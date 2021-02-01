@@ -2,7 +2,7 @@ package com.spring.tour.vo;
 
 import java.sql.Date;
 
-public class ReviewVo {
+public class ReviewVo { 
 	private int review_number;
 	private String user_id;
 	private int service_number;
