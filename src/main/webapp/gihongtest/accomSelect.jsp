@@ -6,11 +6,12 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
 </head>
 <body>
+<div style="width: 800px; height: 60px; background-color: #E4F7BA;">
 <div style="display: inline-block;">
 	<input type="text" id="search">
 </div>
@@ -19,15 +20,49 @@
 	<input type="text" id="d2" readonly="readonly" size="10">
 </div>
 <div style="display: inline-block;">
-	<div id="numCount">1명</div>
-	<div id="changeCount" style="width: 400px; display: none; background-color: pink;"></div>
+	<div id="numCount" name="nCount">
+	<span id="totCount" name="nCount">1명</span>
+	</div>
+	<div id="changeCount" name="nCount" style="width: 200px; display: none; background-color: pink;">
+		인원<br><br>
+		<div name="nCount">성인
+			<button name="nCount"><i class="fas fa-minus-circle fa-2x" name="nCount" id="minCount"
+			style="color: #B2EBF4;"></i></button>
+			<span id="adultNum">1명</span>
+			<button name="nCount"><i class="fas fa-plus-circle fa-2x" name="nCount" id="plusCount"
+			style="color: #B2EBF4;"></i></button>
+		</div>
+	</div>
+</div>
 </div>
 
 
 <script type="text/javascript">
-	$("#numCount").toggle(function(){
-		$("#changeCount").css("display","block");
-		
+	var acnt=1;
+	var totcnt=1;
+	$("#plusCount").click(function(){
+		if(!(acnt>=14)){
+			acnt++;
+			totcnt++;
+		}
+		$("#adultNum").text(acnt+"명");
+		$("#totCount").text(totcnt+"명");
+	});
+	$("#minCount").click(function(){
+		if(!(acnt<=1)){
+			acnt--;
+			totcnt--;
+		}
+		$("#adultNum").text(acnt+"명");
+		$("#totCount").text(totcnt+"명");
+	});
+	$("#numCount").click(function(){
+		$("#changeCount").slideToggle(200);
+	});
+	$('html').click(function(e){
+		if(!$(e.target).is("[name='nCount']")){
+			$("#changeCount").slideUp(200);
+		}
 	});
 	$("#d1").datepicker({
 		dateFormat:'yy/mm/dd',
