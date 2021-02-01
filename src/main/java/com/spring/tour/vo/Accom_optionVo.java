@@ -12,7 +12,7 @@ public class Accom_optionVo {
 		// TODO Auto-generated constructor stub
 	}
 	public Accom_optionVo(int accom_option_number, int accom_service_number, int accom_rooms_option, int accom_total,
-			int accom_count, int accom_price) {
+			int accom_count, int accom_price) { 
 		super();
 		this.accom_option_number = accom_option_number;
 		this.accom_service_number = accom_service_number;
