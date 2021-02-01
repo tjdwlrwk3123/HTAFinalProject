@@ -132,7 +132,7 @@ CREATE TABLE id_token
 
 CREATE TABLE image
 (
-	img_num number NOT NULL UNIQUE,
+	img_num number NOT NULL,
 	imgorgname varchar2(30) NOT NULL,
 	imgsavename varchar2(30) NOT NULL,
 	general_number number NOT NULL,
