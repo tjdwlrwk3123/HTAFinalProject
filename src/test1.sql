@@ -263,7 +263,7 @@ CREATE TABLE wishlist
 (
 	-- PK
 	wishnum number NOT NULL,
-	catenum number,
+	cate_number number,
 	service_number number NOT NULL,
 	user_id varchar2(30) NOT NULL,
 	PRIMARY KEY (wishnum)
@@ -402,6 +402,12 @@ ALTER TABLE tour_service
 ALTER TABLE wishlist
 	ADD FOREIGN KEY (user_id)
 	REFERENCES user_info (user_id)
+;
+
+
+ALTER TABLE wishlist
+	ADD FOREIGN KEY (cate_number)
+	REFERENCES category (cate_number)
 ;
 
 
