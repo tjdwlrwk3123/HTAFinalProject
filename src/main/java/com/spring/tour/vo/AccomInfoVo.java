@@ -1,6 +1,6 @@
 package com.spring.tour.vo;
 
-public class AccomInfoVo {
+public class AccomInfoVo { 
 	private int accom_info_number;
 	private int accom_service_number;
 	private String accom_info_content;
