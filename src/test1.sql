@@ -129,6 +129,17 @@ CREATE TABLE id_token
 );
 
 
+CREATE TABLE image
+(
+	img_num number NOT NULL UNIQUE,
+	imgorgname varchar2(30) NOT NULL,
+	imgsavename varchar2(30) NOT NULL,
+	general_number number NOT NULL,
+	cate_number number NOT NULL,
+	PRIMARY KEY (img_num)
+);
+
+
 CREATE TABLE message
 (
 	message_number number NOT NULL,
@@ -280,6 +291,12 @@ ALTER TABLE accom_service
 
 
 ALTER TABLE review
+	ADD FOREIGN KEY (cate_number)
+	REFERENCES category (cate_number)
+;
+
+
+ALTER TABLE image
 	ADD FOREIGN KEY (cate_number)
 	REFERENCES category (cate_number)
 ;
