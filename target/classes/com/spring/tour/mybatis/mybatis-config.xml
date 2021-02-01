@@ -9,6 +9,6 @@
   
   <!-- 읽어올 Mapper파일 설정 -->
 	<mappers>
-			<mapper resource="com/spring/tour/mybatis/mapper/WishlistMapper.xml"/>
+			<mapper resource="com/spring/tour/mapper/WishlistMapper.xml"/>
 	</mappers>
 </configuration>
