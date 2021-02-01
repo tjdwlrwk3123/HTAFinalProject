@@ -1,6 +1,6 @@
 package com.spring.tour.vo;
 
-public class CategoryVo {
+public class CategoryVo  {
 	private int cate_number;
 	private String cate_name;
 	public CategoryVo() {}
