@@ -5,6 +5,10 @@ DROP TABLE accom_info CASCADE CONSTRAINTS;
 DROP TABLE accom_option CASCADE CONSTRAINTS;
 DROP TABLE accom_service CASCADE CONSTRAINTS;
 DROP TABLE book_management CASCADE CONSTRAINTS;
+DROP TABLE review_answer CASCADE CONSTRAINTS;
+DROP TABLE review CASCADE CONSTRAINTS;
+DROP TABLE service_answer CASCADE CONSTRAINTS;
+DROP TABLE service_question CASCADE CONSTRAINTS;
 DROP TABLE tour_info CASCADE CONSTRAINTS;
 DROP TABLE tour_option CASCADE CONSTRAINTS;
 DROP TABLE tour_service CASCADE CONSTRAINTS;
@@ -15,10 +19,7 @@ DROP TABLE customercenter CASCADE CONSTRAINTS;
 DROP TABLE id_token CASCADE CONSTRAINTS;
 DROP TABLE message CASCADE CONSTRAINTS;
 DROP TABLE notice_board CASCADE CONSTRAINTS;
-DROP TABLE review_answer CASCADE CONSTRAINTS;
-DROP TABLE review CASCADE CONSTRAINTS;
-DROP TABLE service_answer CASCADE CONSTRAINTS;
-DROP TABLE service_question CASCADE CONSTRAINTS;
+DROP TABLE wishlist CASCADE CONSTRAINTS;
 DROP TABLE user_info CASCADE CONSTRAINTS;
 
 
@@ -68,7 +69,6 @@ CREATE TABLE book_management
 	user_id varchar2(30) NOT NULL,
 	book_startdate date,
 	book_enddate date,
-	cate_number number NOT NULL,
 	service_name varchar2(30),
 	service_option varchar2(30),
 	payment_condition varchar2(20),
@@ -157,11 +157,11 @@ CREATE TABLE review
 	review_number number NOT NULL,
 	user_id varchar2(30) NOT NULL,
 	service_number number,
-	cate_number number,
 	star_point varchar2(30),
 	review_content varchar2(100),
 	review_image varchar2(100),
 	review_comment varchar2(100),
+	cate_number number NOT NULL,
 	PRIMARY KEY (review_number)
 );
 
@@ -193,6 +193,7 @@ CREATE TABLE service_question
 	service_number number,
 	service_question_content varchar2(50),
 	service_question_date date,
+	cate_number number NOT NULL,
 	PRIMARY KEY (service_question_number)
 );
 
@@ -200,7 +201,7 @@ CREATE TABLE service_question
 CREATE TABLE tour_info
 (
 	tour_info_number number NOT NULL,
-	tour_service_number number NOT NULL,
+	service_number number NOT NULL,
 	tour_content varchar2(100),
 	tour_how varchar2(100),
 	tour_rule nvarchar2(100),
@@ -212,7 +213,7 @@ CREATE TABLE tour_info
 CREATE TABLE tour_option
 (
 	tour_option_number number NOT NULL,
-	tour_service_number number NOT NULL,
+	service_number number NOT NULL,
 	tour_option varchar2(50),
 	tour_price number,
 	tour_amount number,
@@ -222,12 +223,12 @@ CREATE TABLE tour_option
 
 CREATE TABLE tour_service
 (
-	tour_service_number number NOT NULL,
+	service_number number NOT NULL,
 	cate_number number NOT NULL,
 	user_id varchar2(30) NOT NULL,
 	tour_name varchar2(30),
 	tour_addr xmltype,
-	PRIMARY KEY (tour_service_number)
+	PRIMARY KEY (service_number)
 );
 
 
@@ -243,6 +244,17 @@ CREATE TABLE user_info
 	user_condition varchar2(20),
 	user_point number,
 	PRIMARY KEY (user_id)
+);
+
+
+CREATE TABLE wishlist
+(
+	-- PK
+	wishnum number NOT NULL,
+	catenum number,
+	service_number number NOT NULL,
+	user_id varchar2(30) NOT NULL,
+	PRIMARY KEY (wishnum)
 );
 
 
@@ -267,7 +279,13 @@ ALTER TABLE accom_service
 ;
 
 
-ALTER TABLE book_management
+ALTER TABLE review
+	ADD FOREIGN KEY (cate_number)
+	REFERENCES category (cate_number)
+;
+
+
+ALTER TABLE service_question
 	ADD FOREIGN KEY (cate_number)
 	REFERENCES category (cate_number)
 ;
@@ -298,14 +316,14 @@ ALTER TABLE service_answer
 
 
 ALTER TABLE tour_info
-	ADD FOREIGN KEY (tour_service_number)
-	REFERENCES tour_service (tour_service_number)
+	ADD FOREIGN KEY (service_number)
+	REFERENCES tour_service (service_number)
 ;
 
 
 ALTER TABLE tour_option
-	ADD FOREIGN KEY (tour_service_number)
-	REFERENCES tour_service (tour_service_number)
+	ADD FOREIGN KEY (service_number)
+	REFERENCES tour_service (service_number)
 ;
 
 
@@ -361,6 +379,22 @@ ALTER TABLE tour_service
 	ADD FOREIGN KEY (user_id)
 	REFERENCES user_info (user_id)
 ;
+
+
+ALTER TABLE wishlist
+	ADD FOREIGN KEY (user_id)
+	REFERENCES user_info (user_id)
+;
+
+
+
+/* Comments */
+
+COMMENT ON COLUMN wishlist.wishnum IS 'PK';
+
+
+
+
 
 
 
