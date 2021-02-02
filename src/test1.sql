@@ -169,7 +169,7 @@ CREATE TABLE review
 	review_number number NOT NULL,
 	user_id varchar2(30) NOT NULL,
 	service_number number,
-	star_point varchar2(30),
+	star_point number(1),
 	review_content varchar2(100),
 	review_image varchar2(100),
 	review_comment varchar2(100),
