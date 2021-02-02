@@ -23,6 +23,7 @@ DROP TABLE notice_board CASCADE CONSTRAINTS;
 DROP TABLE wishlist CASCADE CONSTRAINTS;
 DROP TABLE user_info CASCADE CONSTRAINTS;
 DROP TABLE facilities CASCADE CONSTRAINTS;
+DROP TABLE convenience CASCADE CONSTRAINTS;
 
 
 
@@ -276,8 +277,18 @@ CREATE TABLE facilities
 	cate_number number,
 	service_number number NOT NULL,
 	facility varchar2(100),
-	convenience varchar2(100),
 	PRIMARY KEY (facilities_number)
+);
+
+
+CREATE TABLE convenience
+(
+	-- PK
+	convenience_number number NOT NULL,
+	cate_number number,
+	service_number number NOT NULL,
+	conven varchar2(100),
+	PRIMARY KEY (convenience_number)
 );
 
 
@@ -423,6 +434,11 @@ ALTER TABLE wishlist
 
 
 ALTER TABLE facilities
+	ADD FOREIGN KEY (cate_number)
+	REFERENCES category (cate_number)
+;
+
+ALTER TABLE convenience
 	ADD FOREIGN KEY (cate_number)
 	REFERENCES category (cate_number)
 ;
