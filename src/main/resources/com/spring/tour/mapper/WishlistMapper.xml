@@ -6,11 +6,19 @@
   <mapper namespace="com.spring.tour.mapper.WishlistMapper">
   	
   	<insert id="insert" parameterType="wishlist">
+  		insert into wishlist values(#{wishnum},#{cate_number},#{service_number},#{user_id})
  	</insert>
   	
  	<select id="list" parameterType="hashmap" resultType="wishlist">
+ 		select a.wishnum,a.cate_number,a.service_number,a.user_id,a.imgsavename,b.tour_name from 
+		(
+			select wishlist.wishnum, wishlist.cate_number, wishlist.service_number, wishlist.user_id, image.imgsavename 
+				from wishlist join image 
+				on wishlist.cate_number = image.cate_number and general_number=service_number where user_id=#{user_id}
+		)a join (select tour_name, service_number, cate_number from tour_service)b on a.cate_number = b.cate_number and a.service_number=b.service_number
  	</select>
  	
  	<delete id="delete" parameterType="int">
+ 		delete wishlist where wishnum=#{wishnum} and cate_number=#{cate_number} and service_number=#{service_number} and user_id=#{user_id}
  	</delete>
   </mapper>
