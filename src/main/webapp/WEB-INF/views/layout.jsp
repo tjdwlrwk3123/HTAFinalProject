@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>layout.jsp</title>
 <link rel="stylesheet" type="text/css" href="/spring20/resources/css/main.css">
+
 </head>
 <body>
 <div id="wrap">
