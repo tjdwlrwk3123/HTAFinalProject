@@ -32,12 +32,12 @@ CREATE TABLE accom_info
 (
 	accom_info_number number NOT NULL,
 	accom_service_number number NOT NULL,
-	accom_info_content varchar2(100),
-	accom_how varchar2(100),
-	accom_rule varchar2(100),
-	accom_chekinfo varchar2(30),
-	accom_facility varchar2(100),
-	accom_conven varchar2(100),
+	accom_info_content varchar2(2000),
+	accom_how varchar2(3000),
+	accom_rule varchar2(2000),
+	accom_chekinfo varchar2(500),
+	accom_facility varchar2(300),
+	accom_conven varchar2(300),
 	PRIMARY KEY (accom_info_number)
 );
 
@@ -58,7 +58,7 @@ CREATE TABLE accom_service
 	accom_service_number number NOT NULL,
 	cate_number number NOT NULL,
 	user_accom_boss_name varchar2(30),
-	accom_name varchar2(30),
+	accom_name varchar2(50),
 	accom_addr clob,
 	PRIMARY KEY (accom_service_number)
 );
