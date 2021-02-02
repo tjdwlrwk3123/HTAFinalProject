@@ -14,7 +14,7 @@ import com.spring.tour.service.WishlistService;
 import com.spring.tour.vo.WishlistVo;
 
 
-@RestController
+@RestController 
 public class WishlistInsertController { //인서트 된 다음 성공/실패 메세지 전송
 	@Autowired
 	private WishlistService service;
