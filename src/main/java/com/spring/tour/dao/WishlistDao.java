@@ -14,7 +14,7 @@ public class WishlistDao {
 	@Autowired
 	private SqlSession sqlsession;
 	
-	private final String NAMESPACE = "com.test.finalproject.mapper.WishlistMapper";
+	private final String NAMESPACE = "com.spring.tour.mapper.WishlistMapper";
 	
 	public int wishlist_insert(WishlistVo vo) {
 		return sqlsession.insert(NAMESPACE+".insert",vo);
@@ -25,7 +25,7 @@ public class WishlistDao {
 	}
 	
 	public List<WishlistVo> wishlist_list(String user_id){
-		return sqlsession.selectList(user_id);
+		return sqlsession.selectList(NAMESPACE+".list",user_id);
 	}
 
 }

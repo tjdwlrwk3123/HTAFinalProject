@@ -8,5 +8,6 @@
 </head>
 <body>
 <h1>초기화면!</h1>
+<a href='${cp }/wishlist?user_id=kaka'>위시리스트</a>
 </body>
 </html>

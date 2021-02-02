@@ -10,7 +10,7 @@
  <!-- Bootstrap CSS -->
  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-<script type="text/javascript" src="/tour/resources/js/jquery-3.5.1.js"></script>
+<script type="text/javascript" src="/tour/resources/js/jquery-3.5.1.min.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
@@ -35,6 +35,7 @@
 
 <script>
 	$(document).ready(function(){
+		alert("aa");
 		list();
 	});
 	function list(){
@@ -49,7 +50,7 @@
 				let tour_name = data.list[i].tour_name;
 				str+="<div class='col mb-4'>"+
 						"<div class='card h-100' style='width: 12rem;'>"+
-					 	 "<img src='${cp }/resources/images/"+imgsavename+"' class='card-img-top' alt='"+tour_name+"' onclick='move(event)>"+
+					 	 "<img src='${cp }/resources/images/"+imgsavename+"' class='card-img-top' onclick='move(event)' alt='"+tour_name+"'>"+
 					 	 "<div class="+tour_name+">"+
 					   		 "<h5 class='card-title'>"+tour_name+"</h5>"+
 						   	 "<p class='card-text'>서울 구경하는 투어입니다</p>"+
@@ -65,6 +66,7 @@
 			$("#wishlist_list").append(str);
 		});
 	}
+	
 	function unchk(e){
 		var cate_number = e.target.nextSibling.value;
 		var service_number = e.target.nextSibling.nextSibling.value;
@@ -76,6 +78,9 @@
 			}
 		});
 	}
-	function move(e){ //폼으로 묶어서 이동시키는 방법
-		
+	
+	function move(e){
+		alert(e.target.alt+"여기로 이동할거야 나중에~");
 	}
+</script>
+
