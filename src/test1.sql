@@ -22,6 +22,7 @@ DROP TABLE message CASCADE CONSTRAINTS;
 DROP TABLE notice_board CASCADE CONSTRAINTS;
 DROP TABLE wishlist CASCADE CONSTRAINTS;
 DROP TABLE user_info CASCADE CONSTRAINTS;
+DROP TABLE facilities CASCADE CONSTRAINTS;
 
 
 
@@ -36,8 +37,6 @@ CREATE TABLE accom_info
 	accom_how varchar2(3000),
 	accom_rule varchar2(2000),
 	accom_chekinfo varchar2(500),
-	accom_facility varchar2(300),
-	accom_conven varchar2(300),
 	PRIMARY KEY (accom_info_number)
 );
 
@@ -270,6 +269,18 @@ CREATE TABLE wishlist
 );
 
 
+CREATE TABLE facilities
+(
+	-- PK
+	facilities_number number NOT NULL,
+	cate_number number,
+	service_number number NOT NULL,
+	facility varchar2(100),
+	convenience varchar2(100),
+	PRIMARY KEY (facilities_number)
+);
+
+
 
 /* Create Foreign Keys */
 
@@ -406,6 +417,12 @@ ALTER TABLE wishlist
 
 
 ALTER TABLE wishlist
+	ADD FOREIGN KEY (cate_number)
+	REFERENCES category (cate_number)
+;
+
+
+ALTER TABLE facilities
 	ADD FOREIGN KEY (cate_number)
 	REFERENCES category (cate_number)
 ;
