@@ -38,7 +38,7 @@ select accom_service_number from accom_service join convenience on accom_service
 accom_service.cate_number=convenience.cate_number where conven='wifi'
 );
 
-select min(accom_price) from accom_option group by accom_service_number
+select accom_service_number,min(accom_price) minP from accom_option group by accom_service_number
 having accom_service_number in(1,2);
 
  
