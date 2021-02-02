@@ -27,5 +27,4 @@ public class WishlistDao {
 	public List<WishlistVo> wishlist_list(String user_id){
 		return sqlsession.selectList(NAMESPACE+".list",user_id);
 	}
-
 }
