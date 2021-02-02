@@ -5,12 +5,31 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+	#adultNum{
+		-ms-user-select: none;
+		-moz-user-select: -moz-none; 
+		-webkit-user-select: none; 
+		-khtml-user-select: none; 
+		user-select:none;
+	}
+	#changeCount div{
+		-ms-user-select: none;
+		-moz-user-select: -moz-none; 
+		-webkit-user-select: none; 
+		-khtml-user-select: none; 
+		user-select:none;
+	}
+</style>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
 </head>
 <body>
+
+
+
 <div style="width: 800px; height: 60px; background-color: #E4F7BA;">
 <div style="display: inline-block;">
 	<input type="text" id="search">
@@ -26,15 +45,17 @@
 	<div id="changeCount" name="nCount" style="width: 200px; display: none; background-color: pink;">
 		인원<br><br>
 		<div name="nCount">성인
-			<button name="nCount"><i class="fas fa-minus-circle fa-2x" name="nCount" id="minCount"
-			style="color: #B2EBF4;"></i></button>
-			<span id="adultNum">1명</span>
-			<button name="nCount"><i class="fas fa-plus-circle fa-2x" name="nCount" id="plusCount"
-			style="color: #B2EBF4;"></i></button>
+			<i class="fas fa-minus-circle fa-2x" name="nCount" id="minCount"
+			style="color: #B2EBF4;"></i>
+			<span id="adultNum" name="nCount">1명</span>
+			<i class="fas fa-plus-circle fa-2x" name="nCount" id="plusCount"
+			style="color: #B2EBF4;"></i>
 		</div>
 	</div>
 </div>
 </div>
+
+
 
 
 <script type="text/javascript">
@@ -71,7 +92,7 @@
 		yearSuffix:"년",
 		showMonthAfterYear:true,
 		minDate:0,
-		maxDate:"1M",
+		maxDate:"2M",
 		showAnim:"toggle",
 		onClose: function(selectedDate) {
 			var nextDay=new Date(selectedDate);

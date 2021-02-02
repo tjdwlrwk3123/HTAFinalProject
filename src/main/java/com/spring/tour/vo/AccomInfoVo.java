@@ -7,9 +7,10 @@ public class AccomInfoVo {
 	private String accom_rule;
 	private String accom_chekinfo;
 	private String accom_facility;
+	private String accom_conven;
 	public AccomInfoVo() {}
 	public AccomInfoVo(int accom_info_number, int accom_service_number, String accom_info_content, String accom_rule,
-			String accom_chekinfo, String accom_facility) {
+			String accom_chekinfo, String accom_facility, String accom_conven) {
 		super();
 		this.accom_info_number = accom_info_number;
 		this.accom_service_number = accom_service_number;
@@ -17,6 +18,7 @@ public class AccomInfoVo {
 		this.accom_rule = accom_rule;
 		this.accom_chekinfo = accom_chekinfo;
 		this.accom_facility = accom_facility;
+		this.accom_conven = accom_conven;
 	}
 	public int getAccom_info_number() {
 		return accom_info_number;
@@ -54,5 +56,10 @@ public class AccomInfoVo {
 	public void setAccom_facility(String accom_facility) {
 		this.accom_facility = accom_facility;
 	}
-	
+	public String getAccom_conven() {
+		return accom_conven;
+	}
+	public void setAccom_conven(String accom_conven) {
+		this.accom_conven = accom_conven;
+	}
 }

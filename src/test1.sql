@@ -37,6 +37,7 @@ CREATE TABLE accom_info
 	accom_rule varchar2(100),
 	accom_chekinfo varchar2(30),
 	accom_facility varchar2(100),
+	accom_conven varchar2(100),
 	PRIMARY KEY (accom_info_number)
 );
 
@@ -46,7 +47,6 @@ CREATE TABLE accom_option
 	accom_option_number number NOT NULL,
 	accom_service_number number NOT NULL,
 	accom_rooms_option varchar2(40),
-	accom_total number,
 	accom_count number,
 	accom_price number,
 	PRIMARY KEY (accom_option_number)
@@ -59,7 +59,7 @@ CREATE TABLE accom_service
 	cate_number number NOT NULL,
 	user_accom_boss_name varchar2(30),
 	accom_name varchar2(30),
-	accom_addr xmltype,
+	accom_addr clob,
 	PRIMARY KEY (accom_service_number)
 );
 
@@ -239,7 +239,7 @@ CREATE TABLE tour_service
 	cate_number number NOT NULL,
 	user_id varchar2(30) NOT NULL,
 	tour_name varchar2(30),
-	tour_addr xmltype,
+	tour_addr clob,
 	PRIMARY KEY (service_number)
 );
 
