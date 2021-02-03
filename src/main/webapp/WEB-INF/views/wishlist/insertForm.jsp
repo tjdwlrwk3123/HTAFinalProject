@@ -33,7 +33,7 @@
 <script>
 	$("#btn1").on("click",function(){
 		$.ajax({
-			url:"${cp}/insert",
+			url:"${cp}/wishInsert",
 			dataType: 'xml',
 			data:{"wishnum":$("#wishnum").val(),"catenum":$("#catenum").val(),"service_number":$("#service_number").val(),"user_id":$("#user_id").val() },
 			method: 'post',
@@ -50,7 +50,7 @@
 	});
 	
 	$("#btn2").on("click",function(){
-		$.getJSON("${cp}/insert", {"wishnum":$("#wishnum").val(),"catenum":$("#catenum").val(),"service_number":$("#service_number").val(),"user_id":$("#user_id").val() },
+		$.getJSON("${cp}/wishInsert", {"wishnum":$("#wishnum").val(),"catenum":$("#catenum").val(),"service_number":$("#service_number").val(),"user_id":$("#user_id").val() },
 			function(data) {
 			let result = $(data).find("code").text();
 			if(result=='insert_success'){
@@ -63,7 +63,7 @@
 	});
 	$("#btn3").on("click",function(){
 		$.ajax({
-			url:"${cp}/delete",
+			url:"${cp}/wishDelete",
 			dataType: 'xml',
 			data:{"wishnum":$("#wishnum").val(),"catenum":$("#catenum").val(),"service_number":$("#service_number").val(),"user_id":$("#user_id").val() },
 			method:'post',
@@ -80,7 +80,7 @@
 	});
 	
 	$("#btn4").on("click",function(){
-		$.getJSON("${cp}/delete", {"wishnum":$("#wishnum").val(),"catenum":$("#catenum").val(),"service_number":$("#service_number").val(),"user_id":$("#user_id").val() },
+		$.getJSON("${cp}/wishDelete", {"wishnum":$("#wishnum").val(),"catenum":$("#catenum").val(),"service_number":$("#service_number").val(),"user_id":$("#user_id").val() },
 			function(data) {
 			let result = $(data).find("code").text();
 			if(result=='delete_success'){
