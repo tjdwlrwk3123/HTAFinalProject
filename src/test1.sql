@@ -5,6 +5,8 @@ DROP TABLE accom_info CASCADE CONSTRAINTS;
 DROP TABLE accom_option CASCADE CONSTRAINTS;
 DROP TABLE accom_service CASCADE CONSTRAINTS;
 DROP TABLE book_management CASCADE CONSTRAINTS;
+DROP TABLE accom_book CASCADE CONSTRAINTS;
+DROP TABLE tour_book CASCADE CONSTRAINTS;
 DROP TABLE review_answer CASCADE CONSTRAINTS;
 DROP TABLE review CASCADE CONSTRAINTS;
 DROP TABLE service_answer CASCADE CONSTRAINTS;
@@ -47,9 +49,9 @@ CREATE TABLE accom_option
 	accom_option_number number NOT NULL,
 	accom_service_number number NOT NULL,
 	accom_rooms_option varchar2(40),
-	accom_count number,
 	accom_min_people number,
 	accom_max_people number,
+	accom_count number,
 	accom_price number,
 	PRIMARY KEY (accom_option_number)
 );
@@ -66,20 +68,37 @@ CREATE TABLE accom_service
 );
 
 
-CREATE TABLE book_management
+CREATE TABLE accom_book
 (
-	book_number number NOT NULL,
+	accom_book_number number NOT NULL,
 	user_id varchar2(30) NOT NULL,
-	book_startdate date,
-	book_enddate date,
-	service_name varchar2(30),
-	service_option varchar2(30),
-	payment_condition varchar2(20),
+	accom_option_number number,
+	service_name varchar2(100),
+	accom_startdate date,
+	accom_enddate date,
+	payment_condition varchar2(30),
 	total_price number,
 	point_useamount number,
-	coupon_usecondition varchar2(20),
-	payment_method varchar2(30),
-	PRIMARY KEY (book_number)
+	coupon_usecondition varchar2(50),
+	payment_method varchar2(50),
+	PRIMARY KEY (accom_book_number)
+);
+
+
+CREATE TABLE tour_book
+(
+	tour_book_number number NOT NULL,
+	user_id varchar2(30) NOT NULL,
+	tour_option_number number,
+	service_name varchar2(100),
+	tour_startdate date,
+	tour_enddate date,
+	payment_condition varchar2(30),
+	total_price number,
+	point_useamount number,
+	coupon_usecondition varchar2(50),
+	payment_method varchar2(50),
+	PRIMARY KEY (tour_book_number)
 );
 
 
@@ -369,9 +388,19 @@ ALTER TABLE tour_option
 ;
 
 
-ALTER TABLE book_management
+ALTER TABLE accom_book
 	ADD FOREIGN KEY (user_id)
 	REFERENCES user_info (user_id)
+	ADD FOREIGN KEY (accom_option_number)
+	REFERENCES accom_option (accom_option_number)
+;
+
+
+ALTER TABLE tour_book
+	ADD FOREIGN KEY (user_id)
+	REFERENCES user_info (user_id)
+	ADD FOREIGN KEY (tour_option_number)
+	REFERENCES tour_option (tour_option_number)
 ;
 
 

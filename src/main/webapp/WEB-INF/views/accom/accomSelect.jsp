@@ -53,6 +53,7 @@
 		</div>
 	</div>
 </div>
+<input type="button" value="검색" id="searchAccom">
 </div>
 <br>
 <div>
@@ -67,12 +68,25 @@
 
 
 <script type="text/javascript">
+var acnt=1; //어른 인원수
+var totcnt=1; //총 인원수
+var facility=[]; //시설 배열
+var conven=[]; //편의서비스 배열
+var finCount=
 	$(document).ready(function(){
 		getlist();
+		$("#d1").datepicker('setDate','today');
+		$("#d2").datepicker('setDate','+1D');
+	});
+	$("#searchAccom").click(function(){
+		$("input[type='checkbox']").prop("checked",false);
+		$("#totCount").text();
+		$("#d1").val();
+		$("#d2").val();
+		
 	});
 	$("input[type='checkbox']").click(function(){
-		var facility=[];
-		var conven=[];
+		
 		 $("input[name='fck']:checked").each(function(i){ //시설에 체크된 리스트 저장
              facility.push($(this).val());
          });
@@ -80,6 +94,9 @@
              conven.push($(this).val());
          });
 		 var facilityMap= {
+				 "startDate" : startDate,
+				 "endDate" : endDate,
+				 "totcnt" : totcnt,
 				 "facility" : facility,
 				 "conven" : conven
 		 }
@@ -98,8 +115,7 @@
 			}
 		});
 	}
-	var acnt=1;
-	var totcnt=1;
+	
 	$("#plusCount").click(function(){
 		if(!(acnt>=14)){
 			acnt++;

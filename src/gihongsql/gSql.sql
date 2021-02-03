@@ -10,11 +10,13 @@ insert into accom_service values(1,2,'양기홍','a호텔','서울시');
 insert into accom_service values(2,2,'기','b호텔','부산광역시');
 insert into accom_service values(3,2,'홍','c호텔','제주도');
 
-insert into accom_option values(1,1,'스위트룸',4,60000);
-insert into accom_option values(2,1,'일반실',5,20000);
-insert into accom_option values(3,1,'비즈니스',2,30000);
-insert into accom_option values(4,2,'스위트룸',2,80000);
-insert into accom_option values(6,2,'비즈니스',5,45000);
+insert into accom_option values(1,1,'스위트룸',1,4,4,40000);
+insert into accom_option values(2,1,'일반실',1,4,5,20000);
+insert into accom_option values(3,1,'비즈니스',1,4,2,30000);
+insert into accom_option values(4,2,'스위트룸',2,5,2,80000);
+insert into accom_option values(6,2,'비즈니스',2,5,5,45000);
+insert into accom_option values(7,3,'일반',1,3,5,22000);
+insert into accom_option values(8,3,'고급',1,3,5,40000);
 
 
 insert into facilities values(1,2,1,'바베큐장');
@@ -29,17 +31,22 @@ insert into convenience values(3,2,1,'wifi');
 
 commit;
 
+select * from accom_option;
+
 select * from accom_service
 where accom_service_number in(
 select accom_service_number from accom_service join facilities on accom_service_number=facilities.service_number and 
-accom_service.cate_number=facilities.cate_number where facility='수영장'
+accom_service.cate_number=facilities.cate_number where facility in('수영장','바베큐장')
 )and accom_service_number in(
 select accom_service_number from accom_service join convenience on accom_service_number=convenience.service_number and 
 accom_service.cate_number=convenience.cate_number where conven='wifi'
 );
 
-select accom_service_number,min(accom_price) minP from accom_option group by accom_service_number
+select accom_service_number snum,min(accom_price) minp from accom_option group by accom_service_number
 having accom_service_number in(1,2);
+
+select min(accom_price) minP from accom_option group by accom_service_number
+		having accom_service_number=2;
 
  
 
