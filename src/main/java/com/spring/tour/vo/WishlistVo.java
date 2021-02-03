@@ -5,7 +5,7 @@ public class WishlistVo {
 	private int cate_number;
 	private int service_number;
 	private String user_id;
-	private String imgsavename;
+	private String imgsavename; 
 	private String tour_name;
 	
 	
