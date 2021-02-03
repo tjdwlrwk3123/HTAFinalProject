@@ -70,22 +70,41 @@
 <script type="text/javascript">
 var acnt=1; //어른 인원수
 var totcnt=1; //총 인원수
-var facility=[]; //시설 배열
-var conven=[]; //편의서비스 배열
-var finCount=
+
+
 	$(document).ready(function(){
-		getlist();
 		$("#d1").datepicker('setDate','today');
 		$("#d2").datepicker('setDate','+1D');
+		var count=$("#totCount").text().replace(/[^0-9]/g,"");
+		var startDate=$("#d1").val();
+		var endDate=$("#d2").val();
+		var param={
+				"count" : count,
+				"startDate" : startDate,
+				"endDate" : endDate
+		}
+		getlist(param);
+		
 	});
 	$("#searchAccom").click(function(){
 		$("input[type='checkbox']").prop("checked",false);
-		$("#totCount").text();
-		$("#d1").val();
-		$("#d2").val();
+		var count=$("#totCount").text().replace(/[^0-9]/g,"");
+		var startDate=$("#d1").val();
+		var endDate=$("#d2").val();
+		console.log(count);
+		console.log(startDate);
+		console.log(endDate);
+		var param={
+				"count" : count,
+				"startDate" : startDate,
+				"endDate" : endDate
+		}
+		getlist(param);
 		
 	});
 	$("input[type='checkbox']").click(function(){
+		var facility=[]; //시설 배열
+		var conven=[]; //편의서비스 배열
 		
 		 $("input[name='fck']:checked").each(function(i){ //시설에 체크된 리스트 저장
              facility.push($(this).val());
@@ -94,9 +113,9 @@ var finCount=
              conven.push($(this).val());
          });
 		 var facilityMap= {
-				 "startDate" : startDate,
-				 "endDate" : endDate,
-				 "totcnt" : totcnt,
+// 				 "startDate" : startDate,
+// 				 "endDate" : endDate,
+// 				 "totcnt" : totcnt,
 				 "facility" : facility,
 				 "conven" : conven
 		 }
@@ -141,7 +160,7 @@ var finCount=
 		}
 	});
 	$("#d1").datepicker({
-		dateFormat:'yy/mm/dd',
+		dateFormat:'yy-mm-dd',
 		dayNamesMin:['일','월','화','수','목','금','토'],
 		monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
 		yearSuffix:"년",
@@ -159,7 +178,7 @@ var finCount=
 		}
 	});
 	$("#d2").datepicker({
-		dateFormat:'yy/mm/dd',
+		dateFormat:'yy-mm-dd',
 		dayNamesMin:['일','월','화','수','목','금','토'],
 		monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
 		yearSuffix:"년",
