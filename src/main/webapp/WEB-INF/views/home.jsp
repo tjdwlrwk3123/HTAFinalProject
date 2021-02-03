@@ -9,6 +9,7 @@
 <body>
 <h1>초기화면!</h1>
 <a href='${cp }/wishlist?user_id=kaka'>위시리스트</a>
+<a href='${cp }/tourMain'>투어메인페이지</a>
 <a href='${cp }/accomlist'>숙소페이지</a>
 </body>
 </html>
