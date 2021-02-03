@@ -55,24 +55,46 @@
 </div>
 </div>
 <br>
+<div>
+<input type="checkbox" name="fck" value="수영장">수영장<br>
+<input type="checkbox" name="fck" value="바베큐장">바베큐장<br>
+<input type="checkbox" name="cck" value="wifi">wifi<br>
+</div>
+<input type="range">
 <div id="accom">
 	
 </div>
-
-
 
 
 <script type="text/javascript">
 	$(document).ready(function(){
 		getlist();
 	});
-	function getlist(){
-		$.getJSON('${cp}/accomSelect_list', function(data) {
-			for(let i=0;i<data.length;i++){
+	$("input[type='checkbox']").click(function(){
+		var facility=[];
+		var conven=[];
+		 $("input[name='fck']:checked").each(function(i){ //시설에 체크된 리스트 저장
+             facility.push($(this).val());
+         });
+		 $("input[name='cck']:checked").each(function(i){ //편의서비스에 체크된 리스트 저장
+             conven.push($(this).val());
+         });
+		 var facilityMap= {
+				 "facility" : facility,
+				 "conven" : conven
+		 }
+		 getlist(facilityMap);
+		 console.log(facilityMap);
+		 
+	});
+	function getlist(param){
+		$.getJSON('${cp}/accomSelect_list',param, function(data) {
+			
+			for(let i=0;i<data.list.length;i++){
 				var accomName=data.list[i].accom_name;
-				var price=data.price[i].minP;
+				var price=data.price[i].MINP;
 				console.log(accomName);
-				//console.log(price);
+				console.log(price);
 			}
 		});
 	}
