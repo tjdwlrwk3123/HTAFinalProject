@@ -48,6 +48,8 @@ CREATE TABLE accom_option
 	accom_service_number number NOT NULL,
 	accom_rooms_option varchar2(40),
 	accom_count number,
+	accom_min_people number,
+	accom_max_people number,
 	accom_price number,
 	PRIMARY KEY (accom_option_number)
 );

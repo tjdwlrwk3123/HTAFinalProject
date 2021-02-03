@@ -14,10 +14,10 @@ public class AccomService {
 	@Autowired
 	private AccomDao dao;
 	
-	public List<Accom_serviceVo> accom_service_list(HashMap<String, Object> map){
-		return dao.accom_service_list(map);
+	public List<Accom_serviceVo> accom_service_list(HashMap<String, Object> fcMap){
+		return dao.accom_service_list(fcMap);
 	}
-	public int accom_minprice(int serviceNum) {
-		return dao.accom_minprice(serviceNum);
+	public List<HashMap<String, Object>> accom_minprice(HashMap<String, Object> pmap) {
+		return dao.accom_minprice(pmap);
 	}
 }
