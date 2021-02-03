@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+  <mapper namespace="com.spring.tour.mapper.TourPageMapper">
+ 	<select id="list" resultType="tourpage">
+	select * from(
+		select rownum rnum, g.* from(
+			select e.cate_number, e.service_number, e.imgsavename, e.tour_name, f.avgpoint, f.tour_price from 
+				(select imgsavename, a.service_number, a.cate_number, b.tour_name  from
+						(select min(imgsavename) imgsavename, general_number service_number, cate_number from image group by general_number, cate_number
+						)a join ( select tour_name, cate_number, service_number from tour_service)b
+				on a.service_number=b.service_number and a.cate_number=b.cate_number)e 
+			join (select avgpoint, c.cate_number, c.service_number, d.tour_price from 
+						(select avg(star_point) avgpoint, cate_number,service_number from review group by service_number,cate_number,service_number order by service_number
+						)c join (select tour_price,service_number from tour_option where tour_amount>0)d on c.service_number=d.service_number)f
+			 	on e.service_number = f.service_number and e.cate_number = f.cate_number order by avgpoint desc
+		)g 
+	) <![CDATA[where rnum <=8]]>
+ 	</select>
+ 	
+  </mapper>
