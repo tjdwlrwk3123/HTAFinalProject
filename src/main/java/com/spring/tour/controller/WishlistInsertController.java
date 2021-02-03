@@ -19,7 +19,7 @@ public class WishlistInsertController { //인서트 된 다음 성공/실패 메세지 전송
 	@Autowired
 	private WishlistService service;
 	
-	@GetMapping(value = "/insert", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	@GetMapping(value = "/wishInsert", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
 	@ResponseBody
 	public HashMap<String, Object> insert(WishlistVo vo) { // JSON으로 받기
 		int n= service.wishlist_insert(vo);
@@ -33,7 +33,7 @@ public class WishlistInsertController { //인서트 된 다음 성공/실패 메세지 전송
 		return map;
 	}
 	
-	@PostMapping(value = "/insert", produces = "application/xml;charset=utf-8")
+	@PostMapping(value = "/wishInsert", produces = "application/xml;charset=utf-8")
 	@ResponseBody
 	public String wishlist_insert(WishlistVo vo) { //AJAX로 받기
 		int n = service.wishlist_insert(vo);
