@@ -15,11 +15,11 @@ public class AccomDao {
 	private SqlSession sqlSession;
 	private final String NAMESPACE="com.spring.tour.mapper.AccomMapper";
 	
-	public List<Accom_serviceVo> accom_service_list(HashMap<String, Object> map){
-		return sqlSession.selectList(NAMESPACE+".accom_search", map);
+	public List<Accom_serviceVo> accom_service_list(HashMap<String, Object> fcMap){
+		return sqlSession.selectList(NAMESPACE+".accom_search", fcMap);
 	}
 	
-	public int accom_minprice(int serviceNum) {
-		return sqlSession.selectOne(NAMESPACE+".accom_minprice_search", serviceNum);
+	public List<HashMap<String, Object>> accom_minprice(HashMap<String, Object> pmap) {
+		return sqlSession.selectList(NAMESPACE+".accom_minprice_search", pmap);
 	}
 }

@@ -1,7 +1,7 @@
 package com.spring.tour.vo;
 
 public class Accom_serviceVo {
-	private int accom_service; //서비스 고유 번호 
+	private int accom_service_number; //서비스 고유 번호 
 	private int cate_number; //카테고리 번호 
 	private String user_accom_boss_name; //숙소 서비스 사업자 이름
 	private String accom_name; //숙소이름
@@ -11,17 +11,17 @@ public class Accom_serviceVo {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Accom_serviceVo(int accom_service, int cate_number, String user_accom_boss_name, String accom_name,
+	public Accom_serviceVo(int accom_service_number, int cate_number, String user_accom_boss_name, String accom_name,
 			String accom_addr) {
 		super();
-		this.accom_service = accom_service;
+		this.accom_service_number = accom_service_number;
 		this.cate_number = cate_number;
 		this.user_accom_boss_name = user_accom_boss_name;
 		this.accom_name = accom_name;
 		this.accom_addr = accom_addr;
 	}
-	public int getAccom_service() {
-		return accom_service;
+	public int getAccom_service_number() {
+		return accom_service_number;
 	}
 	public int getCate_number() {
 		return cate_number;
@@ -32,8 +32,8 @@ public class Accom_serviceVo {
 	public String getAccom_addr() {
 		return accom_addr;
 	}
-	public void setAccom_service(int accom_service) {
-		this.accom_service = accom_service;
+	public void setAccom_service_number(int accom_service_number) {
+		this.accom_service_number = accom_service_number;
 	}
 	public void setCate_number(int cate_number) {
 		this.cate_number = cate_number;
@@ -52,7 +52,7 @@ public class Accom_serviceVo {
 	}
 	@Override
 	public String toString() {
-		return "Accom_serviceVo [accom_service=" + accom_service + ", cate_number=" + cate_number
+		return "Accom_serviceVo [accom_service_number=" + accom_service_number + ", cate_number=" + cate_number
 				+ ", user_accom_boss_name=" + user_accom_boss_name + ", accom_name=" + accom_name 
 				+ ", accom_addr=" + accom_addr + "]";
 	}
