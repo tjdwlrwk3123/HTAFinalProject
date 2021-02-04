@@ -22,29 +22,41 @@ public class AccomListController {
 	@RequestMapping(value="/accomSelect_list",produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public HashMap<String, Object> getAccomList(@RequestParam(value="facility[]", required = false)List<String> flist,
 			@RequestParam(value="conven[]" , required = false)List<String> clist,
+			@RequestParam(value="category" , defaultValue = "0")int category,
 			@RequestParam(value="count",defaultValue = "1") int count,
 			@RequestParam(value="startDate") Date startDate,
-			@RequestParam(value="endDate") Date endDate) {
+			@RequestParam(value="endDate") Date endDate,
+			@RequestParam(value="minprice" , defaultValue = "0")int minprice,
+			@RequestParam(value="maxprice" , defaultValue = "0")int maxprice) {
 		HashMap<String, Object> wholeMap=new HashMap<String, Object>();
-		System.out.println(count);
-		System.out.println(startDate);
-		System.out.println(endDate);
+		wholeMap.put("count", count);
+		wholeMap.put("startDate", startDate);
+		wholeMap.put("endDate", endDate);
 		wholeMap.put("facility", flist);
 		wholeMap.put("conven", clist);
-		List<Accom_serviceVo> resultlist=service.accom_service_list(wholeMap);
+		if(category!=0) {
+			wholeMap.put("category", category);
+		}
+		if(minprice!=0) {
+			wholeMap.put("minprice", minprice);
+			wholeMap.put("maxprice", maxprice);
+		}
 		
+		HashMap<String, Object> result=new HashMap<String, Object>(); //결과로 보낼 해시맵
+		
+		List<Accom_serviceVo> resultlist=service.accom_service_list(wholeMap);
+		System.out.println(resultlist);
 		List<Integer> list2=new ArrayList<Integer>();
 		HashMap<String, Object> pmap=new HashMap<String, Object>();
 		for(Accom_serviceVo vo : resultlist) {
 			int serviceNum= vo.getAccom_service_number();
+			System.out.println(vo.getAccom_name());
 			list2.add(serviceNum);
 		}
 		pmap.put("snum", list2);
 		List<HashMap<String, Object>> resultprice=service.accom_minprice(pmap);
-		
-		HashMap<String, Object> map2=new HashMap<String, Object>();
-		map2.put("list",resultlist);
-		map2.put("price", resultprice);
-		return null;
+		result.put("list",resultlist);
+		result.put("price", resultprice);
+		return result;
 	}
 }
