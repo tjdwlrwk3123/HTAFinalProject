@@ -234,10 +234,9 @@ CREATE TABLE tour_info
 (
 	tour_info_number number NOT NULL,
 	service_number number NOT NULL,
-	tour_content varchar2(100),
-	tour_how varchar2(100),
-	tour_rule nvarchar2(100),
-	tour_warn varchar2(100),
+	tour_content varchar2(255),
+	tour_how varchar2(255),
+	tour_rule nvarchar2(255),
 	tour_expire date,
 	PRIMARY KEY (tour_info_number)
 );
