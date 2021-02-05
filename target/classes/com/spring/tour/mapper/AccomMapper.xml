@@ -5,8 +5,18 @@
 
 <mapper namespace="com.spring.tour.mapper.AccomMapper">
 	<select id="accom_search" resultType="accomService" parameterType="hashmap">
-		select * from accom_service
+		select * from accom_service where
+		accom_service_number in(
+		select accom_service_number from accom_option left join accom_book 
+		on accom_option.accom_option_number = accom_book.accom_option_number
 		<where>
+		<![CDATA[
+		not (accom_startdate < #{endDate}
+		and accom_enddate > #{startDate})
+		or (accom_startdate is null and accom_enddate is null)
+		and accom_max_people>=#{count}
+		)
+		]]>
 		<if test="facility!=null">
 		and accom_service_number in(
 		select accom_service_number from accom_service join facilities on accom_service_number=facilities.service_number and 
@@ -25,10 +35,23 @@
 		</foreach>
 		)
 		</if>
+		<if test="minprice!=null">
+		<![CDATA[
+		and accom_service_number in(
+		select accom_service_number from accom_option left join accom_book 
+		on accom_option.accom_option_number = accom_book.accom_option_number
+		where accom_price>=#{minprice} and accom_price<=#{maxprice})
+		]]>
+		</if>
+		<if test="category!=null">
+		and accom_service_number in(
+		select accom_service_number from accom_service natural join category 
+		where cate_number=#{category})
+		</if>
 		</where>
 	</select>
 	<select id="accom_minprice_search" parameterType="hashmap" resultType="hashmap">
-		select min(accom_price) minp from accom_option group by accom_service_number
+		select min(accom_price) minp,max(accom_price) maxp from accom_option group by accom_service_number
 		having accom_service_number in
 		<foreach collection="snum" item='item' index='i' open="(" close=")" separator=",">
 		 #{item}

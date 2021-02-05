@@ -16,7 +16,7 @@
 	위시넘버
 	<input type="text" name = "wishnum" id="wishnum"><br>
 	카테넘버<br>
-	<input type="text" name = "catenum" id="catenum"><br>
+	<input type="text" name = "cate_number" id="cate_number"><br>
 	서비스넘버<br>
 	<input type="text" name = "service_number" id="service_number"><br>
 	유저아이디<br>
@@ -33,9 +33,9 @@
 <script>
 	$("#btn1").on("click",function(){
 		$.ajax({
-			url:"${cp}/insert",
+			url:"${cp}/wishInsert",
 			dataType: 'xml',
-			data:{"wishnum":$("#wishnum").val(),"catenum":$("#catenum").val(),"service_number":$("#service_number").val(),"user_id":$("#user_id").val() },
+			data:{"wishnum":$("#wishnum").val(),"cate_number":$("#cate_number").val(),"service_number":$("#service_number").val(),"user_id":$("#user_id").val() },
 			method: 'post',
 			success: function(data){
 				let result = $(data).find("code").text();
@@ -50,7 +50,7 @@
 	});
 	
 	$("#btn2").on("click",function(){
-		$.getJSON("${cp}/insert", {"wishnum":$("#wishnum").val(),"catenum":$("#catenum").val(),"service_number":$("#service_number").val(),"user_id":$("#user_id").val() },
+		$.getJSON("${cp}/wishInsert", {"wishnum":$("#wishnum").val(),"cate_number":$("#cate_number").val(),"service_number":$("#service_number").val(),"user_id":$("#user_id").val() },
 			function(data) {
 			let result = $(data).find("code").text();
 			if(result=='insert_success'){
@@ -63,9 +63,9 @@
 	});
 	$("#btn3").on("click",function(){
 		$.ajax({
-			url:"${cp}/delete",
+			url:"${cp}/wishDelete",
 			dataType: 'xml',
-			data:{"wishnum":$("#wishnum").val(),"catenum":$("#catenum").val(),"service_number":$("#service_number").val(),"user_id":$("#user_id").val() },
+			data:{"wishnum":$("#wishnum").val(),"cate_number":$("#cate_number").val(),"service_number":$("#service_number").val(),"user_id":$("#user_id").val() },
 			method:'post',
 			success: function(data){
 				let result = $(data).find("code").text();
@@ -80,7 +80,7 @@
 	});
 	
 	$("#btn4").on("click",function(){
-		$.getJSON("${cp}/delete", {"wishnum":$("#wishnum").val(),"catenum":$("#catenum").val(),"service_number":$("#service_number").val(),"user_id":$("#user_id").val() },
+		$.getJSON("${cp}/wishDelete", {"wishnum":$("#wishnum").val(),"cate_number":$("#cate_number").val(),"service_number":$("#service_number").val(),"user_id":$("#user_id").val() },
 			function(data) {
 			let result = $(data).find("code").text();
 			if(result=='delete_success'){

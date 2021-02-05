@@ -4,16 +4,18 @@ public class AccomOptionVo {
 	private int accom_option_number;
 	private int accom_service_number;
 	private String accom_rooms_option;
-	private int accom_count;
+	private int accom_min_people;
+	private int accom_max_people;
 	private int accom_price;
 	public AccomOptionVo() {}
-	public AccomOptionVo(int accom_option_number, int accom_service_number, String accom_rooms_option, int accom_count,
-			int accom_price) {
+	public AccomOptionVo(int accom_option_number, int accom_service_number, String accom_rooms_option,
+			int accom_min_people, int accom_max_people, int accom_price) {
 		super();
 		this.accom_option_number = accom_option_number;
 		this.accom_service_number = accom_service_number;
 		this.accom_rooms_option = accom_rooms_option;
-		this.accom_count = accom_count;
+		this.accom_min_people = accom_min_people;
+		this.accom_max_people = accom_max_people;
 		this.accom_price = accom_price;
 	}
 	public int getAccom_option_number() {
@@ -34,11 +36,17 @@ public class AccomOptionVo {
 	public void setAccom_rooms_option(String accom_rooms_option) {
 		this.accom_rooms_option = accom_rooms_option;
 	}
-	public int getAccom_count() {
-		return accom_count;
+	public int getAccom_min_people() {
+		return accom_min_people;
 	}
-	public void setAccom_count(int accom_count) {
-		this.accom_count = accom_count;
+	public void setAccom_min_people(int accom_min_people) {
+		this.accom_min_people = accom_min_people;
+	}
+	public int getAccom_max_people() {
+		return accom_max_people;
+	}
+	public void setAccom_max_people(int accom_max_people) {
+		this.accom_max_people = accom_max_people;
 	}
 	public int getAccom_price() {
 		return accom_price;
@@ -46,5 +54,4 @@ public class AccomOptionVo {
 	public void setAccom_price(int accom_price) {
 		this.accom_price = accom_price;
 	}
-	
 }

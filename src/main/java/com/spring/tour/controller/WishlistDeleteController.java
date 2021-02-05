@@ -19,7 +19,7 @@ public class WishlistDeleteController {
 	private WishlistService service;
 	
 	
-	@GetMapping(value = "/delete", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	@GetMapping(value = "/wishDelete", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
 	@ResponseBody
 	public HashMap<String, Object> insert(WishlistVo vo) { // JSON으로 받기
 		int n= service.wishlist_delete(vo);
@@ -33,7 +33,7 @@ public class WishlistDeleteController {
 		return map;
 	}
 	
-	@PostMapping(value = "/delete", produces = "application/xml;charset=utf-8")
+	@PostMapping(value = "/wishDelete", produces = "application/xml;charset=utf-8")
 	@ResponseBody
 	public String wishlist_insert(WishlistVo vo) { //AJAX로 받기
 		int n = service.wishlist_delete(vo);
