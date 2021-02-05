@@ -7,6 +7,8 @@
   	<typeAlias type="com.spring.tour.vo.WishlistVo" alias="wishlist"/>
   	<typeAlias type="com.spring.tour.vo.TourPageVo" alias="tourpage"/>
   	<typeAlias type="com.spring.tour.vo.Accom_serviceVo" alias="accomService"/>
+  	<typeAlias type="com.spring.tour.vo.AccomInfoVo" alias="accomInfo"/>
+  	<typeAlias type="com.spring.tour.vo.AccomOptionVo" alias="accomOption"/>
   	<typeAlias type="com.spring.tour.vo.User_InfoVo" alias="userinfo"/>
   	<typeAlias type="com.spring.tour.vo.IdTokenVo" alias="idtoken"/>
   </typeAliases>

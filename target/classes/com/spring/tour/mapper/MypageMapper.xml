@@ -5,7 +5,7 @@
 
 <mapper namespace="com.spring.tour.mapper.MypageMapper">
 	
- 	<select id="getinfo" parameterType="String" resultType="com.spring.tour.vo.User_InfoVo">
+ 	<select id="getinfo" parameterType="string" resultType="com.spring.tour.vo.User_InfoVo">
  		select * from user_info where user_id=#{user_id}
  	</select>
 	

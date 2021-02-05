@@ -38,7 +38,7 @@ public class MyPageController {
 		String user_id=(String)session.getAttribute("user_id");
 		User_InfoVo vo = service.select(user_id);
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		if(encoder.matches(pwd, vo.getUser_password())) {
+		if(encoder.matches(pwd, vo.getUser_pass())) {
 			return ".mypage.changeuserinfo";
 		}else {
 			return ".mypage.checkpwd";

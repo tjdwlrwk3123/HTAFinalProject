@@ -40,6 +40,8 @@ CREATE TABLE accom_info
 	accom_how varchar2(3000),
 	accom_rule varchar2(2000),
 	accom_chekinfo varchar2(500),
+	facility varchar2(2000),
+	conven varchar2(2000),
 	PRIMARY KEY (accom_info_number)
 );
 
@@ -292,27 +294,6 @@ CREATE TABLE wishlist
 );
 
 
-CREATE TABLE facilities
-(
-	-- PK
-	facilities_number number NOT NULL,
-	cate_number number,
-	service_number number NOT NULL,
-	facility varchar2(100),
-	PRIMARY KEY (facilities_number)
-);
-
-
-CREATE TABLE convenience
-(
-	-- PK
-	convenience_number number NOT NULL,
-	cate_number number,
-	service_number number NOT NULL,
-	conven varchar2(100),
-	PRIMARY KEY (convenience_number)
-);
-
 
 
 /* Create Foreign Keys */
@@ -464,16 +445,6 @@ ALTER TABLE wishlist
 	REFERENCES category (cate_number)
 ;
 
-
-ALTER TABLE facilities
-	ADD FOREIGN KEY (cate_number)
-	REFERENCES category (cate_number)
-;
-
-ALTER TABLE convenience
-	ADD FOREIGN KEY (cate_number)
-	REFERENCES category (cate_number)
-;
 
 
 

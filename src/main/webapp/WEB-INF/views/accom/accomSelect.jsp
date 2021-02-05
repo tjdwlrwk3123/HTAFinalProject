@@ -84,6 +84,7 @@
 <div id="accomFilter" style="display: inline-block; width: 500px; float: left;">
 <div>
 종류<br>
+<input type="radio" name="gck" value="0" checked="checked" id="defradio">전체<br>
 <input type="radio" name="gck" value="2">호텔<br>
 <input type="radio" name="gck" value="3">펜션<br>
 <input type="radio" name="gck" value="4">기타<br>
@@ -93,11 +94,21 @@
 편의시설<br>
 <input type="checkbox" name="fck" value="수영장">수영장<br>
 <input type="checkbox" name="fck" value="바베큐장">바베큐장<br>
+<input type="checkbox" name="fck" value="유아시설">유아시설<br>
+<input type="checkbox" name="fck" value="카페">카페<br>
+<input type="checkbox" name="fck" value="편의점">편의점<br>
+<input type="checkbox" name="fck" value="온천">온천<br>
+<input type="checkbox" name="fck" value="탁구장">탁구장<br>
+<input type="checkbox" name="fck" value="연회장">연회장<br>
 </div>
 <br>
 <div>
 서비스<br>
 <input type="checkbox" name="cck" value="wifi">wifi<br>
+<input type="checkbox" name="cck" value="조식서비스">조식서비스<br>
+<input type="checkbox" name="cck" value="무료주차">무료주차<br>
+<input type="checkbox" name="cck" value="금연">금연<br>
+<input type="checkbox" name="cck" value="반려동물동반">반려동물동반<br>
 </div>
 <p>
   <label for="amount">총 숙박 요금</label>
@@ -146,6 +157,7 @@ var totcnt=1; //총 인원수
 	});
 	$("#searchAccom").click(function(){
 		$("input[type='checkbox']").prop("checked",false);
+		$("#defradio").prop("checked",true);
 		var count=$("#totCount").text().replace(/[^0-9]/g,"");
 		var startDate=$("#d1").val();
 		var endDate=$("#d2").val();
@@ -180,7 +192,7 @@ var totcnt=1; //총 인원수
 				var maxprice=data.price[i].MAXP;
 				console.log(accomName);
 				console.log(minprice);
-				var content="<a href=''>"+
+				var content="<a href='${cp}/accomDetail?accomNum="+accomNum+"'>"+
 			"<section>"+
 				"<img src='${cp}/resources/images/1.png'>"+
 				"<h5>"+accomName+"</h5>"+
@@ -197,14 +209,13 @@ var totcnt=1; //총 인원수
 					wMaxprice=maxprice;
 				}
 			}
-			var sliderMinprice=wMinprice;
 			var sliderMaxprice=wMaxprice;
 			
 			//함수 중복 실행 방지를 위해 언바인드 후 다시 바인드(1번만 실행)
 			$("input[type='checkbox']").unbind("click").bind("click",function(){
 				facility=[];
 				conven=[];
-				category=[];
+				category=0;
 				
 				 $("input[name='fck']:checked").each(function(i){ //시설에 체크된 리스트 저장
 		             facility.push($(this).val());
@@ -212,9 +223,7 @@ var totcnt=1; //총 인원수
 				 $("input[name='cck']:checked").each(function(i){ //편의서비스에 체크된 리스트 저장
 		             conven.push($(this).val());
 		         });
-				 $("input[name='gck']:checked").each(function(i){ //카테고리에 체크된 리스트 저장
-		             category.push($(this).val());
-		         });
+		         category=$("input[name='gck']:checked").val();
 				 var param= {
 						 "startDate" : startDate,
 						 "endDate" : endDate,
@@ -222,7 +231,32 @@ var totcnt=1; //총 인원수
 						 "facility" : facility,
 						 "conven" : conven,
 						 "category" : category,
-						 "minprice" : sliderMinprice,
+						 "maxprice" : sliderMaxprice
+				 }
+				 console.log(param);
+				 getfilter(param);
+				 
+			});
+			
+			$("input[type='radio']").unbind("click").bind("click",function(){
+				facility=[];
+				conven=[];
+				category=0;
+				
+				 $("input[name='fck']:checked").each(function(i){ //시설에 체크된 리스트 저장
+		             facility.push($(this).val());
+		         });
+				 $("input[name='cck']:checked").each(function(i){ //편의서비스에 체크된 리스트 저장
+		             conven.push($(this).val());
+		         });
+		         category=$("input[name='gck']:checked").val();
+				 var param= {
+						 "startDate" : startDate,
+						 "endDate" : endDate,
+						 "count" : count,
+						 "facility" : facility,
+						 "conven" : conven,
+						 "category" : category,
 						 "maxprice" : sliderMaxprice
 				 }
 				 console.log(param);
@@ -231,17 +265,16 @@ var totcnt=1; //총 인원수
 			});
 			
 			$( "#slider-range" ).slider({ //가격 슬라이더
-			      range: true,
-			      min: wMinprice,
-			      max: wMaxprice,
-			      values: [ wMinprice, wMaxprice ],
+			      range: "min",
+			      min: wMinprice*count,
+			      max: wMaxprice*count,
+			      value: wMaxprice*count,
 			      step : 4000,
 			      slide: function( event, ui ) {
-			        $( "#amount" ).val(ui.values[ 0 ] + "원 - " + ui.values[ 1 ] + "원" );
+			        $( "#amount" ).val(" ~ " + ui.value + "원" );
 			      },
 			      stop:function(value,ui){
-			    	  sliderMinprice=ui.values[0];
-			    	  sliderMaxprice=ui.values[1];
+			    	  sliderMaxprice=parseInt(ui.value/count);
 			    	  var param= {
 								 "startDate" : startDate,
 								 "endDate" : endDate,
@@ -249,15 +282,13 @@ var totcnt=1; //총 인원수
 								 "facility" : facility,
 								 "conven" : conven,
 								 "category" : category,
-								 "minprice" : sliderMinprice,
 								 "maxprice" : sliderMaxprice
 						 }
 			    	  console.log(param);
 			    	  getfilter(param);
 			      }
 			    });
-			$( "#amount" ).val($( "#slider-range" ).slider( "values", 0 ) +
-			"원 - " + $( "#slider-range" ).slider( "values", 1 )+"원" );
+			$( "#amount" ).val(" ~ " + $( "#slider-range" ).slider("value")+"원" );
 		});
 	}
 	
@@ -284,7 +315,7 @@ var totcnt=1; //총 인원수
 						var maxprice=data.price[i].MAXP;
 						console.log(accomName);
 						console.log(minprice);
-						var content="<a href=''>"+
+						var content="<a href='${cp}/accomDetail?accomNum="+accomNum+"'>"+
 						"<section>"+
 							"<img src='${cp}/resources/images/1.png'>"+
 							"<h5>"+accomName+"</h5>"+

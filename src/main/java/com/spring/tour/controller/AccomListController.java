@@ -26,7 +26,6 @@ public class AccomListController {
 			@RequestParam(value="count",defaultValue = "1") int count,
 			@RequestParam(value="startDate") Date startDate,
 			@RequestParam(value="endDate") Date endDate,
-			@RequestParam(value="minprice" , defaultValue = "0")int minprice,
 			@RequestParam(value="maxprice" , defaultValue = "0")int maxprice) {
 		HashMap<String, Object> wholeMap=new HashMap<String, Object>();
 		wholeMap.put("count", count);
@@ -37,8 +36,8 @@ public class AccomListController {
 		if(category!=0) {
 			wholeMap.put("category", category);
 		}
-		if(minprice!=0) {
-			wholeMap.put("minprice", minprice);
+		if(maxprice!=0) {
+			System.out.println(maxprice);
 			wholeMap.put("maxprice", maxprice);
 		}
 		
