@@ -14,8 +14,13 @@
   <!-- 읽어올 Mapper파일 설정 -->
 	<mappers>
 			<mapper resource="com/spring/tour/mapper/WishlistMapper.xml"/>
+			<mapper resource="com/spring/tour/mapper/TourPageMapper.xml"/>
 			<mapper resource="com/spring/tour/mapper/MypageMapper.xml"/>
 			<mapper resource="com/spring/tour/mapper/AccomMapper.xml"/>
+
 			<mapper resource="com/spring/tour/mapper/UserMapper.xml"/>
+
+			<mapper resource="com/spring/tour/mapper/ServiceMapper.xml"/>
+
 	</mappers>
 </configuration>

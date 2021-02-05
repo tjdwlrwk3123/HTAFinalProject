@@ -4,7 +4,9 @@ insert into category values(3,'펜션');
 insert into category values(4,'기타');
 insert into category values(5,'리뷰');
 
-insert into accom_info values(1,1,'좋은호텔','호텔소개?','유의사항','체크인/체크아웃시간체크');
+insert into accom_info values(1,1,'좋은호텔','호텔소개?','유의사항','체크인/체크아웃시간체크','바베큐장,수영장,카페,편의점','wifi,조식서비스');
+insert into accom_info values(2,2,'b호텔좋은호텔','호텔소개?','유의사항','체크인/체크아웃시간체크','수영장,온천,탁구장','wifi,금연,보드게임');
+insert into accom_info values(3,3,'c호텔텔','호텔소개?','유의사항','체크인/체크아웃시간체크','유아시설,탁구장,연회장','wifi,반려동물동반,무료주차');
 
 insert into accom_service values(1,2,'양기홍','a호텔','서울시');
 insert into accom_service values(2,2,'기','b호텔','부산광역시');
@@ -40,16 +42,6 @@ insert into accom_book values(2,'bb',2,'a호텔','2021-02-05','2021-02-08',null,nu
 insert into accom_book values(3,'aa',2,'a호텔','2021-02-08','2021-02-09',null,null,null,null,null);
 insert into accom_book values(4,'cc',9,'a호텔','2021-02-04','2021-02-07',null,null,null,null,null);
 
-
-insert into facilities values(1,2,1,'바베큐장');
-insert into facilities values(2,2,1,'수영장');
-insert into facilities values(3,2,1,'유아시설');
-insert into facilities values(4,2,1,'편의점');
-insert into facilities values(5,2,2,'수영장');
-
-insert into convenience values(1,2,1,'조식서비스');
-insert into convenience values(2,2,1,'무료주차');
-insert into convenience values(3,2,1,'wifi');
 
 commit;
 
