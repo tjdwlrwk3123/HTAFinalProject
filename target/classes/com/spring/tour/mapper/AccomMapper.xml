@@ -19,34 +19,30 @@
 		]]>
 		<if test="facility!=null">
 		and accom_service_number in(
-		select accom_service_number from accom_service join facilities on accom_service_number=facilities.service_number and 
-		accom_service.cate_number=facilities.cate_number where facility in
-		<foreach collection="facility" item="fitem" index='i' open="(" close=")" separator=",">
-		#{fitem}
+		select accom_service_number from accom_service natural join accom_info where
+		<foreach collection="facility" item="fitem" index='i' separator="and">
+		facility like '%'||#{fitem}||'%'
 		</foreach>
 		)
 		</if>
 		<if test="conven!=null">
 		and accom_service_number in(
-		select accom_service_number from accom_service join convenience on accom_service_number=convenience.service_number and 
-		accom_service.cate_number=convenience.cate_number where conven in
-		<foreach collection="conven" item="citem" index='i' open="(" close=")" separator=",">
-		#{citem}
+		select accom_service_number from accom_service natural join accom_info where
+		<foreach collection="conven" item="citem" index='i' separator="and">
+		conven like '%'||#{citem}||'%'
 		</foreach>
 		)
 		</if>
-		<if test="minprice!=null">
+		<if test="maxprice!=null">
 		<![CDATA[
 		and accom_service_number in(
 		select accom_service_number from accom_option left join accom_book 
 		on accom_option.accom_option_number = accom_book.accom_option_number
-		where accom_price>=#{minprice} and accom_price<=#{maxprice})
+		where accom_price<=#{maxprice})
 		]]>
 		</if>
 		<if test="category!=null">
-		and accom_service_number in(
-		select accom_service_number from accom_service natural join category 
-		where cate_number=#{category})
+		and cate_number=#{category}
 		</if>
 		</where>
 	</select>

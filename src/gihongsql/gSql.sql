@@ -86,9 +86,8 @@ accom_service.cate_number=convenience.cate_number where conven='wifi'
 );
 
 --테이블 수정?
-select * from accom_service join facilities on accom_service_number=facilities.service_number and 
-accom_service.cate_number=facilities.cate_number where facility like '%수영장%' and facility like '%바베큐장%';
-
+select * from accom_service natural join accom_info 
+where facility like '%수영장%' and facility like '%바베큐장%';
 
 
 -- 위 쿼리에서 나온 숙소의 최소 방값을 구하기
