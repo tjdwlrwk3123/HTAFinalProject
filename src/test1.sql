@@ -263,6 +263,7 @@ CREATE TABLE tour_service
 	user_id varchar2(30) NOT NULL,
 	tour_name varchar2(30),
 	tour_addr clob,
+	tour_type varchar2(100),
 	PRIMARY KEY (service_number)
 );
 
