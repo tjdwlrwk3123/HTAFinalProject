@@ -10,6 +10,7 @@ import com.spring.tour.dao.AccomDao;
 import com.spring.tour.vo.AccomInfoVo;
 import com.spring.tour.vo.AccomOptionVo;
 import com.spring.tour.vo.Accom_serviceVo;
+import com.spring.tour.vo.ImageVo;
 
 @Service
 public class AccomService {
@@ -28,7 +29,16 @@ public class AccomService {
 	public Accom_serviceVo accomService(int accomNum) {
 		return dao.accomService(accomNum);
 	}
-	public List<AccomOptionVo> accomOption(int accomNum){
-		return dao.accomOption(accomNum);
+	public List<AccomOptionVo> accomOption(HashMap<String, Object> map){
+		return dao.accomOption(map);
+	}
+	public List<ImageVo> accomWholeImage(int accomNum){
+		return dao.accomWholeImage(accomNum);
+	}
+	public List<ImageVo> accomRoomImage(int optNum){
+		return dao.accomRoomImage(optNum);
+	}
+	public int isUsing(HashMap<String, Object> map) {
+		return dao.isUsing(map);
 	}
 }

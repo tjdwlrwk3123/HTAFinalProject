@@ -197,7 +197,7 @@ var totcnt=1; //총 인원수
 				var maxprice=data.price[i].MAXP;
 				console.log(accomName);
 				console.log(minprice);
-				var content="<a href='${cp}/accomDetail?accomNum="+accomNum+"&startDate="+startDate+"&endDate="+endDate+"'>"+
+				var content="<a href='${cp}/accomDetail?accomNum="+accomNum+"&startDate="+startDate+"&endDate="+endDate+"&count="+count+"'>"+
 			"<section>"+
 				"<img src='${cp}/resources/images/1.png'>"+
 				"<h5>"+accomName+"</h5>"+
@@ -323,7 +323,7 @@ var totcnt=1; //총 인원수
 						var maxprice=data.price[i].MAXP;
 						console.log(accomName);
 						console.log(minprice);
-						var content="<a href='${cp}/accomDetail?accomNum="+accomNum+"'>"+
+						var content="<a href='${cp}/accomDetail?accomNum="+accomNum+"&startDate="+startDate+"&endDate="+endDate+"&count="+count+"'>"+
 						"<section>"+
 							"<img src='${cp}/resources/images/1.png'>"+
 							"<h5>"+accomName+"</h5>"+

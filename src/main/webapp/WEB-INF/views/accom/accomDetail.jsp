@@ -7,6 +7,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
@@ -18,6 +19,16 @@
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4b7621e8665f6a2b7f8fcf343ba118b6&libraries=services"></script>
 
+<!-- 이미지 미리보기 기능 라이브러리들 -->
+<!-- Magnific Popup core CSS file -->
+<link rel="stylesheet" href="/tour/resources/css/magnific-popup.css">
+<!-- Magnific Popup core JS file -->
+<script src="/tour/resources/js/jquery.magnific-popup.min.js"></script>
+
+<!-- datepicker라이브러리 -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <style>
 	#payment{width:300px; height:250px; position:fixed; padding:30px; right:250px; top:130px; background-color: red; z-index: 99;}
 	#payment #wishbox{background-color: skyblue;}
@@ -27,7 +38,7 @@
 	#accomDetail_wrapper #title #starbox{width:100%; position:relative; margin:10px; right:10px; background-color: pink; }
 	#accomDetail_wrapper #option{width:100%; margin:auto; position:relative; padding:20px; border-bottom:1px solid gray; background-color: orange;}
 	#accomDetail_wrapper #detail{width:100%; position:relative; margin:auto; background-color: yellow;}
-	#accomDetail_wrapper #photozone{width:100%; position:relative; margin:auto; padding:20px; align-content:center; background-color: gray;}
+	#accomDetail_wrapper #accomWholeImage{width:100%; position:relative; margin:auto; padding:20px; align-content:center; background-color: gray;}
 	#accomDetail_wrapper #detail #info{width:100%; position:relative; padding:20px; border-bottom:1px solid gray; background-color: yellow;}
 	#accomDetail_wrapper #detail #info #infobox{width:100%; position:relative; padding:20px; border-top:1px solid gray; border-bottom:1px solid gray; background-color: yellow;}
 	#accomDetail_wrapper #detail #info #rulebox{width:100%; position:relative; padding:20px; border-bottom:1px solid gray; background-color: yellow;}
@@ -75,33 +86,50 @@
 	<div id="title">
 		<!-- 제목 + 리뷰평점 -->
 		<h3 style="font-weight:700;">${service.accom_name }</h3>
+		<input type="hidden" value="${accomNum }" id="accomNum">
 		<div id="starbox">
 			<span style="font-size:20px; font-weight:600;">평점 : 
 			</span>
 		</div>
 	</div>
-	<div id="photozone" >
+	<div id="accomWholeImage" >
 		<!-- 사진으로 된 홍보물 자리 -->
-		<c:forEach var="p" items="">
-			<img src='${cp}/resources/images/' style="width:100%" alt="">
+		<c:forEach var="p" items="${wholeImage }" varStatus="status">
+			<c:if test="${status.count==1 }">
+			<a href="${cp}/resources/gimgs/${p.imgsavename}"><img src='${cp}/resources/gimgs/${p.imgsavename}' width="300" height="300" alt=""></a>
+			<br>
+			</c:if>
+			<c:if test="${status.count!=1 }">
+			<a href="${cp}/resources/gimgs/${p.imgsavename}"><img src='${cp}/resources/gimgs/${p.imgsavename}' width="100" height="100" alt=""></a>
+			</c:if>
+			<c:if test="${status.count%3==1 and status.count!=1 }">
+			<br>
+			</c:if>
 		</c:forEach>
 	</div>
+	<div style="width: 1100px; background-color: #E4F7BA;">
+	<div style="display: inline-block;">
+	날짜<input type="text" id="d1" readonly="readonly" size="10" value="${startDate }">~
+	<input type="text" id="d2" readonly="readonly" size="10" value="${endDate }">
+	</div>
+	<div style="display: inline-block;">
+	<div id="numCount" name="nCount">
+	<span id="totCount" name="nCount">${count }명</span>
+	</div>
+		<div id="changeCount" name="nCount" style="width: 200px; display: none; background-color: pink;">
+			인원<br><br>
+			<div name="nCount">성인
+				<i class="fas fa-minus-circle fa-2x" name="nCount" id="minCount"
+				style="color: #B2EBF4;"></i>
+				<span id="adultNum" name="nCount">1명</span>
+				<i class="fas fa-plus-circle fa-2x" name="nCount" id="plusCount"
+				style="color: #B2EBF4;"></i>
+			</div>
+		</div>
+	</div>
+	<input type="button" value="재검색" id="reSearch">
+	</div>
 	<div id="option">
-		<c:forEach var="o" items="">
-			<c:choose>
-				<c:when test="">
-					<span style="font-size:15px; font-weight:600;">
-					<input type="button" value="+" disabled="disabled"><input type="button" value="-"disabled="disabled"><span></span>
-					<span style="color:blue;">매진된 상품입니다</span><br>
-					</span>
-				</c:when>
-				<c:otherwise>
-					<span style="font-size:15px; font-weight:600;">
-					<span style="padding-left:20px;">원 /명</span>	<span style="padding-left:20px;"><input type="button" value="+"><input type="button" value="-"></span><br>
-					</span>
-				</c:otherwise>
-			</c:choose>
-		</c:forEach>
 	</div>
 	<div id="detail" >
 		<div id="info">
@@ -121,10 +149,10 @@
 						</div>
 					</c:if>
 				</div>
-			<c:if test="">
+			<c:if test="${!empty info.accom_rule }">
 				<div id="rulebox">
 					<h2>취소 및 환불 규정</h2>
-					<span></span>
+					<span>${info.accom_rule }</span>
 					<br>
 				</div>
 			</c:if>
@@ -164,6 +192,28 @@
 				});
 		}
 	});
+	
+	////////////////이미지 미리보기 기능///////////////////
+	
+	$('#accomWholeImage').magnificPopup({
+		delegate: 'a',
+		type: 'image',
+		tLoading: 'Loading image #%curr%...',
+		mainClass: 'mfp-img-mobile',
+		gallery: {
+			enabled: true,
+			navigateByImgClick: true,
+			preload: [0,1] // Will preload 0 - before current, and 1 after the current image
+		},
+		image: {
+			tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
+		},
+		zoom: {
+			enabled:true,
+			duration: 400
+		},
+	});
+
 
 
 	////////////////////// 지도관련 코드 ///////////////////////////
@@ -201,5 +251,115 @@
 		    map.setCenter(coords);
 		} 
 	});
+	
+	//인원 날짜를 재검색 하기 위한 datepicker,카운트
+	
+		
+	$("#plusCount").click(function(){
+		if(!(acnt>=14)){
+			acnt++;
+			totcnt++;
+		}
+		$("#adultNum").text(acnt+"명");
+		$("#totCount").text(totcnt+"명");
+	});
+	$("#minCount").click(function(){
+		if(!(acnt<=1)){
+			acnt--;
+			totcnt--;
+		}
+		$("#adultNum").text(acnt+"명");
+		$("#totCount").text(totcnt+"명");
+	});
+	$("#numCount").click(function(){
+		$("#changeCount").slideToggle(200);
+	});
+	$('html').click(function(e){
+		if(!$(e.target).is("[name='nCount']")){
+			$("#changeCount").slideUp(200);
+		}
+	});
+	$("#d1").datepicker({
+		dateFormat:'yy-mm-dd',
+		dayNamesMin:['일','월','화','수','목','금','토'],
+		monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+		yearSuffix:"년",
+		showMonthAfterYear:true,
+		minDate:0,
+		maxDate:"2M",
+		showAnim:"toggle",
+		onClose: function(selectedDate) {
+			var nextDay=new Date(selectedDate);
+			nextDay.setDate(nextDay.getDate()+1);
+			var nextTwo=new Date(selectedDate);
+			nextTwo.setDate(nextTwo.getDate()+14);
+			$("#d2").datepicker("option","minDate",nextDay);
+			$("#d2").datepicker("option","maxDate",nextTwo);
+		}
+	});
+	$("#d2").datepicker({
+		dateFormat:'yy-mm-dd',
+		dayNamesMin:['일','월','화','수','목','금','토'],
+		monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+		yearSuffix:"년",
+		showMonthAfterYear:true,
+		minDate:0,
+		showAnim:"toggle"
+	});
+	
+	///////////////재검색 ajax////////////////////
+	$(document).ready(function(){
+		var loading = $('<div id="loading" class="loading"></div><img id="loading_img" alt="loading" src="${cp}/resources/gimgs/viewLoading.gif" />').appendTo(document.body).hide();
+		$(window)	
+		.ajaxStart(function(){
+		loading.show();
+		})
+		.ajaxStop(function(){
+		loading.hide();
+		});
+		var accomNum=$("#accomNum").val();
+		var count=$("#totCount").text().replace(/[^0-9]/g,"");
+		var startDate=$("#d1").val();
+		var endDate=$("#d2").val();
+		var param={
+				"accomNum":accomNum,
+				"count":count,
+				"startDate":startDate,
+				"endDate":endDate
+		}
+		
+		getOptions(param);
+		
+	});
+	
+	$("#reSearch").click(function(){
+		var accomNum=$("#accomNum").val();
+		var count=$("#totCount").text().replace(/[^0-9]/g,"");
+		var startDate=$("#d1").val();
+		var endDate=$("#d2").val();
+		var param={
+				"accomNum":accomNum,
+				"count":count,
+				"startDate":startDate,
+				"endDate":endDate
+		}
+		getOptions(param);
+	});
+	
+	function getOptions(param){
+		$("#option").empty();
+		$.getJSON('${cp}/accomDetail_list',param, function(data) {
+			if(data.options==null){
+				$("#option").append("조건에 해당하는 방이 없습니다.");
+			}
+			for(let i=0;i<data.options.length;i++){
+				var content=
+					'<h4>'+data.options[i].accom_rooms_option+'</h4>'+
+					'<span>기준인원:'+data.options[i].accom_min_people+'/최대인원:'+data.options[i].accom_max_people+'</span><br>'+
+					'<span>'+data.options[i].accom_price+'원</span>';
+				$("#option").append(content);
+			}
+		});
+	}
 
 </script>
