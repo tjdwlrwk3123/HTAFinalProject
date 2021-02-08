@@ -1,5 +1,7 @@
 package com.spring.tour.security;
 
-public class MemberUserDetailService {
+import org.springframework.security.core.userdetails.UserDetailsService;
 
+public class MemberUserDetailService implements UserDetailsService{
+	
 }

@@ -4,6 +4,9 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.spring.tour.mapper.UserMapper">
+	<resultMap type="com.spring.tour.security.MemberUserDetail" id="MemberDetail">
+		
+	</resultMap>
 	<insert id="user_insert" parameterType="userinfo">
 		insert into user_info values(
 		#{user_id},
@@ -17,7 +20,7 @@
 		'0')
 	</insert>
 	<insert id="user_auth" parameterType="hashmap">
-	
+		
 	</insert>
 	
 </mapper>
