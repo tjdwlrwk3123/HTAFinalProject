@@ -6,7 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>layout.jsp</title>
-<link rel="stylesheet" type="text/css" href="/spring20/resources/css/main.css">
+<link rel="stylesheet" type="text/css" href="/tour/resources/css/main.css">
+<script type="text/javascript" src="/tour/resources/js/jquery-3.5.1.min.js"></script>
 
 </head>
 <body>

@@ -3,7 +3,7 @@
 
 <div>
 	<h1>이용 약관</h1>
-	<form id="terms_form" action="/tour/userinputpage">
+	<form id="terms_form" action="/userselect">
 		<h4>이용 약관</h4>
 		<textarea>이것저것</textarea>
 		<p><input type="checkbox" id="chk1">위의 약관에 동의합니다</p><br>
