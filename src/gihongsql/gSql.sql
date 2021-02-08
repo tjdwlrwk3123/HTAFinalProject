@@ -4,11 +4,17 @@ insert into category values(3,'펜션');
 insert into category values(4,'기타');
 insert into category values(5,'리뷰');
 
-insert into accom_info values(1,1,'좋은호텔','호텔소개?','유의사항','체크인/체크아웃시간체크','바베큐장,수영장,카페,편의점','wifi,조식서비스');
+insert into accom_info values(1,1,'좋은 호텔\n입니다.\n많이들 와주세요','독채펜션\n
+· 프라이빗한 객실에서 사랑하는 가족이나 친구와 함께 행복을 찾아보세요.\n
+복층\n
+· 아동,유아 동반 시 안전에 유의하시길 바랍니다.\n
+독채객실\n
+· 프라이빗한 객실에서 사랑하는 가족이나 친구와 함께 행복을 찾아보세요.\n
+· 독채 객실: 버치힐동, 통나무동, 스톤힐동, 올리브동, 벚꽃동','유의사항','체크인/체크아웃시간체크','바베큐장,수영장,카페,편의점','wifi,조식서비스');
 insert into accom_info values(2,2,'b호텔좋은호텔','호텔소개?','유의사항','체크인/체크아웃시간체크','수영장,온천,탁구장','wifi,금연,보드게임');
 insert into accom_info values(3,3,'c호텔텔','호텔소개?','유의사항','체크인/체크아웃시간체크','유아시설,탁구장,연회장','wifi,반려동물동반,무료주차');
 
-insert into accom_service values(1,2,'양기홍','a호텔','서울시');
+insert into accom_service values(1,2,'양기홍','a호텔','서울시 양천구 월정로9길');
 insert into accom_service values(2,2,'기','b호텔','부산광역시');
 insert into accom_service values(3,2,'홍','c호텔','제주도');
 
@@ -42,6 +48,9 @@ insert into accom_book values(2,'bb',2,'a호텔','2021-02-05','2021-02-08',null,nu
 insert into accom_book values(3,'aa',2,'a호텔','2021-02-08','2021-02-09',null,null,null,null,null);
 insert into accom_book values(4,'cc',9,'a호텔','2021-02-04','2021-02-07',null,null,null,null,null);
 
+insert into image values(1,'aa.png','123123de3131as23 aa.png',1,2);
+insert into image values(2,'bb.png','123123de3131as23 bb.png',1,2);
+insert into image values(3,'cc.png','123123de3131as23 cc.png',1,2);
 
 commit;
 
@@ -85,7 +94,7 @@ select accom_service_number from accom_service join convenience on accom_service
 accom_service.cate_number=convenience.cate_number where conven='wifi'
 );
 
---테이블 수정?
+--테이블 수정
 select * from accom_service natural join accom_info 
 where facility like '%수영장%' and facility like '%바베큐장%';
 

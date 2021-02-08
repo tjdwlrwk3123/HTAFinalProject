@@ -53,4 +53,29 @@
 		 #{item}
 		</foreach>
 	</select>
+	<select id="accom_info_detail" parameterType="int" resultType="accomInfo">
+		select * from accom_info where accom_service_number=#{accom_service_number}
+	</select>
+	<select id="accom_service_detail" parameterType="int" resultType="accomService">
+		select * from accom_service where accom_service_number=#{accom_service_number}
+	</select>
+	<select id="accom_option_detail" parameterType="hashmap" resultType="accomOption">
+		select * from accom_option where accom_service_number=#{accomNum} 
+		<![CDATA[
+		and accom_max_people>=#{count}
+		]]>
+	</select>
+	<select id="isUsing" parameterType="hashmap" resultType="int">
+		select count(*) from accom_book where accom_option_number=#{optNum}
+		<![CDATA[
+		and accom_startdate < #{endDate}
+		and accom_enddate > #{startDate}
+		]]>
+	</select>
+	<select id="accom_whole_image" parameterType="int" resultType="image">
+		select * from image where cate_number in(2,3,4,5) and general_number=#{general_number}
+	</select>
+	<select id="accom_room_image" parameterType="int" resultType="image">
+		select * from image where cate_number=555 and general_number=#{general_number}
+	</select>
 </mapper>

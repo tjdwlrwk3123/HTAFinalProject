@@ -99,6 +99,8 @@
 <input type="checkbox" name="fck" value="편의점">편의점<br>
 <input type="checkbox" name="fck" value="온천">온천<br>
 <input type="checkbox" name="fck" value="탁구장">탁구장<br>
+<input type="checkbox" name="fck" value="골프장">골프장<br>
+<input type="checkbox" name="fck" value="족구장">족구장<br>
 <input type="checkbox" name="fck" value="연회장">연회장<br>
 </div>
 <br>
@@ -107,6 +109,9 @@
 <input type="checkbox" name="cck" value="wifi">wifi<br>
 <input type="checkbox" name="cck" value="조식서비스">조식서비스<br>
 <input type="checkbox" name="cck" value="무료주차">무료주차<br>
+<input type="checkbox" name="cck" value="픽업">픽업<br>
+<input type="checkbox" name="cck" value="보드게임">보드게임<br>
+<input type="checkbox" name="cck" value="영화관람">영화관람<br>
 <input type="checkbox" name="cck" value="금연">금연<br>
 <input type="checkbox" name="cck" value="반려동물동반">반려동물동반<br>
 </div>
@@ -192,7 +197,7 @@ var totcnt=1; //총 인원수
 				var maxprice=data.price[i].MAXP;
 				console.log(accomName);
 				console.log(minprice);
-				var content="<a href='${cp}/accomDetail?accomNum="+accomNum+"'>"+
+				var content="<a href='${cp}/accomDetail?accomNum="+accomNum+"&startDate="+startDate+"&endDate="+endDate+"&count="+count+"'>"+
 			"<section>"+
 				"<img src='${cp}/resources/images/1.png'>"+
 				"<h5>"+accomName+"</h5>"+
@@ -309,13 +314,16 @@ var totcnt=1; //총 인원수
 			  success: function(data) {
 				  $("#accom").empty();
 				  var count=$("#totCount").text().replace(/[^0-9]/g,"");
+				  var startDate=$("#d1").val();
+					var endDate=$("#d2").val();
 				  for(let i=0;i<data.list.length;i++){
+					  	var accomNum=data.list[i].accom_service_number;
 						var accomName=data.list[i].accom_name;
 						var minprice=data.price[i].MINP;
 						var maxprice=data.price[i].MAXP;
 						console.log(accomName);
 						console.log(minprice);
-						var content="<a href='${cp}/accomDetail?accomNum="+accomNum+"'>"+
+						var content="<a href='${cp}/accomDetail?accomNum="+accomNum+"&startDate="+startDate+"&endDate="+endDate+"&count="+count+"'>"+
 						"<section>"+
 							"<img src='${cp}/resources/images/1.png'>"+
 							"<h5>"+accomName+"</h5>"+
