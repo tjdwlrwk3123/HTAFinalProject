@@ -26,4 +26,15 @@ public class MemberDao {
 		return sqlSession.selectOne(NAMESPACE+".getAuths",user_id);
 	}
 	
+	public void createAuthKey(String user_email,String user_authCode) throws Exception{
+		User_InfoVo vo = new User_InfoVo();
+		vo.setUser_condition(user_authCode);
+		vo.setUser_email(user_email);
+		
+		sqlSession.selectOne(NAMESPACE+".createAuthKey",vo);
+	}
+	
+	public void userAuth(String user_email) throws Exception {
+		sqlSession.update(NAMESPACE + ".userAuth", user_email);
+	}
 }

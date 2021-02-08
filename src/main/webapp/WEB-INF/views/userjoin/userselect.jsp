@@ -8,12 +8,11 @@
 
 <script type="text/javascript">
 	$("#nomal").click(function(e){
-		location.href="/userinput?usertype=member";
+		location.href="/tour/gojoin?usertype=member";
 	});
 	
 	$("#partner").click(function(e){
-		location.href="/userinput?usertype=partner";
+		location.href="/tour/gojoin?usertype=partner";
 	});
-	
 	
 </script>

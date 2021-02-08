@@ -22,8 +22,9 @@
 		#{user_email},
 		#{user_addr},
 		#{user_phone},
-		#{user_condition},
-		'0')
+		'0',
+		'0'
+		)
 	</insert>
 	<insert id="auth_insert" parameterType="idtoken">
 		insert into IdToken values(
@@ -38,4 +39,8 @@
 		select * from user_info u,id_token t
 		where u.user_id=t.user_id and u.user_id=#{user_id}
 	</select>
+	
+	<update id="createAuthKey">
+	update user_info set user_enabled = #{user_authCode} where user_email = #{user_email}
+	</update>
 </mapper>
