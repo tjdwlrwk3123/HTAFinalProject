@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.tour.dao.AccomDao;
+import com.spring.tour.vo.AccomInfoVo;
+import com.spring.tour.vo.AccomOptionVo;
 import com.spring.tour.vo.Accom_serviceVo;
 
 @Service
@@ -19,5 +21,14 @@ public class AccomService {
 	}
 	public List<HashMap<String, Object>> accom_minprice(HashMap<String, Object> pmap) {
 		return dao.accom_minprice(pmap);
+	}
+	public AccomInfoVo accomInfo(int accomNum) {
+		return dao.accomInfo(accomNum);
+	}
+	public Accom_serviceVo accomService(int accomNum) {
+		return dao.accomService(accomNum);
+	}
+	public List<AccomOptionVo> accomOption(int accomNum){
+		return dao.accomOption(accomNum);
 	}
 }

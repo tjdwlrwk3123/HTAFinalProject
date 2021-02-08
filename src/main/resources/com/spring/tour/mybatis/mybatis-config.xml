@@ -11,6 +11,7 @@
   	<typeAlias type="com.spring.tour.vo.AccomOptionVo" alias="accomOption"/>
   	<typeAlias type="com.spring.tour.vo.User_InfoVo" alias="userinfo"/>
   	<typeAlias type="com.spring.tour.vo.IdTokenVo" alias="idtoken"/>
+  	<typeAlias type="com.spring.tour.vo.ImageVo" alias="image"/>
   </typeAliases>
   
   <!-- 읽어올 Mapper파일 설정 -->
