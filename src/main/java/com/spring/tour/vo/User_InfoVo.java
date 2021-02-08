@@ -49,7 +49,7 @@ public class User_InfoVo {
 		return user_pass;
 	}
 
-	public void setUser_password(String user_pass) {
+	public void setUser_pass(String user_pass) {
 		this.user_pass = user_pass;
 	}
 

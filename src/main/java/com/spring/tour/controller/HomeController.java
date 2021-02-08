@@ -14,6 +14,6 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(HttpServletRequest req) {
 		req.getSession().setAttribute("cp", req.getContextPath());
-		return "home";
+		return ".home";
 	}
 }

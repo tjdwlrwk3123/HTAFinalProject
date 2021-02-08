@@ -9,6 +9,7 @@
 <bean id="passwordEncoding" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 	<sec:http>
 		<sec:intercept-url pattern="/member/**" access="hasRole('ROLE_MEMBER')"/>
+		<sec:intercept-url pattern="/partner/**" access="hasRole('ROLE_PARTNER')"/>
 		<sec:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
 		<sec:intercept-url pattern="/**" access="permitAll"/>
 		<sec:form-login login-page="/login" authentication-success-handler-ref="loginSuccessHandler"/>
@@ -17,7 +18,7 @@
 	</sec:http>
 	<sec:authentication-manager>
 		<sec:authentication-provider>
-			<sec:jdbc-user-service data-source-ref="dataSource"/>
+			<sec:jdbc-user-service data-source-ref="datasource"/>
 			<sec:password-encoder ref="passwordEncoding"/>
 		</sec:authentication-provider>
 	</sec:authentication-manager>

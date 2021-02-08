@@ -5,7 +5,13 @@
 
 <mapper namespace="com.spring.tour.mapper.UserMapper">
 	<resultMap type="com.spring.tour.security.MemberUserDetail" id="MemberDetail">
-		
+		<id property="user_id" column="user_id"/>
+		<result property="user_pass" column="user_password"/>
+		<result property="user_condition" column="user_condition"/>
+		<collection property="authoList" ofType="com.spring.tour.vo.IdTokenVo">
+			<result property="user_id" column="user_id"/>
+			<result property="token_authority" column="token_authority"/>
+		</collection>
 	</resultMap>
 	<insert id="user_insert" parameterType="userinfo">
 		insert into user_info values(
@@ -19,8 +25,17 @@
 		#{user_condition},
 		'0')
 	</insert>
-	<insert id="user_auth" parameterType="hashmap">
-		
+	<insert id="auth_insert" parameterType="idtoken">
+		insert into IdToken values(
+		token_seq.nextval,
+		#{user_id},
+		#{token_data},
+		#{token_autority}
+		)
 	</insert>
 	
+	<select id="getAuths" parameterType="string" resultMap="MemberDetail">
+		select * from user_info u,id_token t
+		where u.user_id=t.user_id and u.user_id=#{user_id}
+	</select>
 </mapper>
