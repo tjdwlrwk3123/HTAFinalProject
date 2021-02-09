@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.tour.service.ServiceService;
 import com.spring.tour.vo.Accom_serviceVo;
@@ -53,9 +55,21 @@ public class ServiceController {
 			return ".login";
 		}
 	}
-	
+
 	@GetMapping("/accominsert")
 	public String accominsertpage() {
+		return ".service.accominsert";
+	}
+	@PostMapping("/accominsert")
+	public String accominsert(String accom_name, String accom_addr, String accom_info_content, String accom_how, String accom_checkinfo, String[] facility, String[] conven, MultipartFile[] img) {
+		System.out.println(accom_name+"/"+accom_addr+"/"+accom_info_content+"/"+accom_how+"/"+accom_checkinfo);
+		for (int i = 0; i < facility.length; i++) {
+			System.out.println(facility[i]);
+		}
+		for (int i = 0; i < conven.length; i++) {
+			System.out.println(conven[i]);
+		}
+		
 		return ".service.accominsert";
 	}
 	
