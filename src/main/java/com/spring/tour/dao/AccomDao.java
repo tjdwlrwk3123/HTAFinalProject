@@ -43,4 +43,7 @@ public class AccomDao {
 	public int isUsing(HashMap<String, Object> map) {
 		return sqlSession.selectOne(NAMESPACE+".isUsing", map);
 	}
+	public int howLong(HashMap<String, Object> map) {
+		return sqlSession.selectOne(NAMESPACE+".howLong", map);
+	}
 }

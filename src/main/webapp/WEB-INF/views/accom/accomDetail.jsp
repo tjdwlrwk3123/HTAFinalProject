@@ -29,6 +29,11 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+<!-- photorama -->
+
+<link  href="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js"></script>
+
 <style>
 	#payment{width:300px; height:250px; position:fixed; padding:30px; right:250px; top:130px; background-color: red; z-index: 99;}
 	#payment #wishbox{background-color: skyblue;}
@@ -45,7 +50,10 @@
 	#accomDetail_wrapper #detail #info #reviewbox{width:100%; position:relative; padding:20px; border-bottom:1px solid gray; background-color: yellow;}
 	#accomDetail_wrapper #detail #info #infobox #mapbox{width:500px; height:330px; margin-top:20px; border:3px solid black; overflow: hidden;}
 	#accomDetail_wrapper #detail #info #infobox #mapbox #map{width:490px; height:300px; margin:auto;}
-	
+	#accomDetail_wrapper #option .fotorama{width: 230px; display: inline-block;}
+	#accomDetail_wrapper #option .tableformOpt{border: 1px solid black; margin: 1px; padding: 2px;}
+	#accomDetail_wrapper #option .opt{display: inline-block; position: relative; bottom: 70px;}
+
 </style>
 
 
@@ -92,19 +100,10 @@
 			</span>
 		</div>
 	</div>
-	<div id="accomWholeImage" >
-		<!-- 사진으로 된 홍보물 자리 -->
+	<!-- 메인 사진들 -->
+	<div class="fotorama" data-nav="thumbs" data-width="500" data-heigth="500">
 		<c:forEach var="p" items="${wholeImage }" varStatus="status">
-			<c:if test="${status.count==1 }">
-			<a href="${cp}/resources/gimgs/${p.imgsavename}"><img src='${cp}/resources/gimgs/${p.imgsavename}' width="300" height="300" alt=""></a>
-			<br>
-			</c:if>
-			<c:if test="${status.count!=1 }">
-			<a href="${cp}/resources/gimgs/${p.imgsavename}"><img src='${cp}/resources/gimgs/${p.imgsavename}' width="100" height="100" alt=""></a>
-			</c:if>
-			<c:if test="${status.count%3==1 and status.count!=1 }">
-			<br>
-			</c:if>
+			<img src='${cp}/resources/gimgs/${p.imgsavename}' width="500" height="500">
 		</c:forEach>
 	</div>
 	<div style="width: 1100px; background-color: #E4F7BA;">
@@ -193,9 +192,9 @@
 		}
 	});
 	
-	////////////////이미지 미리보기 기능///////////////////
+	////////////////이미지 미리보기 기능(magnific)///////////////////
 	
-	$('#accomWholeImage').magnificPopup({
+/*	$('#accomWholeImage').magnificPopup({
 		delegate: 'a',
 		type: 'image',
 		tLoading: 'Loading image #%curr%...',
@@ -212,7 +211,7 @@
 			enabled:true,
 			duration: 400
 		},
-	});
+	});			*/
 
 
 
@@ -253,7 +252,8 @@
 	});
 	
 	//인원 날짜를 재검색 하기 위한 datepicker,카운트
-	
+	var acnt=1; //어른 인원수
+	var totcnt=1; //총 인원수
 		
 	$("#plusCount").click(function(){
 		if(!(acnt>=14)){
@@ -353,12 +353,45 @@
 				$("#option").append("조건에 해당하는 방이 없습니다.");
 			}
 			for(let i=0;i<data.options.length;i++){
+				var optNum=data.options[i].accom_option_number;
+				console.log(data.using[i]);
+				console.log(data.image[i]);
+				var imgdiv='<div class="fotorama" data-width="200" data-heigth="200"'+
+				' data-allowfullscreen="native" width="200">';
+				for(let j=0;j<data.image[i].length;j++){
+					var img=data.image[i][j].imgsavename;
+					imgdiv+='<img src="${cp}/resources/gimgs/'+img+'">'
+				}
+				imgdiv+='</div>';
+				//예약 가능불가능 확인
+				if(data.using[i]=='예약가능'){
+					var endContent=
+						'<span><a href="">예약</a></span>'+
+						'</div>'+
+						'</div>';
+				}else{
+					var endContent=
+						'<span>예약불가</span>'+
+						'</div>'+
+						'</div>';
+				}
+				var count=data.count;
+				var howLong=data.howLong;
+				var price=data.options[i].accom_price;
+				var totPrice=count*howLong*price;
+				
 				var content=
+					'<div class="tableformOpt">'+
+					imgdiv+
+					'<div class="opt">'+
 					'<h4>'+data.options[i].accom_rooms_option+'</h4>'+
 					'<span>기준인원:'+data.options[i].accom_min_people+'/최대인원:'+data.options[i].accom_max_people+'</span><br>'+
-					'<span>'+data.options[i].accom_price+'원</span>';
+					'<span style="font:\'bold\'">'+howLong+'박 총'+totPrice+'원</span>'+
+					endContent;
+					
 				$("#option").append(content);
 			}
+			$('.fotorama').fotorama();
 		});
 	}
 

@@ -52,6 +52,25 @@ insert into image values(1,'aa.png','123123de3131as23 aa.png',1,2);
 insert into image values(2,'bb.png','123123de3131as23 bb.png',1,2);
 insert into image values(3,'cc.png','123123de3131as23 cc.png',1,2);
 
+insert into image values(4,'dd.png','232e3ar331dx34xa dd.png',4,555);
+insert into image values(5,'aa.png','232e3ar331dx34xa aa.png',4,555);
+insert into image values(6,'bb.png','232e3ar331dx34xa bb.png',4,555);
+insert into image values(7,'kk.png','23xeae32ze3131 aa.png',6,555);
+insert into image values(8,'zz.png','23xeae32ze3131 zz.png',6,555);
+insert into image values(9,'aa.jpg','23xeae32ze3131 aa.jpg',6,555);
+
+update accom_info set accom_how='독채펜션\n· 프라이빗한 객실에서 사랑하는 가족이나 친구와 함께 행복을 찾아보세요.\n복층\n· 아동,유아 동반 시 안전에 유의하시길 바랍니다.\n독채객실\n· 프라이빗한 객실에서 사랑하는 가족이나 친구와 함께 행복을 찾아보세요.\n· 독채 객실: 버치힐동, 통나무동, 스톤힐동, 올리브동, 벚꽃동' where accom_info_number=1;
+update accom_info set accom_info_content='좋은 호텔\n입니다.\n많이들 와주세요' where accom_info_number=1;
+update accom_info set accom_rule='- 체크인 6일 전 : 취소 수수료 없음\n
+- 체크인 5일 전 : 취소 수수료 10%\n
+- 체크인 4일 전 : 취소 수수료 20%\n
+- 체크인 3일 전 : 취소 수수료 30%\n
+- 체크인 2일 전 : 취소 수수료 50%\n
+- 체크인 1일 전 : 취소 수수료 70%\n
+- 체크인 당일 : 취소 수수료 100%\n
+'
+where accom_service_number=1;
+
 commit;
 
 select * from accom_option;

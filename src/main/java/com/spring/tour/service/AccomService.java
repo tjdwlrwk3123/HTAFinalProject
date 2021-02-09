@@ -41,4 +41,7 @@ public class AccomService {
 	public int isUsing(HashMap<String, Object> map) {
 		return dao.isUsing(map);
 	}
+	public int howLong(HashMap<String, Object> map) {
+		return dao.howLong(map);
+	}
 }

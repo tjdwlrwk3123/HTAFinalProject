@@ -72,6 +72,12 @@
 		and accom_enddate > #{startDate}
 		]]>
 	</select>
+	<select id="howLong" parameterType="hashmap" resultType="int">
+		<![CDATA[
+		SELECT trunc(to_date(#{endDate},'yyyy-mm-dd')) - trunc(to_date(#{startDate},'yyyy-mm-dd')) howLong 
+		FROM DUAL
+		]]>
+	</select>
 	<select id="accom_whole_image" parameterType="int" resultType="image">
 		select * from image where cate_number in(2,3,4,5) and general_number=#{general_number}
 	</select>

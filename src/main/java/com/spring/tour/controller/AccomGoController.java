@@ -20,7 +20,7 @@ public class AccomGoController {
 	
 	@RequestMapping(value="/accomlist")
 	public String goAccomSelect() {
-		return "/accom/accomSelect";
+		return ".accom.accomSelect";
 	}
 	
 	@RequestMapping("/accomDetail")
@@ -42,6 +42,6 @@ public class AccomGoController {
 		//숙소 전체이미지 불러오기
 		List<ImageVo> wholeImage=service.accomWholeImage(accomNum);
 		model.addAttribute("wholeImage",wholeImage);
-		return "/accom/accomDetail";
+		return ".accom.accomDetail";
 	}
 }
