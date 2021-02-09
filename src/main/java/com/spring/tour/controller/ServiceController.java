@@ -36,7 +36,7 @@ public class ServiceController {
 			e.printStackTrace();
 			return ".login";
 		}
-	}
+	} 
 	@GetMapping("/tourmain")
 	public String tourmain(HttpSession session,Model model) {
 		try {

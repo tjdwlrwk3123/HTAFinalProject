@@ -9,7 +9,7 @@
 		숙소이용안내  <textarea rows="5" cols="30" name="accom_how"></textarea><br><br>
 		숙소 체크인/아웃 정보 <textarea rows="5" cols="30" name="accom_checkinfo"></textarea><br><br>
 		편의시설<br>
-		<div>
+		<div> 
 			<input type="checkbox" name="facility" value="바베큐">바베큐장<br>
 			<input type="checkbox" name="facility" value="수영장">수영장<br>
 			<input type="checkbox" name="facility" value="유아시설">유아시설<br>
