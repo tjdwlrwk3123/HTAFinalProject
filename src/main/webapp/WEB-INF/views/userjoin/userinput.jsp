@@ -78,7 +78,7 @@
 		if(value=='naver.com'){
 			dom.value='naver.com';
 			$("#domain").prop('readonly',true);
-			$("#useremail").val($("#email").val()+$("#domain").val());
+			$("#useremail").val($("#email").val()+'@'+$("#domain").val());
 		}else if(value=='gmail.com'){
 			dom.value='gmail.com';
 			$("#domain").prop('readonly',true);

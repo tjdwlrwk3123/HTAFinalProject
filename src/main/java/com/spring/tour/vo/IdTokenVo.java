@@ -47,6 +47,12 @@ public class IdTokenVo {
 	public void setToken_authority(String token_authority) {
 		this.token_authority = token_authority;
 	}
+
+	@Override
+	public String toString() {
+		return "IdTokenVo [token_number=" + token_number + ", user_id=" + user_id + ", token_data=" + token_data
+				+ ", token_authority=" + token_authority + "]";
+	}
 	
 	
 }

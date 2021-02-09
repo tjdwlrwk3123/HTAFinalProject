@@ -23,15 +23,15 @@
 		#{user_addr},
 		#{user_phone},
 		'0',
-		'0'
+		0
 		)
 	</insert>
 	<insert id="auth_insert" parameterType="idtoken">
-		insert into IdToken values(
+		insert into Id_Token values(
 		token_seq.nextval,
 		#{user_id},
 		#{token_data},
-		#{token_autority}
+		#{token_authority}
 		)
 	</insert>
 	
@@ -40,7 +40,19 @@
 		where u.user_id=t.user_id and u.user_id=#{user_id}
 	</select>
 	
-	<update id="createAuthKey">
-	update user_info set user_enabled = #{user_authCode} where user_email = #{user_email}
+	<update id="createAuthKey" parameterType="string">
+	update id_token 
+	set token_data = #{token_data} 
+	where id_token.user_id =
+	(select user_info.user_id 
+	from user_info
+	inner join id_token
+	on user_info.user_id=id_token.user_id
+	where user_info.user_email=#{user_email})
+	</update>
+	
+	<update id="stateUp" parameterType="string">
+		update user_info set user_condition='1' 
+		where user_email=#{user_email}
 	</update>
 </mapper>

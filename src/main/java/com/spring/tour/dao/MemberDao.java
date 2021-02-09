@@ -15,10 +15,12 @@ public class MemberDao {
 	private SqlSession sqlSession;
 	
 	public int insert(User_InfoVo vo) {
+		System.out.println(vo);
 		return sqlSession.insert(NAMESPACE+".user_insert",vo);
 	}
 	
 	public int insert(IdTokenVo vo) {
+		System.out.println(vo);
 		return sqlSession.insert(NAMESPACE+".auth_insert",vo);
 	}
 	
@@ -27,14 +29,17 @@ public class MemberDao {
 	}
 	
 	public void createAuthKey(String user_email,String user_authCode) throws Exception{
-		User_InfoVo vo = new User_InfoVo();
-		vo.setUser_condition(user_authCode);
-		vo.setUser_email(user_email);
+		IdTokenVo vo = new IdTokenVo();
+		vo.setToken_data(user_authCode);
 		
 		sqlSession.selectOne(NAMESPACE+".createAuthKey",vo);
 	}
 	
 	public void userAuth(String user_email) throws Exception {
 		sqlSession.update(NAMESPACE + ".userAuth", user_email);
+	}
+	
+	public void stateUp(String user_email) {
+		sqlSession.update(NAMESPACE+".stateUp",user_email);
 	}
 }
