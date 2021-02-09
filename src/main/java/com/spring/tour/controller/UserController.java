@@ -51,10 +51,11 @@ public class UserController {
 	
 	@RequestMapping(value = "/emailConfirm", method = RequestMethod.GET)
 	public String emailConfirm(String user_email, Model model) throws Exception { // 이메일인증
-		service.userAuth(user_email);
+		System.out.println("기홍이바보");
+		service.stateUp(user_email);
 		model.addAttribute("user_email", user_email);
 
-		return "/user/emailConfirm";
+		return "/tour/emailConfirm";
 	}
 	
 }

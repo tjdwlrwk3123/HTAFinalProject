@@ -32,17 +32,17 @@ public class MemberService {
 		}else {//일반회원 가입조건
 			avo.setToken_authority("ROLE_MEMBER");
 		}
-		dao.insert(avo);
 		
 		String key = new TempKey().getKey(50, false); // 인증키 생성
-
-		dao.createAuthKey(vo.getUser_email(), key); // 인증키 DB저장
-
+		avo.setToken_data(key);
+		//dao.createAuthKey(vo.getUser_email(), key);
+		
+		dao.insert(avo);
 		MailHandler sendMail = new MailHandler(mailSender);
-		sendMail.setSubject("[ALMOM 서비스 이메일 인증]");
+		sendMail.setSubject("[기홍투어 인증 이메일]");
 		sendMail.setText(
-				new StringBuffer().append("<h1>메일인증</h1>").append("<a href='http://localhost/user/emailConfirm?user_email=").append(vo.getUser_email()).append("&key=").append(key).append("' target='_blenk'>이메일 인증 확인</a>").toString());
-		sendMail.setFrom("호스트 이메일 아이디", "알몸개발자");
+				new StringBuffer().append("<h1>메일인증</h1>").append("<a href='http://localhost:8081/tour/emailConfirm?user_email=").append(vo.getUser_email()).append("&key=").append(key).append("' target='_blenk'>이메일 인증 확인</a>").toString());
+		sendMail.setFrom("dhrmstn11@gmail.com", "관리자");
 		sendMail.setTo(vo.getUser_email());
 		sendMail.send();
 		
@@ -54,7 +54,11 @@ public class MemberService {
 	}
 	
 	
-	public void userAuth(String userEmail) throws Exception {
-		dao.userAuth(userEmail);
+	public void userAuth(String user_email) throws Exception {
+		dao.userAuth(user_email);
+	}
+	
+	public void stateUp(String user_email) {
+		 dao.stateUp(user_email);
 	}
 }

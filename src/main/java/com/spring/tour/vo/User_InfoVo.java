@@ -108,6 +108,14 @@ public class User_InfoVo {
 	public void setUser_point(String user_point) {
 		this.user_point = user_point;
 	}
+
+	@Override
+	public String toString() {
+		return "User_InfoVo [user_id=" + user_id + ", user_pass=" + user_pass + ", user_name=" + user_name
+				+ ", user_grade=" + user_grade + ", user_email=" + user_email + ", user_addr=" + user_addr
+				+ ", user_phone=" + user_phone + ", user_condition=" + user_condition + ", user_point=" + user_point
+				+ ", user_enabled=" + user_enabled + "]";
+	}
 	
 	
 }
