@@ -55,4 +55,11 @@
 		update user_info set user_condition='1' 
 		where user_email=#{user_email}
 	</update>
+	
+	<select id="loginCheck" resultType="String">
+		<![CDATA[
+			SELECT count(*) FROM user_info
+			WHERE user_id = #{user_id} AND user_pass = #{user_pass}
+		]]>
+	</select>
 </mapper>

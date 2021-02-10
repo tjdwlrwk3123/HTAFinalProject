@@ -1,5 +1,7 @@
 package com.spring.tour.dao;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -41,5 +43,16 @@ public class MemberDao {
 	
 	public void stateUp(String user_email) {
 		sqlSession.update(NAMESPACE+".stateUp",user_email);
+	}
+	
+	public boolean loginCheck(User_InfoVo vo) {
+		System.out.println("로그인됬니");
+		String name=sqlSession.selectOne(NAMESPACE+".loginCheck",vo);
+		return (Integer.parseInt(name)==0)?false:true;
+	}
+	
+	public void logout(HttpSession session) {
+		System.out.println("로그아웃 됬니");
+		session.invalidate();
 	}
 }

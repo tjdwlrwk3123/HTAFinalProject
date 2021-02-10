@@ -14,5 +14,6 @@
 <a href='${cp }/tourSelect'>tourSelect</a>
 <a href='${cp }/accomlist'>숙소페이지</a>
 <a href='${cp }/userterms'>회원 테스트페이지</a>
+<a href='${cp }/userlogin'>로그인 테스트페이지</a>
 </body>
 </html>
