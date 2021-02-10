@@ -12,6 +12,12 @@
   	<typeAlias type="com.spring.tour.vo.User_InfoVo" alias="userinfo"/>
   	<typeAlias type="com.spring.tour.vo.IdTokenVo" alias="idtoken"/>
   	<typeAlias type="com.spring.tour.vo.ImageVo" alias="image"/>
+  	<typeAlias type="com.spring.tour.vo.TourPageVo" alias="tourpage"/>
+  	<typeAlias type="com.spring.tour.vo.TourDetailVo" alias="tourdetail"/>
+  	<typeAlias type="com.spring.tour.vo.TourOptionVo" alias="touroption"/>
+  	<typeAlias type="com.spring.tour.vo.TourReviewVo" alias="tourreview"/>
+  	<typeAlias type="com.spring.tour.vo.TourSelectVo" alias="tourselect"/>
+  	
   </typeAliases>
   
   <!-- 읽어올 Mapper파일 설정 -->
@@ -24,6 +30,9 @@
 			<mapper resource="com/spring/tour/mapper/UserMapper.xml"/>
 
 			<mapper resource="com/spring/tour/mapper/ServiceMapper.xml"/>
+			
+			<mapper resource="com/spring/tour/mapper/WishlistMapper.xml"/>
+			<mapper resource="com/spring/tour/mapper/TourPageMapper.xml"/>
 
 	</mappers>
 </configuration>
