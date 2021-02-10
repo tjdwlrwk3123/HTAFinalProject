@@ -28,6 +28,7 @@
 			<mapper resource="com/spring/tour/mapper/TourPageMapper.xml"/>
 			<mapper resource="com/spring/tour/mapper/MypageMapper.xml"/>
 			<mapper resource="com/spring/tour/mapper/AccomMapper.xml"/>
+			<mapper resource="com/spring/tour/mapper/BookingMapper.xml"/>
 
 			<mapper resource="com/spring/tour/mapper/UserMapper.xml"/>
 
