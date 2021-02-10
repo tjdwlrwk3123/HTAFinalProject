@@ -10,7 +10,6 @@ import com.spring.tour.dao.TourPageDao;
 import com.spring.tour.vo.ImageVo;
 import com.spring.tour.vo.TourDetailVo;
 import com.spring.tour.vo.TourOptionVo;
-import com.spring.tour.vo.TourPageVo;
 import com.spring.tour.vo.TourReviewVo;
 import com.spring.tour.vo.TourSelectVo;
 import com.spring.tour.vo.WishlistVo;
@@ -23,7 +22,7 @@ public class TourPageService {
 	private TourPageDao dao; 
 	////////////////////////////////////
 	//투어 메인 페이지 데이터
-	public List<TourPageVo> tourMainList(){
+	public List<TourSelectVo> tourMainList(){
 		return dao.tourMainList();
 	}
 	
@@ -32,8 +31,6 @@ public class TourPageService {
 	public List<TourSelectVo> tourSelectList(HashMap<String, Object> map){
 		return dao.tourSelectList(map);
 	}
-	
-	
 	
 	///////////////////////////////////////////////////////////
 	

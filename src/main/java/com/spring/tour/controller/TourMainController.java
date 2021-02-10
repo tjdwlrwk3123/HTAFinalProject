@@ -14,9 +14,15 @@ import com.spring.tour.vo.TourSelectVo;
 
 
 @Controller
-public class TourListController {
+public class TourMainController {
 	@Autowired
 	private TourPageService service;
+	
+	@RequestMapping(value = "/tourMain")
+	public String tourMain() {
+		return "/tourPage/tourMain";
+	}
+
 	
 	@RequestMapping(value = "/tourMainList", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
 	@ResponseBody

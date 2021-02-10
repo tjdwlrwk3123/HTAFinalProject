@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import com.spring.tour.vo.ImageVo;
 import com.spring.tour.vo.TourDetailVo;
 import com.spring.tour.vo.TourOptionVo;
-import com.spring.tour.vo.TourPageVo;
 import com.spring.tour.vo.TourReviewVo;
 import com.spring.tour.vo.TourSelectVo;
 import com.spring.tour.vo.WishlistVo;
@@ -23,10 +22,10 @@ public class TourPageDao {
 	private SqlSession sqlsession;
 	
 	private final String NAMESPACE = "com.spring.tour.mapper.TourPageMapper";
-	
+
 	//////////////////////////////////////////
 	//투어 첫페이지 데이터 
-	public List<TourPageVo> tourMainList(){
+	public List<TourSelectVo> tourMainList(){
 		return sqlsession.selectList(NAMESPACE+".mainlist");
 	}
 	
@@ -36,6 +35,9 @@ public class TourPageDao {
 	public List<TourSelectVo> tourSelectList(HashMap<String, Object> map){
 		return sqlsession.selectList(NAMESPACE+".selectlist", map);
 	}
+	
+	
+	
 	//////////////////////////////////////////////
 	//투어 상세 페이지 데이터
 	public TourDetailVo tourDetailList(HashMap<String, Object> map){

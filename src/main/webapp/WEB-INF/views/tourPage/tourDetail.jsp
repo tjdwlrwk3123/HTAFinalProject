@@ -15,11 +15,11 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/174a2d5b3b.js" crossorigin="anonymous"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=def622213948a607b8b4062c406ef1e5&libraries=services"></script>
 
 <style>
-	#payment{width:300px; height:250px; position:fixed; padding:30px; right:250px; top:130px; background-color: red; z-index: 99;}
+	#payment{width:300px; height:250px; position:fixed; padding:30px; right:5%; top:130px; background-color: red; z-index: 99;}
 	#payment #wishbox{background-color: skyblue;}
 	
 	#tourDetail_wrapper{width:1100px; position:relative; margin:auto; background-color: royalblue;}
@@ -28,13 +28,14 @@
 	#tourDetail_wrapper #option{width:100%; margin:auto; position:relative; padding:20px; border-bottom:1px solid gray; background-color: orange;}
 	#tourDetail_wrapper #detail{width:100%; position:relative; margin:auto; background-color: yellow;}
 	#tourDetail_wrapper #detail #photozone{width:100%; position:relative; margin:auto; padding:20px; align-content:center; background-color: gray;}
+	#tourDetail_wrapper #detail #photozone #thumbnail{width:100%; position:relative; margin:auto; text-align:center; align-content:center; align-items:center; background-color: gray;}
 	#tourDetail_wrapper #detail #info{width:100%; position:relative; padding:20px; border-bottom:1px solid gray; background-color: yellow;}
 	#tourDetail_wrapper #detail #info #infobox{width:100%; position:relative; padding:20px; border-top:1px solid gray; border-bottom:1px solid gray; background-color: yellow;}
 	#tourDetail_wrapper #detail #info #rulebox{width:100%; position:relative; padding:20px; border-bottom:1px solid gray; background-color: yellow;}
 	#tourDetail_wrapper #detail #info #reviewbox{width:100%; position:relative; padding:20px; border-bottom:1px solid gray; background-color: yellow;}
 	#tourDetail_wrapper #detail #info #infobox #mapbox{width:500px; height:330px; margin-top:20px; border:3px solid black; overflow: hidden;}
 	#tourDetail_wrapper #detail #info #infobox #mapbox #map{width:490px; height:300px; margin:auto;}
-	
+	#basket{text-align:right;}
 </style>
 
 <!--
@@ -90,7 +91,6 @@
 			<!-- 옵션중 최저가 보여주기, 나중에 옵션 추가 제거 하면 금액 변동시키기-->
 		</c:otherwise>
 	</c:choose>
-	
 	<div id="wishbox">
 		<c:choose>
 			<c:when test="${wishlist==false}">
@@ -114,7 +114,7 @@
 		<!-- 제목 + 리뷰평점 -->
 		<h3 style="font-weight:700;">${detail.tour_name }</h3>
 		<div id="starbox">
-			<span style="font-size:20px; font-weight:600;">평점 : ${detail.avgpoint}
+			<span style="font-size:20px; font-weight:600;">평점 : ${detail.avgpoint} &nbsp; (${fn:length(review)})
 			<c:if test="${!empty detail.tour_expire }">
 				<p style="float:right;">유효기간 : ${detail.tour_expire}</p>
 			</c:if>
@@ -126,20 +126,34 @@
 			<c:choose>
 				<c:when test="${o.tour_amount==0 }">
 					<span style="font-size:15px; font-weight:600;">[${o.tour_option_index}] ${o.tour_option}
-					<input type="button" value="+" disabled="disabled"><input type="button" value="-"disabled="disabled"><span></span>
+					<input type="hidden" value="0" name="count"><input type="hidden" value="${o.tour_option}" name="tour_option"><input type="hidden" name="tour_price" value="${o.tour_price}">
+					<input type="button" value="-" disabled="disabled"><span>0</span><input type="button" value="+"disabled="disabled"><span></span>
 					<span style="color:blue;">매진된 상품입니다</span><br>
 					</span>
 				</c:when>
 				<c:otherwise>
 					<span style="font-size:15px; font-weight:600;">[${o.tour_option_index}] ${o.tour_option}
-					<span style="padding-left:20px;">${o.tour_price}원 /명</span>	<span style="padding-left:20px;"><input type="button" value="+"><input type="button" value="-"></span><br>
+					<span style="padding-left:20px;">${o.tour_price}원 /명</span>
+					<span style="padding-left:20px;">
+					<input type="hidden" value="${o.tour_option}" name="tour_option"><input type="hidden" name="tour_price" value="${o.tour_price}">
+					<input type="hidden" value="${o.tour_option_index}" name="tour_index"><input type="button" value="-" onclick="minus(event)"><span>0</span><input type="button" value="+" onclick="plus(event)"></span>
+					<span>${o.tour_amount}개 남음</span><br>
 					</span>
 				</c:otherwise>
 			</c:choose>
 		</c:forEach>
+		<div id="basket" style="border:2px solid black;"></div>
 	</div>
 	<div id="detail" >
 		<div id="photozone" >
+			<div id="thumbnailbox">
+				<c:forEach var="tm" items="${de_image}">
+					<div style="width:200px; height:200px; margin:20px; display:inline-block; border:3px solid red;">
+						<img src='${cp}/resources/images/${tm.imgsavename}'>
+					</div>
+				</c:forEach>
+			
+			</div>
 			<!-- 사진으로 된 홍보물 자리 -->
 			<c:forEach var="p" items="${pa_image}">
 				<img src='${cp}/resources/images/${p.imgsavename}' style="width:100%"alt="${cp}${p.imgsavename}">
@@ -205,6 +219,52 @@
 		}
 	});
 
+	/////////////////////// 옵션 추가제거  /////////////////////////////
+
+	
+	var totalprice = 0;
+	
+	function minus(e){
+		var btn = e.target;
+		var span = btn.nextSibling;
+		var cnt = parseInt(span.textContent);
+		if(cnt==0){
+			return;
+		}
+		var indexnum = parseInt(btn.previousSibling.value)-1;
+		var option = document.getElementsByName("tour_option")[indexnum];
+		var price= document.getElementsByName("tour_price")[indexnum];
+		cnt--;
+		span.innerHTML=cnt;
+		totalprice-=parseInt(price.value);
+		
+		var basket= document.getElementById("basket");
+		if(totalprice==0){
+			basket.innerHTML = "";  
+		}else{
+			basket.innerHTML = "<span style='text-align:right;'>TOTAL : "+totalprice+"</span><br>"+
+							"<button id='payall' onclick='pay();' >결제하기</button>";  
+		}
+	}
+	function plus(e){
+		var btn = e.target;
+		var span = btn.previousSibling;
+		var cnt = parseInt(span.textContent);
+		if(cnt>=20){
+			return;
+		}
+		var indexnum = parseInt(btn.previousSibling.previousSibling.previousSibling.value)-1;
+		var option = document.getElementsByName("tour_option")[indexnum];
+		var price= document.getElementsByName("tour_price")[indexnum];
+		cnt++;
+		span.innerHTML=cnt;
+		totalprice+=parseInt(price.value);
+		
+		var basket= document.getElementById("basket");
+		basket.innerHTML = "<span style='text-align:right;'>TOTAL : "+totalprice+"원</span><br>"+
+						"<button id='payall' onclick='pay();' >결제하기</button>";  
+	
+	}
 
 	////////////////////// 지도관련 코드 ///////////////////////////
 	
