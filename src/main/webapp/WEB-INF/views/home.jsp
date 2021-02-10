@@ -9,7 +9,9 @@
 <body>
 <h1>초기화면!</h1>
 <a href='${cp }/wishlist?user_id=kaka'>위시리스트</a>
-<a href='${cp }/tourMain'>투어메인페이지</a>
+<a href='${cp }/tourMain'>tourMain</a>
+<a href='${cp }/tourDetail?user_id=kaka&cate_number=1&service_number=1'>tourDetail</a>
+<a href='${cp }/tourSelect'>tourSelect</a>
 <a href='${cp }/accomlist'>숙소페이지</a>
 <a href='${cp }/userterms'>회원 테스트페이지</a>
 </body>

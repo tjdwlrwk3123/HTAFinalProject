@@ -4,20 +4,159 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
   <mapper namespace="com.spring.tour.mapper.TourPageMapper">
- 	<select id="list" resultType="tourpage">
-	select * from(
-		select rownum rnum, g.* from(
-			select e.cate_number, e.service_number, e.imgsavename, e.tour_name, f.avgpoint, f.tour_price from 
-				(select imgsavename, a.service_number, a.cate_number, b.tour_name  from
-						(select min(imgsavename) imgsavename, general_number service_number, cate_number from image group by general_number, cate_number
-						)a join ( select tour_name, cate_number, service_number from tour_service)b
-				on a.service_number=b.service_number and a.cate_number=b.cate_number)e 
-			join (select avgpoint, c.cate_number, c.service_number, d.tour_price from 
-						(select avg(star_point) avgpoint, cate_number,service_number from review group by service_number,cate_number,service_number order by service_number
-						)c join (select tour_price,service_number from tour_option where tour_amount>0)d on c.service_number=d.service_number)f
-			 	on e.service_number = f.service_number and e.cate_number = f.cate_number order by avgpoint desc
-		)g 
-	) <![CDATA[where rnum <=8]]>
+ 		<!-- 투어의 첫화면 DATA -->
+ 	<select id="mainlist" resultType="tourpage">
+		select * from (
+		    select distinct *  from 
+		    (
+		         select img_num,imgsavename, b.service_number, a.cate_number, tour_name,tour_type  from 
+		            (           
+		                select * from image where img_num in (select min(img_num) from image group by general_number))
+		                a join (
+		                select tour_name, cate_number, service_number, tour_type from tour_service)
+		                b on a.cate_number=b.cate_number and general_number = service_number
+		            )e join (
+		        select avgpoint, cate_number,c.service_number, tour_price,tour_amount from 
+		            (
+		                select avg(star_point) avgpoint, cate_number, service_number from review group by service_number,cate_number,service_number order by service_number)
+		                c join (
+                       select * from tour_option where (service_number, tour_option_index, tour_price) in 
+                        (select service_number, min(tour_option_index), min(tour_price) from tour_option where (service_number, tour_price) in 
+                        (select service_number, min(tour_price) from tour_option where tour_amount>0 group by service_number) group by service_number))
+		                d on c.service_number = d.service_number
+		            )f on e.cate_number=f.cate_number and e.service_number = f.service_number order by avgpoint desc
+		) <![CDATA[where rownum <=8]]>
  	</select>
  	
+ 	<select id="selectlist" parameterType="hashmap" resultType="tourselect">
+select * from
+(
+    select  cate_number, h.service_number, tour_name, tour_type, avgpoint, rcnt, tour_price, tour_amount, tour_expire, img_num, imgsavename from (
+        select distinct img_num,imgsavename, f.service_number, f.cate_number, tour_name,tour_type,avgpoint,tour_price,tour_amount, rcnt  from 
+		    (
+		         select img_num,imgsavename, b.service_number, a.cate_number, tour_name,tour_type  from 
+		            (           
+		                select * from image where img_num in (select min(img_num) from image group by general_number))
+		                a join (
+		                select tour_name, cate_number, service_number, tour_type from tour_service)
+		                b on a.cate_number=b.cate_number and general_number = service_number
+		            )e join (
+            select avgpoint, cate_number,c.service_number, tour_price,tour_amount, rcnt from 
+		            (
+		                select avg(star_point) avgpoint, count(review_number)rcnt, cate_number, service_number from review group by service_number,cate_number,service_number order by service_number)
+		                c join (
+                       select * from tour_option where (service_number, tour_option_index, tour_price) in 
+                        (select service_number, min(tour_option_index), min(tour_price) from tour_option where (service_number, tour_price) in 
+                        (select service_number, min(tour_price) from tour_option where tour_amount>0 group by service_number) group by service_number)
+                    )d on c.service_number = d.service_number
+            )f on e.cate_number=f.cate_number and e.service_number = f.service_number
+        )g join (select tour_expire,service_number from tour_info)h on g.service_number = h.service_number
+ )
+		<where>
+			<![CDATA[
+			((tour_expire <= #{endDate} and tour_expire >= #{startDate})
+			or (tour_expire is null))
+			]]>
+			<if test="tourType!=null">
+				<if test="tourType==1">
+					and tour_type='티켓/패스'
+				</if>
+				<if test="tourType==2">
+					and tour_type='테마파크'
+				</if>
+				<if test="tourType==3">
+					and tour_type='취미/클래스'
+				</if>
+				<if test="tourType==4">
+					and tour_type='맛집'
+				</if>
+			</if>
+			<if test="keyword!=null">
+				and tour_name like '%'||#{keyword}||'%'
+			</if>
+			<if test="targetPoint!=null">
+				and avgpoint >= #{targetPoint}
+			</if>
+			<if test="targetPrice!=null">
+				<![CDATA[and tour_price<= #{targetPrice}]]>
+			</if>
+			<if test="classification!=null">
+				<if test="classification==1">
+					order by avgpoint desc
+				</if>
+				<if test="classification==2">
+					order by rcnt desc
+				</if>
+				<if test="classification==3">
+					order by tour_price
+				</if>
+				<if test="classification==4">
+					order by tour_price desc
+				</if>
+			</if>
+		</where>
+ 	</select> 	
+
+ 	
+ 	<!-- ///////////////////////////투어 상세페이지 데이터 ///////////////////////////-->
+ 	<select id="detaillist" parameterType="hashmap" resultType="tourdetail">
+		select cate_number, e.service_number, minp, tour_addr, tour_name, tour_expire, tour_how, tour_rule, avgpoint from 
+		(
+		    select  cate_number, c.service_number, minp, tour_addr, tour_name, tour_expire, tour_how, tour_rule from 
+		    (
+		        select cate_number,a.service_number, minp, tour_addr, tour_name from 
+		        (
+		            select min(tour_price)minp, service_number from tour_option where service_number=#{service_number}group by service_number
+		            )a join
+		                (select cate_number,tour_addr, tour_name, service_number from tour_service where cate_number=#{cate_number} and service_number = #{service_number})b
+		        on a.service_number=b.service_number
+		    )c join
+		        (select service_number, tour_expire, tour_how, tour_rule from tour_info where service_number =#{service_number})d
+		    on c.service_number = d.service_number
+		)e join 
+			(select service_number, avg(star_point)avgpoint from review where service_number =#{service_number} and cate_number = #{cate_number} group by service_number
+		)f
+		on e.service_number = f.service_number
+ 	</select>
+ 	
+ 	<!-- 투어 옵션 정보만 따로  -->
+ 	<select id="tour_option_list" parameterType="int" resultType="touroption">
+ 		select tour_price, tour_option_index, tour_option, tour_amount from tour_option where service_number =#{service_number} and <![CDATA[tour_amount > 0]]>
+ 	</select>
+ 	
+ 	<!-- 투어에 딸린 이벤트 실황 사진들  -->
+ 	<select id="tour_detail_image" parameterType="int" resultType="image">
+ 		select * from image where cate_number=1 and general_number=#{service_number}
+ 	</select>
+ 	
+ 	<!-- 투어 디테일 설명 팜플릿 -->
+ 	<select id="tour_detail_pamphlet" parameterType="int" resultType="image">
+ 		select * from image where cate_number=111 and general_number=#{service_number}
+ 	</select>
+ 	
+ 	<!-- wishlist에 저장된 파일인지 아닌지 체크 -->
+ 	<select id="tour_detail_isinwish" parameterType="hashmap" resultType="wishlist">
+ 		select * from wishlist where cate_number=#{cate_number} and service_number=#{service_number} and user_id=#{user_id}
+ 	</select>
+
+	<resultMap type="tourreview" id="tour_review">
+ 		<result property="review_number" column="review_number"/>
+ 		<result property="user_id" column="user_id"/>
+ 		<result property="service_number" column="service_number"/>
+ 		<result property="star_point" column="star_point"/>
+ 		<result property="review_content" column="review_content"/>
+ 		<result property="review_comment" column="review_comment"/>
+ 		<result property="cate_number" column="cate_number"/>
+ 		<collection property="imglist" ofType="image">
+ 			<result property="img_num" column="img_num"/>
+ 			<result property="imgorgname" column="imgorgname"/>
+ 			<result property="imgsavename" column="imgsavename"/>
+ 			<result property="general_number" column="general_number"/>
+ 			<result property="cate_number" column="categorynum"/>
+ 		</collection>
+ 	</resultMap>
+ 	<select id="tour_review_list" parameterType="hashmap" resultMap="tour_review">
+ 		select * from (select * from review where cate_number =#{cate_number}and service_number = #{service_number} order by review_number desc)a, 
+		(select img_num, imgorgname, imgsavename, general_number, cate_number categorynum from image where cate_number =11 and general_number=#{service_number})b where a.service_number= b.general_number
+ 	</select>
   </mapper>
