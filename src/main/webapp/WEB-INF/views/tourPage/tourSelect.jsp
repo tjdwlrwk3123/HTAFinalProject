@@ -23,12 +23,8 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-
-<link rel="stylesheet" type="text/css" href="${cp }/resources/css/tourSelectCss.css">
-
 <div id="tourSelect_wrapper">
-	
-	<div id="filterbox">
+	<div id="tour_filterbox">
 		<h3>카테고리</h3>
 		<div id="type">
 			<input type="hidden" id="user_id" value="${sessionScope.user_id}">
@@ -54,8 +50,8 @@
 			<span id="showRange"></span>
 		</div>
 	</div>
-	<div id="contentbox">
-		<div id="option">
+	<div id="tour_contentbox">
+		<div id="tour_option">
 			<input type="text" placeholder="검색어 입력" id="keyword"><button id="btn1" onclick="search()">검색</button>
 			<input type="hidden" id="classification">
 			<a href="javascript:orderChange(1);"<c:if test='${classification==1}'>style="color:gray;"</c:if>>추천순</a>
@@ -63,7 +59,7 @@
 			<a href="javascript:orderChange(3);"<c:if test='${classification==3}'>style="color:gray;"</c:if>>가격낮은순</a>
 			<a href="javascript:orderChange(4);"<c:if test='${classification==4}'>style="color:gray;"</c:if>>가격높은순</a>
 		</div>
-		<div id="content">
+		<div id="tour_content">
 		</div>
 	</div>
 
@@ -227,13 +223,14 @@
 	
 	function initialPage(param){
 		$.getJSON('${cp}/tourSelectList', param, function(data){
-			$("#content").empty();
+			$("#tour_content").empty();
 			var str = "";
 			str+="<div class='row row-cols-1 row-cols-md-4'>";
 			$("#tourType").val(param.tourType);
 			
 			let minprice= data.minprice;
 			let maxprice= data.maxprice;
+			
 			
 			let targetPrice = maxprice;
 			if(data.targetPrice!=0){
@@ -244,7 +241,7 @@
 			}else{
 				$("#price_range").prop({"min":minprice,"max":maxprice,"value":targetPrice});
 			}
-			$("#showRange").html(minprice+"원  ~ "+ $("#price_range").val()+"원");
+			$("#showRange").html(minprice+"원  ~ 최대 "+ $("#price_range").val()+"원");
 			
 			for(let i=0; i<data.list.length; i++){
 				let cate_number= data.list[i].cate_number;
@@ -263,7 +260,7 @@
 					stars+="<i class='far fa-star'></i>";
 				}
 				str+= "<div class='col mb-4'>"+
-					"<div class='card h-100 mx-auto' style='width: 12rem;'>"+
+					"<div class='card h-100 mx-auto' style='width: 11rem;'>"+
 				   	 "<input type='hidden' name='cate_number' value='"+cate_number+"'>"+
 				   	 "<input type='hidden' name='service_number' value='"+service_number+"'>"+
 				 	 "<img src='${cp}/resources/images/"+imgsavename+"' class='card-img-top' onclick='move(event)' alt='"+tour_name+"'>"+
@@ -279,7 +276,7 @@
 		 		 "</div>"
 			}
 			str+="</div>";
-			$("#content").append(str);
+			$("#tour_content").append(str);
 		});
 		MAXPRICE= $("#price_range").prop("max");
 	}

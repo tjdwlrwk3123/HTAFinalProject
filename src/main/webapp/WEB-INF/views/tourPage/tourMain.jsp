@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
 
 <style>
-	#tourMain_wrapper{width:1200px; height:100%; margin:auto; background-color: tomato; }
+	#tourMain_wrapper{width:1000px; margin:auto; background-color: tomato; }
 	#tourMain_wrapper #menubox{width:100%; height:150px; margin:auto; align-content: center; text-align: center; background-color: green; }
 	#tourMain_wrapper #menubox #menu{
 		width:100%; height:30px; margin-top:50px;margin:auto; text-align: center; background-color: yellow;
@@ -27,7 +27,7 @@
 		margin:20px;
 	}
 	#tourMain_wrapper #content #itembox{
-		width:100%; height: 80%; align-content: center; background-color: pink;
+		width:100%; align-content: center; background-color: royalblue;
 	}
 	#loading {
 		height: 100%;

@@ -22,17 +22,17 @@
 	#payment{width:300px; height:250px; position:fixed; padding:30px; right:5%; top:130px; background-color: red; z-index: 99;}
 	#payment #wishbox{background-color: skyblue;}
 	
-	#tourDetail_wrapper{width:1100px; position:relative; margin:auto; background-color: royalblue;}
-	#tourDetail_wrapper #title{width:100%; height:130px; position:relative; padding:20px; border-bottom:1px solid gray; background-color: green; }
-	#tourDetail_wrapper #title #starbox{width:100%; position:relative; margin:10px; right:10px; background-color: pink; }
-	#tourDetail_wrapper #option{width:100%; margin:auto; position:relative; padding:20px; border-bottom:1px solid gray; background-color: orange;}
-	#tourDetail_wrapper #detail{width:100%; position:relative; margin:auto; background-color: yellow;}
-	#tourDetail_wrapper #detail #photozone{width:100%; position:relative; margin:auto; padding:20px; align-content:center; background-color: gray;}
-	#tourDetail_wrapper #detail #photozone #thumbnail{width:100%; position:relative; margin:auto; text-align:center; align-content:center; align-items:center; background-color: gray;}
-	#tourDetail_wrapper #detail #info{width:100%; position:relative; padding:20px; border-bottom:1px solid gray; background-color: yellow;}
-	#tourDetail_wrapper #detail #info #infobox{width:100%; position:relative; padding:20px; border-top:1px solid gray; border-bottom:1px solid gray; background-color: yellow;}
-	#tourDetail_wrapper #detail #info #rulebox{width:100%; position:relative; padding:20px; border-bottom:1px solid gray; background-color: yellow;}
-	#tourDetail_wrapper #detail #info #reviewbox{width:100%; position:relative; padding:20px; border-bottom:1px solid gray; background-color: yellow;}
+	#tourDetail_wrapper{width:1000px; position:relative; margin:auto; background-color: royalblue;}
+	#tourDetail_wrapper #title{width:100%; height:130px;  padding:20px; border-bottom:1px solid gray; background-color: green; }
+	#tourDetail_wrapper #title #starbox{width:100%;  margin:10px; right:10px; background-color: pink; }
+	#tourDetail_wrapper #option{width:100%; margin:auto;  padding:20px; border-bottom:1px solid gray; background-color: orange;}
+	#tourDetail_wrapper #detail{width:100%;  margin:auto; background-color: yellow;}
+	#tourDetail_wrapper #detail #photozone{width:100%;  margin:auto; padding:20px; align-content:center; background-color: gray;}
+	#tourDetail_wrapper #detail #photozone #thumbnail{width:100%; margin:auto; text-align:center; align-content:center; align-items:center; background-color: gray;}
+	#tourDetail_wrapper #detail #info{width:100%;  padding:20px; border-bottom:1px solid gray; background-color: yellow;}
+	#tourDetail_wrapper #detail #info #infobox{width:100%;  padding:20px; border-top:1px solid gray; border-bottom:1px solid gray; background-color: yellow;}
+	#tourDetail_wrapper #detail #info #rulebox{width:100%;  padding:20px; border-bottom:1px solid gray; background-color: yellow;}
+	#tourDetail_wrapper #detail #info #reviewbox{width:100%; padding:20px; border-bottom:1px solid gray; background-color: yellow;}
 	#tourDetail_wrapper #detail #info #infobox #mapbox{width:500px; height:330px; margin-top:20px; border:3px solid black; overflow: hidden;}
 	#tourDetail_wrapper #detail #info #infobox #mapbox #map{width:490px; height:300px; margin:auto;}
 	#basket{text-align:right;}
@@ -156,7 +156,7 @@
 			</div>
 			<!-- 사진으로 된 홍보물 자리 -->
 			<c:forEach var="p" items="${pa_image}">
-				<img src='${cp}/resources/images/${p.imgsavename}' style="width:100%"alt="${cp}${p.imgsavename}">
+				<img src='${cp}/resources/images/${p.imgsavename}' onerror="this.style.display='none'" style="width:100%"alt="${cp}${p.imgsavename}">
 			</c:forEach>
 		</div>
 		<div id="info">
