@@ -294,7 +294,9 @@ CREATE TABLE wishlist
 	PRIMARY KEY (wishnum)
 );
 
+/* Create Sequences */
 
+create sequence wish_seq;
 
 
 /* Create Foreign Keys */

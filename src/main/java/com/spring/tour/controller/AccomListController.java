@@ -37,7 +37,6 @@ public class AccomListController {
 			wholeMap.put("category", category);
 		}
 		if(maxprice!=0) {
-			System.out.println(maxprice);
 			wholeMap.put("maxprice", maxprice);
 		}
 		

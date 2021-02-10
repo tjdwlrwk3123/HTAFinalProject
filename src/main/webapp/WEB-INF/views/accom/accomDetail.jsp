@@ -51,7 +51,7 @@
 	#accomDetail_wrapper #detail #info #infobox #mapbox{width:500px; height:330px; margin-top:20px; border:3px solid black; overflow: hidden;}
 	#accomDetail_wrapper #detail #info #infobox #mapbox #map{width:490px; height:300px; margin:auto;}
 	#accomDetail_wrapper #option .fotorama{width: 230px; display: inline-block;}
-	#accomDetail_wrapper #option .tableformOpt{border: 1px solid black; margin: 1px; padding: 2px;}
+	#accomDetail_wrapper #option .tableformOpt{border: 1px solid black; margin: 1px; padding: 2px; width: 600px;}
 	#accomDetail_wrapper #option .opt{display: inline-block; position: relative; bottom: 70px;}
 
 </style>
@@ -60,21 +60,19 @@
 <div id="payment">
 
 <!-- 결제할 금액 / 결제버튼 / 위시리스트 넣기 버튼 -->
-	<c:choose>
-		<c:when test=""><!-- option이 비엇으면 전체 티켓 개수 0 -->
-			<span style="font-size:30px; font-weight:700; color:royalblue;">매진된상품입니다</span>
-		</c:when>
-		<c:otherwise>
-			<span style="font-size:30px; font-weight:700; color:royalblue;" id="price">${detail.minp}원 <span style="font-size:15px;">부터</span></span>
-			<br>
-<!-- 			<span style="width:200px; margin:auto; align-content: center;"><input type="button" value="결제하기" id="payBtn"></span> -->
-			<!-- 옵션중 최저가 보여주기, 나중에 옵션 추가 제거 하면 금액 변동시키기-->
-		</c:otherwise>
-	</c:choose>
+<%-- 	<c:choose> --%>
+<%-- 		<c:when test=""><!-- option이 비엇으면 전체 티켓 개수 0 --> --%>
+<!-- 			<span style="font-size:30px; font-weight:700; color:royalblue;">매진된상품입니다</span> -->
+<%-- 		</c:when> --%>
+<%-- 		<c:otherwise> --%>
+<%-- 			<span style="font-size:30px; font-weight:700; color:royalblue;" id="price">${detail.minp}원 <span style="font-size:15px;">부터</span></span> --%>
+<!-- 			<br> -->
+<%-- 		</c:otherwise> --%>
+<%-- 	</c:choose> --%>
 	
 	<div id="wishbox">
 		<c:choose>
-			<c:when test="">
+			<c:when test="${wishlist==false}">
 				<input type="button" value="위시리스트추가" id="wishbtn">
 			</c:when>
 			<c:otherwise>
@@ -82,9 +80,9 @@
 			</c:otherwise>
 		</c:choose>
 		<!-- 일단보이게 해놓고 나중에 hidden 만들자 -->
-		<input type="hidden" value="" id="cate_number"><br>
-		<input type="hidden" value="" id="service_number"><br>
-		<input type="hidden" value="" id="user_id">
+		<input type="hidden" value="${service.cate_number }" id="cate_number"><br>
+		<input type="hidden" value="${service.accom_service_number }" id="service_number"><br>
+		<input type="hidden" value="${sessionScope.user_id }" id="user_id">
 	</div>
 
 </div>
@@ -92,13 +90,9 @@
 
 <div id="accomDetail_wrapper" >
 	<div id="title">
-		<!-- 제목 + 리뷰평점 -->
+		<!-- 제목  -->
 		<h3 style="font-weight:700;">${service.accom_name }</h3>
 		<input type="hidden" value="${accomNum }" id="accomNum">
-		<div id="starbox">
-			<span style="font-size:20px; font-weight:600;">평점 : 
-			</span>
-		</div>
 	</div>
 	<!-- 메인 사진들 -->
 	<div class="fotorama" data-nav="thumbs" data-width="500" data-heigth="500">
@@ -156,6 +150,10 @@
 				</div>
 			</c:if>
 			<div id="reviewbox">
+				<div id="starbox">
+					<span style="font-size:20px; font-weight:600;">평점 : 
+					</span>
+				</div>
 				<c:if test="">
 					<span>후기 </span><br>
 					<c:forEach var="r" items="">

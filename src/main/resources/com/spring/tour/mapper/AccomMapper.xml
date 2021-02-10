@@ -59,6 +59,8 @@
 	<select id="accom_service_detail" parameterType="int" resultType="accomService">
 		select * from accom_service where accom_service_number=#{accom_service_number}
 	</select>
+	<!-- 리뷰쿼리 만들어놓기 -->
+	
 	<select id="accom_option_detail" parameterType="hashmap" resultType="accomOption">
 		select * from accom_option where accom_service_number=#{accomNum} 
 		<![CDATA[
