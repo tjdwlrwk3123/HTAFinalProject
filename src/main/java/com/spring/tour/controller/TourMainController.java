@@ -20,7 +20,7 @@ public class TourMainController {
 	
 	@RequestMapping(value = "/tourMain")
 	public String tourMain() {
-		return "/tourPage/tourMain";
+		return ".tourPage.tourMain";
 	}
 
 	

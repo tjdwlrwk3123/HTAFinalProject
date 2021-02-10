@@ -27,7 +27,7 @@ public class TourSelectController {
 		if(tourType!=null || !tourType.equals("")) {
 			model.addAttribute("tourType",tourType);
 		}
-		return "/tourPage/tourSelect";
+		return ".tourPage.tourSelect";
 	}
 	
 	@RequestMapping(value = "/tourSelectList", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
