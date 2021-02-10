@@ -5,11 +5,11 @@
 
   <mapper namespace="com.spring.tour.mapper.WishlistMapper">
 	<insert id="insert" parameterType="wishlist">
-  		insert into wishlist values(#{wishnum},#{cate_number},#{service_number},#{user_id})
+  		insert into wishlist values(wish_seq.nextval,#{cate_number},#{service_number},#{user_id})
  	</insert>
   	
  	<select id="list" parameterType="string" resultType="wishlist">
-		with t as
+ 		with t as
 		 (
 		    select a.wishnum,a.cate_number,a.service_number,a.user_id, a.imgsavename,b.tour_name from
 		    (
