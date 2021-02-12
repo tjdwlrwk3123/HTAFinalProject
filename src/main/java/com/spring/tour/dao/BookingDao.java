@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.spring.tour.vo.AccomBookVo;
+import com.spring.tour.vo.TourBookVo;
 
 @Repository
 public class BookingDao {
@@ -20,5 +21,11 @@ public class BookingDao {
 	}
 	public int accomCount(String user_id) {
 		return sqlSession.selectOne(NAMESPACE+".accomBookingCount", user_id);
+	}
+	public List<TourBookVo> tourBookList(HashMap<String, Object> tourMap){
+		return sqlSession.selectList(NAMESPACE+".tourBookingList", tourMap);
+	}
+	public int tourCount(String user_id) {
+		return sqlSession.selectOne(NAMESPACE+".tourBookingCount", user_id);
 	}
 }

@@ -46,4 +46,7 @@ public class AccomDao {
 	public int howLong(HashMap<String, Object> map) {
 		return sqlSession.selectOne(NAMESPACE+".howLong", map);
 	}
+	public AccomOptionVo accomRoomDetail(int optNum) {
+		return sqlSession.selectOne(NAMESPACE+".accom_room_detail", optNum);
+	}
 }

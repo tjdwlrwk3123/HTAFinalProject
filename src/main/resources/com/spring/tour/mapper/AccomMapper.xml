@@ -86,4 +86,8 @@
 	<select id="accom_room_image" parameterType="int" resultType="image">
 		select * from image where cate_number=555 and general_number=#{general_number}
 	</select>
+	<!-- 개별 방에 해당하는 상세정보 -->
+	<select id="accom_room_detail" parameterType="int" resultType="accomOption">
+		select * from accom_option where accom_option_number=#{accom_option_number}
+	</select>
 </mapper>

@@ -19,6 +19,7 @@
   	<typeAlias type="com.spring.tour.vo.TourOptionVo" alias="touroption"/>
   	<typeAlias type="com.spring.tour.vo.TourReviewVo" alias="tourreview"/>
   	<typeAlias type="com.spring.tour.vo.TourSelectVo" alias="tourselect"/>
+  	<typeAlias type="com.spring.tour.vo.TourServiceVo" alias="tourservice"/>
   	
   </typeAliases>
   
