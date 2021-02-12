@@ -121,7 +121,7 @@ select * from
  	
  	<!-- 투어 옵션 정보만 따로  -->
  	<select id="tour_option_list" parameterType="int" resultType="touroption">
- 		select tour_price, tour_option_index, tour_option, tour_amount from tour_option where service_number =#{service_number} and <![CDATA[tour_amount > 0]]>
+ 		select tour_price, service_number, tour_option_index, tour_option, tour_amount from tour_option where service_number =#{service_number} and <![CDATA[tour_amount > 0]]>
  	</select>
  	
  	<!-- 투어에 딸린 이벤트 실황 사진들  -->
