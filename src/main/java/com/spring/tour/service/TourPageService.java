@@ -12,6 +12,7 @@ import com.spring.tour.vo.TourDetailVo;
 import com.spring.tour.vo.TourOptionVo;
 import com.spring.tour.vo.TourReviewVo;
 import com.spring.tour.vo.TourSelectVo;
+import com.spring.tour.vo.TourServiceVo;
 import com.spring.tour.vo.WishlistVo;
 
 
@@ -58,6 +59,14 @@ public class TourPageService {
 	//투어 디테일 상품이 위시에 있는지 확인
 	public WishlistVo tourDetailIsinWish(HashMap<String, Object> map){
 		return dao.tourDetailIsinWish(map);
+	}
+	
+	//투어 옵션번호,서비스번호에 따른 정보
+	public TourOptionVo getTourOption(int optNum) {
+		return dao.getTourOption(optNum);
+	}
+	public TourServiceVo getTourService(int serviceNum) {
+		return dao.getTourService(serviceNum);
 	}
 	/////////////////////////////////////////////////////////////
 	

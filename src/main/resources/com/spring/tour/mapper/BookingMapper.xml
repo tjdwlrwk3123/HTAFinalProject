@@ -11,6 +11,7 @@
 		    (
 		        select * from accom_book 
 		        where user_id=#{user_id}
+		        <!-- 끝날짜가 오늘날짜보다 앞인것들만 가져오기 -->
 		        order by accom_book_number desc
 		    ) a
 		)
@@ -18,5 +19,22 @@
 	</select>
 	<select id="accomBookingCount" parameterType="string" resultType="int">
 		select NVL(count(*),0) cnt from accom_book where user_id=#{user_id}
+	</select>
+	<!-- tour예약 리스트 -->
+	<select id="tourBookingList" parameterType="hashmap" resultType="tourBookVo">
+		select * from
+		(
+		    select a.*,rownum rnum from
+		    (
+		        select * from tour_book 
+		        where user_id=#{user_id}
+		        <!-- 끝날짜가 오늘날짜보다 앞인것들만 가져오기 -->
+		        order by tour_book_number desc
+		    ) a
+		)
+		<![CDATA[ where rnum>=#{startRow} and rnum<=#{endRow} ]]>
+	</select>
+	<select id="tourBookingCount" parameterType="string" resultType="int">
+		select NVL(count(*),0) cnt from tour_book where user_id=#{user_id}
 	</select>
 </mapper>

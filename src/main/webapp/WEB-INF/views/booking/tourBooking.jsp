@@ -9,60 +9,60 @@
 <!-- <script src="https://kit.fontawesome.com/b99e675b6e.js"></script> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
 <style type="text/css">
-	.accomBookingWrapper{
+	.tourBookingWrapper{
 		display: flex;
 		position: relative;
 	}
 	
-	.accomBookingWrapper .bookingSidebar{
+	.tourBookingWrapper .bookingSidebar{
 		position: fixed;
 		width: 200px;
 		height: 650px;
 		background: #4b4276;
 		padding: 30px 0;
 	}
-	.accomBookingWrapper .bookingSidebar h2{
+	.tourBookingWrapper .bookingSidebar h2{
 		color: #fff;
 		text-align: center;
 		margin-bottom: 30px;
 	}
-	.accomBookingWrapper .bookingSidebar ul li{
+	.tourBookingWrapper .bookingSidebar ul li{
 		padding: 15px;
 		border-bottom: 1px solid rgba(0,0,0,0.05);
 		border-top: 1px solid rgba(225,225,225,0.05);
 		list-style:none;
 		padding-left:0px;
 	}
-	.accomBookingWrapper .bookingSidebar ul li a{
+	.tourBookingWrapper .bookingSidebar ul li a{
 		color: #bdb8d7;
 		display: block;
 	}
-	.accomBookingWrapper .bookingSidebar ul li a .fas{
+	.tourBookingWrapper .bookingSidebar ul li a .fas{
 		width: 25px;
 	}
-	.accomBookingWrapper .bookingSidebar ul li a .far{
+	.tourBookingWrapper .bookingSidebar ul li a .far{
 		width: 25px;
 	}
-	.accomBookingWrapper .bookingSidebar ul li:hover{
+	.tourBookingWrapper .bookingSidebar ul li:hover{
 		background: #594f8d;
 	}
-	.accomBookingWrapper .bookingSidebar ul li:hover a{
+	.tourBookingWrapper .bookingSidebar ul li:hover a{
 		color:#fff;
 	}
-	.accomBookingWrapper .accomBookingMain{
+	.tourBookingWrapper .tourBookingMain{
 		width: 100%;
 		margin-left: 200px;
 		height: 710px;
 	}
-	.accomBookingWrapper .accomBookingMain #accomListWrap{
+	.tourBookingWrapper .tourBookingMain #tourListWrap{
 		height: 600px;
 	}
-	.accomBookingWrapper .accomBookingMain #accomListWrap .accomBookList{
+	.tourBookingWrapper .tourBookingMain #tourListWrap .tourBookList{
 		border-bottom: 1px solid rgba(0,0,0,0.05);
 		border-top: 1px solid rgba(225,225,225,0.05);
 		margin-left: 50px;
 	}
-	.accomBookingWrapper .accomBookingMain .accomPaging{
+	.tourBookingWrapper .tourBookingMain .tourPaging{
 		text-align: center;
 		
 	}
@@ -70,7 +70,7 @@
 </head>
 <body>
 
-<div class="accomBookingWrapper">
+<div class="tourBookingWrapper">
 	<div class="bookingSidebar">
 		<h2>예약내역</h2>
 		<ul>
@@ -80,33 +80,34 @@
 			<li><a href=""><i class="fas fa-plane-slash"></i>취소목록</a></li>
 		</ul>
 	</div>
-	<div class="accomBookingMain">
-		<div id="accomListWrap">
-			<h2 style="text-align: center;">숙소 예약내역</h2>
+	<div class="tourBookingMain">
+		<div id="tourListWrap">
+			<h2 style="text-align: center;">투어 예약내역</h2>
 			<c:forEach var="vo" items="${bookingList }" varStatus="status">
-				<div class="accomBookList">
+				<div class="tourBookList">
 					<div style="display: inline-block;">
-						<img src="${cp}/resources/gimgs/${image[status.index][0].imgsavename}" 
+						<img src="${cp}/resources/gimgs/1.png" 
 						style="width: 100px; height: 100px;">
+<%-- 						${image[status.index][0].imgsavename} --%>
 					</div>
 					<div style="display: inline-block;">
-						<h3><a href="${cp }/accomDetail?">${vo.service_name }</a></h3>
-						<span>${detail[status.index].accom_rooms_option }</span><br>
-						<span>예약날짜:</span><span>${vo.accom_startdate }~${vo.accom_enddate }</span>
+						<h3><a href="${cp }/tourDetail?">${vo.service_name }</a></h3>
+						<span>${option[status.index].tour_option }</span><br>
+						<span>예약날짜:</span><span>${vo.tour_startdate }~${vo.tour_enddate }</span>
 						<br>
 						<span>총 결제금액:</span><span>${vo.total_price }</span><span>원</span>
 					</div>
 				</div>
 			</c:forEach>
 		</div>
-		<div class="accomPaging">
+		<div class="tourPaging">
 			<c:forEach var="i" begin="${pu.startPageNum }" end="${pu.endPageNum }">
 				<c:choose>
 					<c:when test="${i==pu.pageNum }">
-						<a href="${cp }/accomBookingCheck?pageNum=${i}"><span style='color:blue'>[${i }]</span></a>
+						<a href="${cp }/tourBookingCheck?pageNum=${i}"><span style='color:blue'>[${i }]</span></a>
 					</c:when>
 					<c:otherwise>
-						<a href="${cp }/accomBookingCheck?pageNum=${i}"><span style='color:gray'>[${i }]</span></a>
+						<a href="${cp }/tourBookingCheck?pageNum=${i}"><span style='color:gray'>[${i }]</span></a>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
