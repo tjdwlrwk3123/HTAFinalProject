@@ -76,8 +76,14 @@
 		<ul>
 			<li><a href="${cp }/accomBookingCheck"><i class="fas fa-hotel"></i>숙소</a></li>
 			<li><a href="${cp }/tourBookingCheck"><i class="fas fa-ticket-alt"></i>투어/티켓</a></li>
-			<li><a href=""><i class="far fa-lightbulb"></i>지난여행/후기</a></li>
-			<li><a href=""><i class="fas fa-plane-slash"></i>취소목록</a></li>
+			<li>
+				<a><i class="far fa-lightbulb"></i>지난여행/후기</a>
+				<ul>
+					<li><a href="${cp }/accompastTrip">숙박</a></li>
+					<li><a href="${cp }/tourpastTrip">티켓/투어</a></li>
+				</ul>
+			</li>
+			<li><a href="${cp }/cancleTrip"><i class="fas fa-plane-slash"></i>취소목록</a></li>
 		</ul>
 	</div>
 	<div class="accomBookingMain">

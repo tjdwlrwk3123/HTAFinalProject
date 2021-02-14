@@ -21,10 +21,34 @@ public class BookingService {
 	public int accomCount(String user_id) {
 		return dao.accomCount(user_id);
 	}
+	//지난 숙소 목록
+	public List<AccomBookVo> accompastList(HashMap<String, Object> accomMap){
+		return dao.accompastList(accomMap);
+	}
+	public int accompastCount(String user_id) {
+		return dao.accompastCount(user_id);
+	}
+	//숙소 취소목록
+	public List<AccomBookVo> accomCancleList(String user_id){
+		return dao.accomCancleList(user_id);
+	}
+	
+	
 	public List<TourBookVo> tourBookList(HashMap<String, Object> tourMap){
 		return dao.tourBookList(tourMap);
 	}
 	public int tourCount(String user_id) {
 		return dao.tourCount(user_id);
+	}
+	//지난 투어목록
+	public List<TourBookVo> tourpastList(HashMap<String, Object> tourMap){
+		return dao.tourpastList(tourMap);
+	}
+	public int tourpastCount(String user_id) {
+		return dao.tourpastCount(user_id);
+	}
+	//투어 취소목록
+	public List<TourBookVo> tourCancleList(String user_id){
+		return dao.tourCancleList(user_id);
 	}
 }
