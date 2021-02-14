@@ -14,7 +14,7 @@ import com.spring.tour.vo.IdTokenVo;
 public class MemberUserDetail implements UserDetails{
 	private String user_id;
 	private String user_pass;
-	private String user_enabled;
+	private String user_condition;
 	private List<IdTokenVo> authoList;
 	
 	@Override
