@@ -59,6 +59,8 @@
 	<select id="accom_service_detail" parameterType="int" resultType="accomService">
 		select * from accom_service where accom_service_number=#{accom_service_number}
 	</select>
+	<!-- 리뷰쿼리 만들어놓기 -->
+	
 	<select id="accom_option_detail" parameterType="hashmap" resultType="accomOption">
 		select * from accom_option where accom_service_number=#{accomNum} 
 		<![CDATA[
@@ -83,5 +85,9 @@
 	</select>
 	<select id="accom_room_image" parameterType="int" resultType="image">
 		select * from image where cate_number=555 and general_number=#{general_number}
+	</select>
+	<!-- 개별 방에 해당하는 상세정보 -->
+	<select id="accom_room_detail" parameterType="int" resultType="accomOption">
+		select * from accom_option where accom_option_number=#{accom_option_number}
 	</select>
 </mapper>

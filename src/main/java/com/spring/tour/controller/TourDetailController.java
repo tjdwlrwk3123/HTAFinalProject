@@ -40,7 +40,7 @@ public class TourDetailController {
 			model.addAttribute("wishlist", true);
 		}
 		
-		return "/tourPage/tourDetail";
+		return ".tourPage.tourDetail";
 		
 		
 		

@@ -121,7 +121,7 @@ select * from
  	
  	<!-- 투어 옵션 정보만 따로  -->
  	<select id="tour_option_list" parameterType="int" resultType="touroption">
- 		select tour_price, tour_option_index, tour_option, tour_amount from tour_option where service_number =#{service_number} and <![CDATA[tour_amount > 0]]>
+ 		select tour_price, service_number, tour_option_index, tour_option, tour_amount from tour_option where service_number =#{service_number} and <![CDATA[tour_amount > 0]]>
  	</select>
  	
  	<!-- 투어에 딸린 이벤트 실황 사진들  -->
@@ -158,5 +158,12 @@ select * from
  	<select id="tour_review_list" parameterType="hashmap" resultMap="tour_review">
  		select * from (select * from review where cate_number =#{cate_number}and service_number = #{service_number} order by review_number desc)a, 
 		(select img_num, imgorgname, imgsavename, general_number, cate_number categorynum from image where cate_number =11 and general_number=#{service_number})b where a.service_number= b.general_number
+ 	</select>
+ 	<!-- //////////기홍 쿼리 추가///////// -->
+ 	<select id="get_tourService" parameterType="int" resultType="touroption">
+ 		select * from tour_option where tour_option_number=#{tour_option_number}
+ 	</select>
+ 	<select id="get_tour_detail" parameterType="int" resultType="tourservice">
+ 		select * from tour_service where service_number=#{service_number}
  	</select>
   </mapper>

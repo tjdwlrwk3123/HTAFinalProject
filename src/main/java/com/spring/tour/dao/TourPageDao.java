@@ -10,9 +10,9 @@ import org.springframework.stereotype.Repository;
 import com.spring.tour.vo.ImageVo;
 import com.spring.tour.vo.TourDetailVo;
 import com.spring.tour.vo.TourOptionVo;
-import com.spring.tour.vo.TourPageVo;
 import com.spring.tour.vo.TourReviewVo;
 import com.spring.tour.vo.TourSelectVo;
+import com.spring.tour.vo.TourServiceVo;
 import com.spring.tour.vo.WishlistVo;
 
 
@@ -23,10 +23,10 @@ public class TourPageDao {
 	private SqlSession sqlsession;
 	
 	private final String NAMESPACE = "com.spring.tour.mapper.TourPageMapper";
-	
+
 	//////////////////////////////////////////
 	//투어 첫페이지 데이터 
-	public List<TourPageVo> tourMainList(){
+	public List<TourSelectVo> tourMainList(){
 		return sqlsession.selectList(NAMESPACE+".mainlist");
 	}
 	
@@ -36,6 +36,9 @@ public class TourPageDao {
 	public List<TourSelectVo> tourSelectList(HashMap<String, Object> map){
 		return sqlsession.selectList(NAMESPACE+".selectlist", map);
 	}
+	
+	
+	
 	//////////////////////////////////////////////
 	//투어 상세 페이지 데이터
 	public TourDetailVo tourDetailList(HashMap<String, Object> map){
@@ -60,5 +63,12 @@ public class TourPageDao {
 	
 	public WishlistVo tourDetailIsinWish(HashMap<String, Object> map){
 		return sqlsession.selectOne(NAMESPACE+".tour_detail_isinwish",map);
+	}
+	//투어 옵션번호에 해당하는 정보
+	public TourOptionVo getTourOption(int optNum) {
+		return sqlsession.selectOne(NAMESPACE+".get_tourService", optNum);
+	}
+	public TourServiceVo getTourService(int serviceNum) {
+		return sqlsession.selectOne(NAMESPACE+".get_tour_detail", serviceNum);
 	}
 }

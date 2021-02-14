@@ -9,6 +9,8 @@
   	<typeAlias type="com.spring.tour.vo.Accom_serviceVo" alias="accomService"/>
   	<typeAlias type="com.spring.tour.vo.AccomInfoVo" alias="accomInfo"/>
   	<typeAlias type="com.spring.tour.vo.AccomOptionVo" alias="accomOption"/>
+  	<typeAlias type="com.spring.tour.vo.AccomBookVo" alias="accomBookVo"/>
+  	<typeAlias type="com.spring.tour.vo.TourBookVo" alias="tourBookVo"/>
   	<typeAlias type="com.spring.tour.vo.User_InfoVo" alias="userinfo"/>
   	<typeAlias type="com.spring.tour.vo.IdTokenVo" alias="idtoken"/>
   	<typeAlias type="com.spring.tour.vo.ImageVo" alias="image"/>
@@ -17,6 +19,7 @@
   	<typeAlias type="com.spring.tour.vo.TourOptionVo" alias="touroption"/>
   	<typeAlias type="com.spring.tour.vo.TourReviewVo" alias="tourreview"/>
   	<typeAlias type="com.spring.tour.vo.TourSelectVo" alias="tourselect"/>
+  	<typeAlias type="com.spring.tour.vo.TourServiceVo" alias="tourservice"/>
   	
   </typeAliases>
   
@@ -26,6 +29,7 @@
 			<mapper resource="com/spring/tour/mapper/TourPageMapper.xml"/>
 			<mapper resource="com/spring/tour/mapper/MypageMapper.xml"/>
 			<mapper resource="com/spring/tour/mapper/AccomMapper.xml"/>
+			<mapper resource="com/spring/tour/mapper/BookingMapper.xml"/>
 
 			<mapper resource="com/spring/tour/mapper/UserMapper.xml"/>
 

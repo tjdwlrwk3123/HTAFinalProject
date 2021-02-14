@@ -1,10 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+
+
 <style>
 	#adultNum{
 		-ms-user-select: none;
@@ -44,13 +41,13 @@
 		margin-left:-75px;	
 		z-index: 200;
 	}
+	#accomWrap{width: 1000px; height: 1000px;}
 </style>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
-</head>
-<body>
+
 
 
 
@@ -80,7 +77,7 @@
 <input type="button" value="검색" id="searchAccom">
 </div>
 <br>
-<div id="accomWrap" style="width: 1000px;">
+<div id="accomWrap">
 <div id="accomFilter" style="display: inline-block; width: 500px; float: left;">
 <div>
 종류<br>
@@ -193,11 +190,14 @@ var totcnt=1; //총 인원수
 			for(let i=0;i<data.list.length;i++){
 				var accomNum=data.list[i].accom_service_number;
 				var accomName=data.list[i].accom_name;
+				var cate_number=data.list[i].cate_number;
 				var minprice=data.price[i].MINP;
 				var maxprice=data.price[i].MAXP;
 				console.log(accomName);
 				console.log(minprice);
-				var content="<a href='${cp}/accomDetail?accomNum="+accomNum+"&startDate="+startDate+"&endDate="+endDate+"&count="+count+"'>"+
+				var content="<a href='${cp}/accomDetail?accomNum="+accomNum+
+						"&startDate="+startDate+"&endDate="+endDate+
+						"&count="+count+"&cate_number="+cate_number+"'>"+
 			"<section>"+
 				"<img src='${cp}/resources/images/1.png'>"+
 				"<h5>"+accomName+"</h5>"+
@@ -319,11 +319,14 @@ var totcnt=1; //총 인원수
 				  for(let i=0;i<data.list.length;i++){
 					  	var accomNum=data.list[i].accom_service_number;
 						var accomName=data.list[i].accom_name;
+						var cate_number=data.list[i].cate_number;
 						var minprice=data.price[i].MINP;
 						var maxprice=data.price[i].MAXP;
 						console.log(accomName);
 						console.log(minprice);
-						var content="<a href='${cp}/accomDetail?accomNum="+accomNum+"&startDate="+startDate+"&endDate="+endDate+"&count="+count+"'>"+
+						var content="<a href='${cp}/accomDetail?accomNum="+
+								accomNum+"&startDate="+startDate+"&endDate="+
+								endDate+"&count="+count+"&cate_number="+cate_number+"'>"+
 						"<section>"+
 							"<img src='${cp}/resources/images/1.png'>"+
 							"<h5>"+accomName+"</h5>"+
@@ -403,5 +406,3 @@ var totcnt=1; //총 인원수
 	
 	
 </script>
-</body>
-</html>

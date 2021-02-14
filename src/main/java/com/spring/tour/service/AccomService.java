@@ -44,4 +44,7 @@ public class AccomService {
 	public int howLong(HashMap<String, Object> map) {
 		return dao.howLong(map);
 	}
+	public AccomOptionVo accomRoomDetail(int optNum) {
+		return dao.accomRoomDetail(optNum);
+	}
 }

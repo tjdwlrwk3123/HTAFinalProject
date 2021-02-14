@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,8 @@ public class AccomDetailController {
 			@RequestParam(value="endDate") Date endDate,
 			@RequestParam(value="accomNum") int accomNum,
 			@RequestParam(value="count") int count){
+
+		
 		HashMap<String, Object> map=new HashMap<String, Object>();
 		map.put("accomNum", accomNum);
 		map.put("count", count);
