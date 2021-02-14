@@ -12,7 +12,7 @@
 		<sec:intercept-url pattern="/partner/**" access="hasRole('ROLE_PARTNER')"/>
 		<sec:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
 		<sec:intercept-url pattern="/**" access="permitAll"/>
-		<sec:form-login login-page="/login" authentication-success-handler-ref="loginSuccessHandler"/>
+		<sec:form-login login-page="/loginCheck" authentication-success-handler-ref="loginSuccessHandler"/>
 		<sec:logout logout-url="/logout" invalidate-session="true" logout-success-url="/"/>
 		<sec:form-login/>
 	</sec:http>

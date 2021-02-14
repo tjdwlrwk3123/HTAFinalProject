@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,6 +16,14 @@
 <a href='${cp }/tourSelect'>tourSelect</a>
 <a href='${cp }/accomlist'>숙소페이지</a>
 <a href='${cp }/userterms'>회원 테스트페이지</a>
-<a href='${cp }/userlogin'>로그인 테스트페이지</a>
+<c:choose>
+	<c:when test="${empty sessionScope.user_id }">
+		<a href='${cp }/userlogin'>로그인 테스트페이지</a>
+	</c:when>
+	<c:otherwise>
+		<h3>${sessionScope.user_id }</h3>
+		<a href='${cp }/logout'>로그아웃</a>
+	</c:otherwise>
+</c:choose>
 </body>
 </html>

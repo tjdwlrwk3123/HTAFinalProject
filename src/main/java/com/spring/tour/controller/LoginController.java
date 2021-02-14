@@ -1,4 +1,4 @@
-package com.spring.tour.login;
+package com.spring.tour.controller;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.spring.tour.login.Login_Interface;
 import com.spring.tour.vo.User_InfoVo;
 
 @Controller
@@ -18,9 +19,9 @@ public class LoginController {
 	@Autowired
 	private Login_Interface login_Interface;
 	
-	@RequestMapping("/login")
+	@RequestMapping("/userlogin")
 	public String login() {
-		return ".userjoin .login";
+		return ".userjoin.userlogin";
 	}
 	
 	//로그인 처리

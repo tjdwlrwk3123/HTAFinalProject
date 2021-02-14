@@ -17,7 +17,7 @@ public class Login_Impl implements Login_Interface{
 	public boolean loginCheck(User_InfoVo vo, HttpSession session) {
 		boolean result=dao.loginCheck(vo);
 		if(result==true) {
-			session.setAttribute("userid", vo.getUser_id());
+			session.setAttribute("user_id", vo.getUser_id());
 		}
 		return result;
 	}
