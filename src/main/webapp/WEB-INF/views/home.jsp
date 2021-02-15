@@ -17,6 +17,7 @@
 <a href='${cp }/accomlist'>숙소페이지</a>
 <a href="${cp }/accomBookingCheck">예약내역(회원)</a>
 <a href='${cp }/userterms'>회원 테스트페이지</a>
+<a href='${cp }/adminchat'>관리자 채팅 페이지</a>
 <c:choose>
 	<c:when test="${empty sessionScope.user_id }">
 		<a href='${cp }/userlogin'>로그인 테스트페이지</a>

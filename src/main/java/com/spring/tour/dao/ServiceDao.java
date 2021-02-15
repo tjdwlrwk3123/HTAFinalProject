@@ -16,7 +16,7 @@ import com.spring.tour.vo.TourServiceVo;
 public class ServiceDao {
 	@Autowired private SqlSession sqlSession;
 	private static String NAMESPACE="com.spring.tour.mapper.ServiceMapper";
-	public List<Accom_serviceVo> selectAccomList(String user_id){
+	public List<Accom_serviceVo> selectAccomList(String user_id){ 
 		return sqlSession.selectList(NAMESPACE+".selectAccomList",user_id);
 	}
 	public List<TourServiceVo> selectTourList(String user_id){

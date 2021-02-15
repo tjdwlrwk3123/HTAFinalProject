@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>layout.jsp</title>
+<script src="https://kit.fontawesome.com/174a2d5b3b.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="/tour/resources/css/tourSelect.css">
 <link rel="stylesheet" type="text/css" href="/tour/resources/css/main.css">
 <script type="text/javascript" src="/tour/resources/js/jquery-3.5.1.min.js"></script>

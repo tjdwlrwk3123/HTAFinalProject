@@ -83,7 +83,7 @@ public class ServiceController {
 				e.printStackTrace();
 				return ".login"; 
 			}
-			String f=facility[0];
+			String f=facility[0]; 
 			for (int i = 1; i < facility.length; i++) {
 				f+=","+facility[i];
 			}
