@@ -143,14 +143,14 @@
 			writeResponse1(event.data);
 		}
 		ws1.onclose=function(event){
-			writeResponse1("대화 종료");
+			writeResponse1("SYSTEM대화 종료");
 		}
 	}
 	
 	
 	function openSocket2(){
 		
-		writeResponse2("접속중...");
+		writeResponse2("SYSTEM접속중...");
 	
 		if(ws2!= undefined && ws.readyState != WebSocket.CLOSED){
 			writeResponse2("ws WebSocket is already opended");
@@ -173,14 +173,14 @@
 			writeResponse2(event.data);
 		}
 		ws2.onclose=function(event){
-			writeResponse2("대화 종료");
+			writeResponse2("SYSTEM대화 종료");
 		}
 		////////
 	
 	}
 	function openSocket3(){
 		
-		writeResponse3("접속중...");
+		writeResponse3("SYSTEM접속중...");
 	
 		if(ws3!= undefined && ws.readyState != WebSocket.CLOSED){
 			writeResponse3("ws WebSocket is already opended");
@@ -203,7 +203,7 @@
 			writeResponse3(event.data);
 		}
 		ws3.onclose=function(event){
-			writeResponse3("대화 종료");
+			writeResponse3("SYSTEM대화 종료");
 		}
 		////////
 	
@@ -233,7 +233,7 @@
 			writeResponse4(event.data);
 		}
 		ws4.onclose=function(event){
-			writeResponse4("대화 종료");
+			writeResponse4("SYSTEM대화 종료");
 		}
 		////////
 	
@@ -244,11 +244,14 @@
 	//보내기만 하면 내가 서버여서 알아서 처리해서 뿌려줌
 	
 	function send(){
-		if(document.getElementById("messageinput").value==""){
+		var text = document.getElementById("messageinput").value;
+		if(text==""){
+			console.log("잉1?");
 			return;
 		}
-		var text = document.getElementById("messageinput").value+
-		","+document.getElementById("sender").value;
+			console.log("잉2?");
+		text= text+","+document.getElementById("sender").value;
+		console.log("text는 "+text);
 		
 		var who = document.getElementById("who").value;
 		if(who=='customer1'){

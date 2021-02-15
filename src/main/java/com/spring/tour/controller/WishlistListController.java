@@ -23,7 +23,7 @@ public class WishlistListController {
 	@RequestMapping(value = "/wishlist")
 	public String wishlist(@RequestParam(name = "user_id") String user_id, Model model) {
 		model.addAttribute("user_id",user_id);
-		return "/wishlist/wishList";
+		return ".wishlist.wishList";
 	}
 	
 	

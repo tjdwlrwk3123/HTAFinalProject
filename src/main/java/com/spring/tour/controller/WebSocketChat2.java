@@ -55,7 +55,7 @@ public class WebSocketChat2 {
 		try {
 			for(Session session : WebSocketChat2.sessionList) {
 				if(!self.getId().equals(session.getId())) {
-					session.getBasicRemote().sendText(sender+" : "+message);
+					session.getBasicRemote().sendText(message);
 				}
 			}
 		}catch(Exception e) {
@@ -74,7 +74,6 @@ public class WebSocketChat2 {
 		if(cnt++==0) {
 			username=message;
 		}
-		System.out.println(message);
 		
 		String sender = message.split(",")[1];
 		message=message.split(",")[0];

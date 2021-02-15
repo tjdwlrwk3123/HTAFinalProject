@@ -79,7 +79,6 @@ public class WebSocketChat1 {
 		if(cnt++==0) {
 			username=message;
 		}
-		System.out.println("¸Ş¼¼Áö!! : "+message);
 		
 		String sender = message.split(",")[1];
 		message=message.split(",")[0];	

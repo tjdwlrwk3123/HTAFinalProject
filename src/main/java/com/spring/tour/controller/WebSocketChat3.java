@@ -56,7 +56,7 @@ public class WebSocketChat3 {
 		try {
 			for(Session session : WebSocketChat3.sessionList) {
 				if(!self.getId().equals(session.getId())) {
-					session.getBasicRemote().sendText(sender+" : "+message);
+					session.getBasicRemote().sendText(message);
 				}
 			}
 		}catch(Exception e) {

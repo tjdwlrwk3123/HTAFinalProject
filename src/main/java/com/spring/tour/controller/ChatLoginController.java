@@ -30,24 +30,15 @@ public class ChatLoginController {
 	@Autowired
 	private ChatService service;
 	
-	@RequestMapping("/chat")
-	public String chat() {
-		return "chat";
-	}
-	@RequestMapping("/adminchat")
-	public String adminchat() {
-		return "adminchat";
-	}
-	
-	@RequestMapping(value = "/adminLogin.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/adminchat", method = RequestMethod.GET)
 	public String adminLogin(HttpServletRequest req, Model model) { // 관리자는 따로 접근하도록
 		HttpSession session = req.getSession();
 		session.setAttribute("id" ,"admin");
 		model.addAttribute("username","admin");
-		return "/chat/adminChat";
+		return "/chat/adminchat";
 	}
 	
-	@RequestMapping(value = "/login.do", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE} )
+	@RequestMapping(value = "/login.do", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
 	@ResponseBody
 	public HashMap<String, Object> login(HttpServletRequest req, Model model) {
 		HttpSession session = req.getSession();
@@ -65,6 +56,8 @@ public class ChatLoginController {
 			
 			map.put("code", "success"); // 여기까지 진행이 잘 되면 성공
 			map.put("username", username);
+			
+			System.out.println("username : "+username);
 			
 			return map;
 

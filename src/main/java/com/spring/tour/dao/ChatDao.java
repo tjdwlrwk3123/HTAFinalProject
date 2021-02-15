@@ -16,7 +16,7 @@ public class ChatDao {
 	@Autowired
 	private SqlSession sqlsession;
 	
-	private final String NAMESPACE = "com.test.finalproject.mapper.ChatMapper";
+	private final String NAMESPACE = "com.spring.tour.mapper.ChatMapper";
 	
 	public ChatVo check(String username) {
 		return sqlsession.selectOne(NAMESPACE+".check",username);
