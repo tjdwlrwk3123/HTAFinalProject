@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
 <style>
@@ -54,6 +55,11 @@
 	.accomSelectSection{width:500px; height:200px;}
 	.accomSelectSection .accomSelectImage{display:inline-block; margin-right:10px;}
 	.accomSelectSection .accomSelectInfo{display:inline-block;}
+	
+	#accomOrderBox {
+		
+	}
+	
 	
 </style>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -134,7 +140,15 @@
 <div id="slider-range" style="width: 300px;"></div>
 
 </div>
-<div id="accomResult" style="display: inline-block; width: 400px; float: left;">
+
+<div id="accomResult" style="display: inline-block; width: 500px; float: left;">
+	<div id="accomOrderBox" style="text-align: center;">
+	<input type="hidden" id="classification">
+		<a href="javascript:orderChange(1);"<c:if test='${classification==1}'>style="color:gray;"</c:if>>추천순</a>
+		<a href="javascript:orderChange(2);"<c:if test='${classification==2}'>style="color:gray;"</c:if>>리뷰많은순</a>
+		<a href="javascript:orderChange(3);"<c:if test='${classification==3}'>style="color:gray;"</c:if>>가격낮은순</a>
+		<a href="javascript:orderChange(4);"<c:if test='${classification==4}'>style="color:gray;"</c:if>>가격높은순</a>
+	</div>
 	<div id="accom">
 		
 	</div>
@@ -201,44 +215,55 @@ var totcnt=1; //총 인원수
 			var conven=[]; //편의서비스 배열
 			var category=[]; //카테고리 배열
 			$("#accom").empty();
-			for(let i=0;i<data.list.length;i++){
-				var accomNum=data.list[i].accom_service_number;
-				var accomName=data.list[i].accom_name;
-				var cate_number=data.list[i].cate_number;
-				var minprice=data.price[i].MINP;
-				var maxprice=data.price[i].MAXP;
-				console.log(accomName);
-				console.log(minprice);
-				var content="<a href='${cp}/accomDetail?accomNum="+accomNum+
-						"&startDate="+startDate+"&endDate="+endDate+
-						"&count="+count+"&cate_number="+cate_number+"'>"+
-			"<section class='accomSelectSection'>"+
-				"<div class='accomSelectImage'>"+
-				"<img src='${cp}/resources/images/1.png'>"+
-				"</div>"+
-				"<div class='accomSelectInfo'>"+
-				"<h3>"+accomName+"</h3>"+
-				"<p>숙소정보</p>"+
-				"<p>1박 총 "+minprice*count+"원</p>"+
-				"<p style='font-size: 0.7em;'>1인당 "+minprice+"원</p>"+
-				"</div>"+
-			"</section>"+
-			"</a>";
+			if(data.list.length!=0){
+				for(let i=0;i<data.list.length;i++){
+					var accomNum=data.list[i].accom_service_number;
+					var accomName=data.list[i].accom_name;
+					var cate_number=data.list[i].cate_number;
+					var minprice=data.list[i].minp;
+					var maxprice=data.list[i].maxp;
+					console.log(accomName);
+					console.log(minprice);
+					var content="<a href='${cp}/accomDetail?accomNum="+accomNum+
+							"&startDate="+startDate+"&endDate="+endDate+
+							"&count="+count+"&cate_number="+cate_number+"'>"+
+				"<section class='accomSelectSection'>"+
+					"<div class='accomSelectImage'>"+
+					"<img src='${cp}/resources/images/1.png'>"+
+					"</div>"+
+					"<div class='accomSelectInfo'>"+
+					"<h3>"+accomName+"</h3>"+
+					"<p>숙소정보</p>"+
+					"<p>1박 총 "+minprice+"원</p>"+
+					"<p style='font-size: 0.7em;'>1인당 "+parseInt(minprice/count)+"원</p>"+
+					"</div>"+
+				"</section>"+
+				"</a>";
+					$("#accom").append(content);
+					if(wMinprice>minprice){
+						wMinprice=minprice;
+					}
+					if(wMaxprice<maxprice){
+						wMaxprice=maxprice;
+					}
+				}
+			}else{
+				var content=
+				"<section class='accomSelectSection'>"+
+				"<img src='${cp}/resources/images/3.png'>"+
+				"<h3>검색결과가 없습니다...</h3>"
+				"</section>";
 				$("#accom").append(content);
-				if(wMinprice>minprice){
-					wMinprice=minprice;
-				}
-				if(wMaxprice<maxprice){
-					wMaxprice=maxprice;
-				}
 			}
 			var sliderMaxprice=wMaxprice;
 			
 			//함수 중복 실행 방지를 위해 언바인드 후 다시 바인드(1번만 실행)
 			$("input[type='checkbox']").unbind("click").bind("click",function(){
+				count=$("#totCount").text().replace(/[^0-9]/g,"");
 				facility=[];
 				conven=[];
 				category=0;
+				
 				
 				 $("input[name='fck']:checked").each(function(i){ //시설에 체크된 리스트 저장
 		             facility.push($(this).val());
@@ -262,6 +287,7 @@ var totcnt=1; //총 인원수
 			});
 			
 			$("input[type='radio']").unbind("click").bind("click",function(){
+				count=$("#totCount").text().replace(/[^0-9]/g,"");
 				facility=[];
 				conven=[];
 				category=0;
@@ -287,17 +313,17 @@ var totcnt=1; //총 인원수
 				 
 			});
 			
-			$( "#slider-range" ).slider({ //가격 슬라이더
-			      range: "min",
-			      min: wMinprice*count,
-			      max: wMaxprice*count,
-			      value: wMaxprice*count,
+			$( "#slider-range" ).slider({ //가격 슬라이더 
+				range: "min",
+			      min: wMinprice,
+			      max: wMaxprice,
+			      value: wMaxprice,
 			      step : 4000,
 			      slide: function( event, ui ) {
 			        $( "#amount" ).val(" ~ " + ui.value + "원" );
 			      },
 			      stop:function(value,ui){
-			    	  sliderMaxprice=parseInt(ui.value/count);
+			    	  sliderMaxprice=parseInt(ui.value);
 			    	  var param= {
 								 "startDate" : startDate,
 								 "endDate" : endDate,
@@ -305,41 +331,74 @@ var totcnt=1; //총 인원수
 								 "facility" : facility,
 								 "conven" : conven,
 								 "category" : category,
-								 "maxprice" : sliderMaxprice
+								 "maxprice" : sliderMaxprice,
 						 }
 			    	  console.log(param);
 			    	  getfilter(param);
 			      }
 			    });
+			
 			$( "#amount" ).val(" ~ " + $( "#slider-range" ).slider("value")+"원" );
+		})
+		.fail(function(){
+		    $("#accom").empty();
+		    var content=
+			"<section class='accomSelectSection'>"+
+				"<img src='${cp}/resources/images/3.png'>"+
+				"<h3>검색결과가 없습니다...</h3>"
+			"</section>";
+			$("#accom").append(content);
 		});
 	}
 	
+	function orderChange(classification){ // 정렬 순서 변할때 
+		var startDate=$("#d1").val();
+		var endDate=$("#d2").val();
+		var count=$("#totCount").text().replace(/[^0-9]/g,"");
+		var facility=[];
+		var conven=[];
+		var category=0;
+		var maxprice=$("#amount").val().replace(/[^0-9]/g,"");
+		
+		 $("input[name='fck']:checked").each(function(i){ //시설에 체크된 리스트 저장
+             facility.push($(this).val());
+         });
+		 $("input[name='cck']:checked").each(function(i){ //편의서비스에 체크된 리스트 저장
+             conven.push($(this).val());
+         });
+         category=$("input[name='gck']:checked").val();
+		
+		var param={
+				"startDate" : startDate,
+				 "endDate" : endDate,
+				 "count" : count,
+				 "facility" : facility,
+				 "conven" : conven,
+				 "category" : category,
+				 "maxprice" : maxprice,
+				 "classification" : classification
+		}
+		getfilter(param);
+	}
+	
 	function getfilter(param){
-// 		$.getJSON('${cp}/accomSelect_list',param, function(data) {
-// 			for(let i=0;i<data.list.length;i++){
-// 				var accomName=data.list[i].accom_name;
-// 				var minprice=data.price[i].MINP;
-// 				var maxprice=data.price[i].MAXP;
-// 				console.log(accomName);
-// 				console.log(minprice);
-// 			}
-// 		});
+
 		$.ajax({
-			  url: '${cp}/accomSelect_list',
-			  dataType: 'json',
-			  data: param,
-			  success: function(data) {
-				  $("#accom").empty();
-				  var count=$("#totCount").text().replace(/[^0-9]/g,"");
-				  var startDate=$("#d1").val();
-					var endDate=$("#d2").val();
-				  for(let i=0;i<data.list.length;i++){
-					  	var accomNum=data.list[i].accom_service_number;
+			url: '${cp}/accomSelect_list',
+			dataType: 'json',
+			data: param,
+			success: function(data) {
+				$("#accom").empty();
+				var count=$("#totCount").text().replace(/[^0-9]/g,"");
+				var startDate=$("#d1").val();
+				var endDate=$("#d2").val();
+				if(data.list.length!=0){
+					for(let i=0;i<data.list.length;i++){
+					 	var accomNum=data.list[i].accom_service_number;
 						var accomName=data.list[i].accom_name;
 						var cate_number=data.list[i].cate_number;
-						var minprice=data.price[i].MINP;
-						var maxprice=data.price[i].MAXP;
+						var minprice=data.list[i].minp;
+						var maxprice=data.list[i].maxp;
 						console.log(accomName);
 						console.log(minprice);
 						var content="<a href='${cp}/accomDetail?accomNum="+
@@ -352,25 +411,32 @@ var totcnt=1; //총 인원수
 							"<div class='accomSelectInfo'>"+
 							"<h3>"+accomName+"</h3>"+
 							"<p>숙소정보</p>"+
-							"<p>1박 총 "+minprice*count+"원</p>"+
-							"<p style='font-size: 0.7em;'>1인당 "+minprice+"원</p>"+
+							"<p>1박 총 "+minprice+"원</p>"+
+							"<p style='font-size: 0.7em;'>1인당 "+parseInt(minprice/count)+"원</p>"+
 							"</div>"+
 						"</section>"+
 						"</a>";
 						$("#accom").append(content);
 					}
-			  },
-			  error: function(XMLHttpRequest, textStatus, errorThrown) {
-			    console.log(textStatus, errorThrown);
-			    $("#accom").empty();
-			    var content="<a href=''>"+
-				"<section class='accomSelectSection'>"+
-					"<img src='${cp}/resources/images/3.png'>"+
-					"<h3>검색결과가 없습니다...</h3>"
-				"</section>"+
-				"</a>";
-				$("#accom").append(content);
-			  }
+				}else{
+					var content=
+					"<section class='accomSelectSection'>"+
+						"<img src='${cp}/resources/images/3.png'>"+
+						"<h3>검색결과가 없습니다...</h3>"
+					"</section>";
+					$("#accom").append(content);
+				}
+			},
+		  error: function(XMLHttpRequest, textStatus, errorThrown) {
+		    console.log(textStatus, errorThrown);
+		    $("#accom").empty();
+		    var content=
+			"<section class='accomSelectSection'>"+
+				"<img src='${cp}/resources/images/3.png'>"+
+				"<h3>검색결과가 없습니다...</h3>"
+			"</section>";
+			$("#accom").append(content);
+		  }
 		});
 	}
 	

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.spring.tour.vo.AccomInfoVo;
 import com.spring.tour.vo.AccomOptionVo;
+import com.spring.tour.vo.AccomServiceReviewJoinVo;
 import com.spring.tour.vo.Accom_serviceVo;
 import com.spring.tour.vo.ImageVo;
 
@@ -18,7 +19,7 @@ public class AccomDao {
 	private SqlSession sqlSession;
 	private final String NAMESPACE="com.spring.tour.mapper.AccomMapper";
 	
-	public List<Accom_serviceVo> accom_service_list(HashMap<String, Object> fcMap){
+	public List<AccomServiceReviewJoinVo> accom_service_list(HashMap<String, Object> fcMap){
 		return sqlSession.selectList(NAMESPACE+".accom_search", fcMap);
 	}
 	

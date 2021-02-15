@@ -4,16 +4,22 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.spring.tour.mapper.AccomMapper">
-	<select id="accom_search" resultType="accomService" parameterType="hashmap">
-		select * from accom_service where
+	<select id="accom_search" resultType="arJoin" parameterType="hashmap">
+		select accom_service_number,cate_number,accom_name,avgpoint,rcnt,min(accom_price) minp,max(accom_price) maxp
+		from(
+		select accom_service_number,accom_service.cate_number,accom_name,nvl(avg(star_point),0) avgpoint,count(review_number) rcnt 
+		from accom_service left join review
+		on accom_service_number=service_number
+		group by accom_service_number,accom_service.cate_number,accom_name
+		having
 		accom_service_number in(
 		select accom_service_number from accom_option left join accom_book 
 		on accom_option.accom_option_number = accom_book.accom_option_number
 		<where>
 		<![CDATA[
-		not (accom_startdate < #{endDate}
+		(not (accom_startdate < #{endDate}
 		and accom_enddate > #{startDate})
-		or (accom_startdate is null and accom_enddate is null)
+		or (accom_startdate is null and accom_enddate is null))
 		and accom_max_people>=#{count}
 		)
 		]]>
@@ -45,7 +51,21 @@
 		and cate_number=#{category}
 		</if>
 		</where>
-		order by accom_service_number
+		) natural join accom_option group by accom_service_number,cate_number,accom_name,avgpoint,rcnt
+		<if test="classification!=null">
+			<if test="classification==1">
+				order by avgpoint desc
+			</if>
+			<if test="classification==2">
+				order by rcnt desc
+			</if>
+			<if test="classification==3">
+				order by minp
+			</if>
+			<if test="classification==4">
+				order by maxp desc
+			</if>
+		</if>
 	</select>
 	<select id="accom_minprice_search" parameterType="hashmap" resultType="hashmap">
 		select min(accom_price) minp,max(accom_price) maxp from accom_option group by accom_service_number
@@ -53,6 +73,14 @@
 		<foreach collection="snum" item='item' index='i' open="(" close=")" separator=",">
 		 #{item}
 		</foreach>
+		<if test="classification!=null">
+			<if test="classification==3">
+				order by minp
+			</if>
+			<if test="classification==4">
+				order by maxp desc
+			</if>
+		</if>
 	</select>
 	<select id="accom_info_detail" parameterType="int" resultType="accomInfo">
 		select * from accom_info where accom_service_number=#{accom_service_number}

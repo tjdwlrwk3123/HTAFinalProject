@@ -52,6 +52,10 @@ insert into accom_book values(5,'dd',4,'bÈ£ÅÚ','2021-02-09','2021-02-10',null,nu
 update accom_book set payment_condition='°áÁ¦¿Ï·á';
 update accom_book set payment_condition='°áÁ¦Ãë¼Ò' where accom_book_number=5;
 
+insert into review values(1,'dd',2,4,'±Â','1.png',null,2);
+insert into review values(2,'ee',2,5,'±Â±Â','2.png',null,2);
+insert into review values(3,'ff',2,1,'º°·Î','1.png',null,2);
+insert into review values(4,'dd',2,4,'±Â','1.png',null,2);
 
 insert into image values(1,'aa.png','123123de3131as23 aa.png',1,2);
 insert into image values(2,'bb.png','123123de3131as23 bb.png',1,2);

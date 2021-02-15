@@ -10,6 +10,7 @@
   	<typeAlias type="com.spring.tour.vo.AccomInfoVo" alias="accomInfo"/>
   	<typeAlias type="com.spring.tour.vo.AccomOptionVo" alias="accomOption"/>
   	<typeAlias type="com.spring.tour.vo.AccomBookVo" alias="accomBookVo"/>
+  	<typeAlias type="com.spring.tour.vo.AccomServiceReviewJoinVo" alias="arJoin"/>
   	<typeAlias type="com.spring.tour.vo.TourBookVo" alias="tourBookVo"/>
   	<typeAlias type="com.spring.tour.vo.User_InfoVo" alias="userinfo"/>
   	<typeAlias type="com.spring.tour.vo.IdTokenVo" alias="idtoken"/>
