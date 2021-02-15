@@ -72,23 +72,31 @@
 </div>
 
 <script type="text/javascript">
+	$("#ex_detailAddress").keyup(function(){
+		$("#user_addr").val($("#ex_address").val()+" "+$("#ex_detailAddress").val());
+	});
+
 	$("#seldomain").change(function(){
 		var value=$(this).val();
 		var dom=document.getElementById("domain");
 		if(value=='naver.com'){
 			dom.value='naver.com';
 			$("#domain").prop('readonly',true);
-			$("#useremail").val($("#email").val()+'@'+$("#domain").val());
 		}else if(value=='gmail.com'){
 			dom.value='gmail.com';
 			$("#domain").prop('readonly',true);
+			
 		}else if(value=='daum.net'){
 			dom.value='daum.net';
 			$("#domain").prop('readonly',true);
 		}else{
 			dom.value="";
 			$("#domain").prop('readonly',false);
+			$("#domain").keyup(function(e){
+				$("#useremail").val($("#email").val()+'@'+$("#domain").val());
+			});
 		}
+		$("#useremail").val($("#email").val()+'@'+$("#domain").val());
 	});
 	
 	$("#userid").keyup(function(e){
