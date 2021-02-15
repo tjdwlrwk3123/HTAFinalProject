@@ -78,6 +78,7 @@ public class ServiceController {
 			String user_id="";
 			try {
 				user_id=(String)session.getAttribute("user_id");
+				System.out.println(user_id);
 			}catch(Exception e){
 				e.printStackTrace();
 				return ".login"; 

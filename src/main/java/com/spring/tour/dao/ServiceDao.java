@@ -15,7 +15,7 @@ import com.spring.tour.vo.TourServiceVo;
 @Repository
 public class ServiceDao {
 	@Autowired private SqlSession sqlSession;
-	private static String NAMESPACE="com.test.spring.tour.mapper.ServiceMapper";
+	private static String NAMESPACE="com.spring.tour.mapper.ServiceMapper";
 	public List<Accom_serviceVo> selectAccomList(String user_id){
 		return sqlSession.selectList(NAMESPACE+".selectAccomList",user_id);
 	}
@@ -23,12 +23,15 @@ public class ServiceDao {
 		return sqlSession.selectList(NAMESPACE+".selectTourList",user_id);
 	}
 	public int insertAccomService(Accom_serviceVo vo) {
+		System.out.println(vo);
 		return sqlSession.insert(NAMESPACE+".insertAccomService",vo);
 	}
 	public int insertAccomInfo(AccomInfoVo vo) {
+		System.out.println(vo);
 		return sqlSession.insert(NAMESPACE+".insertAccomInfo",vo);
 	}
 	public int insertImg(ImageVo vo) {
+		System.out.println(vo);
 		return sqlSession.insert(NAMESPACE+".insertImg",vo);
 	}
 }
