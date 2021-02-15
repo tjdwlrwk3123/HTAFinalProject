@@ -20,7 +20,7 @@
   	<typeAlias type="com.spring.tour.vo.TourReviewVo" alias="tourreview"/>
   	<typeAlias type="com.spring.tour.vo.TourSelectVo" alias="tourselect"/>
   	<typeAlias type="com.spring.tour.vo.TourServiceVo" alias="tourservice"/>
-  	
+  	<typeAlias type="com.spring.tour.vo.ChatVo" alias="chatvo"/>
   </typeAliases>
   
   <!-- 읽어올 Mapper파일 설정 -->
@@ -37,6 +37,6 @@
 			
 			<mapper resource="com/spring/tour/mapper/WishlistMapper.xml"/>
 			<mapper resource="com/spring/tour/mapper/TourPageMapper.xml"/>
-
+			<mapper resource="com/spring/tour/mapper/ChatMapper.xml"/>
 	</mappers>
 </configuration>
