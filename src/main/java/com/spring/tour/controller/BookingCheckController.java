@@ -21,6 +21,7 @@ import com.spring.tour.service.TourPageService;
 import com.spring.tour.util.PageUtil;
 import com.spring.tour.vo.AccomBookVo;
 import com.spring.tour.vo.AccomOptionVo;
+import com.spring.tour.vo.Accom_serviceVo;
 import com.spring.tour.vo.ImageVo;
 import com.spring.tour.vo.TourBookVo;
 import com.spring.tour.vo.TourOptionVo;
@@ -64,18 +65,24 @@ public class BookingCheckController {
 		//각각의 숙소에 해당하는 정보들 뽑아오기
 		List<List<ImageVo>> image=new ArrayList<List<ImageVo>>();
 		List<AccomOptionVo> detail=new ArrayList<AccomOptionVo>();
+		List<Accom_serviceVo> service=new ArrayList<Accom_serviceVo>();
 		for(AccomBookVo vo:accomBookList) {
 			int optNum=vo.getAccom_option_number();
 			List<ImageVo> roomImage=accomService.accomRoomImage(optNum);
 			image.add(roomImage);
 			AccomOptionVo roomDetail=accomService.accomRoomDetail(optNum);
 			detail.add(roomDetail);
+			//카테고리넘버 뽑아오기
+			int accomNum=roomDetail.getAccom_service_number();
+			Accom_serviceVo as=accomService.accomService(accomNum);
+			service.add(as);
 		}
 		
 		model.addAttribute("bookingList", accomBookList);
 		model.addAttribute("pu", pu);
 		model.addAttribute("image", image);
 		model.addAttribute("detail", detail);
+		model.addAttribute("service", service);
 		
 		return ".booking.accomBooking";
 	}
@@ -156,18 +163,24 @@ public class BookingCheckController {
 		//각각의 숙소에 해당하는 정보들 뽑아오기
 		List<List<ImageVo>> image=new ArrayList<List<ImageVo>>();
 		List<AccomOptionVo> detail=new ArrayList<AccomOptionVo>();
+		List<Accom_serviceVo> service=new ArrayList<Accom_serviceVo>();
 		for(AccomBookVo vo:accompastList) {
 			int optNum=vo.getAccom_option_number();
 			List<ImageVo> roomImage=accomService.accomRoomImage(optNum);
 			image.add(roomImage);
 			AccomOptionVo roomDetail=accomService.accomRoomDetail(optNum);
 			detail.add(roomDetail);
+			//카테고리넘버 뽑아오기
+			int accomNum=roomDetail.getAccom_service_number();
+			Accom_serviceVo as=accomService.accomService(accomNum);
+			service.add(as);
 		}
 		
 		model.addAttribute("bookingList", accompastList);
 		model.addAttribute("pu", pu);
 		model.addAttribute("image", image);
 		model.addAttribute("detail", detail);
+		model.addAttribute("service",service);
 		
 		return ".booking.accompastTrip";
 	}
@@ -239,12 +252,17 @@ public class BookingCheckController {
 		//각각의 숙소에 해당하는 정보들 뽑아오기
 		List<List<ImageVo>> image=new ArrayList<List<ImageVo>>();
 		List<AccomOptionVo> detail=new ArrayList<AccomOptionVo>();
+		List<Accom_serviceVo> service=new ArrayList<Accom_serviceVo>();
 		for(AccomBookVo vo:accomCancleList) {
 			int optNum=vo.getAccom_option_number();
 			List<ImageVo> roomImage=accomService.accomRoomImage(optNum);
 			image.add(roomImage);
 			AccomOptionVo roomDetail=accomService.accomRoomDetail(optNum);
 			detail.add(roomDetail);
+			//카테고리넘버 뽑아오기
+			int accomNum=roomDetail.getAccom_service_number();
+			Accom_serviceVo as=accomService.accomService(accomNum);
+			service.add(as);
 		}
 		
 		//투어 정보들 뽑아오기
@@ -266,6 +284,7 @@ public class BookingCheckController {
 		model.addAttribute("timage", timage);
 		model.addAttribute("detail", detail);
 		model.addAttribute("opiton", option);
+		model.addAttribute("service", service);
 		
 		return ".booking.cancleTrip";
 	}

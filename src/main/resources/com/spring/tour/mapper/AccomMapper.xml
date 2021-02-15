@@ -45,6 +45,7 @@
 		and cate_number=#{category}
 		</if>
 		</where>
+		order by accom_service_number
 	</select>
 	<select id="accom_minprice_search" parameterType="hashmap" resultType="hashmap">
 		select min(accom_price) minp,max(accom_price) maxp from accom_option group by accom_service_number

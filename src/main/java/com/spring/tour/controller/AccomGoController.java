@@ -1,5 +1,8 @@
 package com.spring.tour.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -7,9 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -33,9 +40,35 @@ public class AccomGoController {
 		return ".accom.accomSelect";
 	}
 	
+	@InitBinder
+	public void initBinder(WebDataBinder binder) throws Exception {
+	    final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+	    final CustomDateEditor dateEditor = new CustomDateEditor(df, true) {
+	        @Override
+	        public void setAsText(String text) throws IllegalArgumentException {
+	            if ("today".equals(text)) {
+	            	Calendar cal=Calendar.getInstance();
+	            	cal.setTime(new java.util.Date());
+	                setValue(cal);
+	            } else if("nextday".equals(text)){
+	            	Calendar cal=Calendar.getInstance();
+	            	cal.setTime(new java.util.Date());
+	            	cal.add(Calendar.DATE, 1);
+	                setValue(cal);
+	            }else {
+	            	super.setAsText(text);
+	            }
+	        }
+	    };
+	    binder.registerCustomEditor(Calendar.class, dateEditor);
+	}
+	
 	@RequestMapping("/accomDetail")
 	public String accomDetail(int accomNum,int cate_number,
-			String startDate,String endDate,String count,Model model) {
+			@RequestParam(value="startDate",required = false)String startDate,
+			@RequestParam(value="endDate",required = false)String endDate,
+			@RequestParam(value="count",defaultValue = "1")String count,
+			Model model) {
 		//테스트용 세션에 아이디 담기
 		HttpServletRequest request=((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
 		HttpSession session = request.getSession();

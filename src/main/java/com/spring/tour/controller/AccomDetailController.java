@@ -1,19 +1,13 @@
 package com.spring.tour.controller;
 
 import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,35 +21,13 @@ public class AccomDetailController {
 	@Autowired
 	private AccomService service;
 	
-	@InitBinder
-	public void initBinder(WebDataBinder binder) throws Exception {
-	    final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-	    final CustomDateEditor dateEditor = new CustomDateEditor(df, true) {
-	        @Override
-	        public void setAsText(String text) throws IllegalArgumentException {
-	            if ("today".equals(text)) {
-	            	Calendar cal=Calendar.getInstance();
-	            	cal.setTime(new java.util.Date());
-	                setValue(cal);
-	            } else if("nextday".equals(text)){
-	            	Calendar cal=Calendar.getInstance();
-	            	cal.setTime(new java.util.Date());
-	            	cal.add(Calendar.DATE, 1);
-	                setValue(cal);
-	            }else {
-	            	super.setAsText(text);
-	            }
-	        }
-	    };
-	    binder.registerCustomEditor(Calendar.class, dateEditor);
-	}
 	
 	@RequestMapping(value="/accomDetail_list",produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public HashMap<String, Object> getDetailList(
-			@RequestParam(value="startDate",defaultValue = "today") Date startDate,
-			@RequestParam(value="endDate",defaultValue = "nextday") Date endDate,
+			@RequestParam(value="startDate") Date startDate,
+			@RequestParam(value="endDate") Date endDate,
 			@RequestParam(value="accomNum") int accomNum,
-			@RequestParam(value="count",defaultValue = "1") int count){
+			@RequestParam(value="count") int count){
 
 		
 		HashMap<String, Object> map=new HashMap<String, Object>();
@@ -69,7 +41,6 @@ public class AccomDetailController {
 		
 		//숙소가 예약상태인지 여부 조사
 		HashMap<String, Object> checkUsing=new HashMap<String, Object>();
-		System.out.println(startDate);
 		checkUsing.put("startDate", startDate);
 		checkUsing.put("endDate", endDate);
 		//몇박인지 확인

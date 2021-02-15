@@ -51,9 +51,31 @@
 	#accomDetail_wrapper #detail #info #infobox #mapbox{width:500px; height:330px; margin-top:20px; border:3px solid black; overflow: hidden;}
 	#accomDetail_wrapper #detail #info #infobox #mapbox #map{width:490px; height:300px; margin:auto;}
 	#accomDetail_wrapper #option .fotorama{width: 230px; display: inline-block;}
-	#accomDetail_wrapper #option .tableformOpt{border: 1px solid black; margin: 1px; padding: 2px; width: 600px;}
-	#accomDetail_wrapper #option .opt{display: inline-block; position: relative; bottom: 70px;}
-
+	#accomDetail_wrapper #option .tableformOpt{border: 1px solid black; margin: 1px; padding: 2px; width: 600px; height:250px;}
+	#accomDetail_wrapper #option .opt{display: inline-block; position: relative; float: left; top:50px;}
+	#adultNum{
+		-ms-user-select: none;
+		-moz-user-select: -moz-none; 
+		-webkit-user-select: none; 
+		-khtml-user-select: none; 
+		user-select:none;
+	}
+	#changeCount{
+		user-select:none;
+		display: none;
+		position: absolute;
+		background-color: #f9f9f9;
+		min-width: 160px;
+		box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+		padding: 12px 16px;
+		z-index: 1;
+	}
+	#changeCount div{
+ 		-ms-user-select: none;
+ 		-moz-user-select: -moz-none; 
+ 		-webkit-user-select: none; 
+ 		-khtml-user-select: none;
+	}
 </style>
 
 
@@ -109,7 +131,7 @@
 	<div id="numCount" name="nCount">
 	<span id="totCount" name="nCount">${count }명</span>
 	</div>
-		<div id="changeCount" name="nCount" style="width: 200px; display: none; background-color: pink;">
+		<div id="changeCount" name="nCount">
 			인원<br><br>
 			<div name="nCount">성인
 				<i class="fas fa-minus-circle fa-2x" name="nCount" id="minCount"
@@ -319,6 +341,12 @@
 		var count=$("#totCount").text().replace(/[^0-9]/g,"");
 		var startDate=$("#d1").val();
 		var endDate=$("#d2").val();
+		if(startDate=='' || endDate==''){
+			$("#d1").datepicker('setDate','today');
+			$("#d2").datepicker('setDate','+1D');
+			startDate=$("#d1").val();
+			endDate=$("#d2").val();
+		}
 		var param={
 				"accomNum":accomNum,
 				"count":count,
@@ -364,12 +392,14 @@
 				//예약 가능불가능 확인
 				if(data.using[i]=='예약가능'){
 					var endContent=
-						'<span><a href="">예약</a></span>'+
+						'<div style="float:right; margin-top:180px; margin-right:20px;">'+
+						'<span style="font-size:1.5em;"><a href="">예약</a></span>'+
 						'</div>'+
 						'</div>';
 				}else{
 					var endContent=
-						'<span>예약불가</span>'+
+						'<div style="float:right; top:50px;">'+
+						'<span style="font-size:1.5em;">예약불가</span>'+
 						'</div>'+
 						'</div>';
 				}
@@ -380,11 +410,15 @@
 				
 				var content=
 					'<div class="tableformOpt">'+
+					'<div style="float:left;">'+
 					imgdiv+
+					'</div>'+
 					'<div class="opt">'+
 					'<h4>'+data.options[i].accom_rooms_option+'</h4>'+
 					'<span>기준인원:'+data.options[i].accom_min_people+'/최대인원:'+data.options[i].accom_max_people+'</span><br>'+
 					'<span style="font:\'bold\'">'+howLong+'박 총'+totPrice+'원</span>'+
+					'<p style="font-size: 0.7em;">1인당 '+howLong*price+'원</p>'+
+					'</div>'+
 					endContent;
 					
 				$("#option").append(content);

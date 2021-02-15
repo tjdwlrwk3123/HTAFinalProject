@@ -96,7 +96,8 @@
 						style="width: 100px; height: 100px;">
 					</div>
 					<div style="display: inline-block;">
-						<h3><a href="${cp }/accomDetail?${detail[status.index].accom_service_number}">${vo.service_name }</a></h3>
+						<h3><a href="${cp }/accomDetail?accomNum=${detail[status.index].accom_service_number}
+						&cate_number=${service[status.index].cate_number}">${vo.service_name }</a></h3>
 						<span>${detail[status.index].accom_rooms_option }</span><br>
 						<span>예약날짜:</span><span>${vo.accom_startdate }~${vo.accom_enddate }</span>
 						<br>

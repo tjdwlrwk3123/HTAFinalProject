@@ -10,12 +10,21 @@
 		-khtml-user-select: none; 
 		user-select:none;
 	}
-	#changeCount div{
-		-ms-user-select: none;
-		-moz-user-select: -moz-none; 
-		-webkit-user-select: none; 
-		-khtml-user-select: none; 
+	#changeCount{
 		user-select:none;
+		display: none;
+		position: absolute;
+		background-color: #f9f9f9;
+		min-width: 160px;
+		box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+		padding: 12px 16px;
+		z-index: 1;
+	}
+	#changeCount div{
+ 		-ms-user-select: none;
+ 		-moz-user-select: -moz-none; 
+ 		-webkit-user-select: none; 
+ 		-khtml-user-select: none;
 	}
 	#loading {
 		height: 100%;
@@ -42,6 +51,10 @@
 		z-index: 200;
 	}
 	#accomWrap{width: 1000px; height: 1000px;}
+	.accomSelectSection{width:500px; height:200px;}
+	.accomSelectSection .accomSelectImage{display:inline-block; margin-right:10px;}
+	.accomSelectSection .accomSelectInfo{display:inline-block;}
+	
 </style>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -63,7 +76,7 @@
 	<div id="numCount" name="nCount">
 	<span id="totCount" name="nCount">1명</span>
 	</div>
-	<div id="changeCount" name="nCount" style="width: 200px; display: none; background-color: pink;">
+	<div id="changeCount" name="nCount">
 		인원<br><br>
 		<div name="nCount">성인
 			<i class="fas fa-minus-circle fa-2x" name="nCount" id="minCount"
@@ -78,13 +91,14 @@
 </div>
 <br>
 <div id="accomWrap">
-<div id="accomFilter" style="display: inline-block; width: 500px; float: left;">
+<div id="accomFilter" style="display: inline-block; width: 400px; float: left;">
 <div>
 종류<br>
 <input type="radio" name="gck" value="0" checked="checked" id="defradio">전체<br>
-<input type="radio" name="gck" value="2">호텔<br>
-<input type="radio" name="gck" value="3">펜션<br>
-<input type="radio" name="gck" value="4">기타<br>
+<input type="radio" name="gck" value="2">펜션<br>
+<input type="radio" name="gck" value="3">캠핑<br>
+<input type="radio" name="gck" value="4">게스트하우스<br>
+<input type="radio" name="gck" value="5">기타<br>
 </div>
 <br>
 <div>
@@ -117,10 +131,10 @@
   <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
 </p>
  
-<div id="slider-range" style="width: 400px;"></div>
+<div id="slider-range" style="width: 300px;"></div>
 
 </div>
-<div id="accomResult" style="display: inline-block; width: 500px; float: right;">
+<div id="accomResult" style="display: inline-block; width: 400px; float: left;">
 	<div id="accom">
 		
 	</div>
@@ -198,12 +212,16 @@ var totcnt=1; //총 인원수
 				var content="<a href='${cp}/accomDetail?accomNum="+accomNum+
 						"&startDate="+startDate+"&endDate="+endDate+
 						"&count="+count+"&cate_number="+cate_number+"'>"+
-			"<section>"+
+			"<section class='accomSelectSection'>"+
+				"<div class='accomSelectImage'>"+
 				"<img src='${cp}/resources/images/1.png'>"+
-				"<h5>"+accomName+"</h5>"+
+				"</div>"+
+				"<div class='accomSelectInfo'>"+
+				"<h3>"+accomName+"</h3>"+
 				"<p>숙소정보</p>"+
 				"<p>1박 총 "+minprice*count+"원</p>"+
 				"<p style='font-size: 0.7em;'>1인당 "+minprice+"원</p>"+
+				"</div>"+
 			"</section>"+
 			"</a>";
 				$("#accom").append(content);
@@ -327,12 +345,16 @@ var totcnt=1; //총 인원수
 						var content="<a href='${cp}/accomDetail?accomNum="+
 								accomNum+"&startDate="+startDate+"&endDate="+
 								endDate+"&count="+count+"&cate_number="+cate_number+"'>"+
-						"<section>"+
+						"<section class='accomSelectSection'>"+
+							"<div class='accomSelectImage'>"+
 							"<img src='${cp}/resources/images/1.png'>"+
-							"<h5>"+accomName+"</h5>"+
+							"</div>"+
+							"<div class='accomSelectInfo'>"+
+							"<h3>"+accomName+"</h3>"+
 							"<p>숙소정보</p>"+
 							"<p>1박 총 "+minprice*count+"원</p>"+
 							"<p style='font-size: 0.7em;'>1인당 "+minprice+"원</p>"+
+							"</div>"+
 						"</section>"+
 						"</a>";
 						$("#accom").append(content);
@@ -342,7 +364,7 @@ var totcnt=1; //총 인원수
 			    console.log(textStatus, errorThrown);
 			    $("#accom").empty();
 			    var content="<a href=''>"+
-				"<section>"+
+				"<section class='accomSelectSection'>"+
 					"<img src='${cp}/resources/images/3.png'>"+
 					"<h3>검색결과가 없습니다...</h3>"
 				"</section>"+

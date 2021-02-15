@@ -96,7 +96,7 @@
 						style="width: 100px; height: 100px;">
 					</div>
 					<div style="display: inline-block;">
-						<h3><a href="${cp }/tourDetail?${option[status.index].service_number}">${vo.service_name }</a></h3>
+						<h3><a href="${cp }/tourDetail?service_number=${option[status.index].service_number}">${vo.service_name }</a></h3>
 						<span>${option[status.index].tour_option }</span><br>
 						<span>예약날짜:</span><span>${vo.tour_startdate }~${vo.tour_enddate }</span>
 						<br>
