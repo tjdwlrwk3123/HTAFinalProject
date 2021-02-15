@@ -96,7 +96,7 @@
 						style="width: 100px; height: 100px;">
 					</div>
 					<div style="display: inline-block;">
-						<h3><a href="${cp }/accomDetail?">${vo.service_name }</a></h3>
+						<h3><a href="${cp }/accomDetail?${detail[status.index].accom_service_number}">${vo.service_name }</a></h3>
 						<span>${detail[status.index].accom_rooms_option }</span><br>
 						<span>결제 취소금액:</span><span>${vo.total_price }</span><span>원</span>
 					</div>
@@ -109,7 +109,7 @@
 						style="width: 100px; height: 100px;">
 					</div>
 					<div style="display: inline-block;">
-						<h3><a href="${cp }/tourDetail?">${vo.service_name }</a></h3>
+						<h3><a href="${cp }/tourDetail?${option[status.index].service_number}">${vo.service_name }</a></h3>
 						<span>${option[status.index].tour_option }</span><br>
 						<span>결제 취소금액:</span><span>${vo.total_price }</span><span>원</span>
 					</div>
