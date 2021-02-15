@@ -127,9 +127,8 @@ public class BookingCheckController {
 		
 		model.addAttribute("bookingList", tourBookList);
 		model.addAttribute("pu", pu);
-		model.addAttribute("opiton", option);
+		model.addAttribute("option", option);
 		model.addAttribute("image", image);
-		
 		return ".booking.tourBooking";
 	}
 	

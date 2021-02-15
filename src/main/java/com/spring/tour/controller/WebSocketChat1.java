@@ -33,7 +33,7 @@ public class WebSocketChat1 {
 	public WebSocketChat1() {
 		System.out.println("웹소켓(서버) 객체 생성!");
 	}
-	
+	 
 	@OnOpen
 	public void onOpen(Session session) {
 		cnt=0; // 매번 들어올때마다 이름 가져오기 위함
