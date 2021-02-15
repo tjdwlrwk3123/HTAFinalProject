@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.spring.tour.dao.ServiceDao;
 import com.spring.tour.vo.AccomInfoVo;
 import com.spring.tour.vo.Accom_serviceVo;
+import com.spring.tour.vo.ImageVo;
 import com.spring.tour.vo.TourServiceVo;
 @Service
 public class ServiceService {
@@ -23,5 +24,8 @@ public class ServiceService {
 	}
 	public int inserAccomInfo(AccomInfoVo vo) {
 		return dao.insertAccomInfo(vo);
+	}
+	public int insertImg(ImageVo vo) {
+		return dao.insertImg(vo);
 	}
 }
