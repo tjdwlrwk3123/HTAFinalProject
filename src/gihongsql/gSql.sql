@@ -47,6 +47,11 @@ insert into accom_book values(1,'aa',1,'a호텔','2021-02-04','2021-02-05',null,nu
 insert into accom_book values(2,'bb',2,'a호텔','2021-02-05','2021-02-08',null,null,null,null,null);
 insert into accom_book values(3,'aa',2,'a호텔','2021-02-08','2021-02-09',null,null,null,null,null);
 insert into accom_book values(4,'cc',9,'a호텔','2021-02-04','2021-02-07',null,null,null,null,null);
+insert into accom_book values(5,'dd',4,'b호텔','2021-02-09','2021-02-10',null,null,null,null,null);
+
+update accom_book set payment_condition='결제완료';
+update accom_book set payment_condition='결제취소' where accom_book_number=5;
+
 
 insert into image values(1,'aa.png','123123de3131as23 aa.png',1,2);
 insert into image values(2,'bb.png','123123de3131as23 bb.png',1,2);

@@ -2,10 +2,16 @@ package com.spring.tour.controller;
 
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.spring.tour.service.TourPageService;
 import com.spring.tour.vo.WishlistVo;
@@ -19,7 +25,16 @@ public class TourDetailController {
 	
 	// 아이디 정보랑, cate_number, service_number 넘겨받기
 	@RequestMapping(value = "/tourDetail")
-	public String tourDetail(String user_id, int cate_number, int service_number, Model model) {
+	public String tourDetail(@RequestParam(value="cate_number",defaultValue = "1")int cate_number,
+			int service_number, Model model) {
+		
+		//테스트용 유저 생성
+		HttpServletRequest request=((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
+		HttpSession session = request.getSession();
+		session.setAttribute("user_id","dd");	
+		//유저의 아이디 가져오기
+		String user_id=(String)session.getAttribute("user_id");
+		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		map.put("user_id",user_id);

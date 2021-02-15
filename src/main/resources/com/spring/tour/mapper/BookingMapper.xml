@@ -9,16 +9,54 @@
 		(
 		    select a.*,rownum rnum from
 		    (
+		    	<![CDATA[
 		        select * from accom_book 
 		        where user_id=#{user_id}
-		        <!-- 끝날짜가 오늘날짜보다 앞인것들만 가져오기 -->
+		        and not payment_condition='결제취소'
+				and accom_enddate>=sysdate
 		        order by accom_book_number desc
+		        ]]>
 		    ) a
 		)
 		<![CDATA[ where rnum>=#{startRow} and rnum<=#{endRow} ]]>
 	</select>
 	<select id="accomBookingCount" parameterType="string" resultType="int">
-		select NVL(count(*),0) cnt from accom_book where user_id=#{user_id}
+		select NVL(count(*),0) cnt from accom_book where user_id=#{user_id} 
+		and not payment_condition='결제취소'
+		<![CDATA[
+		and accom_enddate>=sysdate
+		]]>
+	</select>
+	<!-- 지난 여행 리스트 -->
+	<select id="accompastList" parameterType="hashmap" resultType="accomBookVo">
+		select * from
+		(
+		    select a.*,rownum rnum from
+		    (
+		    	<![CDATA[
+		        select * from accom_book 
+		        where user_id=#{user_id}
+		        and not payment_condition='결제취소'
+				and accom_enddate<sysdate
+		        order by accom_book_number desc
+		        ]]>
+		    ) a
+		)
+		<![CDATA[ where rnum>=#{startRow} and rnum<=#{endRow} ]]>
+	</select>
+	<select id="accompastCount" parameterType="string" resultType="int">
+		select NVL(count(*),0) cnt from accom_book where user_id=#{user_id} 
+		and not payment_condition='결제취소'
+		<![CDATA[
+		and accom_enddate<sysdate
+		]]>
+	</select>
+	<!-- 숙소 취소리스트 -->
+	<select id="accomCancleList" parameterType="string" resultType="accomBookVo">
+        select * from accom_book 
+        where user_id=#{user_id}
+        and payment_condition='결제취소'
+        order by accom_book_number desc
 	</select>
 	<!-- tour예약 리스트 -->
 	<select id="tourBookingList" parameterType="hashmap" resultType="tourBookVo">
@@ -26,15 +64,53 @@
 		(
 		    select a.*,rownum rnum from
 		    (
+		    	<![CDATA[
 		        select * from tour_book 
 		        where user_id=#{user_id}
-		        <!-- 끝날짜가 오늘날짜보다 앞인것들만 가져오기 -->
+		        and not payment_condition='결제취소'
+				and tour_enddate>=sysdate
 		        order by tour_book_number desc
+		        ]]>
 		    ) a
 		)
 		<![CDATA[ where rnum>=#{startRow} and rnum<=#{endRow} ]]>
 	</select>
 	<select id="tourBookingCount" parameterType="string" resultType="int">
 		select NVL(count(*),0) cnt from tour_book where user_id=#{user_id}
+		and not payment_condition='결제취소'
+		<![CDATA[
+		and tour_enddate>=sysdate
+		]]>
+	</select>
+	<!-- 지난tour리스트 -->
+	<select id="tourpastList" parameterType="hashmap" resultType="tourBookVo">
+		select * from
+		(
+		    select a.*,rownum rnum from
+		    (
+		    	<![CDATA[
+		        select * from tour_book 
+		        where user_id=#{user_id}
+		        and not payment_condition='결제취소'
+				and tour_enddate<sysdate
+		        order by tour_book_number desc
+		        ]]>
+		    ) a
+		)
+		<![CDATA[ where rnum>=#{startRow} and rnum<=#{endRow} ]]>
+	</select>
+	<select id="tourpastCount" parameterType="string" resultType="int">
+		select NVL(count(*),0) cnt from tour_book where user_id=#{user_id}
+		and not payment_condition='결제취소'
+		<![CDATA[
+		and tour_enddate<sysdate
+		]]>
+	</select>
+	<!-- tour취소 리스트 -->
+	<select id="tourCancleList" parameterType="string" resultType="tourBookVo">
+        select * from tour_book 
+        where user_id=#{user_id}
+        and payment_condition='결제취소'
+        order by tour_book_number desc
 	</select>
 </mapper>

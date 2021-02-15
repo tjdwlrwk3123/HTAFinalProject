@@ -76,8 +76,14 @@
 		<ul>
 			<li><a href="${cp }/accomBookingCheck"><i class="fas fa-hotel"></i>숙소</a></li>
 			<li><a href="${cp }/tourBookingCheck"><i class="fas fa-ticket-alt"></i>투어/티켓</a></li>
-			<li><a href=""><i class="far fa-lightbulb"></i>지난여행/후기</a></li>
-			<li><a href=""><i class="fas fa-plane-slash"></i>취소목록</a></li>
+			<li>
+				<a><i class="far fa-lightbulb"></i>지난여행/후기</a>
+				<ul>
+					<li><a href="${cp }/accompastTrip">숙박</a></li>
+					<li><a href="${cp }/tourpastTrip">티켓/투어</a></li>
+				</ul>
+			</li>
+			<li><a href="${cp }/cancleTrip"><i class="fas fa-plane-slash"></i>취소목록</a></li>
 		</ul>
 	</div>
 	<div class="tourBookingMain">
@@ -86,12 +92,11 @@
 			<c:forEach var="vo" items="${bookingList }" varStatus="status">
 				<div class="tourBookList">
 					<div style="display: inline-block;">
-						<img src="${cp}/resources/gimgs/1.png" 
+						<img src="${cp}/resources/gimgs/${image[status.index][0].imgsavename}" 
 						style="width: 100px; height: 100px;">
-<%-- 						${image[status.index][0].imgsavename} --%>
 					</div>
 					<div style="display: inline-block;">
-						<h3><a href="${cp }/tourDetail?">${vo.service_name }</a></h3>
+						<h3><a href="${cp }/tourDetail?${option[status.index].service_number}">${vo.service_name }</a></h3>
 						<span>${option[status.index].tour_option }</span><br>
 						<span>예약날짜:</span><span>${vo.tour_startdate }~${vo.tour_enddate }</span>
 						<br>
