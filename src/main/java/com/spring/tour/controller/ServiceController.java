@@ -67,7 +67,7 @@ public class ServiceController {
 	} 
 	@GetMapping("/accominsert")
 	public String accominsertpage() {
-		return ".service.accominsert";
+		return ".service.accominsert"; 
 	}
 	@PostMapping("/accominsert")
 	public String accominsert(String cate, String accom_name, String accom_addr, String accom_info_content, String accom_how, String accom_rule, String accom_checkinfo, String[] facility, String[] conven, MultipartFile[] img, HttpSession session, Model model) {
