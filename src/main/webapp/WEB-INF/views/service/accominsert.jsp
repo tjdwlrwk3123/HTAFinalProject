@@ -2,21 +2,27 @@
     pageEncoding="UTF-8"%>
 
 <div>
-	<form action="${cp }/accominsert" method="post" enctype="multipart/form-data">
+	<form action="${cp }/accominsert" method="post" enctype="multipart/form-data" onsubmit="return check()">
+		<select name="cate" id="cate">
+			<option value="2" selected="selected">펜션</option>
+			<option value="3">캠핑</option>
+			<option value="4">게스트하우스</option>
+		</select><br><br>
 		숙소이름 <input type="text" name="accom_name"><br><br>
 		숙소주소 <input type="text" name="accom_addr"><br><br>
 		숙소소개 <textarea rows="5" cols="30" name="accom_info_content"></textarea><br><br>
 		숙소이용안내  <textarea rows="5" cols="30" name="accom_how"></textarea><br><br>
+		숙소취소및환불규정  <textarea rows="5" cols="30" name="accom_rule"></textarea><br><br>
 		숙소 체크인/아웃 정보 <textarea rows="5" cols="30" name="accom_checkinfo"></textarea><br><br>
 		편의시설<br>
 		<div> 
-			<input type="checkbox" name="facility" value="바베큐">바베큐장<br>
+			<input type="checkbox" name="facility" value="바베큐">바베큐<br>
 			<input type="checkbox" name="facility" value="수영장">수영장<br>
 			<input type="checkbox" name="facility" value="유아시설">유아시설<br>
 			<input type="checkbox" name="facility" value="카페">카페<br>
 			<input type="checkbox" name="facility" value="편의점">편의점<br>
 			<input type="checkbox" name="facility" value="온천">온천<br>
-			<input type="checkbox" name="facility" value="콜프장">골프장<br>
+			<input type="checkbox" name="facility" value="골프장">골프장<br>
 			<input type="checkbox" name="facility" value="족구장">족구장<br>
 			<input type="checkbox" name="facility" value="탁구장">탁구장<br>
 			<input type="checkbox" name="facility" value="연회장">연회장<br>
@@ -62,6 +68,77 @@
 			}else{
 				alert("메인이미지는 최소 1개 이상이어야 합니다.");
 			}
+		}
+		function check(){
+			let accom_name=document.getElementsByName("accom_name")[0].value;
+			let accom_addr=document.getElementsByName("accom_addr")[0].value;
+			let accom_info_content=document.getElementsByName("accom_info_content")[0].value;
+			let accom_how=document.getElementsByName("accom_how")[0].value;
+			let accom_rule=document.getElementsByName("accom_rule")[0].value;
+			let accom_checkinfo=document.getElementsByName("accom_checkinfo")[0].value;
+			let facility=document.getElementsByName("facility");
+			let facilitycheck=false;
+			let cate=document.getElementById("cate");
+			let catev=cate.options[cate.selectedIndex].value;
+			for(let i=0;i<facility.length;i++){
+				if(facility[i].checked==true){
+					facilitycheck=true;
+					break;
+				}
+			}
+			let conven=document.getElementsByName("conven");
+			let convencheck=false;
+			for(let i=0;i<conven.length;i++){
+				if(conven[i].checked==true){
+					convencheck=true;
+					break;
+				}
+			}
+			let img=document.getElementsByName("img");
+			let imgcheck=false;
+			for(let i=0;i<img.length;i++){
+				if(img[i].value.replaceAll(" ","")!=""){
+					imgcheck=true;
+					break;
+				}
+			}
+			if(accom_name.replaceAll(" ","")==""){
+				alert("숙소 이름을 입력하세요.");
+				return false;
+			}
+			if(accom_addr.replaceAll(" ","")==""){
+				alert("숙소 주소를 입력하세요.");
+				return false;
+			}
+			if(accom_info_content.replaceAll(" ","")==""){
+				alert("숙소 소개를 입력하세요.");
+				return false;
+			}
+			if(accom_how.replaceAll(" ","")==""){
+				alert("숙소 이용 안내를 입력하세요.");
+				return false;
+			}
+			if(accom_rule.replaceAll(" ","")==""){
+				alert("숙소 취소 및 환불 규정을  입력하세요.");
+				return false;
+			}
+			if(accom_checkinfo.replaceAll(" ","")==""){
+				alert("숙소 체크인/아웃 정보를 입력하세요.");
+				return false;
+			}
+			if(!facilitycheck){
+				alert("편의시설을 한개이상 체크해주세요");
+				return false;
+			}
+			if(!convencheck){
+				alert("편의서비스를 한개이상 체크해주세요");
+				return false;
+			}
+			if(!imgcheck){
+				alert("숙소 메인이미지를 최소1개 입력해주세요.");
+				return false;
+			}
+			return true;
 		}
 	</script>
 </div>

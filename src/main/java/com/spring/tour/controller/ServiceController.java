@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.tour.service.ServiceService;
+import com.spring.tour.vo.AccomInfoVo;
 import com.spring.tour.vo.Accom_serviceVo;
 
 @Controller
@@ -61,14 +62,25 @@ public class ServiceController {
 		return ".service.accominsert";
 	}
 	@PostMapping("/accominsert")
-	public String accominsert(String accom_name, String accom_addr, String accom_info_content, String accom_how, String accom_checkinfo, String[] facility, String[] conven, MultipartFile[] img) {
-		System.out.println(accom_name+"/"+accom_addr+"/"+accom_info_content+"/"+accom_how+"/"+accom_checkinfo);
-		for (int i = 0; i < facility.length; i++) {
-			System.out.println(facility[i]);
+	public String accominsert(String cate, String accom_name, String accom_addr, String accom_info_content, String accom_how, String accom_rule, String accom_checkinfo, String[] facility, String[] conven, MultipartFile[] img, HttpSession session, Model model) {
+		String user_id="";
+		try {
+			user_id=(String)session.getAttribute("user_id");
+		}catch(Exception e){
+			e.printStackTrace();
+			return ".login";
 		}
+		String f=facility[0];
+		for (int i = 1; i < facility.length; i++) {
+			f+=","+facility[i];
+		}
+		String c=conven[0];
 		for (int i = 0; i < conven.length; i++) {
-			System.out.println(conven[i]);
+			c+=","+conven[i];
 		}
+		Accom_serviceVo servicevo=new Accom_serviceVo(0, Integer.parseInt(cate), user_id, accom_name, accom_addr);
+		AccomInfoVo infovo=new AccomInfoVo(0, 0, accom_info_content, accom_how, accom_rule, accom_checkinfo, f, c);
+		
 		
 		return ".service.accominsert";
 	}
