@@ -294,6 +294,17 @@ CREATE TABLE wishlist
 	PRIMARY KEY (wishnum)
 );
 
+create table chatusers
+( num number(5) primary key,
+  username varchar2(255),
+  using number(1)
+);
+--insert into chatusers values(1, 'costomer1', '0');
+--insert into chatusers values(2, 'costomer2', '0');
+--insert into chatusers values(3, 'costomer3', '0');
+--insert into chatusers values(4, 'costomer4', '0');
+
+
 /* Create Sequences */
 
 create sequence wish_seq;
