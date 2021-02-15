@@ -68,7 +68,7 @@ public class ServiceController {
 			user_id=(String)session.getAttribute("user_id");
 		}catch(Exception e){
 			e.printStackTrace();
-			return ".login";
+			return ".login"; 
 		}
 		String f=facility[0];
 		for (int i = 1; i < facility.length; i++) {

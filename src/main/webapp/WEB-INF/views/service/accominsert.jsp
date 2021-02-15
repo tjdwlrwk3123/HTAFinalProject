@@ -81,7 +81,7 @@
 			let cate=document.getElementById("cate");
 			let catev=cate.options[cate.selectedIndex].value;
 			for(let i=0;i<facility.length;i++){
-				if(facility[i].checked==true){
+				if(facility[i].checked==true){ 
 					facilitycheck=true;
 					break;
 				}
