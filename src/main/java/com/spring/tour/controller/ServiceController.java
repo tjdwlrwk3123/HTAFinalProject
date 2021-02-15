@@ -25,7 +25,7 @@ import com.spring.tour.vo.ImageVo;
 @Controller
 public class ServiceController {
 	@Autowired
-	private ServiceService service;
+	private ServiceService service; 
 	@Autowired ServletContext sc;
 
 	@GetMapping("/tourmain")
