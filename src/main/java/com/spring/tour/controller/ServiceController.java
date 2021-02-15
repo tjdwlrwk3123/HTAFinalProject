@@ -35,7 +35,7 @@ public class ServiceController {
 			String user_id=(String)session.getAttribute("user_id");
 			System.out.println(session.getAttribute("user_id"));
 			if(user_id.equals("")||user_id==null) {
-				return ".login";
+				return ".userjoin.userlogin";
 			}else {
 				List<Accom_serviceVo> list = service.selectAccomList(user_id);
 				model.addAttribute("list",list);
@@ -43,7 +43,7 @@ public class ServiceController {
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
-			return ".login";
+			return ".userjoin.userlogin";
 		}
 	}
 
@@ -78,9 +78,10 @@ public class ServiceController {
 			String user_id="";
 			try {
 				user_id=(String)session.getAttribute("user_id");
+				System.out.println(user_id);
 			}catch(Exception e){
 				e.printStackTrace();
-				return ".login"; 
+				return ".userjoin.userlogin"; 
 			}
 			String f=facility[0];
 			for (int i = 1; i < facility.length; i++) {
@@ -115,7 +116,7 @@ public class ServiceController {
 			return "/accommain";
 		}catch(Exception e) {
 			e.printStackTrace();
-			return ".login";
+			return ".userjoin.userlogin";
 		}
 	}
 	
