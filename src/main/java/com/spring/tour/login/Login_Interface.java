@@ -6,7 +6,7 @@ import com.spring.tour.vo.User_InfoVo;
 
 public interface Login_Interface {
 	
-	public boolean loginCheck(User_InfoVo vo, HttpSession session);
+	public User_InfoVo loginCheck(User_InfoVo vo, HttpSession session);
 	
 	public void logout(HttpSession session);
 }

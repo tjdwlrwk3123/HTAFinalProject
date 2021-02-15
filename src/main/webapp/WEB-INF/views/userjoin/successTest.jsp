@@ -4,4 +4,4 @@
 
 <h1>${sessionScope.user_id }</h1>
 <h1>${msg }</h1>
-<a href="${cp }/">메인페이지로</a>
+<a href="/tour/">메인페이지로</a>

@@ -45,10 +45,10 @@ public class MemberDao {
 		sqlSession.update(NAMESPACE+".stateUp",user_email);
 	}
 	
-	public boolean loginCheck(User_InfoVo vo) {
+	public User_InfoVo loginCheck(User_InfoVo vo) {
 		System.out.println("로그인됬니");
-		String name=sqlSession.selectOne(NAMESPACE+".loginCheck",vo);
-		return (Integer.parseInt(name)==0)?false:true;
+		
+		return sqlSession.selectOne(NAMESPACE+".loginCheck",vo);
 	}
 	
 	public void logout(HttpSession session) {
