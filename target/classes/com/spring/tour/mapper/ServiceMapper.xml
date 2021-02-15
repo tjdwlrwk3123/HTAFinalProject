@@ -13,7 +13,7 @@
 	<insert id="insertAccomService" parameterType="com.spring.tour.vo.Accom_serviceVo">
 		insert into accom_service values((select nvl(max(accom_service_number)+1,0) from accom_service),#{cate_number},#{user_accom_boss_name},#{accom_name},#{accom_addr})
 	</insert>
-	<insert id="insertAccomInfo" parameterType="com.spring.tour.vo.AccominfoVo">
+	<insert id="insertAccomInfo" parameterType="com.spring.tour.vo.AccomInfoVo">
 		insert into accom_info values((select nvl(max(accom_info_number)+1,0) from accom_info),(select nvl(max(accom_service_number),0) from accom_service),#{accom_info_content},#{accom_how},#{accom_rule},#{accom_chekinfo},#{facility},#{conven})
 	</insert>
 </mapper>
