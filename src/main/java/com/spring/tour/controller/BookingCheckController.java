@@ -93,7 +93,7 @@ public class BookingCheckController {
 		//테스트용 유저 생성
 		HttpServletRequest request=((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
 		HttpSession session = request.getSession();
-		session.setAttribute("user_id","dd");
+		session.setAttribute("user_id","kaka");
 		
 		//유저의 아이디 가져오기
 		String user_id=(String)session.getAttribute("user_id");
@@ -192,7 +192,7 @@ public class BookingCheckController {
 		//테스트용 유저 생성
 		HttpServletRequest request=((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
 		HttpSession session = request.getSession();
-		session.setAttribute("user_id","dd");
+		session.setAttribute("user_id","kaka");
 		
 		//유저의 아이디 가져오기
 		String user_id=(String)session.getAttribute("user_id");
@@ -238,7 +238,7 @@ public class BookingCheckController {
 		//테스트용 유저 생성
 		HttpServletRequest request=((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
 		HttpSession session = request.getSession();
-		session.setAttribute("user_id","dd");
+		session.setAttribute("user_id","kaka");
 		
 		//유저의 아이디 가져오기
 		String user_id=(String)session.getAttribute("user_id");
