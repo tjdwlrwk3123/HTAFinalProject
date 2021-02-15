@@ -28,24 +28,6 @@ public class ServiceController {
 	private ServiceService service;
 	@Autowired ServletContext sc;
 
-	@GetMapping("/accommain")
-	public String accommain(HttpSession session,Model model) {
-		try {
-			System.out.println(session);
-			String user_id=(String)session.getAttribute("user_id");
-			System.out.println(session.getAttribute("user_id"));
-			if(user_id.equals("")||user_id==null) {
-				return ".login";
-			}else {
-				List<Accom_serviceVo> list = service.selectAccomList(user_id);
-				model.addAttribute("list",list);
-				return ".service.accommain";
-			}
-		}catch(Exception e) {
-			e.printStackTrace();
-			return ".login";
-		}
-	} 
 	@GetMapping("/tourmain")
 	public String tourmain(HttpSession session,Model model) {
 		try {
@@ -65,9 +47,27 @@ public class ServiceController {
 		}
 	}
 
+	@GetMapping("/accommain")
+	public String accommain(HttpSession session,Model model) {
+		try {
+			System.out.println(session);
+			String user_id=(String)session.getAttribute("user_id");
+			System.out.println(session.getAttribute("user_id"));
+			if(user_id.equals("")||user_id==null) {
+				return ".login";
+			}else {
+				List<Accom_serviceVo> list = service.selectAccomList(user_id);
+				model.addAttribute("list",list);
+				return ".service.accommain";
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			return ".login";
+		}
+	} 
 	@GetMapping("/accominsert")
 	public String accominsertpage() {
-		return ".service.accominsert";
+		return ".service.accominsert"; 
 	}
 	@PostMapping("/accominsert")
 	public String accominsert(String cate, String accom_name, String accom_addr, String accom_info_content, String accom_how, String accom_rule, String accom_checkinfo, String[] facility, String[] conven, MultipartFile[] img, HttpSession session, Model model) {

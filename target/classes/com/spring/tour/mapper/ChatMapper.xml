@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.spring.tour.mapper.ChatMapper">
+
+  	<select id="check" parameterType="string" resultType="chatvo">
+  		select * from chatusers where username=#{username}
+  	</select>
+  	
+  	<select id="one" resultType="chatvo">
+  		select * from chatusers where using = 0 and rownum = 1 order by num
+  	</select>
+  	
+  	<update id="isUsing" parameterType="string">
+  		update chatusers set using=1 where username = #{username}
+  	</update>
+  	<update id="isWaiting" parameterType="string">
+  		update chatusers set using=0 where username = #{username}
+  	</update>
+
+  </mapper>
+  
+  
