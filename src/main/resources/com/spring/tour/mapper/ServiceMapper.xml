@@ -16,4 +16,7 @@
 	<insert id="insertAccomInfo" parameterType="com.spring.tour.vo.AccomInfoVo">
 		insert into accom_info values((select nvl(max(accom_info_number)+1,0) from accom_info),(select nvl(max(accom_service_number),0) from accom_service),#{accom_info_content},#{accom_how},#{accom_rule},#{accom_chekinfo},#{facility},#{conven})
 	</insert>
+	<insert id="insertImg" parameterType="com.spring.tour.vo.ImageVo">
+		insert into image values((select nvl(max(img_num)+1,0) from image),#{imgorgname},#{imgsavename},(select nvl(max(accom_service_number),0) from accom_service), #{cate_number})
+	</insert>
 </mapper>

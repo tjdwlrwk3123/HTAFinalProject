@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.spring.tour.vo.AccomInfoVo;
 import com.spring.tour.vo.Accom_serviceVo;
+import com.spring.tour.vo.ImageVo;
 import com.spring.tour.vo.TourServiceVo;
 
 
@@ -26,5 +27,8 @@ public class ServiceDao {
 	}
 	public int insertAccomInfo(AccomInfoVo vo) {
 		return sqlSession.insert(NAMESPACE+".insertAccomInfo",vo);
+	}
+	public int insertImg(ImageVo vo) {
+		return sqlSession.insert(NAMESPACE+".insertImg",vo);
 	}
 }
