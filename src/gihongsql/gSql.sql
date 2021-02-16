@@ -48,6 +48,8 @@ insert into accom_book values(2,'bb',2,'a호텔','2021-02-05','2021-02-08',null,nu
 insert into accom_book values(3,'aa',2,'a호텔','2021-02-08','2021-02-09',null,null,null,null,null);
 insert into accom_book values(4,'cc',9,'a호텔','2021-02-04','2021-02-07',null,null,null,null,null);
 insert into accom_book values(5,'dd',4,'b호텔','2021-02-09','2021-02-10',null,null,null,null,null);
+insert into accom_book values(6,'ck',8,'c호텔','2021/02/18','2021/02/20','결제완료',40000,null,null,null);
+
 
 update accom_book set payment_condition='결제완료';
 update accom_book set payment_condition='결제취소' where accom_book_number=5;

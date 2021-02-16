@@ -83,7 +83,7 @@
 					<li><a href="${cp }/tourpastTrip">티켓/투어</a></li>
 				</ul>
 			</li>
-			<li><a href="${cp }/cancleTrip"><i class="fas fa-plane-slash"></i>취소목록</a></li>
+			<li><a href="${cp }/cancelTrip"><i class="fas fa-plane-slash"></i>취소목록</a></li>
 		</ul>
 	</div>
 	<div class="accompastTripMain">
