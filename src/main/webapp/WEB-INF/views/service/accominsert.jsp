@@ -95,10 +95,10 @@
 				}
 			}
 			let img=document.getElementsByName("img");
-			let imgcheck=false;
+			let imgcheck=true;
 			for(let i=0;i<img.length;i++){
-				if(img[i].value.replaceAll(" ","")!=""){
-					imgcheck=true;
+				if(img[i].value.replaceAll(" ","")==""){
+					imgcheck=false;
 					break;
 				}
 			}
@@ -135,7 +135,7 @@
 				return false;
 			}
 			if(!imgcheck){
-				alert("숙소 메인이미지를 최소1개 입력해주세요.");
+				alert("숙소 메인이미지를 모두 입력해주세요.");
 				return false;
 			}
 			return true;

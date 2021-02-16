@@ -88,7 +88,7 @@ public class ServiceController {
 				f+=","+facility[i];
 			}
 			String c=conven[0];
-			for (int i = 0; i < conven.length; i++) {
+			for (int i = 1; i < conven.length; i++) {
 				c+=","+conven[i];
 			}
 			Accom_serviceVo servicevo=new Accom_serviceVo(0, Integer.parseInt(cate), user_id, accom_name, accom_addr);
