@@ -74,7 +74,7 @@ public class ServiceController {
 		Accom_serviceVo vo1 = service.selectAccomService(accom_service_number);
 		AccomInfoVo vo2=service.selectAccomInfo(accom_service_number);
 		model.addAttribute("vo1",vo1);
-		model.addAttribute("vo2",vo2);
+		model.addAttribute("vo2",vo2); 
 		return "service.accomupdate"; 
 	}
 	@GetMapping("/accomdelete")
