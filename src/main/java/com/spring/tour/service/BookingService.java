@@ -54,4 +54,7 @@ public class BookingService {
 	public List<TourBookVo> tourCancelList(String user_id){
 		return dao.tourCancelList(user_id);
 	}
+	public int tourCancel(int bookNumber) {
+		return dao.tourCancel(bookNumber);
+	}
 }

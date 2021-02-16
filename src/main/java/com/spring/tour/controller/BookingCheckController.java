@@ -290,13 +290,26 @@ public class BookingCheckController {
 	@RequestMapping("/accomCancel")
 	public String accomCancel(int bookNumber,Model model) {
 		try {
-			System.out.println(bookNumber);
 			int n=service.accomCancel(bookNumber);
 			model.addAttribute("result", "success");
+			//트랜잭션 처리필요
 		}catch(Exception e) {
 			e.printStackTrace();
 			model.addAttribute("result", "fail");
 		}
 		return "redirect:/accomBookingCheck";
 	}
+	
+	@RequestMapping("/tourCancel")
+	public String tourCancel(int bookNumber,Model model) {
+		try {
+			int n=service.tourCancel(bookNumber);
+			model.addAttribute("result", "success");
+			//트랜잭션 처리필요
+		}catch(Exception e) {
+			e.printStackTrace();
+			model.addAttribute("result", "fail");
+		}
+		return "redirect:/tourBookingCheck";
+	} 
 }
