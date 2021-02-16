@@ -15,7 +15,7 @@
 				<th>수정</th>
 				<th>삭제</th>
 			</tr>
-			<c:forEach var="vo" items="tdst">
+			<c:forEach var="vo" items="list">
 				<tr>
 					<td><a href="/accomservice?accom_service_number=${vo.accom_service_number }">${vo.accom_name }</a></td>
 					<!-- 
