@@ -5,7 +5,7 @@
 
 <mapper namespace="com.spring.tour.mapper.ServiceMapper">
 	<select id="selectAccomList" resultType="com.spring.tour.vo.Accom_serviceVo" parameterType="string">
-		select * from accom_service where user_id=#{user_id}
+		select * from accom_service where user_accom_boss_name=#{user_accom_boss_name}
 	</select>
 	<select id="selectTourList" resultType="com.spring.tour.vo.TourServiceVo" parameterType="string">
 		select * from tour_service where user_id=#{user_id}
