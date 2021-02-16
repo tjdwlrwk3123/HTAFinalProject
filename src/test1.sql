@@ -115,6 +115,7 @@ CREATE TABLE category
 CREATE TABLE coupon
 (
 	coupon_number number NOT NULL,
+	coupon_name varchar2(255) NOT NULL,
 	user_id varchar2(30) NOT NULL,
 	discount_price number,
 	expire_date date,
