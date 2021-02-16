@@ -1,8 +1,12 @@
 insert into category values(1,'투어');
-insert into category values(2,'호텔');
-insert into category values(3,'펜션');
-insert into category values(4,'기타');
-insert into category values(5,'리뷰');
+insert into category values(2,'펜션');
+insert into category values(3,'캠핑');
+insert into category values(4,'게스트하우스');
+insert into category values(5,'기타');
+insert into category values(11,'투어리뷰');
+insert into category values(111,'투어디테일');
+insert into category values(55,'숙소리뷰');
+insert into category values(555,'숙소디테일');
 
 insert into accom_info values(1,1,'좋은 호텔\n입니다.\n많이들 와주세요','독채펜션\n
 · 프라이빗한 객실에서 사랑하는 가족이나 친구와 함께 행복을 찾아보세요.\n
@@ -19,29 +23,29 @@ insert into accom_service values(2,2,'기','b호텔','부산광역시');
 insert into accom_service values(3,2,'홍','c호텔','제주도');
 
 --같은 방이 세개씩 있다고 가정하고 복붙
-insert into accom_option values(1,1,'스위트룸',1,4,40000);
-insert into accom_option values(2,1,'일반실',1,4,20000);
-insert into accom_option values(3,1,'비즈니스',1,4,30000);
-insert into accom_option values(4,2,'스위트룸',2,5,80000);
-insert into accom_option values(6,2,'비즈니스',2,5,45000);
-insert into accom_option values(7,3,'일반',1,3,22000);
-insert into accom_option values(8,3,'고급',1,3,40000);
+insert into accom_option values(1,1,'스위트룸',1,4,40000,null);
+insert into accom_option values(2,1,'일반실',1,4,20000,null);
+insert into accom_option values(3,1,'비즈니스',1,4,30000,null);
+insert into accom_option values(4,2,'스위트룸',2,5,80000,null);
+insert into accom_option values(6,2,'비즈니스',2,5,45000,null);
+insert into accom_option values(7,3,'일반',1,3,22000,null);
+insert into accom_option values(8,3,'고급',1,3,40000,null);
 
-insert into accom_option values(9,1,'스위트룸',1,4,40000);
-insert into accom_option values(10,1,'일반실',1,4,20000);
-insert into accom_option values(11,1,'비즈니스',1,4,30000);
-insert into accom_option values(12,2,'스위트룸',2,5,80000);
-insert into accom_option values(13,2,'비즈니스',2,5,45000);
-insert into accom_option values(14,3,'일반',1,3,22000);
-insert into accom_option values(15,3,'고급',1,3,40000);
+insert into accom_option values(9,1,'스위트룸',1,4,40000,null);
+insert into accom_option values(10,1,'일반실',1,4,20000,null);
+insert into accom_option values(11,1,'비즈니스',1,4,30000,null);
+insert into accom_option values(12,2,'스위트룸',2,5,80000,null);
+insert into accom_option values(13,2,'비즈니스',2,5,45000,null);
+insert into accom_option values(14,3,'일반',1,3,22000,null);
+insert into accom_option values(15,3,'고급',1,3,40000,null);
 
-insert into accom_option values(16,1,'스위트룸',1,4,40000);
-insert into accom_option values(17,1,'일반실',1,4,20000);
-insert into accom_option values(18,1,'비즈니스',1,4,30000);
-insert into accom_option values(19,2,'스위트룸',2,5,80000);
-insert into accom_option values(20,2,'비즈니스',2,5,45000);
-insert into accom_option values(21,3,'일반',1,3,22000);
-insert into accom_option values(22,3,'고급',1,3,40000);
+insert into accom_option values(16,1,'스위트룸',1,4,40000,null);
+insert into accom_option values(17,1,'일반실',1,4,20000,null);
+insert into accom_option values(18,1,'비즈니스',1,4,30000,null);
+insert into accom_option values(19,2,'스위트룸',2,5,80000,null);
+insert into accom_option values(20,2,'비즈니스',2,5,45000,null);
+insert into accom_option values(21,3,'일반',1,3,22000,null);
+insert into accom_option values(22,3,'고급',1,3,40000,null);
 
 insert into accom_book values(1,'aa',1,'a호텔','2021-02-04','2021-02-05',null,null,null,null,null);
 insert into accom_book values(2,'bb',2,'a호텔','2021-02-05','2021-02-08',null,null,null,null,null);

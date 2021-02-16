@@ -73,7 +73,7 @@
 		else 0
 		end
 		,accom_startdate=null
-		where accom_book_number=#{accom_book_number};
+		where accom_book_number=#{accom_book_number}
 	]]>
 	</update>
 	<!-- tour예약 리스트 -->

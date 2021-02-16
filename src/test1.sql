@@ -307,6 +307,15 @@ create table chatusers
 --insert into chatusers values(3, 'costomer3', '0');
 --insert into chatusers values(4, 'costomer4', '0');
 
+create table visitor_info
+(
+    visitor_info_number number not null,
+    accom_book_number number not null,
+    visitor_name varchar2(30),
+    visitor_email varchar2(100),
+    visitor_phone varchar2(50),
+    primary key(visitor_info_number)
+);
 
 /* Create Sequences */
 
@@ -463,6 +472,10 @@ ALTER TABLE wishlist
 ;
 
 
+alter table visitor_info
+    add foreign key (accom_book_number)
+    references accom_book (accom_book_number)
+;
 
 
 /* Comments */

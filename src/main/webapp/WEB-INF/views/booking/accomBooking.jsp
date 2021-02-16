@@ -154,6 +154,7 @@
 		- 체크인 2일 전 : 취소 수수료 50%<br>
 		- 체크인 1일 전 : 취소 수수료 70%<br>
 		- 체크인 당일 : 취소 수수료 100%<br>
+		<span>사용한 포인트는 환불되나, 사용한 쿠폰은 환불되지 않고 소멸합니다.</span>
     </p>
     <p style="text-align:center;">취소하시겠습니까?</p>
     <div style="text-align:center;">
