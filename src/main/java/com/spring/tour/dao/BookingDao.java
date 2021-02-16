@@ -55,4 +55,7 @@ public class BookingDao {
 	public List<TourBookVo> tourCancelList(String user_id){
 		return sqlSession.selectList(NAMESPACE+".tourCancelList", user_id);
 	}
+	public int tourCancel(int bookNumber) {
+		return sqlSession.update(NAMESPACE+".tourCancel", bookNumber);
+	}
 }

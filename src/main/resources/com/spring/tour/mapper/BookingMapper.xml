@@ -73,7 +73,7 @@
 		else 0
 		end
 		,accom_startdate=null
-		where accom_book_number=#{accom_book_number};
+		where accom_book_number=#{accom_book_number}
 	]]>
 	</update>
 	<!-- tour예약 리스트 -->
@@ -131,4 +131,20 @@
         and payment_condition='결제취소'
         order by tour_book_number desc
 	</select>
+	<!-- tour결제취소 -->
+	<update id="tourCancel" parameterType="int">
+	<![CDATA[
+		update accom_book 
+		set payment_condition='결제취소',total_price=
+		case 
+		when accom_enddate is null and accom_startdate+7<=sysdate then 0
+        when accom_enddate is null and accom_startdate+7>sysdate then total_price*0.9
+        when accom_enddate is not null and accom_startdate+7<=sysdate then 0
+        when accom_enddate is not null and accom_enddate>sysdate+7 then total_price*0.9
+        when accom_enddate is not null and accom_enddate<=sysdate+7 then total_price
+		end
+		,accom_startdate=null,accom_enddate=null
+		where accom_book_number=#{accom_book_number};
+	]]>
+	</update>
 </mapper>

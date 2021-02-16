@@ -237,7 +237,7 @@ public class BookingCheckController {
 		//테스트용 유저 생성
 		HttpServletRequest request=((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
 		HttpSession session = request.getSession();
-		session.setAttribute("user_id","kaka");
+		session.setAttribute("user_id","ck");
 		
 		//유저의 아이디 가져오기
 		String user_id=(String)session.getAttribute("user_id");
@@ -292,10 +292,24 @@ public class BookingCheckController {
 		try {
 			int n=service.accomCancel(bookNumber);
 			model.addAttribute("result", "success");
+			//트랜잭션 처리필요
 		}catch(Exception e) {
 			e.printStackTrace();
 			model.addAttribute("result", "fail");
 		}
-		return ".booking.accomBooking";
+		return "redirect:/accomBookingCheck";
 	}
+	
+	@RequestMapping("/tourCancel")
+	public String tourCancel(int bookNumber,Model model) {
+		try {
+			int n=service.tourCancel(bookNumber);
+			model.addAttribute("result", "success");
+			//트랜잭션 처리필요
+		}catch(Exception e) {
+			e.printStackTrace();
+			model.addAttribute("result", "fail");
+		}
+		return "redirect:/tourBookingCheck";
+	} 
 }
