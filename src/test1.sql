@@ -279,7 +279,7 @@ CREATE TABLE user_info
 	user_grade varchar2(20) NOT NULL,
 	user_email varchar2(30),
 	user_addr varchar2(40),
-	user_phone number,
+	user_phone varchar2(255),
 	user_condition varchar2(20),
 	user_point number,
 	user_enabled char(1) default '1',
