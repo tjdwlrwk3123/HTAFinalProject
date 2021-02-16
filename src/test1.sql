@@ -54,6 +54,7 @@ CREATE TABLE accom_option
 	accom_min_people number,
 	accom_max_people number,
 	accom_price number,
+	discount number,
 	PRIMARY KEY (accom_option_number)
 );
 
@@ -116,8 +117,8 @@ CREATE TABLE coupon
 	coupon_number number NOT NULL,
 	user_id varchar2(30) NOT NULL,
 	discount_price number,
-	effective_date date,
-	coupon_usecondition varchar2(20),
+	expire_date date,
+	coupon_usecondition number(5),
 	PRIMARY KEY (coupon_number)
 );
 
@@ -252,6 +253,7 @@ CREATE TABLE tour_option
 	tour_option varchar2(50),
 	tour_price number,
 	tour_amount number,
+	discount number,
 	PRIMARY KEY (tour_option_number)
 );
 

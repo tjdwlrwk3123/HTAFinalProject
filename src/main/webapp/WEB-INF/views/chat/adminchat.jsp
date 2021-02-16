@@ -35,11 +35,13 @@
 		text-align:right;
 		margin :8px;
 		margin-left:60px;
+		word-break:break-all;
 	}
  	.fromC{ /* 내가 아닌 메세지 div  */ 
 		margin :8px;
 		margin-right:60px;
 		font-weight: 500;
+		word-break:break-all;
 	}
 	.mTag{/* 내용에 입힐 CSS */
 		margin:3px;
