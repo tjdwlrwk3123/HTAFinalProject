@@ -26,7 +26,7 @@ DROP TABLE wishlist CASCADE CONSTRAINTS;
 DROP TABLE user_info CASCADE CONSTRAINTS;
 DROP TABLE facilities CASCADE CONSTRAINTS;
 DROP TABLE convenience CASCADE CONSTRAINTS;
-
+DROP TABLE tour_book_option CASCADE CONSTRAINTS;
 
 
 
@@ -91,7 +91,7 @@ CREATE TABLE tour_book
 (
 	tour_book_number number NOT NULL,
 	user_id varchar2(30) NOT NULL,
-	tour_option_number number,
+	service_number number(5), --투어서비스 포린키
 	service_name varchar2(100),
 	tour_startdate date,
 	tour_enddate date,
@@ -102,6 +102,16 @@ CREATE TABLE tour_book
 	payment_method varchar2(50),
 	PRIMARY KEY (tour_book_number)
 );
+
+CREATE TABLE tour_book_option
+(
+	tour_book_option_number number NOT NULL,
+	tour_book_number number, --투어북 포린키
+	tour_option_index number(5),
+	cnt number(5),
+	PRIMARY KEY (tour_book_option_number)
+);
+
 
 
 CREATE TABLE category
