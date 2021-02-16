@@ -18,7 +18,7 @@ public class ServiceDao {
 	private static String NAMESPACE="com.spring.tour.mapper.ServiceMapper";
 	public List<Accom_serviceVo> selectAccomServiceList(String user_id){ 
 		return sqlSession.selectList(NAMESPACE+".selectAccomServiceList",user_id);
-	}
+	} 
 	public Accom_serviceVo selectAccomService(String accom_service_number){ 
 		return sqlSession.selectOne(NAMESPACE+".selectAccomService",accom_service_number);
 	}

@@ -22,7 +22,7 @@
 					<td><a href="/accomoption?accom_service_number=${vo.accom_service_number }">옵션</a></td>
 					<td><a href="/accomupdate?accom_service_number=${vo.accom_service_number }">수정</a></td>
 					<td><a href="/accomdelete?accom_service_number=${vo.accom_service_number }">삭제</a></td>
-				</tr>
+				</tr> 
 			</c:forEach>
 		</table>
 	</div>

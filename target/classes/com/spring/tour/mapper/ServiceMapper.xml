@@ -9,7 +9,7 @@
 	</select>
 	<select id="selectAccomService" resultType="com.spring.tour.vo.Accom_serviceVo" parameterType="string">
 		select * from accom_service where accom_service_number=#{accom_service_number}
-	</select>
+	</select> 
 	<select id="selectAccomInfo" resultType="com.spring.tour.vo.AccomInfoVo" parameterType="string">
 		select * from accom_info where accom_service_number=#{accom_service_number}
 	</select>

@@ -48,7 +48,7 @@
 		</div>
 		<br>
 		편의서비스<br>
-		<div>
+		<div> 
 			<input type="checkbox" name="conven" value="조식">조식<br>
 			<input type="checkbox" name="conven" value="픽업">픽업<br>
 			<input type="checkbox" name="conven" value="무료주차">무료주차<br>

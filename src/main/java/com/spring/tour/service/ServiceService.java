@@ -18,7 +18,7 @@ public class ServiceService {
 	}
 	public Accom_serviceVo selectAccomService(String accom_service_number) {
 		return dao.selectAccomService(accom_service_number);
-	}
+	} 
 	public AccomInfoVo selectAccomInfo(String accom_service_number) {
 		return dao.selectAccomInfo(accom_service_number);
 	}
