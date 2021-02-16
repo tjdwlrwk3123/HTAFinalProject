@@ -9,60 +9,60 @@
 <!-- <script src="https://kit.fontawesome.com/b99e675b6e.js"></script> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
 <style type="text/css">
-	.cancleTripWrapper{
+	.cancelTripWrapper{
 		display: flex;
 		position: relative;
 	}
 	
-	.cancleTripWrapper .bookingSidebar{
+	.cancelTripWrapper .bookingSidebar{
 		position: fixed;
 		width: 200px;
 		height: 650px;
 		background: #4b4276;
 		padding: 30px 0;
 	}
-	.cancleTripWrapper .bookingSidebar h2{
+	.cancelTripWrapper .bookingSidebar h2{
 		color: #fff;
 		text-align: center;
 		margin-bottom: 30px;
 	}
-	.cancleTripWrapper .bookingSidebar ul li{
+	.cancelTripWrapper .bookingSidebar ul li{
 		padding: 15px;
 		border-bottom: 1px solid rgba(0,0,0,0.05);
 		border-top: 1px solid rgba(225,225,225,0.05);
 		list-style:none;
 		padding-left:0px;
 	}
-	.cancleTripWrapper .bookingSidebar ul li a{
+	.cancelTripWrapper .bookingSidebar ul li a{
 		color: #bdb8d7;
 		display: block;
 	}
-	.cancleTripWrapper .bookingSidebar ul li a .fas{
+	.cancelTripWrapper .bookingSidebar ul li a .fas{
 		width: 25px;
 	}
-	.cancleTripWrapper .bookingSidebar ul li a .far{
+	.cancelTripWrapper .bookingSidebar ul li a .far{
 		width: 25px;
 	}
-	.cancleTripWrapper .bookingSidebar ul li:hover{
+	.cancelTripWrapper .bookingSidebar ul li:hover{
 		background: #594f8d;
 	}
-	.cancleTripWrapper .bookingSidebar ul li:hover a{
+	.cancelTripWrapper .bookingSidebar ul li:hover a{
 		color:#fff;
 	}
-	.cancleTripWrapper .cancleTripMain{
+	.cancelTripWrapper .cancelTripMain{
 		width: 100%;
 		margin-left: 200px;
 		height: 710px;
 	}
-	.cancleTripWrapper .cancleTripMain #cancleTripWrap{
+	.cancelTripWrapper .cancelTripMain #cancelTripWrap{
 		height: 600px;
 	}
-	.cancleTripWrapper .cancleTripMain #cancleTripWrap .cancleTripList{
+	.cancelTripWrapper .cancelTripMain #cancelTripWrap .cancelTripList{
 		border-bottom: 1px solid rgba(0,0,0,0.05);
 		border-top: 1px solid rgba(225,225,225,0.05);
 		margin-left: 50px;
 	}
-	.cancleTripWrapper .cancleTripMain .cancleTripPaging{
+	.cancelTripWrapper .cancelTripMain .cancelTripPaging{
 		text-align: center;
 		
 	}
@@ -70,7 +70,7 @@
 </head>
 <body>
 
-<div class="cancleTripWrapper">
+<div class="cancelTripWrapper">
 	<div class="bookingSidebar">
 		<h2>취소목록</h2>
 		<ul>
@@ -83,14 +83,14 @@
 					<li><a href="${cp }/tourpastTrip">티켓/투어</a></li>
 				</ul>
 			</li>
-			<li><a href="${cp }/cancleTrip"><i class="fas fa-plane-slash"></i>취소목록</a></li>
+			<li><a href="${cp }/cancelTrip"><i class="fas fa-plane-slash"></i>취소목록</a></li>
 		</ul>
 	</div>
-	<div class="cancleTripMain">
-		<div id="cancleTripWrap">
+	<div class="cancelTripMain">
+		<div id="cancelTripWrap">
 			<h2 style="text-align: center;">취소목록</h2>
-			<c:forEach var="vo" items="${accomCancleList }" varStatus="status">
-				<div class="cancleTripList">
+			<c:forEach var="vo" items="${accomCancelList }" varStatus="status">
+				<div class="cancelTripList">
 					<div style="display: inline-block;">
 						<img src="${cp}/resources/gimgs/${aimage[status.index][0].imgsavename}" 
 						style="width: 100px; height: 100px;">
@@ -103,8 +103,8 @@
 					</div>
 				</div>
 			</c:forEach>
-			<c:forEach var="vo" items="${tourCancleList }" varStatus="status">
-				<div class="cancleTripList">
+			<c:forEach var="vo" items="${tourCancelList }" varStatus="status">
+				<div class="cancelTripList">
 					<div style="display: inline-block;">
 						<img src="${cp}/resources/gimgs/${timage[status.index][0].imgsavename}" 
 						style="width: 100px; height: 100px;">

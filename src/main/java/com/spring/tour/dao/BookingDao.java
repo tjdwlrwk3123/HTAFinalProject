@@ -30,8 +30,11 @@ public class BookingDao {
 		return sqlSession.selectOne(NAMESPACE+".accompastCount", user_id);
 	}
 	//숙소 취소목록
-	public List<AccomBookVo> accomCancleList(String user_id){
-		return sqlSession.selectList(NAMESPACE+".accomCancleList", user_id);
+	public List<AccomBookVo> accomCancelList(String user_id){
+		return sqlSession.selectList(NAMESPACE+".accomCancelList", user_id);
+	}
+	public int accomCancel(int bookNumber) {
+		return sqlSession.update(NAMESPACE+".accomCancel", bookNumber);
 	}
 	
 	
@@ -49,7 +52,10 @@ public class BookingDao {
 		return sqlSession.selectOne(NAMESPACE+".tourpastCount", user_id);
 	}
 	//투어 취소목록
-	public List<TourBookVo> tourCancleList(String user_id){
-		return sqlSession.selectList(NAMESPACE+".tourCancleList", user_id);
+	public List<TourBookVo> tourCancelList(String user_id){
+		return sqlSession.selectList(NAMESPACE+".tourCancelList", user_id);
+	}
+	public int tourCancel(int bookNumber) {
+		return sqlSession.update(NAMESPACE+".tourCancel", bookNumber);
 	}
 }

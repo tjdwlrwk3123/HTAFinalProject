@@ -52,12 +52,30 @@
 		]]>
 	</select>
 	<!-- 숙소 취소리스트 -->
-	<select id="accomCancleList" parameterType="string" resultType="accomBookVo">
+	<select id="accomCancelList" parameterType="string" resultType="accomBookVo">
         select * from accom_book 
         where user_id=#{user_id}
         and payment_condition='결제취소'
         order by accom_book_number desc
 	</select>
+	<!-- 예약 취소 -->
+	<update id="accomCancel" parameterType="int">
+	<![CDATA[
+		update accom_book 
+		set accom_enddate=null,payment_condition='결제취소',total_price=
+		case 
+		when accom_startdate=sysdate then total_price
+		when accom_startdate<=sysdate+1 then total_price*0.7
+		when accom_startdate<=sysdate+2 then total_price*0.5
+		when accom_startdate<=sysdate+3 then total_price*0.3
+		when accom_startdate<=sysdate+4 then total_price*0.2
+		when accom_startdate<=sysdate+5 then total_price*0.1
+		else 0
+		end
+		,accom_startdate=null
+		where accom_book_number=#{accom_book_number}
+	]]>
+	</update>
 	<!-- tour예약 리스트 -->
 	<select id="tourBookingList" parameterType="hashmap" resultType="tourBookVo">
 		select * from
@@ -107,10 +125,26 @@
 		]]>
 	</select>
 	<!-- tour취소 리스트 -->
-	<select id="tourCancleList" parameterType="string" resultType="tourBookVo">
+	<select id="tourCancelList" parameterType="string" resultType="tourBookVo">
         select * from tour_book 
         where user_id=#{user_id}
         and payment_condition='결제취소'
         order by tour_book_number desc
 	</select>
+	<!-- tour결제취소 -->
+	<update id="tourCancel" parameterType="int">
+	<![CDATA[
+		update accom_book 
+		set payment_condition='결제취소',total_price=
+		case 
+		when accom_enddate is null and accom_startdate+7<=sysdate then 0
+        when accom_enddate is null and accom_startdate+7>sysdate then total_price*0.9
+        when accom_enddate is not null and accom_startdate+7<=sysdate then 0
+        when accom_enddate is not null and accom_enddate>sysdate+7 then total_price*0.9
+        when accom_enddate is not null and accom_enddate<=sysdate+7 then total_price
+		end
+		,accom_startdate=null,accom_enddate=null
+		where accom_book_number=#{accom_book_number};
+	]]>
+	</update>
 </mapper>

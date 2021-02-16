@@ -29,8 +29,11 @@ public class BookingService {
 		return dao.accompastCount(user_id);
 	}
 	//숙소 취소목록
-	public List<AccomBookVo> accomCancleList(String user_id){
-		return dao.accomCancleList(user_id);
+	public List<AccomBookVo> accomCancelList(String user_id){
+		return dao.accomCancelList(user_id);
+	}
+	public int accomCancel(int bookNumber) {
+		return dao.accomCancel(bookNumber);
 	}
 	
 	
@@ -48,7 +51,10 @@ public class BookingService {
 		return dao.tourpastCount(user_id);
 	}
 	//투어 취소목록
-	public List<TourBookVo> tourCancleList(String user_id){
-		return dao.tourCancleList(user_id);
+	public List<TourBookVo> tourCancelList(String user_id){
+		return dao.tourCancelList(user_id);
+	}
+	public int tourCancel(int bookNumber) {
+		return dao.tourCancel(bookNumber);
 	}
 }

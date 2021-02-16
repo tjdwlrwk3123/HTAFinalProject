@@ -53,7 +53,8 @@
     overflow-y:auto;  /* 내용이 설정된 height을 넘기면 자동으로 스크롤 생성 */
 
 	border-radius: 5% 5% 0% 0%;
-}
+	word-break:break-all; /* 글자가 div를 넘어가지 않도록*/
+	}
 
 
 #messages::-webkit-scrollbar {
@@ -90,11 +91,13 @@
 	text-align:right;
 	margin :8px;
 	margin-left:60px;
+	word-break:break-all;
 }
 	.fromC{ /* 내가 아닌 메세지 div  */ 
 	margin :8px;
 	margin-right:60px;
 	font-weight: 500;
+	word-break:break-all;
 }
 .mTag{/* 내용에 입힐 CSS */
 	margin:3px;

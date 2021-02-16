@@ -54,6 +54,7 @@ CREATE TABLE accom_option
 	accom_min_people number,
 	accom_max_people number,
 	accom_price number,
+	discount number,
 	PRIMARY KEY (accom_option_number)
 );
 
@@ -114,10 +115,11 @@ CREATE TABLE category
 CREATE TABLE coupon
 (
 	coupon_number number NOT NULL,
+	coupon_name varchar2(255) NOT NULL,
 	user_id varchar2(30) NOT NULL,
 	discount_price number,
-	effective_date date,
-	coupon_usecondition varchar2(20),
+	expire_date date,
+	coupon_usecondition number(5),
 	PRIMARY KEY (coupon_number)
 );
 
@@ -252,6 +254,7 @@ CREATE TABLE tour_option
 	tour_option varchar2(50),
 	tour_price number,
 	tour_amount number,
+	discount number,
 	PRIMARY KEY (tour_option_number)
 );
 
@@ -276,7 +279,7 @@ CREATE TABLE user_info
 	user_grade varchar2(20) NOT NULL,
 	user_email varchar2(30),
 	user_addr varchar2(40),
-	user_phone number,
+	user_phone varchar2(255),
 	user_condition varchar2(20),
 	user_point number,
 	user_enabled char(1) default '1',
@@ -304,6 +307,15 @@ create table chatusers
 --insert into chatusers values(3, 'costomer3', '0');
 --insert into chatusers values(4, 'costomer4', '0');
 
+create table visitor_info
+(
+    visitor_info_number number not null,
+    accom_book_number number not null,
+    visitor_name varchar2(30),
+    visitor_email varchar2(100),
+    visitor_phone varchar2(50),
+    primary key(visitor_info_number)
+);
 
 /* Create Sequences */
 
@@ -460,6 +472,10 @@ ALTER TABLE wishlist
 ;
 
 
+alter table visitor_info
+    add foreign key (accom_book_number)
+    references accom_book (accom_book_number)
+;
 
 
 /* Comments */
