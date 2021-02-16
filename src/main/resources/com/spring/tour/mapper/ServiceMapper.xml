@@ -4,8 +4,14 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.spring.tour.mapper.ServiceMapper">
-	<select id="selectAccomList" resultType="com.spring.tour.vo.Accom_serviceVo" parameterType="string">
+	<select id="selectAccomServiceList" resultType="com.spring.tour.vo.Accom_serviceVo" parameterType="string">
 		select * from accom_service where user_accom_boss_name=#{user_accom_boss_name}
+	</select>
+	<select id="selectAccomService" resultType="com.spring.tour.vo.Accom_serviceVo" parameterType="string">
+		select * from accom_service where accom_service_number=#{accom_service_number}
+	</select>
+	<select id="selectAccomInfo" resultType="com.spring.tour.vo.AccomInfoVo" parameterType="string">
+		select * from accom_info where accom_service_number=#{accom_service_number}
 	</select>
 	<select id="selectTourList" resultType="com.spring.tour.vo.TourServiceVo" parameterType="string">
 		select * from tour_service where user_id=#{user_id}
@@ -19,4 +25,7 @@
 	<insert id="insertImg" parameterType="com.spring.tour.vo.ImageVo">
 		insert into image values((select nvl(max(img_num)+1,0) from image),#{imgorgname},#{imgsavename},(select nvl(max(accom_service_number),0) from accom_service), #{cate_number})
 	</insert>
+	<delete id="deleteAccomService" parameterType="string">
+		delete from accom_service where accom_service_number=#{accom_service_number}
+	</delete>
 </mapper>

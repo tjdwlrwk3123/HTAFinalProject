@@ -37,7 +37,7 @@ public class ServiceController {
 			if(user_id.equals("")||user_id==null) {
 				return ".userjoin.userlogin";
 			}else {
-				List<Accom_serviceVo> list = service.selectAccomList(user_id);
+				List<Accom_serviceVo> list = service.selectAccomServiceList(user_id);
 				model.addAttribute("list",list);
 				return ".service.tourmain";
 			}
@@ -56,7 +56,7 @@ public class ServiceController {
 			if(user_id.equals("")||user_id==null) {
 				return ".userjoin.userlogin";
 			}else {
-				List<Accom_serviceVo> list = service.selectAccomList(user_id);
+				List<Accom_serviceVo> list = service.selectAccomServiceList(user_id);
 				model.addAttribute("list",list);
 				return ".service.accommain";
 			}
@@ -68,6 +68,19 @@ public class ServiceController {
 	@GetMapping("/accominsert")
 	public String accominsertpage() {
 		return ".service.accominsert"; 
+	}
+	@GetMapping("/accomupdate")
+	public String accomupdatepage(String accom_service_number, Model model) {
+		Accom_serviceVo vo1 = service.selectAccomService(accom_service_number);
+		AccomInfoVo vo2=service.selectAccomInfo(accom_service_number);
+		model.addAttribute("vo1",vo1);
+		model.addAttribute("vo2",vo2);
+		return "service.accomupdate"; 
+	}
+	@GetMapping("/accomdelete")
+	public String accomdelete(String accom_service_number) {
+		service.deleteAccomService(accom_service_number);
+		return "/accommain"; 
 	}
 	@PostMapping("/accominsert")
 	public String accominsert(String cate, String accom_name, String accom_addr, String accom_info_content, String accom_how, String accom_rule, String accom_checkinfo, String[] facility, String[] conven, MultipartFile[] img, HttpSession session, Model model) {

@@ -12,15 +12,14 @@
 		<table>
 			<tr>
 				<th>서비스이름</th>
+				<th>옵션</th>
 				<th>수정</th>
 				<th>삭제</th>
 			</tr>
 			<c:forEach var="vo" items="list">
 				<tr>
 					<td><a href="/accomservice?accom_service_number=${vo.accom_service_number }">${vo.accom_name }</a></td>
-					<!-- 
-					<td><a href="/accommessage?accom_service_number=${vo.accom_service_number }">관련 메시지</a></td>
-					 -->
+					<td><a href="/accomoption?accom_service_number=${vo.accom_service_number }">옵션</a></td>
 					<td><a href="/accomupdate?accom_service_number=${vo.accom_service_number }">수정</a></td>
 					<td><a href="/accomdelete?accom_service_number=${vo.accom_service_number }">삭제</a></td>
 				</tr>
