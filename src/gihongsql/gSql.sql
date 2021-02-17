@@ -207,6 +207,8 @@ Insert into FINAL.USER_INFO (USER_ID,USER_PASS,USER_NAME,USER_GRADE,USER_EMAIL,U
 Insert into FINAL.USER_INFO (USER_ID,USER_PASS,USER_NAME,USER_GRADE,USER_EMAIL,USER_ADDR,USER_PHONE,USER_CONDITION,USER_POINT) values ('kaka','1234','카카','DIAMOND','kaka@me.com','강남구','01099998888','Great',10000000);
 Insert into FINAL.USER_INFO (USER_ID,USER_PASS,USER_NAME,USER_GRADE,USER_EMAIL,USER_ADDR,USER_PHONE,USER_CONDITION,USER_POINT) values ('admin','1234','관리자','MANAGER','admin@me.com','강남구','01011112222','Great',100000);
 
+insert into tour_book_option values(1,1,1,3);
+insert into tour_book_option values(2,1,2,2);
 
 commit;
 
@@ -258,6 +260,10 @@ where facility like '%수영장%' and facility like '%바베큐장%';
 update accom_book set accom_startdate='2021/02/18',accom_enddate='2021/02/20',
 payment_condition='결제완료',total_price=40000,point_useamount=3000,coupon_usecondition='환영쿠폰'
 where accom_book_number=6;
+
+update tour_book set tour_startdate='2021/02/17',tour_enddate='2021/03/05',
+payment_condition='결제완료',total_price=59779,point_useamount=4221,coupon_usecondition='환영쿠폰'
+where tour_book_number=2;
 
 
 -- 위 쿼리에서 나온 숙소의 최소 방값을 구하기

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.spring.tour.vo.AccomBookVo;
+import com.spring.tour.vo.TourBookOptionVo;
 import com.spring.tour.vo.TourBookVo;
 
 @Repository
@@ -36,8 +37,8 @@ public class BookingDao {
 	public int getUsedPointA(int bookNumber) {
 		return sqlSession.selectOne(NAMESPACE+".getUsedPointA", bookNumber);
 	}
-	public int pointRefundA(HashMap<String, Object> map) {
-		return sqlSession.update(NAMESPACE+".pointRefundA", map);
+	public int pointRefund(HashMap<String, Object> map) {
+		return sqlSession.update(NAMESPACE+".pointRefund", map);
 	}
 	public int accomCancel(int bookNumber) {
 		return sqlSession.update(NAMESPACE+".accomCancel", bookNumber);
@@ -61,7 +62,18 @@ public class BookingDao {
 	public List<TourBookVo> tourCancelList(String user_id){
 		return sqlSession.selectList(NAMESPACE+".tourCancelList", user_id);
 	}
+	public int getUsedPointT(int bookNumber) {
+		return sqlSession.selectOne(NAMESPACE+".getUsedPointT", bookNumber);
+	}
+	public int tourOptionDel(int bookNumber) {
+		return sqlSession.delete(NAMESPACE+".tourBookOptionDel",bookNumber);
+	}
 	public int tourCancel(int bookNumber) {
 		return sqlSession.update(NAMESPACE+".tourCancel", bookNumber);
+	}
+	
+	//투어 디테일
+	public List<TourBookOptionVo> tourBookOption(int bookNumber){
+		return sqlSession.selectList(NAMESPACE+".tourBookDetail", bookNumber);
 	}
 }

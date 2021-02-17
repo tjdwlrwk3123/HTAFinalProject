@@ -84,6 +84,17 @@
     background-color:#FFF;
     z-index:10000;   
  	}
+ 	.detailPopup{
+    display: none;
+    position:absolute;
+    left:65%;
+    top:200px;
+    margin-left: -500px;
+    width:500px;
+    height:400px;
+    background-color:#FFF;
+    z-index:10000;   
+ 	}
  	
 </style>
 
@@ -97,7 +108,6 @@
 				<a><i class="far fa-lightbulb"></i>지난여행/후기</a>
 				<ul>
 					<li><a href="${cp }/accompastTrip">숙박</a></li>
-					<li><a href="${cp }/tourpastTrip">티켓/투어</a></li>
 				</ul>
 			</li>
 			<li><a href="${cp }/cancelTrip"><i class="fas fa-plane-slash"></i>취소목록</a></li>
@@ -114,17 +124,21 @@
 					</div>
 					<div style="display: inline-block;">
 						<h3><a href="${cp }/tourDetail?service_number=${vo.service_number}">${vo.service_name }</a></h3>
-						<span>예약날짜:</span><span>${vo.tour_startdate }~${vo.tour_enddate }</span>
+						<span>유효기간:</span><span>${vo.tour_startdate }~${vo.tour_enddate }</span>
 						<br>
-						<span>총 결제금액:</span><span>${vo.total_price }</span><span>원</span>
+						<span>사용 쿠폰:</span><span>${vo.coupon_usecondition }</span><br>
+						<span>총 결제금액:</span><span>${vo.total_price+vo.point_useamount}</span><span>원</span>
 					</div>
 					<div style="display:inline-block; position: relative; left: 100px;">
-						<a href="#" class="openMask">상세보기</a>
-						<input type="hidden" value="${vo.accom_book_number }">
+						<a href="#" class="openBookDetail">상세보기</a>
+						<input type="hidden" value="${vo.tour_book_number }">
 					</div>
-					<div style="display:inline-block; position: relative; left: 200px;">
+					<div style="display:inline-block; position: relative; left: 125px;">
 						<a href="#" class="openMask">결제취소</a>
-						<input type="hidden" value="${vo.accom_book_number }">
+						<input type="hidden" value="${vo.tour_book_number }">
+					</div>
+					<div style="display:inline-block; position: relative; left: 150px;">
+						<span>리뷰쓰기</span>
 					</div>
 				</div>
 			</c:forEach>
@@ -146,17 +160,22 @@
 
 <div id="mask">
 </div>
+
+<div class="detailPopup">
+</div>
+
 <div class="cancelPopup">
     <p style="width:500px;height:300px;text-align:center;vertical-align:middle;">
     	<span style="font-weight:bold; color: red;">규정에 따라 취소 수수료가 발생할 수 있습니다.</span><br><br><br>
     	유효기간이 없는 티켓인 경우<br>
     	- 구입 후 7일 이내 : 취소 수수료 무료<br>
-    	- 구입 후 7일 이후 : 취소 수수료 10%<br><br><br>
+    	- 구입 후 7일 이후 : 취소 수수료 10%<br><br>
     	유효기간이 있는 티켓인 경우<br>
     	- 구입 후 7일 이내 : 취소 수수료 무료<br>
     	- 유효기간 7일 이전 : 취소 수수료 10%<br>
-    	- 유효기간 7일 이내 : 취소 수수료 100%<br>
-		<span>사용한 포인트는 환불되나, 사용한 쿠폰은 환불되지 않고 소멸합니다.</span>
+    	- 유효기간 7일 이내 : 취소 수수료 100%<br><br>
+		<span>사용한 포인트는 환불되나, 사용한 쿠폰은 환불되지 않고 소멸합니다.</span><br>
+		<span style="color:red;">부분취소의 경우 서비스관리자에게 문의 바랍니다.</span>
     </p>
     <p style="text-align:center;">취소하시겠습니까?</p>
     <div style="text-align:center;">
@@ -185,6 +204,57 @@ function wrapWindowByMask(){
 
 }
 
+function wrapWindowByDetailMask(bookNumber){
+	 
+    //화면의 높이와 너비를 구한다.
+    var maskHeight = $(document).height();  
+    var maskWidth = $(window).width();  
+
+    //마스크의 높이와 너비를 화면 것으로 만들어 전체 화면을 채운다.
+    $("#mask").css({"width":maskWidth,"height":maskHeight});  
+
+    //애니메이션 효과 - 일단 0초동안 까맣게 됐다가 60% 불투명도로 간다.
+
+    $("#mask").fadeIn(0);      
+    $("#mask").fadeTo("slow",0.6);    
+	
+    
+    $.ajax({
+		url: '${cp}/tourBookDetail',
+		dataType: 'json',
+		data: {"bookNumber":bookNumber},
+		success: function(data) {
+			$(".detailPopup").empty();
+			for(let i=0;i<data.detail.length;i++){
+				var optName=data.detail[i].tour_option;
+				var count=data.count[i];
+				var price=data.detail[i].tour_price;
+				var discount=data.detail[i].discount;
+				console.log(discount);
+				if(discount!=null){
+					price-=price*(discount*0.01);
+				}
+				var content='<div style="margin:20px;">'+
+				'<div style="display:inline-block">'+
+				'<span style="font-size:1.3em;">'+optName+'/</span>'+
+				'<span>'+count+'장</span><br>'+
+				'</div>'+
+				'<div style="display:inline-block; float:right;">'+
+				'<span>실 가격: '+price+'원</span>'+
+				'</div>'+
+				'</div>';
+				
+				$(".detailPopup").append(content);
+				
+			}
+		}
+	});
+    
+    //윈도우 같은 거 띄운다.
+    $(".detailPopup").show();
+
+}
+
 $(document).ready(function(){
 	var bookNumber=0;
 
@@ -194,6 +264,13 @@ $(document).ready(function(){
         bookNumber=$(e.target).next().val();
         wrapWindowByMask();
     });
+    
+    //검은 막 띄우기
+    $(".openBookDetail").click(function(e){
+        e.preventDefault();
+        bookNumber=$(e.target).next().val();
+        wrapWindowByDetailMask(bookNumber);
+    });
 
     //닫기 버튼을 눌렀을 때
     $(".cancelPopup .close").click(function (e) {  
@@ -201,14 +278,14 @@ $(document).ready(function(){
         e.preventDefault();
         bookNumber=0;
         $("#mask, .cancelPopup").hide();  
-    });       
+    });
 
     //검은 막을 눌렀을 때
     $("#mask").click(function () {  
     	bookNumber=0;
         $(this).hide();
         $(".cancelPopup").hide();
-
+        $(".detailPopup").hide();
     });
     
     $(".cancelPopup .cancelApply").click(function (e) {  

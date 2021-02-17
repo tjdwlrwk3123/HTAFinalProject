@@ -98,7 +98,6 @@
 				<a><i class="far fa-lightbulb"></i>지난여행/후기</a>
 				<ul>
 					<li><a href="${cp }/accompastTrip">숙박</a></li>
-					<li><a href="${cp }/tourpastTrip">티켓/투어</a></li>
 				</ul>
 			</li>
 			<li><a href="${cp }/cancelTrip"><i class="fas fa-plane-slash"></i>취소목록</a></li>

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -23,6 +24,7 @@ import com.spring.tour.vo.AccomBookVo;
 import com.spring.tour.vo.AccomOptionVo;
 import com.spring.tour.vo.Accom_serviceVo;
 import com.spring.tour.vo.ImageVo;
+import com.spring.tour.vo.TourBookOptionVo;
 import com.spring.tour.vo.TourBookVo;
 import com.spring.tour.vo.TourOptionVo;
 
@@ -117,7 +119,6 @@ public class BookingCheckController {
 		List<List<ImageVo>> image=new ArrayList<List<ImageVo>>();
 		for(TourBookVo vo:tourBookList) {
 			int service_number=vo.getService_number();
-			System.out.println("서비스넘버"+service_number);
 			//서비스넘버로 이미지 뽑아오기
 			List<ImageVo> tourimg=tourService.tourDetailImage(service_number);
 			image.add(tourimg);
@@ -295,13 +296,34 @@ public class BookingCheckController {
 	@RequestMapping("/tourCancel")
 	public String tourCancel(int bookNumber,Model model) {
 		try {
-			int n=service.tourCancel(bookNumber);
+			HttpServletRequest request=((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
+			HttpSession session = request.getSession();
+			String user_id=(String)session.getAttribute("user_id");
+			int n=service.tourCancel(bookNumber,user_id);
 			model.addAttribute("result", "success");
-			//트랜잭션 처리필요
 		}catch(Exception e) {
 			e.printStackTrace();
 			model.addAttribute("result", "fail");
 		}
 		return "redirect:/tourBookingCheck";
-	} 
+	}
+	
+	@RequestMapping("/tourBookDetail")
+	@ResponseBody
+	public HashMap<String, Object> tourBookDetail(int bookNumber){
+		List<TourBookOptionVo> tbo=service.tourBookOption(bookNumber);
+		List<Integer> count=new ArrayList<Integer>();
+		List<TourOptionVo> detail=new ArrayList<TourOptionVo>();
+		for(TourBookOptionVo vo:tbo) {
+			int optNum=vo.getTour_option_index();
+			int cnt=vo.getCnt();
+			count.add(cnt);
+			TourOptionVo optvo=tourService.getTourOption(optNum);
+			detail.add(optvo);
+		}
+		HashMap<String, Object> result=new HashMap<String, Object>();
+		result.put("count", count);
+		result.put("detail", detail);
+		return result;
+	}
 }

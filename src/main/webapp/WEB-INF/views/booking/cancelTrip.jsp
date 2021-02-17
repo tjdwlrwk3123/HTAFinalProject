@@ -80,7 +80,6 @@
 				<a><i class="far fa-lightbulb"></i>지난여행/후기</a>
 				<ul>
 					<li><a href="${cp }/accompastTrip">숙박</a></li>
-					<li><a href="${cp }/tourpastTrip">티켓/투어</a></li>
 				</ul>
 			</li>
 			<li><a href="${cp }/cancelTrip"><i class="fas fa-plane-slash"></i>취소목록</a></li>
@@ -99,7 +98,7 @@
 						<h3><a href="${cp }/accomDetail?accomNum=${detail[status.index].accom_service_number}
 						&cate_number=${service[status.index].cate_number}">${vo.service_name }</a></h3>
 						<span>${detail[status.index].accom_rooms_option }</span><br>
-						<span>결제 취소수수료:</span><span>${vo.total_price }</span><span>원</span>
+						<span>환불금액:</span><span>${vo.total_price }</span><span>원</span>
 					</div>
 				</div>
 			</c:forEach>
@@ -112,7 +111,7 @@
 					<div style="display: inline-block;">
 						<h3><a href="${cp }/tourDetail?service_number=${option[status.index].service_number}">${vo.service_name }</a></h3>
 						<span>${option[status.index].tour_option }</span><br>
-						<span>결제 취소금액:</span><span>${vo.total_price }</span><span>원</span>
+						<span>환불금액:</span><span>${vo.total_price }</span><span>원</span>
 					</div>
 				</div>
 			</c:forEach>

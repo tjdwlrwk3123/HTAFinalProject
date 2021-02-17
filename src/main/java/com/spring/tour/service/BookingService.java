@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.tour.dao.BookingDao;
 import com.spring.tour.vo.AccomBookVo;
+import com.spring.tour.vo.TourBookOptionVo;
 import com.spring.tour.vo.TourBookVo;
 
 @Service
@@ -39,7 +40,7 @@ public class BookingService {
 		HashMap<String, Object> map=new HashMap<String, Object>();
 		map.put("user_point",point);
 		map.put("user_id",user_id);
-		dao.pointRefundA(map);
+		dao.pointRefund(map);
 		dao.accomCancel(bookNumber);
 		return 1;
 	}
@@ -62,7 +63,21 @@ public class BookingService {
 	public List<TourBookVo> tourCancelList(String user_id){
 		return dao.tourCancelList(user_id);
 	}
-	public int tourCancel(int bookNumber) {
-		return dao.tourCancel(bookNumber);
+	@Transactional
+	public int tourCancel(int bookNumber,String user_id) {
+		System.out.println("넘어왔니");
+		int point=dao.getUsedPointT(bookNumber);
+		System.out.println(point);
+		HashMap<String, Object> map=new HashMap<String, Object>();
+		map.put("user_point",point);
+		map.put("user_id",user_id);
+		dao.pointRefund(map);
+		dao.tourOptionDel(bookNumber);
+		dao.tourCancel(bookNumber);
+		return 1;
+	}
+	//투어디테일
+	public List<TourBookOptionVo> tourBookOption(int bookNumber){
+		return dao.tourBookOption(bookNumber);
 	}
 }
