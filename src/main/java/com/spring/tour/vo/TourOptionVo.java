@@ -7,13 +7,16 @@ public class TourOptionVo {
 	 private int tour_option_index;
 	 private String tour_option;
 	 private int tour_amount; // 티켓 개수/  없으면 전체가 비어버린다.
+	 private int discount;
 	 
 	public TourOptionVo() {
 		super();
 	}
 
+	
+
 	public TourOptionVo(int tour_option_number, int service_number, int tour_price, int tour_option_index,
-			String tour_option, int tour_amount) {
+			String tour_option, int tour_amount, int discount) {
 		super();
 		this.tour_option_number = tour_option_number;
 		this.service_number = service_number;
@@ -21,7 +24,10 @@ public class TourOptionVo {
 		this.tour_option_index = tour_option_index;
 		this.tour_option = tour_option;
 		this.tour_amount = tour_amount;
+		this.discount = discount;
 	}
+
+
 
 	public int getTour_option_number() {
 		return tour_option_number;
@@ -70,12 +76,17 @@ public class TourOptionVo {
 	public void setTour_amount(int tour_amount) {
 		this.tour_amount = tour_amount;
 	}
-
+	public int getDiscount() {
+		return discount;
+	}
+	public void setDiscount(int discount) {
+		this.discount = discount;
+	}
 	@Override
 	public String toString() {
 		return "TourOptionVo [tour_option_number=" + tour_option_number + ", service_number=" + service_number
 				+ ", tour_price=" + tour_price + ", tour_option_index=" + tour_option_index + ", tour_option="
-				+ tour_option + ", tour_amount=" + tour_amount + "]";
+				+ tour_option + ", tour_amount=" + tour_amount + ", discount=" + discount + "]";
 	}
 	
 }
