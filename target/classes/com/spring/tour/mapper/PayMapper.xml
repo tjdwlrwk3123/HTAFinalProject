@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.tour.mapper.PayMapper">
+
+	<resultMap type="payment" id="paymentInfo">
+		<result property="user_id" column="user_id"/>
+		<result property="user_name" column="user_name"/>
+		<result property="user_phone" column="user_phone"/>
+		<result property="user_point" column="user_point"/>
+		<collection property="couponlist" ofType="couponInfo">
+			<result property="coupon_name" column="coupon_name"/>
+			<result property="discount_price" column="discount_price"/>
+			<result property="expire_date" column="expire_date"/>
+		</collection>
+	</resultMap>
+	<select id="getUserInfo" parameterType="string" resultMap="paymentInfo">
+		select a.user_id,user_name,user_phone, user_point, coupon_name, discount_price, expire_date from 
+		(
+		select user_id, user_name,user_phone, user_point from user_info where user_id=#{user_id}
+			) a left join (
+		select user_id, coupon_name, discount_price, expire_date from coupon where expire_date >= sysdate and coupon_usecondition=0)b 
+		on a.user_id=b.user_id order by discount_price desc
+	</select>
+	
+	<insert id="insertTourBook" parameterType="hashmap">
+		insert into tour_book values(tb_seq.nextval,#{user_id},#{service_number},#{service_name},sysdate,#{tour_enddate},#{payment_condition},#{total_price},#{point_useamount},#{coupon_usecondition},#{payment_method},#{bookername},#{bookerphone})
+	</insert>
+	<select id="tourBookMax" resultType="int">
+		select max(tour_book_number) from tour_book
+	</select>
+	<insert id="insertTourBookOption" parameterType="hashmap">
+		insert into tour_book_option values(tbo_seq.nextval, #{tour_book_number},#{tour_option_index},#{cnt})
+	</insert>
+	
+	
+	<update id="updatePoint" parameterType="hashmap">
+		update user_info set user_point = (select user_point from user_info where user_id=#{user_id})- #{pointUsing} where user_id=#{user_id}
+	</update>
+	<update id="updateCoupon" parameterType="hashmap">
+		update coupon set coupon_usecondition = 1 where user_id=#{user_id} and coupon_name=#{couponUsing}
+	</update>
+	<update id="updateTicket" parameterType="hashmap">
+		update tour_option set tour_amount = 
+		(select tour_amount from tour_option where service_number=#{service_number} and tour_option_index=#{tour_option_index})-#{cnt} 
+		where service_number=#{service_number} and tour_option_index=#{tour_option_index}
+	</update>
+	
+	
+</mapper>

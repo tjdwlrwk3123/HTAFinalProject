@@ -24,6 +24,8 @@
   	<typeAlias type="com.spring.tour.vo.TourServiceVo" alias="tourservice"/>
   	<typeAlias type="com.spring.tour.vo.TourBookOptionVo" alias="tourBookOption"/>
   	<typeAlias type="com.spring.tour.vo.ChatVo" alias="chatvo"/>
+  	<typeAlias type="com.spring.tour.vo.PaymentVo" alias="payment"/>
+  	<typeAlias type="com.spring.tour.vo.CouponInfoVo" alias="couponInfo"/>
   </typeAliases>
   
   <!-- 읽어올 Mapper파일 설정 -->
@@ -41,5 +43,6 @@
 			<mapper resource="com/spring/tour/mapper/WishlistMapper.xml"/>
 			<mapper resource="com/spring/tour/mapper/TourPageMapper.xml"/>
 			<mapper resource="com/spring/tour/mapper/ChatMapper.xml"/>
+			<mapper resource="com/spring/tour/mapper/PayMapper.xml"/>
 	</mappers>
 </configuration>

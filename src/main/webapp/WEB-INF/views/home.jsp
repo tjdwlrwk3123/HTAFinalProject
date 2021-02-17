@@ -27,5 +27,8 @@
 		<a href='${cp }/logout'>로그아웃</a>
 	</c:otherwise>
 </c:choose>
+<%
+	session.setAttribute("user_id", "test");
+%>
 </body>
 </html>
