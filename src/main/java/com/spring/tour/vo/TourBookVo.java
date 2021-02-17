@@ -5,7 +5,7 @@ import java.sql.Date;
 public class TourBookVo {
 	private int tour_book_number;
 	private String user_id;
-	private int tour_option_number;
+	private int service_number;
 	private String service_name;
 	private Date tour_startdate;
 	private Date tour_enddate;
@@ -14,14 +14,16 @@ public class TourBookVo {
 	private int point_useamount;
 	private String coupon_usecondition;
 	private String payment_method;
+	private String bookername;
+	private String bookerphone;
 	public TourBookVo() {}
-	public TourBookVo(int tour_book_number, String user_id, int tour_option_number, String service_name,
+	public TourBookVo(int tour_book_number, String user_id, int service_number, String service_name,
 			Date tour_startdate, Date tour_enddate, String payment_condition, int total_price, int point_useamount,
-			String coupon_usecondition, String payment_method) {
+			String coupon_usecondition, String payment_method, String bookername, String bookerphone) {
 		super();
 		this.tour_book_number = tour_book_number;
 		this.user_id = user_id;
-		this.tour_option_number = tour_option_number;
+		this.service_number = service_number;
 		this.service_name = service_name;
 		this.tour_startdate = tour_startdate;
 		this.tour_enddate = tour_enddate;
@@ -30,6 +32,8 @@ public class TourBookVo {
 		this.point_useamount = point_useamount;
 		this.coupon_usecondition = coupon_usecondition;
 		this.payment_method = payment_method;
+		this.bookername = bookername;
+		this.bookerphone = bookerphone;
 	}
 	public int getTour_book_number() {
 		return tour_book_number;
@@ -43,11 +47,11 @@ public class TourBookVo {
 	public void setUser_id(String user_id) {
 		this.user_id = user_id;
 	}
-	public int getTour_option_number() {
-		return tour_option_number;
+	public int getService_number() {
+		return service_number;
 	}
-	public void setTour_option_number(int tour_option_number) {
-		this.tour_option_number = tour_option_number;
+	public void setService_number(int service_number) {
+		this.service_number = service_number;
 	}
 	public String getService_name() {
 		return service_name;
@@ -96,5 +100,17 @@ public class TourBookVo {
 	}
 	public void setPayment_method(String payment_method) {
 		this.payment_method = payment_method;
+	}
+	public String getBookername() {
+		return bookername;
+	}
+	public void setBookername(String bookername) {
+		this.bookername = bookername;
+	}
+	public String getBookerphone() {
+		return bookerphone;
+	}
+	public void setBookerphone(String bookerphone) {
+		this.bookerphone = bookerphone;
 	}
 }
