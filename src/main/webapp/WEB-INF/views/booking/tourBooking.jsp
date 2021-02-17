@@ -113,13 +113,16 @@
 						style="width: 100px; height: 100px;">
 					</div>
 					<div style="display: inline-block;">
-						<h3><a href="${cp }/tourDetail?service_number=${option[status.index].service_number}">${vo.service_name }</a></h3>
-						<span>${option[status.index].tour_option }</span><br>
+						<h3><a href="${cp }/tourDetail?service_number=${vo.service_number}">${vo.service_name }</a></h3>
 						<span>예약날짜:</span><span>${vo.tour_startdate }~${vo.tour_enddate }</span>
 						<br>
 						<span>총 결제금액:</span><span>${vo.total_price }</span><span>원</span>
 					</div>
 					<div style="display:inline-block; position: relative; left: 100px;">
+						<a href="#" class="openMask">상세보기</a>
+						<input type="hidden" value="${vo.accom_book_number }">
+					</div>
+					<div style="display:inline-block; position: relative; left: 200px;">
 						<a href="#" class="openMask">결제취소</a>
 						<input type="hidden" value="${vo.accom_book_number }">
 					</div>

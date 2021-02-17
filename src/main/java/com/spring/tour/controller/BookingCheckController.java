@@ -116,11 +116,9 @@ public class BookingCheckController {
 		List<TourOptionVo> option=new ArrayList<TourOptionVo>();
 		List<List<ImageVo>> image=new ArrayList<List<ImageVo>>();
 		for(TourBookVo vo:tourBookList) {
-			int optNum=vo.getTour_option_number();
-			TourOptionVo ovo=tourService.getTourOption(optNum);
-			option.add(ovo);
+			int service_number=vo.getService_number();
+			System.out.println("서비스넘버"+service_number);
 			//서비스넘버로 이미지 뽑아오기
-			int service_number=ovo.getService_number();
 			List<ImageVo> tourimg=tourService.tourDetailImage(service_number);
 			image.add(tourimg);
 		}
@@ -214,11 +212,7 @@ public class BookingCheckController {
 		List<TourOptionVo> option=new ArrayList<TourOptionVo>();
 		List<List<ImageVo>> image=new ArrayList<List<ImageVo>>();
 		for(TourBookVo vo:tourpastList) {
-			int optNum=vo.getTour_option_number();
-			TourOptionVo ovo=tourService.getTourOption(optNum);
-			option.add(ovo);
-			//서비스넘버로 이미지 뽑아오기
-			int service_number=ovo.getService_number();
+			int service_number=vo.getService_number();
 			List<ImageVo> tourimg=tourService.tourDetailImage(service_number);
 			image.add(tourimg);
 		}
@@ -268,11 +262,7 @@ public class BookingCheckController {
 		List<TourOptionVo> option=new ArrayList<TourOptionVo>();
 		List<List<ImageVo>> timage=new ArrayList<List<ImageVo>>();
 		for(TourBookVo vo:tourCancelList) {
-			int optNum=vo.getTour_option_number();
-			TourOptionVo ovo=tourService.getTourOption(optNum);
-			option.add(ovo);
-			//서비스넘버로 이미지 뽑아오기
-			int service_number=ovo.getService_number();
+			int service_number=vo.getService_number();
 			List<ImageVo> tourimg=tourService.tourDetailImage(service_number);
 			timage.add(tourimg);
 		}
