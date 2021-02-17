@@ -337,6 +337,27 @@ create table visitor_info
 
 create sequence wish_seq;
 
+create sequence ti_seq -- tour_info
+start with 1
+increment by 1;
+
+create sequence to_seq -- tour_option
+start with 1
+increment by 1;
+
+create sequence wish_seq -- wishlist
+start with 1
+increment by 1;
+
+create sequence ab_seq -- accom_book
+start with 1
+increment by 1;
+create sequence tb_seq -- tour_book
+start with 1
+increment by 1;
+
+
+
 
 /* Create Foreign Keys */
 
