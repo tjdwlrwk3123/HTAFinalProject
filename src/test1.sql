@@ -28,6 +28,10 @@ DROP TABLE facilities CASCADE CONSTRAINTS;
 DROP TABLE convenience CASCADE CONSTRAINTS;
 DROP TABLE tour_book_option CASCADE CONSTRAINTS;
 
+/* Drop Sequences */
+
+DROP SEQUENCE WISH_SEQ;
+
 
 
 /* Create Tables */
@@ -91,7 +95,7 @@ CREATE TABLE tour_book
 (
 	tour_book_number number NOT NULL,
 	user_id varchar2(30) NOT NULL,
-	service_number number(5), --투어서비스 포린키
+	service_number number(5), --tour_service에서 가져온 service_number
 	service_name varchar2(100),
 	tour_startdate date,
 	tour_enddate date,
@@ -106,7 +110,7 @@ CREATE TABLE tour_book
 CREATE TABLE tour_book_option
 (
 	tour_book_option_number number NOT NULL,
-	tour_book_number number, --투어북 포린키
+	tour_book_number number, --tour_book에서 가져온 tour_book_number
 	tour_option_index number(5),
 	cnt number(5),
 	PRIMARY KEY (tour_book_option_number)
@@ -417,8 +421,13 @@ ALTER TABLE accom_book
 ALTER TABLE tour_book
 	ADD FOREIGN KEY (user_id)
 	REFERENCES user_info (user_id)
-	ADD FOREIGN KEY (tour_option_number)
-	REFERENCES tour_option (tour_option_number)
+	ADD FOREIGN KEY (service_number)
+	REFERENCES tour_service (service_number)
+;
+
+ALTER TABLE tour_book_option
+	ADD FOREIGN KEY (tour_book_number)
+	REFERENCES tour_book (tour_book_number)
 ;
 
 
