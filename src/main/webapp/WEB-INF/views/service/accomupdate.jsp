@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div>
 	<form action="${cp }/accominsert" method="post" enctype="multipart/form-data" onsubmit="return check()">
+		<input type="hidden" name="accom_service_number" value="${vo1.accom_service_number }">
 		<select name="cate" id="cate">
 		<c:choose>
 			<c:when test="${vo1.cate_number==2 }">

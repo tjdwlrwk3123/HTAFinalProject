@@ -21,7 +21,7 @@
 					<td><a href="/accomservice?accom_service_number=${vo.accom_service_number }">${vo.accom_name }</a></td>
 					<td><a href="/accomoption?accom_service_number=${vo.accom_service_number }">옵션</a></td>
 					<td><a href="/accomupdate?accom_service_number=${vo.accom_service_number }">수정</a></td>
-					<td><a href="/accomdelete?accom_service_number=${vo.accom_service_number }">삭제</a></td>
+					<td><a href="/accomdelete?accom_service_number=${vo.accom_service_number }&cate_number=${vo.cate_number }">삭제</a></td>
 				</tr> 
 			</c:forEach>
 		</table>

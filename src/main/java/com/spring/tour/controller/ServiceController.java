@@ -77,8 +77,62 @@ public class ServiceController {
 		model.addAttribute("vo2",vo2); 
 		return "service.accomupdate"; 
 	}
+	@PostMapping("/accomupdate")
+	public String accomupdate(String accom_service_number, String cate, String accom_name, String accom_addr, String accom_info_content, String accom_how, String accom_rule, String accom_checkinfo, String[] facility, String[] conven, MultipartFile[] img, HttpSession session, Model model) {
+		try {
+			String path = sc.getRealPath("/resources/upload");
+			System.out.println(path);
+			
+			String user_id="";
+			try {
+				user_id=(String)session.getAttribute("user_id");
+				System.out.println(user_id);
+			}catch(Exception e){
+				e.printStackTrace();
+				return ".userjoin.userlogin"; 
+			}
+			String f=facility[0]; 
+			for (int i = 1; i < facility.length; i++) {
+				f+=","+facility[i];
+			}
+			String c=conven[0];
+			for (int i = 1; i < conven.length; i++) {
+				c+=","+conven[i];
+			}
+			Accom_serviceVo servicevo=new Accom_serviceVo(Integer.parseInt(accom_service_number), Integer.parseInt(cate), user_id, accom_name, accom_addr);
+			AccomInfoVo infovo=new AccomInfoVo(0, Integer.parseInt(accom_service_number), accom_info_content, accom_how, accom_rule, accom_checkinfo, f, c);
+			
+			service.updateAccomService(servicevo);
+			service.updateAccomInfo(infovo);
+			
+			service.deleteImg(new ImageVo(0, null, null, Integer.parseInt(accom_service_number), Integer.parseInt(cate)));
+			for(int i=0;i<img.length;i++) {
+				String orgfilename=img[i].getOriginalFilename();
+				String savefilename=UUID.randomUUID()+"_"+orgfilename;
+				try {
+					InputStream is=img[i].getInputStream();
+					FileOutputStream fos=new FileOutputStream(path+"\\"+savefilename);
+					FileCopyUtils.copy(is, fos);
+					is.close();
+					fos.close();
+					ImageVo vo=new ImageVo(0, orgfilename, savefilename, 0, Integer.parseInt(cate));
+					service.insertImg(vo);
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+					return ".error";
+				}
+			}
+			return "/accommain";
+		}catch(Exception e) {
+			e.printStackTrace();
+			return ".error";
+		}
+	}
 	@GetMapping("/accomdelete")
-	public String accomdelete(String accom_service_number) {
+	public String accomdelete(String accom_service_number, String cate_number) {
+		service.deleteImg(new ImageVo(0, null, null, Integer.parseInt(accom_service_number), Integer.parseInt(cate_number)));
+		service.deleteAccomInfo(accom_service_number);
 		service.deleteAccomService(accom_service_number);
 		return "/accommain"; 
 	}
@@ -123,13 +177,13 @@ public class ServiceController {
 					
 				} catch (IOException e) {
 					e.printStackTrace();
-					return "error";
+					return ".error";
 				}
 			}
 			return "/accommain";
 		}catch(Exception e) {
 			e.printStackTrace();
-			return ".userjoin.userlogin";
+			return ".error";
 		}
 	}
 	

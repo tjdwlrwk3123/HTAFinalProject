@@ -28,6 +28,7 @@ public class ServiceDao {
 	public List<TourServiceVo> selectTourList(String user_id){
 		return sqlSession.selectList(NAMESPACE+".selectTourList",user_id);
 	}
+	
 	public int insertAccomService(Accom_serviceVo vo) {
 		return sqlSession.insert(NAMESPACE+".insertAccomService",vo);
 	}
@@ -37,7 +38,21 @@ public class ServiceDao {
 	public int insertImg(ImageVo vo) {
 		return sqlSession.insert(NAMESPACE+".insertImg",vo);
 	}
+	
+	public int updateAccomService(Accom_serviceVo vo) {
+		return sqlSession.insert(NAMESPACE+".updateAccomService",vo);
+	}
+	public int updateAccomInfo(AccomInfoVo vo) {
+		return sqlSession.insert(NAMESPACE+".updateAccomInfo",vo);
+	}
+	
 	public int deletAccomService(String accom_service_number) {
 		return sqlSession.delete(NAMESPACE+".deleteAccomService",accom_service_number);
+	}
+	public int deleteAccomInfo(String accom_service_number) {
+		return sqlSession.delete(NAMESPACE+".deleteAccomInfo",accom_service_number);
+	}
+	public int deleteImg(ImageVo vo) {
+		return sqlSession.delete(NAMESPACE+".deleteImg",vo);
 	}
 }

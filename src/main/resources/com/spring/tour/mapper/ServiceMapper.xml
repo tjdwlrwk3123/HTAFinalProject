@@ -16,6 +16,7 @@
 	<select id="selectTourList" resultType="com.spring.tour.vo.TourServiceVo" parameterType="string">
 		select * from tour_service where user_id=#{user_id}
 	</select>
+	
 	<insert id="insertAccomService" parameterType="com.spring.tour.vo.Accom_serviceVo">
 		insert into accom_service values((select nvl(max(accom_service_number)+1,0) from accom_service),#{cate_number},#{user_accom_boss_name},#{accom_name},#{accom_addr})
 	</insert>
@@ -25,7 +26,21 @@
 	<insert id="insertImg" parameterType="com.spring.tour.vo.ImageVo">
 		insert into image values((select nvl(max(img_num)+1,0) from image),#{imgorgname},#{imgsavename},(select nvl(max(accom_service_number),0) from accom_service), #{cate_number})
 	</insert>
+	
+	<update id="updateAccomService" parameterType="com.spring.tour.vo.Accom_serviceVo">
+		update accom_service set cate_number=#{cate_number}, accom_name=#{accom_name}, accom_addr=#{accom_addr} where accom_service_number=#{accom_service_number}
+	</update>
+	<update id="updateAccomInfo" parameterType="com.spring.tour.vo.AccomInfoVo">
+		update accom_service set accom_info_content=#{accom_info_content}, accom_how=#{accom_how}, accom_rule=#{accom_rule}, accom_chekinfo=#{accom_chekinfo}, facility=#{facility}, conven=#{conven} where accom_service_number=#{accom_service_number}
+	</update>
+	
 	<delete id="deleteAccomService" parameterType="string">
 		delete from accom_service where accom_service_number=#{accom_service_number}
+	</delete>
+	<delete id="deleteAccomInfo" parameterType="string">
+		delete from accom_Info where accom_service_number=#{accom_service_number}
+	</delete>
+	<delete id="deleteImg" parameterType="com.spring.tour.vo.ImageVo">
+		delete from image where general_number=#{general_number} and cate_number=#{cate_number}
 	</delete>
 </mapper>

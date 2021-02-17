@@ -25,6 +25,7 @@ public class ServiceService {
 	public List<TourServiceVo> selectTourList(String user_id) {
 		return dao.selectTourList(user_id);
 	}
+	
 	public int insertAccomService(Accom_serviceVo vo) {
 		return dao.insertAccomService(vo);
 	}
@@ -34,7 +35,21 @@ public class ServiceService {
 	public int insertImg(ImageVo vo) {
 		return dao.insertImg(vo);
 	}
+	
+	public int updateAccomService(Accom_serviceVo vo) {
+		return dao.updateAccomService(vo);
+	}
+	public int updateAccomInfo(AccomInfoVo vo) {
+		return dao.updateAccomInfo(vo);
+	}
+	
 	public int deleteAccomService(String accom_service_number) {
 		return dao.deletAccomService(accom_service_number);
+	}
+	public int deleteAccomInfo(String accom_service_number) {
+		return dao.deleteAccomInfo(accom_service_number);
+	}
+	public int deleteImg(ImageVo vo) {
+		return dao.deleteImg(vo);
 	}
 }
