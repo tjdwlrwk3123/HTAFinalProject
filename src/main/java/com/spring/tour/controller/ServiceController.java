@@ -65,6 +65,11 @@ public class ServiceController {
 			return ".userjoin.userlogin";
 		}
 	} 
+	@GetMapping("/accomoption")
+	public String accomoption(String accom_service_number) {
+		
+		return ".service.accomoption"; 
+	}
 	@GetMapping("/accominsert")
 	public String accominsertpage() {
 		return ".service.accominsert"; 
