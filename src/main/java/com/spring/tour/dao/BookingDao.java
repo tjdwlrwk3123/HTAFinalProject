@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.spring.tour.vo.AccomBookVo;
 import com.spring.tour.vo.TourBookOptionVo;
 import com.spring.tour.vo.TourBookVo;
+import com.spring.tour.vo.VisitorInfoVo;
 
 @Repository
 public class BookingDao {
@@ -42,6 +43,10 @@ public class BookingDao {
 	}
 	public int accomCancel(int bookNumber) {
 		return sqlSession.update(NAMESPACE+".accomCancel", bookNumber);
+	}
+	//¼÷¼Ò µðÅ×ÀÏ
+	public VisitorInfoVo accomBookDetail(int bookNumber) {
+		return sqlSession.selectOne(NAMESPACE+".accomBookDetail", bookNumber);
 	}
 	
 	

@@ -58,6 +58,7 @@
 		border-bottom: 1px solid rgba(0,0,0,0.05);
 		border-top: 1px solid rgba(225,225,225,0.05);
 		margin-left: 50px;
+		margin-top: 15px;
 	}
 	.tourBookingWrapper .tourBookingMain .tourPaging{
 		text-align: center;
@@ -122,22 +123,32 @@
 						<img src="${cp}/resources/gimgs/${image[status.index][0].imgsavename}" 
 						style="width: 100px; height: 100px;">
 					</div>
-					<div style="display: inline-block;">
+					<div style="display: inline-block; width:320px;">
 						<h3><a href="${cp }/tourDetail?service_number=${vo.service_number}">${vo.service_name }</a></h3>
 						<span>유효기간:</span><span>${vo.tour_startdate }~${vo.tour_enddate }</span>
 						<br>
+						<c:choose>
+						<c:when test="${vo.coupon_usecondition!=null }">
 						<span>사용 쿠폰:</span><span>${vo.coupon_usecondition }</span><br>
+						</c:when>
+						<c:otherwise>
+						<br>
+						</c:otherwise>
+						</c:choose>
 						<span>총 결제금액:</span><span>${vo.total_price+vo.point_useamount}</span><span>원</span>
+						<c:if test="${vo.point_useamount!='0' }">
+						<span style="font-size: 0.5em;">(포인트 사용금액:</span><span style="font-size: 0.5em;">${vo.point_useamount }원)</span><br>
+						</c:if>
 					</div>
-					<div style="display:inline-block; position: relative; left: 100px;">
+					<div style="display:inline-block; position: relative; left:10px;">
 						<a href="#" class="openBookDetail">상세보기</a>
 						<input type="hidden" value="${vo.tour_book_number }">
 					</div>
-					<div style="display:inline-block; position: relative; left: 125px;">
+					<div style="display:inline-block; position: relative; left:40px;">
 						<a href="#" class="openMask">결제취소</a>
 						<input type="hidden" value="${vo.tour_book_number }">
 					</div>
-					<div style="display:inline-block; position: relative; left: 150px;">
+					<div style="display:inline-block; position: relative; left:70px;">
 						<span>리뷰쓰기</span>
 					</div>
 				</div>
@@ -229,18 +240,14 @@ function wrapWindowByDetailMask(bookNumber){
 				var optName=data.detail[i].tour_option;
 				var count=data.count[i];
 				var price=data.detail[i].tour_price;
-				var discount=data.detail[i].discount;
-				console.log(discount);
-				if(discount!=null){
-					price-=price*(discount*0.01);
-				}
+				
 				var content='<div style="margin:20px;">'+
 				'<div style="display:inline-block">'+
 				'<span style="font-size:1.3em;">'+optName+'/</span>'+
 				'<span>'+count+'장</span><br>'+
 				'</div>'+
 				'<div style="display:inline-block; float:right;">'+
-				'<span>실 가격: '+price+'원</span>'+
+				'<span>기본 가격: '+price+'원</span>'+
 				'</div>'+
 				'</div>';
 				

@@ -27,6 +27,7 @@ import com.spring.tour.vo.ImageVo;
 import com.spring.tour.vo.TourBookOptionVo;
 import com.spring.tour.vo.TourBookVo;
 import com.spring.tour.vo.TourOptionVo;
+import com.spring.tour.vo.VisitorInfoVo;
 
 
 @Controller
@@ -324,6 +325,20 @@ public class BookingCheckController {
 		HashMap<String, Object> result=new HashMap<String, Object>();
 		result.put("count", count);
 		result.put("detail", detail);
+		return result;
+	}
+	
+	@RequestMapping("/accomBookDetail")
+	@ResponseBody
+	public HashMap<String, Object> accomBookDetail(int bookNumber,int optNum){
+		VisitorInfoVo viv=service.accomBookDetail(bookNumber);
+		AccomOptionVo avo=accomService.accomRoomDetail(optNum);
+		int serviceNum=avo.getAccom_service_number();
+		Accom_serviceVo svo=accomService.accomService(serviceNum);
+		HashMap<String, Object> result=new HashMap<String, Object>();
+		result.put("visitor", viv);
+		result.put("detail", avo);
+		result.put("service",svo);
 		return result;
 	}
 }

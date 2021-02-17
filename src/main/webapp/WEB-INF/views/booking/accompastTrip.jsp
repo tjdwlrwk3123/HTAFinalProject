@@ -61,6 +61,7 @@
 		border-bottom: 1px solid rgba(0,0,0,0.05);
 		border-top: 1px solid rgba(225,225,225,0.05);
 		margin-left: 50px;
+		margin-top: 15px;
 	}
 	.accompastTripWrapper .accompastTripMain .accompastTripPaging{
 		text-align: center;

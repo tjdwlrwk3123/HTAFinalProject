@@ -61,6 +61,7 @@
 		border-bottom: 1px solid rgba(0,0,0,0.05);
 		border-top: 1px solid rgba(225,225,225,0.05);
 		margin-left: 50px;
+		margin-top: 15px;
 	}
 	.cancelTripWrapper .cancelTripMain .cancelTripPaging{
 		text-align: center;
@@ -98,7 +99,7 @@
 						<h3><a href="${cp }/accomDetail?accomNum=${detail[status.index].accom_service_number}
 						&cate_number=${service[status.index].cate_number}">${vo.service_name }</a></h3>
 						<span>${detail[status.index].accom_rooms_option }</span><br>
-						<span>환불금액:</span><span>${vo.total_price }</span><span>원</span>
+						<span>취소 수수료:</span><span>${vo.total_price }</span><span>원</span>
 					</div>
 				</div>
 			</c:forEach>
@@ -111,7 +112,7 @@
 					<div style="display: inline-block;">
 						<h3><a href="${cp }/tourDetail?service_number=${option[status.index].service_number}">${vo.service_name }</a></h3>
 						<span>${option[status.index].tour_option }</span><br>
-						<span>환불금액:</span><span>${vo.total_price }</span><span>원</span>
+						<span>취소 수수료:</span><span>${vo.total_price }</span><span>원</span>
 					</div>
 				</div>
 			</c:forEach>

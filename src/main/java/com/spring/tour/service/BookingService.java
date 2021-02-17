@@ -11,6 +11,7 @@ import com.spring.tour.dao.BookingDao;
 import com.spring.tour.vo.AccomBookVo;
 import com.spring.tour.vo.TourBookOptionVo;
 import com.spring.tour.vo.TourBookVo;
+import com.spring.tour.vo.VisitorInfoVo;
 
 @Service
 public class BookingService {
@@ -43,6 +44,10 @@ public class BookingService {
 		dao.pointRefund(map);
 		dao.accomCancel(bookNumber);
 		return 1;
+	}
+	//¼÷¼Ò µðÅ×ÀÏ
+	public VisitorInfoVo accomBookDetail(int bookNumber) {
+		return dao.accomBookDetail(bookNumber);
 	}
 	
 	

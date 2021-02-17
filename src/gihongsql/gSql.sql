@@ -210,6 +210,8 @@ Insert into FINAL.USER_INFO (USER_ID,USER_PASS,USER_NAME,USER_GRADE,USER_EMAIL,U
 insert into tour_book_option values(1,1,1,3);
 insert into tour_book_option values(2,1,2,2);
 
+insert into visitor_info values(1,6,'¾ç±âÈ«','tjdwlrwk@naver.com','010123124');
+
 commit;
 
 select * from accom_option;
