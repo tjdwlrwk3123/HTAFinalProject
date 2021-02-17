@@ -48,21 +48,21 @@
 		margin:10px;
 		word-break:break-all;
 	}
-	#itemInfo p{
-		margin:3px;
-	}
 	#itemInfo a{
 		text-decoration: none;
 		color: black;
 	}
-	#priceInfo{
-		width: 275px;
-		height:200px;
-		margin:auto;
-		margin:10px;
-		background-color:white;
-		word-break:break-all;
+	#itemInfo p{
+		margin:3px;
+		margin-bottom:15px;
 	}
+	#itemInfo span{
+		margin:3px;
+		font-weight:600;
+		
+	}
+	
+	
 	#bookInfo{
 		width: 275px;
 		height:200px;
@@ -71,7 +71,44 @@
 		background-color:white;
 		word-break:break-all;
 	}
+	#bookInfo p{
+		margin-bottom:10px;
+		font-weight: 550;
+	}
+	#bookInfo input{
+		margin-bottom:10px;
+	}
 	#accomInfo{
+		width: 275px;
+		margin:auto;
+		margin:10px;
+		background-color:white; 
+		word-break:break-all;
+	}
+	#accomInfo input{
+		margin-bottom:10px;
+	}
+	
+	#priceInfo{
+		width: 275px;
+		margin:auto;
+		margin:10px;
+		margin-top:15px;
+		background-color:white;
+		word-break:break-all;
+	}
+	#couponSelect{
+		margin-top:10px;
+	}
+	.point_wrapper{
+		margin: 10px 0;
+	}
+	.point_wrapper input{
+		margin-left:80px;
+		
+	}
+	
+	#howtopay{
 		width: 275px;
 		height:200px;
 		margin:auto;
@@ -79,40 +116,43 @@
 		background-color:white;
 		word-break:break-all;
 	}
-	#howtopay{
+	#howtopay h4, input[type=radio]{
+		margin-right:5px;
+		margin-bottom: 10px;
+	}
+	#agreement{
 		width: 275px;
 		height:200px;
 		margin:auto;
+		margin:10px;
 		background-color:white;
 		word-break:break-all;
 	}
+	
+	#agreement input[type=checkbox]{
+		margin-bottom:10px;
+		margin-right:5px;
+	}
+	
 	.finalPrice{
 		margin-left:10px;
 	}
 	#realfinal{
-		 text-align: right; 
-		 font-size:20;
-		 font-weight:700;
+		margin-top: 15px;
+		margin-right:5px;
+		padding-bottom: 15px;
+		text-align: right; 
+		font-size:19px;
+		font-weight:700;
+	}
+	input[type=submit] {
+		padding: 10px 20px;
+	  	text-align: center;
+	}	
+	h3{
+		margin:10px 0px;
 	}
 </style>
-<!-- 
-		model.addAttribute(service_name);
-		model.addAttribute(cate_number);
-		model.addAttribute(service_number);
-		if(startDate!=null) {
-			model.addAttribute(startDate);
-		}
-		if(endDate!=null) {
-			model.addAttribute(endDate);
-		}
-		model.addAttribute(user_id);
-		model.addAttribute(indexNum);
-		model.addAttribute(optionName);
-		model.addAttribute(optionCnts);
-		model.addAttribute(optionPrice);
- -->
-
-
 
 <div id="pay_wrapper">
 	<form action="${cp}/payit" method="post">
@@ -136,7 +176,7 @@
 				<div id="price">
 					<c:forEach var="i" items="${optionCnts}" varStatus="status">
 						<c:if test="${i!=0}"> <!-- 옵션을 0개 선택했으면 보여주지 않기 -->
-							<p>${optionName[status.index]}</p>
+							<span>${optionName[status.index]}</span>
 							<p>${optionPrice[status.index]} X ${i} = ${optionPrice[status.index]*i}원</p>						
 							<input type="hidden" name="eachOptionPrice" value="${optionPrice[status.index]*i}">
 							<input type="hidden" name="eachOptionIndex" value="${indexNum[status.index]}">
@@ -146,22 +186,21 @@
 				</div>
 			</div>
 			<div id="bookInfo">
-				예약자명<br>
+				<h3>예약정보</h3>
+				<p>예약자명</p>
 				<input type="text" name="bookerName" id="bookerName" placeholder="예약자명" required="required"><br>
-				예약자 연락처<br>
-				<input type="text" name="bookerPhone" id="bookerPhone" placeholder="예약자 연락처" required="required">
-				
+				<p>예약자 연락처</p>
+				<input type="tel" id="bookerPhone" name="bookerPhone" placeholder="010-9999-9999" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" required>
 			</div>
 <%-- 			<c:if test="${cate_number==2}"><!-- 숙박 상품일 경우 --> --%>
 				<div id="accomInfo">
 					<input type="checkbox" id="isSame" name="isSame"><label for="isSame">위 정보와 동일</label><br>
-					이용자 성명<br>
+					<p>이용자 성명</p>
 					<input type="text" name="visitorName" id="visitorName" placeholder="홍길동" required="required"><br>
-					이용자 연락처<br>
-					<input type="tel" id="phone" name="phone" placeholder="010-9999-9999" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" required><br>
-					<small>"-"를 입력하여 주세요.</small><br>
+					<p>이용자 연락처</p>
+					<input type="tel" id="visitorPhone" name="visitorPhone" placeholder="010-9999-9999" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" required><br>
 <!-- 				<input type="text" name="visitorPhone" id="visitorPhone" placeholder="이용하실 고객 연락처" required="required"><br> -->
-					이용자 이메일<br>
+					<p>이용자 이메일</p>
 					<input type="email" name="visitorEmail" id="visitorEmail" placeholder="example@me.com" required="required"><br>
 				</div>
 <%-- 			</c:if> --%>
@@ -171,7 +210,7 @@
 					<input type="hidden" name="couponUsing" id="couponUsing"><!-- 선택한 쿠폰 이름 저장해서 나중에 결제할때 보내기 -->
 					<c:choose>
 						<c:when test="${!empty pvo }"><!-- user_id로 로그인 했을때만 보여짐 -->
-							<h2 style="margin:5px;">쿠폰</h2>
+							<h3>쿠폰 & 포인트</h3>
 							<select id="couponSelect">
 							<c:choose>
 								<c:when test="${!empty pvo.couponlist }">
@@ -188,8 +227,8 @@
 						</c:when>
 					</c:choose>
 				<br>
-				보유포인트<input type="text" id ="myPoint" value="${pvo.user_point}" disabled="disabled" size="10" style="text-align: right;">P<br>
-				사용할포인트<input type="text" name="pointUsing" id="pointUsing" max="1000" value="0" size="10" onkeydown="onlyNumber(event)" style="text-align: right;">P<br><br>
+				<div class="point_wrapper">보유포인트<input type="text" id ="myPoint" value="${pvo.user_point}" disabled="disabled" size="10" style="text-align: right;">P</div>
+				<div class="point_wrapper">사용포인트<input type="text" name="pointUsing" id="pointUsing" max="1000" value="0" size="10" onkeydown="onlyNumber(event)" style="text-align: right;">P</div>
 				<div id="realfinal">최종결제금액<span class="finalPrice"></span>원</div>
 				<input type="hidden" id="couponprice">
 				<c:if test="${!empty user_id}">
@@ -208,20 +247,21 @@
 			</div>
 			<div id="howtopay">
 				<!-- 라디오로 결제 방법 선택 -->
-				<h4>결제방법</h4>
-				<input type="radio" name="waytopay" value="신용카드" required="required">신용카드<br>
-				<input type="radio" name="waytopay" value="계좌이체" required="required">계좌이체<br>
-				<input type="radio" name="waytopay" value="naverpay" required="required">네이버페이<br>
-				<input type="radio" name="waytopay" value="kakaopay" required="required">카카오페이<br>
-				<input type="radio" name="waytopay" value="paypal" required="required">PAYPAL
+				<h3>결제방법</h3>
+				<input type="radio" name="waytopay" id="credit" value="신용카드" required="required"><label for="credit">신용카드</label><br>
+				<input type="radio" name="waytopay" id="cash" value="계좌이체" required="required"><label for="cash">계좌이체</label><br>
+				<input type="radio" name="waytopay" id="naver" value="naverpay" required="required"><label for="naver">네이버페이</label><br>
+				<input type="radio" name="waytopay" id="kakao" value="kakaopay" required="required"><label for="kakao">카카오페이</label><br>
+				<input type="radio" name="waytopay" id="paypal" value="paypal" required="required"><label for="paypal">PAYPAL</label>
 			</div>
 			<div id="agreement">
+				<h3>결제동의</h3>
 				<input type="checkbox" id="checkall" name="checkall"><label for="checkall">전체 약관 동의</label><br>
-				<input type="checkbox" name="agreecheck" value="no1" required="required">개인정보 수집 및 이용 동의(필수)<br>
-				<input type="checkbox" name="agreecheck" value="no2" required="required">개인정보 제공 동의(필수)<br>
-				<input type="checkbox" name="agreecheck" value="no3">특가 및 할인 안내 동의(선택)<br>
+				<input type="checkbox" name="agreecheck" id="no1" value="no1" required="required"><label for="no1">개인정보 수집 및 이용 동의(필수)</label><br>
+				<input type="checkbox" name="agreecheck" id="no2" value="no2" required="required"><label for="no2">개인정보 제공 동의(필수)</label><br>
+				<input type="checkbox" name="agreecheck" id="no3" value="no3"><label for="no3">특가 및 할인 안내 동의(선택)</label><br>
 			</div>
-			<input type="submit" value="결제하기">
+			<div style="text-align: center;"><input type="submit" value="결제하기"></div>
 		</div>
 	</div>
 	</form>
@@ -237,6 +277,23 @@
 			$("#visitorPhone").val("");
 		}
 	});
+	
+	$("#visitorName").on("input",function(){
+		if(  $(this).val() != $("#bookerName").val() ){
+			$("#isSame").prop("checked",false);
+		}else{
+			$("#isSame").prop("checked",true);
+		}
+	});
+	$("#visitorPhone").on("input",function(){
+		if(  $(this).val() != $("#bookerPhone").val() ){
+			$("#isSame").prop("checked",false);
+		}else{
+			$("#isSame").prop("checked",true);
+		}
+	});
+	
+	
 	
 	//체크박스 전체 선택 및 해제
 	$("#checkall").click(function(){
