@@ -5,17 +5,17 @@
 	<form action="${cp }/accominsert" method="post" enctype="multipart/form-data" onsubmit="return check()">
 		<select name="cate" id="cate">
 		<c:choose>
-			<c:when test="${vo1.cate_number=2 }">
+			<c:when test="${vo1.cate_number==2 }">
 				<option value="2" selected="selected">펜션</option>
 				<option value="3">캠핑</option>
 				<option value="4">게스트하우스</option>
 			</c:when>
-			<c:when test="${vo1.cate_number=3 }">
+			<c:when test="${vo1.cate_number==3 }">
 				<option value="2">펜션</option>
 				<option value="3" selected="selected">캠핑</option>
 				<option value="4">게스트하우스</option>
 			</c:when>
-			<c:when test="${vo1.cate_number=4 }">
+			<c:when test="${vo1.cate_number==4 }">
 				<option value="2">펜션</option>
 				<option value="3">캠핑</option>
 				<option value="4" selected="selected">게스트하우스</option>
@@ -34,7 +34,7 @@
 		숙소취소및환불규정  <textarea rows="5" cols="30" name="accom_rule">${vo2.accom_rule }</textarea><br><br>
 		숙소 체크인/아웃 정보 <textarea rows="5" cols="30" name="accom_checkinfo">${vo2.accom_checkinfo }</textarea><br><br>
 		편의시설<br>
-		<div> 
+		<div>
 			<input type="checkbox" name="facility" value="바베큐">바베큐<br>
 			<input type="checkbox" name="facility" value="수영장">수영장<br>
 			<input type="checkbox" name="facility" value="유아시설">유아시설<br>
@@ -159,5 +159,30 @@
 			}
 			return true;
 		}
+
+		function cb1(){
+			let facility = document.getElementsByName("facility");
+			let cf="${vo2.facility}".split(",");
+			for (let i = 0; i < facility.length; i++) {
+				for (let j = 0; j < cf.length; j++) {
+					if(facility[i].value==cf[j]){
+						facility[i].setAttribute("checked", "checked");
+					}
+				}
+			}
+		}
+		cb1();
+		function cb2(){
+			let conven = document.getElementsByName("conven");
+			let cc="${vo2.conven}".split(",");
+			for (let i = 0; i < conven.length; i++) {
+				for (let j = 0; j < cc.length; j++) {
+					if(conven[i].value==cc[j]){
+						conven[i].setAttribute("checked", "checked");
+					}
+				}
+			}
+		}
+		cb2();
 	</script>
 </div>
