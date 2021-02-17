@@ -28,7 +28,7 @@
 		border-bottom: 1px solid rgba(0,0,0,0.05);
 		border-top: 1px solid rgba(225,225,225,0.05);
 		list-style:none;
-		padding-left:0px;
+		padding-left:10px;
 	}
 	.accomBookingWrapper .bookingSidebar ul li a{
 		color: #bdb8d7;
@@ -58,6 +58,7 @@
 		border-bottom: 1px solid rgba(0,0,0,0.05);
 		border-top: 1px solid rgba(225,225,225,0.05);
 		margin-left: 50px;
+		margin-top: 15px;
 	}
 	.accomBookingWrapper .accomBookingMain .accomPaging{
 		text-align: center;
@@ -118,7 +119,8 @@
 						<span>${detail[status.index].accom_rooms_option }</span><br>
 						<span>예약날짜:</span><span>${vo.accom_startdate }~${vo.accom_enddate }</span>
 						<br>
-						<span>총 결제금액:</span><span>${vo.total_price }</span><span>원</span>
+						<span>사용 쿠폰:</span><span>${vo.coupon_usecondition }</span><br>
+						<span>총 결제금액:</span><span>${vo.total_price+vo.point_useamount }</span><span>원</span>
 					</div>
 					<div style="display:inline-block; position: relative; left: 100px;">
 						<a href="#" class="openMask">예약취소</a>

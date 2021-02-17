@@ -104,6 +104,8 @@ CREATE TABLE tour_book
 	point_useamount number,
 	coupon_usecondition varchar2(50),
 	payment_method varchar2(50),
+	bookername varchar2(50),
+	bookerphone varchar2(100),
 	PRIMARY KEY (tour_book_number)
 );
 
@@ -316,10 +318,10 @@ create table chatusers
   username varchar2(255),
   using number(1)
 );
---insert into chatusers values(1, 'costomer1', '0');
---insert into chatusers values(2, 'costomer2', '0');
---insert into chatusers values(3, 'costomer3', '0');
---insert into chatusers values(4, 'costomer4', '0');
+--insert into chatusers values(1, 'customer1', '0');
+--insert into chatusers values(2, 'customer2', '0');
+--insert into chatusers values(3, 'customer3', '0');
+--insert into chatusers values(4, 'customer4', '0');
 
 create table visitor_info
 (

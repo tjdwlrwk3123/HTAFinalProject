@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.tour.dao.BookingDao;
 import com.spring.tour.vo.AccomBookVo;
@@ -32,8 +33,15 @@ public class BookingService {
 	public List<AccomBookVo> accomCancelList(String user_id){
 		return dao.accomCancelList(user_id);
 	}
-	public int accomCancel(int bookNumber) {
-		return dao.accomCancel(bookNumber);
+	@Transactional
+	public int accomCancel(int bookNumber,String user_id) {
+		int point=dao.getUsedPointA(bookNumber);
+		HashMap<String, Object> map=new HashMap<String, Object>();
+		map.put("user_point",point);
+		map.put("user_id",user_id);
+		dao.pointRefundA(map);
+		dao.accomCancel(bookNumber);
+		return 1;
 	}
 	
 	

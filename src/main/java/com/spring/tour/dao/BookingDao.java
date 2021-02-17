@@ -33,6 +33,12 @@ public class BookingDao {
 	public List<AccomBookVo> accomCancelList(String user_id){
 		return sqlSession.selectList(NAMESPACE+".accomCancelList", user_id);
 	}
+	public int getUsedPointA(int bookNumber) {
+		return sqlSession.selectOne(NAMESPACE+".getUsedPointA", bookNumber);
+	}
+	public int pointRefundA(HashMap<String, Object> map) {
+		return sqlSession.update(NAMESPACE+".pointRefundA", map);
+	}
 	public int accomCancel(int bookNumber) {
 		return sqlSession.update(NAMESPACE+".accomCancel", bookNumber);
 	}

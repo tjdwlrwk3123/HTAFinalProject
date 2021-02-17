@@ -31,7 +31,7 @@
 		border-bottom: 1px solid rgba(0,0,0,0.05);
 		border-top: 1px solid rgba(225,225,225,0.05);
 		list-style:none;
-		padding-left:0px;
+		padding-left:10px;
 	}
 	.cancelTripWrapper .bookingSidebar ul li a{
 		color: #bdb8d7;
@@ -99,7 +99,7 @@
 						<h3><a href="${cp }/accomDetail?accomNum=${detail[status.index].accom_service_number}
 						&cate_number=${service[status.index].cate_number}">${vo.service_name }</a></h3>
 						<span>${detail[status.index].accom_rooms_option }</span><br>
-						<span>결제 취소금액:</span><span>${vo.total_price }</span><span>원</span>
+						<span>결제 취소수수료:</span><span>${vo.total_price }</span><span>원</span>
 					</div>
 				</div>
 			</c:forEach>

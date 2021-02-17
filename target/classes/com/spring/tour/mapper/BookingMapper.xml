@@ -59,20 +59,27 @@
         order by accom_book_number desc
 	</select>
 	<!-- 예약 취소 -->
+	<select id="getUsedPointA" parameterType="int" resultType="int">
+		select nvl(point_useamount,0) from accom_book where accom_book_number=#{accom_book_number}
+	</select>
+	<update id="pointRefundA" parameterType="hashmap">
+		update user_info set user_point=user_point+#{user_point}
+		where user_id=#{user_id}
+	</update>
 	<update id="accomCancel" parameterType="int">
 	<![CDATA[
 		update accom_book 
 		set accom_enddate=null,payment_condition='결제취소',total_price=
 		case 
 		when accom_startdate=sysdate then total_price
-		when accom_startdate<=sysdate+1 then total_price*0.7
-		when accom_startdate<=sysdate+2 then total_price*0.5
-		when accom_startdate<=sysdate+3 then total_price*0.3
-		when accom_startdate<=sysdate+4 then total_price*0.2
-		when accom_startdate<=sysdate+5 then total_price*0.1
+		when accom_startdate<=sysdate+1 then trunc(total_price*0.7,0)
+		when accom_startdate<=sysdate+2 then trunc(total_price*0.5,0)
+		when accom_startdate<=sysdate+3 then trunc(total_price*0.3,0)
+		when accom_startdate<=sysdate+4 then trunc(total_price*0.2,0)
+		when accom_startdate<=sysdate+5 then trunc(total_price*0.1,0)
 		else 0
 		end
-		,accom_startdate=null
+		,accom_startdate=null,point_useamount=null
 		where accom_book_number=#{accom_book_number}
 	]]>
 	</update>
@@ -132,18 +139,21 @@
         order by tour_book_number desc
 	</select>
 	<!-- tour결제취소 -->
+	<select id="getUsedPointT" parameterType="int" resultType="int">
+		select nvl(point_useamount,0) from tour_book where tour_book_number=#{tour_book_number}
+	</select>
 	<update id="tourCancel" parameterType="int">
 	<![CDATA[
 		update accom_book 
 		set payment_condition='결제취소',total_price=
 		case 
 		when accom_enddate is null and accom_startdate+7<=sysdate then 0
-        when accom_enddate is null and accom_startdate+7>sysdate then total_price*0.9
+        when accom_enddate is null and accom_startdate+7>sysdate then trunc(total_price*0.9,0)
         when accom_enddate is not null and accom_startdate+7<=sysdate then 0
-        when accom_enddate is not null and accom_enddate>sysdate+7 then total_price*0.9
+        when accom_enddate is not null and accom_enddate>sysdate+7 then trunc(total_price*0.9,0)
         when accom_enddate is not null and accom_enddate<=sysdate+7 then total_price
 		end
-		,accom_startdate=null,accom_enddate=null
+		,accom_startdate=null,accom_enddate=null,point_useamount=null
 		where accom_book_number=#{accom_book_number};
 	]]>
 	</update>

@@ -31,7 +31,7 @@
 		border-bottom: 1px solid rgba(0,0,0,0.05);
 		border-top: 1px solid rgba(225,225,225,0.05);
 		list-style:none;
-		padding-left:0px;
+		padding-left:10px;
 	}
 	.accompastTripWrapper .bookingSidebar ul li a{
 		color: #bdb8d7;
