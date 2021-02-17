@@ -150,10 +150,11 @@ public class PayController {
 //			System.out.println("cnt : "+ eachOptionCount.get(i));
 //		}
 		
-		
+		System.out.println("pointUsing : "+pointUsing);
 		if(cate_number ==1) {
 			try {
 			//여기엔 투어book 저장 코드
+			System.out.println("투어/티켓 결제 입니다");
 			HashMap<String, Object> tbMap = new HashMap<String, Object>(); // tourBook
 			HashMap<String, Object> tboMap = new HashMap<String, Object>(); // tourBookOption
 			HashMap<String, Object> upMap = new HashMap<String, Object>(); // update는 그냥 같이 쓰자
@@ -175,6 +176,7 @@ public class PayController {
 			tbMap.put("payment_condition", "결제완료");
 			tbMap.put("total_price", thePrice);
 			tbMap.put("point_useamount", pointUsing); //0이 항상 들어옴 사용했단면 user_info 포인트 업데이트!!!!
+			
 			if(!couponUsing.equals("none") || couponUsing!=null) {
 				tbMap.put("coupon_usecondition", couponUsing); //사용한 쿠폰의 이름이 들어감 사용했다면 user_info도 업데이트!!!
 			}
@@ -182,27 +184,101 @@ public class PayController {
 			tbMap.put("bookername", bookerName);
 			tbMap.put("bookerphone", bookerPhone);
 			
+			// update 관련 
 			if(!couponUsing.equals("none")) { 
 				upMap.put("user_id", user_id);
-				upMap.put("couponUsing", couponUsing);
+				upMap.put("coupon_usecondition", couponUsing);
 			}
-			if(pointUsing!=0) {// 포인트 사용 안하면 수정 안하기
-				upMap.put("user_id", user_id);
-				upMap.put("pointUsing", pointUsing);
-			}
+			upMap.put("user_id", user_id);
+			upMap.put("point_useamount", pointUsing);
 			
+			// tour_book_option 관련 
 			tboMap.put("service_number", service_number);
 			tboMap.put("eachOptionIndex", eachOptionIndex);
 			tboMap.put("eachOptionCount", eachOptionCount);
 			
 			int n = service.transactionTour(tbMap,upMap,tboMap); 
-			System.out.println("성공이면 n=1 : " +n);
+			if(n>0) {
+				System.out.println("투어/티켓 결제 성공");
+			}
 			
 			}catch(ParseException pe) {
 				pe.printStackTrace();
+				return ".pay.payment";
 			}
 		}else if(cate_number==2) {
+			try {
 			//여기엔 숙소book 저장코드
+			System.out.println("숙소 결제 입니다.");
+		
+			HashMap<String, Object> abMap = new HashMap<String, Object>(); // accom_Book
+			HashMap<String, Object> viMap = new HashMap<String, Object>(); // visitor_info
+			HashMap<String, Object> upMap = new HashMap<String, Object>(); // update는 그냥 같이 쓰자
+			
+			// accom_book 관련
+			//insert into accom_book values(ab_seq.nextval,#{user_id},#{optionNum},#{service_name},#{startDate},#{endDate},
+			//#{payment_condition},#{total_price}, #{point_useramount}, #{coupon_usecondition}, #payment_method})
+			if(user_id!=null) {
+				abMap.put("user_id", user_id);
+			}else {
+				user_id="none"; //비회원일때를 대비..
+				abMap.put("user_id", user_id);
+			}
+			abMap.put("user_id", user_id);
+			abMap.put("optionNum", eachOptionIndex.get(0));
+			abMap.put("service_name", service_name);
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			if(startDate!=null) {
+				abMap.put("startDate", dateFormat.parse(startDate));
+			}
+			if(endDate!=null) {
+				abMap.put("endDate", dateFormat.parse(endDate));
+			}
+			
+			abMap.put("payment_condition","결제완료");
+			abMap.put("total_price", thePrice);
+			abMap.put("point_useramount", pointUsing);
+
+			if(!couponUsing.equals("none") || couponUsing!=null) {
+				abMap.put("coupon_usecondition", couponUsing); //사용한 쿠폰의 이름이 들어감 사용했다면 user_info도 업데이트!!!
+			}
+			abMap.put("payment_method", waytopay);
+			
+			
+			//insert into visitor_info values(vi_seq.nextval, #{accom_book_number},#{visitor_name},#{visitor_email},#{visitor_phone})
+			//필요 정보 : #{accom_book_number},#{visitor_name},#{visitor_email},#{visitor_phone}
+			
+			// #{accom_book_number}은 서비스에서 추가해준다.
+			viMap.put("visitor_name", visitorName);
+			viMap.put("visitor_email", visitorEmail);
+			viMap.put("visitor_phone", visitorPhone);
+
+			
+//			update user_info set user_point = (select user_point from user_info where user_id=#{user_id})- #{pointUsing} where user_id=#{user_id}
+//			update coupon set coupon_usecondition = 1 where user_id=#{user_id} and coupon_name=#{couponUsing}
+			//필요 정보 : #{user_id} #{pointUsing} #{couponUsing}
+			
+//			update accom_option????????????
+			//질문!!!! accom_option은 바꿔줄게 없는가? 다시말해, 예약이 되었다는 기록을 어떻게 잡아줘야 하는가? 
+			
+			//선생님께 질문! 많은 파라미터를 갖은 map에 동일한 내용이 있지만 그 중 한두개의 값만 쓴다면 그 map을 그대로 가져다 쓰는게 효율적인가 ? 아니면 새로운 map을 생성하는게 효휼적인가??
+			// 필요 없으면  update관련한 map은 지우기 
+			upMap.put("user_id", user_id);
+			upMap.put("point_useramount", pointUsing);
+			if(!couponUsing.equals("none") || couponUsing!=null) {
+				upMap.put("coupon_usecondition", couponUsing);
+			}
+			///////////////
+			
+			int n = service.transactionAccom(abMap,viMap,upMap);
+			if(n>0) {
+				System.out.println("숙소 결제 성공");
+			}
+			
+			}catch(ParseException pe) {
+				pe.printStackTrace();
+				return ".pay.payment"; //이게 안먹히면 뒤로가기
+			}
 		}
 		return ".home";
 

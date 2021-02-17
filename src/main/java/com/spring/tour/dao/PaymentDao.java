@@ -21,6 +21,7 @@ public class PaymentDao {
 		return sqlsession.selectOne(NAMESPACE+".getUserInfo",user_id);		
 	}
 	
+	// 투어 관련
 	public int insertTourBook(HashMap<String, Object> map) {
 		return sqlsession.insert(NAMESPACE+".insertTourBook",map);
 	}
@@ -33,6 +34,26 @@ public class PaymentDao {
 		return sqlsession.selectOne(NAMESPACE+".tourBookMax");
 	}
 	
+	// 숙박 관련 
+	public int insertAccomBook(HashMap<String, Object> map) {
+		return sqlsession.insert(NAMESPACE+".insertAccomBook",map);
+	}
+	
+	public int insertVisitorInfo(HashMap<String, Object> map) {
+		return sqlsession.insert(NAMESPACE+".insertVisitorInfo",map);
+	}
+	
+	public int AccomBookMax() {
+		return sqlsession.selectOne(NAMESPACE+".AccomBookMax");
+	}
+	
+	
+	
+	
+	
+	
+	
+	//공통 부분 
 	public int updatePoint(HashMap<String, Object> map) {
 		return sqlsession.update(NAMESPACE+".updatePoint", map);
 	}

@@ -156,9 +156,13 @@
 				<div id="accomInfo">
 					<input type="checkbox" id="isSame" name="isSame"><label for="isSame">위 정보와 동일</label><br>
 					이용자 성명<br>
-					<input type="text" name="visitorName" id="visitorName" placeholder="이용하실 고객 성함" required="required"><br>
+					<input type="text" name="visitorName" id="visitorName" placeholder="홍길동" required="required"><br>
 					이용자 연락처<br>
-					<input type="text" name="visitorPhone" id="visitorPhone" placeholder="이용하실 고객 연락처" required="required">
+					<input type="tel" id="phone" name="phone" placeholder="010-9999-9999" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" required><br>
+					<small>"-"를 입력하여 주세요.</small><br>
+<!-- 				<input type="text" name="visitorPhone" id="visitorPhone" placeholder="이용하실 고객 연락처" required="required"><br> -->
+					이용자 이메일<br>
+					<input type="email" name="visitorEmail" id="visitorEmail" placeholder="example@me.com" required="required"><br>
 				</div>
 <%-- 			</c:if> --%>
 		</div>
@@ -177,7 +181,7 @@
 									</c:forEach>
 								</c:when>
 								<c:otherwise>
-		 							<option>적용 가능한 쿠폰이 존재하지 않습니다</option>						
+		 							<option value="none">적용 가능한 쿠폰이 존재하지 않습니다</option>						
 								</c:otherwise>
 							</c:choose>
 							</select><br>
@@ -263,6 +267,7 @@
 		
 		mypoint=parseInt($("#myPoint").val()); //DB에서 가져온 포인트 정보 저장
 		$("#couponprice").val(totalprice);
+		$("#pointUsing").val(0);
 		
 	});
 	

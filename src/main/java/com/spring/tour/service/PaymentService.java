@@ -23,56 +23,66 @@ public class PaymentService {
 	@Transactional
 	public int transactionTour(HashMap<String, Object> tbMap,
 								HashMap<String, Object> upMap,
-								HashMap<String, Object> tboMap
-								) {
+								HashMap<String, Object> tboMap) {
+		
 		int service_number= (Integer)tboMap.get("service_number");
 		List<Integer> eachOptionIndex = (List<Integer>)tboMap.get("eachOptionIndex");
 		List<Integer> eachOptionCount = (List<Integer>)tboMap.get("eachOptionCount");
-				
 		
+		// 예약 테이블에 저장
 		dao.insertTourBook(tbMap);
-		dao.updatePoint(upMap);
-		dao.updateCoupon(upMap);
+		
+		// 예약 테이블에 저장한 시퀀스 넘버 가져오기
 		int booknumber = dao.tourBookMax(); 
 		
-		HashMap<String, Object> map	 = new HashMap<String, Object>();
+		// tour_book_option & tour_option 테이블을 위한 map
+		HashMap<String, Object> map	 = new HashMap<String, Object>(); // 
 		map.put("tour_book_number", booknumber);
 		map.put("service_number",service_number);
 		
-		System.out.println("optionsize " +eachOptionIndex.size());
 		for(int i=0; i<eachOptionIndex.size(); i++) {
 			map.put("tour_option_index", eachOptionIndex.get(i));
 			map.put("cnt", eachOptionCount.get(i));
-			dao.insertTourBookOption(map);
-			dao.updateTicket(map);
+			dao.insertTourBookOption(map); // 예약 내역과 연결하여 예약된 옵션 상세내역 저장
+			dao.updateTicket(map); // 옵션별로 딸려있는 티켓 수량 변경 
 		}
+		
+		
+		// 앞에서 none이라고 하면 안넘기니깐 없으면 비어있다. 근데 비어있지 않다면!
+		// 쿠폰 사용시 쿠폰 테이블에서 coupon_usecondition 변경
+		if(!((String)upMap.get("coupon_usecondition")).isEmpty()) { 
+			dao.updateCoupon(upMap);
+		}
+		// 포인트 사용했을시 user_info 테이블에서 사용한 만큼의 포인트 차감
+		dao.updatePoint(upMap);
+		
 		return 1;
 	}
 	
-//	@Transactional
-//	public int insertTourBook(HashMap<String, Object> map) {
-//		return dao.insertTourBook(map);
-//	}
-//	@Transactional
-//	public int insertTourBookOption(HashMap<String, Object> map) {
-//		return dao.insertTourBookOption(map);
-//	}
-//	@Transactional
-//	public int tourBookMax() {
-//		return dao.tourBookMax();
-//	}
-//	@Transactional
-//	public int updatePoint(HashMap<String, Object> map) {
-//		return dao.updatePoint(map);
-//	}
-//	@Transactional
-//	public int updateCoupon(HashMap<String, Object> map) {
-//		return dao.updateCoupon(map);
-//	}
-//	@Transactional
-//	public int updateTicket(HashMap<String, Object> map) {
-//		return dao.updateTicket(map);
-//	}
+	@Transactional
+	public int transactionAccom(HashMap<String, Object> abMap,
+								HashMap<String, Object> viMap,
+								HashMap<String, Object> upMap) {
+		// accom_book은 바로 실행
+		dao.insertAccomBook(abMap);
+		
+		// 위 코드가 완료되면 정상적으로 booknumber 가져올 수 있다
+		int booknumber = dao.AccomBookMax();
+		
+		//viMap에는 accom_book_number없어서 위에서 구한 MAX 값을 넣어준다.
+		viMap.put("accom_book_number", booknumber);
+		dao.insertVisitorInfo(viMap);
+		
+		// 쿠폰 사용시 쿠폰 테이블에서 coupon_usecondition 변경
+		if(!((String)upMap.get("coupon_usecondition")).isEmpty()) { 
+			dao.updateCoupon(upMap);
+		}
+		// 포인트 사용했을시 user_info 테이블에서 사용한 만큼의 포인트 차감
+		dao.updatePoint(upMap);
+		
+		return 1;
+	}
+	
 	
 	
 }

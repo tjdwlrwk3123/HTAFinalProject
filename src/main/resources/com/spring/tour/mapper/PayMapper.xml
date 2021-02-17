@@ -25,6 +25,7 @@
 		on a.user_id=b.user_id order by discount_price desc
 	</select>
 	
+	<!-- 투어 예약 관련 -->
 	<insert id="insertTourBook" parameterType="hashmap">
 		insert into tour_book values(tb_seq.nextval,#{user_id},#{service_number},#{service_name},sysdate,#{tour_enddate},#{payment_condition},#{total_price},#{point_useamount},#{coupon_usecondition},#{payment_method},#{bookername},#{bookerphone})
 	</insert>
@@ -36,11 +37,24 @@
 	</insert>
 	
 	
+	<!-- 숙박 예약 관련 -->
+	<insert id="insertAccomBook" parameterType="hashmap"  >
+		insert into accom_book values(ab_seq.nextval,#{user_id},#{optionNum},#{service_name},#{startDate},#{endDate}, #{payment_condition},#{total_price}, #{point_useramount}, #{coupon_usecondition}, #payment_method})
+	</insert>
+	<select id="AccomBookMax" resultType="int">
+		select max(accom_book_number) from accom_book
+	</select>
+	<insert id="insertVisitorInfo" parameterType="hashmap">
+		insert into visitor_info values(vi_seq.nextval, #{accom_book_number},#{visitor_name},#{visitor_email},#{visitor_phone})
+	</insert>
+	
+	
+	<!-- 이 밑으로는 투어/숙박 공통 사용 -->
 	<update id="updatePoint" parameterType="hashmap">
-		update user_info set user_point = (select user_point from user_info where user_id=#{user_id})- #{pointUsing} where user_id=#{user_id}
+		update user_info set user_point = (select user_point from user_info where user_id=#{user_id})- #{point_useamount} where user_id=#{user_id}
 	</update>
 	<update id="updateCoupon" parameterType="hashmap">
-		update coupon set coupon_usecondition = 1 where user_id=#{user_id} and coupon_name=#{couponUsing}
+		update coupon set coupon_usecondition = 1 where user_id=#{user_id} and coupon_name=#{coupon_usecondition}
 	</update>
 	<update id="updateTicket" parameterType="hashmap">
 		update tour_option set tour_amount = 
