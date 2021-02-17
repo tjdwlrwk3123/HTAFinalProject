@@ -352,11 +352,14 @@ increment by 1;
 create sequence ab_seq -- accom_book
 start with 1
 increment by 1;
+
 create sequence tb_seq -- tour_book
 start with 1
 increment by 1;
 
-
+create sequence vi_seq -- visitor_info
+start with 1
+increment by 1 ;
 
 
 /* Create Foreign Keys */
