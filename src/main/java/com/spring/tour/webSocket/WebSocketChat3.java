@@ -1,4 +1,4 @@
-package com.spring.tour.controller;
+package com.spring.tour.webSocket;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,21 +15,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.socket.server.standard.SpringConfigurator;
 
 import com.spring.tour.service.ChatService;
 
 
-@Controller
-@ServerEndpoint(value = "/echo4.do")
-public class WebSocketChat4 {
+@ServerEndpoint(value = "/echo3.do", configurator = SpringConfigurator.class)
+public class WebSocketChat3 {
+	
 	@Autowired
 	private ChatService service;
 	int cnt = 0;
 	String username = "";
 	
 	private static final List<Session> sessionList = new ArrayList<Session>();
-	private static final Logger logger = LoggerFactory.getLogger(WebSocketChat4.class);
-	public WebSocketChat4() {
+	private static final Logger logger = LoggerFactory.getLogger(WebSocketChat3.class);
+	public WebSocketChat3() {
 		System.out.println("웹소켓(서버) 객체 생성!");
 	}
 	
@@ -39,7 +40,7 @@ public class WebSocketChat4 {
 		logger.info("Open Session id : " + session.getId());
 		try {
 			final Basic basic = session.getBasicRemote();
-			basic.sendText("SYSTEM대화방에 연결되었습니다");
+			basic.sendText("SYSTEM대화방에 연결 되었습니다");
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -54,9 +55,9 @@ public class WebSocketChat4 {
 	 */
 	private void sendAllSessionToMessage(Session self, String sender, String message) {
 		try {
-			for(Session session : WebSocketChat4.sessionList) {
+			for(Session session : WebSocketChat3.sessionList) {
 				if(!self.getId().equals(session.getId())) {
-					session.getBasicRemote().sendText(sender+" : "+message);
+					session.getBasicRemote().sendText(message);
 				}
 			}
 		}catch(Exception e) {
@@ -72,13 +73,15 @@ public class WebSocketChat4 {
 	 */
 	@OnMessage
 	public void onMessage(String message, Session session) {
-		if(cnt++==0) {
-			username=message;
-		}
-		System.out.println(message);
 		
 		String sender = message.split(",")[1];
 		message=message.split(",")[0];
+		
+		if(cnt++==0) {
+			username=sender;
+			sendAllSessionToMessage(session, "SYSTEM", "SYSTEM"+message);
+			return;
+		}
 		
 		logger.info("Message From "+sender+":"+message);
 		try {
@@ -100,6 +103,7 @@ public class WebSocketChat4 {
 	public void onClose(Session session) {
 		logger.info("Session "+session.getId()+ "has ended");
 		sessionList.remove(session);
+		System.out.println(username);
 		service.isWaiting(username);
 	}
 	

@@ -5,7 +5,7 @@
 
 #chat_icon{
 	right:20px;
-	bottom:40px;
+	bottom:30px;
 	position:fixed;
 }
 
@@ -111,7 +111,7 @@
 	<h2>푸터</h2>
 	
 	<input type="hidden" id="sender" value="none"><br>
-	<div id="chat_icon"><i class="fas fa-headset fa-2x"></i></div>
+	<div id="chat_icon"><i class="far fa-comment-dots fa-2x"></i></div>
 	<div id="chat_window">
 		<div id="callwrap">
 			<div id="call"><i class="fas fa-concierge-bell fa-3x"></i><br>
@@ -190,10 +190,11 @@
 		
 		ws.onopen = function(event){
 			if(event.data== undefined){
+				ws.send(username+"님이 접속하셨습니다.,"+username);
 				return;
 			}
 			writerResponse(event.data);
-			ws.send(username);
+			ws.send(username+",님이 접속하셨습니다.");
 			
 		}
 		ws.onmessage = function(event){

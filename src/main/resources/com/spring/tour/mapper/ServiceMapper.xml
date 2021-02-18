@@ -13,8 +13,14 @@
 	<select id="selectAccomServiceMax" resultType="string" parameterType="string">
 		select max(accom_service_number) from accom_service where user_accom_boss_name=#{user_accom_boss_name}
 	</select> 
+	<select id="selectAccomOptioneMax" resultType="string" parameterType="string">
+		select max(accom_option_number) from accom_option where accom_service_number=#{accom_service_number}
+	</select> 
 	<select id="selectAccomInfo" resultType="com.spring.tour.vo.AccomInfoVo" parameterType="string">
 		select * from accom_info where accom_service_number=#{accom_service_number}
+	</select>
+	<select id="selectAccomOptionList" resultType="com.spring.tour.vo.AccomOptionVo" parameterType="string">
+		select * from accom_option where accom_service_number=#{accom_service_number}
 	</select>
 	<select id="selectTourList" resultType="com.spring.tour.vo.TourServiceVo" parameterType="string">
 		select * from tour_service where user_id=#{user_id}
@@ -28,6 +34,9 @@
 	</insert>
 	<insert id="insertAccomInfo" parameterType="com.spring.tour.vo.AccomInfoVo">
 		insert into accom_info values((select nvl(max(accom_info_number)+1,0) from accom_info),#{accom_service_number},#{accom_info_content},#{accom_how},#{accom_rule},#{accom_chekinfo},#{facility},#{conven})
+	</insert>
+	<insert id="insertAccomOption" parameterType="com.spring.tour.vo.AccomOptionVo">
+		insert into accom_option values((select nvl(max(accom_option_number)+1,0) from accom_option),#{accom_service_number},#{accom_rooms_option},#{accom_min_people},#{accom_max_people},#{accom_price},#{discount})
 	</insert>
 	<insert id="insertImg" parameterType="com.spring.tour.vo.ImageVo">
 		insert into image values((select nvl(max(img_num)+1,0) from image),#{imgorgname},#{imgsavename},#{general_number}, #{cate_number})
