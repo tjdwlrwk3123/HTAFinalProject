@@ -2,3 +2,38 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.tour.mapper.MemberManageMapper">
+<select id="couponList" resultType="couponVo" parameterType="hashmap">
+	select * from
+	(
+	    select a.*,rownum rnum from
+	    (
+	        select coupon_name,discount_price,expire_date from coupon
+	        group by coupon_name,discount_price,expire_date 
+	        <if test="field!=null and field!=''">
+		        <if test="picker!=null and picker!=''">
+		        	<![CDATA[ having ${field} <= #{picker} ]]>
+		        </if>
+		        <if test="keyword!=null and keyword!=''">
+					having ${field} like '%'||#{keyword}||'%' 
+				</if>
+			</if>
+	        order by coupon_name desc
+	    ) a
+	)
+	<![CDATA[ where rnum>=#{startRow} and rnum<=#{endRow} ]]>
+</select>
+
+<select id="couponCount" resultType="int" parameterType="hashmap">
+	select NVL(count(*),0) cnt from coupon
+	<if test="field!=null and field!=''">
+		<if test="picker!=null and picker!=''">
+        	<![CDATA[ where ${field} <= #{picker} ]]>
+        </if>
+        <if test="keyword!=null and keyword!=''">
+			where ${field} like '%'||#{keyword}||'%' 
+		</if>
+	</if>
+</select>
+</mapper>
