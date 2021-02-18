@@ -217,14 +217,14 @@
 			});
 		}else{
 			$.getJSON("${cp}/wishDelete", {"cate_number":$("#cate_number").val(),"service_number":$("#service_number").val(),"user_id":$("#user_id").val() },
-					function(data) {
-					let result = data.code;
-					if(result=='delete_success'){
-						$("#wishbtn").val("위시리스트추가");
-					}else if(result=='delete_fail'){
-						alert("delete ERROR");
-					}
-				});
+				function(data) {
+				let result = data.code;
+				if(result=='delete_success'){
+					$("#wishbtn").val("위시리스트추가");
+				}else if(result=='delete_fail'){
+					alert("delete ERROR");
+				}
+			});
 		}
 	});
 

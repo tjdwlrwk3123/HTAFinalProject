@@ -34,9 +34,6 @@ public class WishlistListController {
 		
 		List<WishlistVo> list = service.wishlist_list(user_id);
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		for(WishlistVo vo : list) {
-			System.out.println(vo.getImgsavename());
-		}
 		map.put("list", list);
 		return map;
 	}
