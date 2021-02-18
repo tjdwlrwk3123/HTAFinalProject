@@ -7,7 +7,7 @@
  		<!-- 투어의 첫화면 DATA -->
  	<select id="mainlist" resultType="tourpage">
 		select * from (
-		    select distinct *  from 
+		    select distinct img_num, imgsavename, e.service_number, e.cate_number, tour_name, tour_type, avgpoint, tour_price, tour_amount  from  
 		    (
 		         select img_num,imgsavename, b.service_number, a.cate_number, tour_name,tour_type  from 
 		            (           
