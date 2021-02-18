@@ -1,9 +1,12 @@
 package com.spring.tour.controller;
 
+import java.net.http.HttpRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,11 +46,19 @@ public class PayController {
 					@RequestParam(value="service_option") List<String> optionName,
 					@RequestParam(value="count", defaultValue = "1") List<Integer> optionCnts,
 					@RequestParam(value="optionPrice") List<Integer> optionPrice,
-					Model model
+					Model model,
+					HttpServletRequest req
 			) {
+		
 		System.out.println("user_id 페이 컨트롤러 : "+user_id);
 		if(!user_id.equals("none")) {
-			PaymentVo vo = service.getUserInfo(user_id);
+			PaymentVo vo;
+			if(req.getSession().getAttribute("user_id")!=null) {
+				vo = service.getUserInfo((String)req.getSession().getAttribute("user_id"));
+			}else {
+				vo = service.getUserInfo(user_id);
+			}
+			
 			model.addAttribute("pvo", vo);
 		}
 		
