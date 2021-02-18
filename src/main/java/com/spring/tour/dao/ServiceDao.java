@@ -11,6 +11,7 @@ import com.spring.tour.vo.AccomOptionVo;
 import com.spring.tour.vo.Accom_serviceVo;
 import com.spring.tour.vo.ImageVo;
 import com.spring.tour.vo.TourServiceVo;
+import com.spring.tour.vo.Tour_infoVo;
 
 
 @Repository
@@ -20,11 +21,17 @@ public class ServiceDao {
 	public List<Accom_serviceVo> selectAccomServiceList(String user_id){ 
 		return sqlSession.selectList(NAMESPACE+".selectAccomServiceList",user_id);
 	} 
+	public List<TourServiceVo> selectTourServiceList(String user_id){ 
+		return sqlSession.selectList(NAMESPACE+".selectTourServiceList",user_id);
+	} 
 	public Accom_serviceVo selectAccomService(String accom_service_number){ 
 		return sqlSession.selectOne(NAMESPACE+".selectAccomService",accom_service_number);
 	}
 	public String selectAccomServiceMax(String user_id){ 
 		return sqlSession.selectOne(NAMESPACE+".selectAccomServiceMax",user_id);
+	}
+	public String selectTourServiceMax(String user_id){ 
+		return sqlSession.selectOne(NAMESPACE+".selectTourServiceMax",user_id);
 	}
 	public String selectAccomOptioneMax(String accom_service_number){ 
 		return sqlSession.selectOne(NAMESPACE+".selectAccomOptioneMax",accom_service_number);
@@ -53,6 +60,12 @@ public class ServiceDao {
 	}
 	public int insertAccomOption(AccomOptionVo vo) {
 		return sqlSession.insert(NAMESPACE+".insertAccomOption",vo);
+	}
+	public int insertTourService(TourServiceVo vo) {
+		return sqlSession.insert(NAMESPACE+".insertTourService",vo);
+	}
+	public int insertTourInfo(Tour_infoVo vo) {
+		return sqlSession.insert(NAMESPACE+".insertTourInfo",vo);
 	}
 	public int insertImg(ImageVo vo) {
 		return sqlSession.insert(NAMESPACE+".insertImg",vo);

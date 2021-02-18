@@ -7,11 +7,17 @@
 	<select id="selectAccomServiceList" resultType="com.spring.tour.vo.Accom_serviceVo" parameterType="string">
 		select * from accom_service where user_accom_boss_name=#{user_accom_boss_name}
 	</select>
+	<select id="selectTourServiceList" resultType="com.spring.tour.vo.TourServiceVo" parameterType="string">
+		select * from tour_service where user_id=#{user_id}
+	</select>
 	<select id="selectAccomService" resultType="com.spring.tour.vo.Accom_serviceVo" parameterType="string">
 		select * from accom_service where accom_service_number=#{accom_service_number}
 	</select> 
 	<select id="selectAccomServiceMax" resultType="string" parameterType="string">
 		select max(accom_service_number) from accom_service where user_accom_boss_name=#{user_accom_boss_name}
+	</select> 
+	<select id="selectTourServiceMax" resultType="string" parameterType="string">
+		select max(service_number) from tour_service where user_id=#{user_id}
 	</select> 
 	<select id="selectAccomOptioneMax" resultType="string" parameterType="string">
 		select max(accom_option_number) from accom_option where accom_service_number=#{accom_service_number}
@@ -37,6 +43,12 @@
 	</insert>
 	<insert id="insertAccomInfo" parameterType="com.spring.tour.vo.AccomInfoVo">
 		insert into accom_info values((select nvl(max(accom_info_number)+1,0) from accom_info),#{accom_service_number},#{accom_info_content},#{accom_how},#{accom_rule},#{accom_chekinfo},#{facility},#{conven})
+	</insert>
+	<insert id="insertTourService" parameterType="com.spring.tour.vo.TourServiceVo">
+		insert into tour_service values((select nvl(max(service_number)+1,0) from tour_service),#{cate_number},#{user_id},#{tour_name},#{tour_addr},#{tour_type})
+	</insert>
+	<insert id="insertTourInfo" parameterType="com.spring.tour.vo.Tour_infoVo">
+		insert into tour_info values((select nvl(max(tour_info_number)+1,0) from tour_info),#{service_number},#{tour_content},#{tour_how},#{tour_rule},#{tour_warn})
 	</insert>
 	<insert id="insertAccomOption" parameterType="com.spring.tour.vo.AccomOptionVo">
 		insert into accom_option values((select nvl(max(accom_option_number)+1,0) from accom_option),#{accom_service_number},#{accom_rooms_option},#{accom_min_people},#{accom_max_people},#{accom_price},#{discount})

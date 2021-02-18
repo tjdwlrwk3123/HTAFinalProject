@@ -6,14 +6,17 @@ public class TourServiceVo {
 	private String user_id;
 	private String tour_name;
 	private String tour_addr;
+	private String tour_type;
 	public TourServiceVo() {}
-	public TourServiceVo(int service_number, int cate_number, String user_id, String tour_name, String tour_addr) {
+	public TourServiceVo(int service_number, int cate_number, String user_id, String tour_name, String tour_addr,
+			String tour_type) {
 		super();
 		this.service_number = service_number;
 		this.cate_number = cate_number;
 		this.user_id = user_id;
 		this.tour_name = tour_name;
 		this.tour_addr = tour_addr;
+		this.tour_type = tour_type;
 	}
 	public int getService_number() {
 		return service_number;
@@ -45,4 +48,11 @@ public class TourServiceVo {
 	public void setTour_addr(String tour_addr) {
 		this.tour_addr = tour_addr;
 	}
+	public String getTour_type() {
+		return tour_type;
+	}
+	public void setTour_type(String tour_type) {
+		this.tour_type = tour_type;
+	}
+	
 }
