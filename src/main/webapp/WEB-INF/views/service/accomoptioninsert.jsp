@@ -4,7 +4,7 @@
 <div>
 	<form action="${cp }/accomoptioninsert" method="post" enctype="multipart/form-data" onsubmit="return check()">
 		<input type="hidden" name="accom_service_number" value="${accom_service_number }">
-		옵션이름(등급) <input type="text" name="accom_rooms_name"><br><br>
+		옵션이름(등급) <input type="text" name="accom_rooms_option"><br><br>
 		최소인원 <input type="number" name="accom_min_people"><br><br>
 		최대인원 <input type="number" name="accom_max_people"><br><br>
 		숙소가격 <input type="number" name="accom_price"><br><br>
