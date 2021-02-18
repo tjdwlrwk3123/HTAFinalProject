@@ -1,4 +1,4 @@
-package com.spring.tour.controller;
+package com.spring.tour.webSocket;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +15,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.socket.server.standard.SpringConfigurator;
 
 import com.spring.tour.service.ChatService;
 
 
-@Controller
-@ServerEndpoint(value = "/echo2.do")
+@ServerEndpoint(value = "/echo2.do", configurator = SpringConfigurator.class)
+
 public class WebSocketChat2 {
+	
+	@Autowired
 	private ChatService service;
 	int cnt = 0;
 	String username = "";
@@ -71,12 +74,17 @@ public class WebSocketChat2 {
 	 */
 	@OnMessage
 	public void onMessage(String message, Session session) {
-		if(cnt++==0) {
-			username=message;
-		}
 		
 		String sender = message.split(",")[1];
 		message=message.split(",")[0];
+		
+		if(cnt++==0) {
+			username=sender;
+			sendAllSessionToMessage(session, "SYSTEM", "SYSTEM"+message);
+			return;
+		}
+		
+		
 		
 		logger.info("Message From "+sender+":"+message);
 		try {
@@ -98,6 +106,7 @@ public class WebSocketChat2 {
 	public void onClose(Session session) {
 		logger.info("Session "+session.getId()+ "has ended");
 		sessionList.remove(session);
+		System.out.println(username);
 		service.isWaiting(username);
 	}
 	

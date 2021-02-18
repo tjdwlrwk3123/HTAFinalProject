@@ -1,6 +1,5 @@
 package com.spring.tour.service;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,5 +27,10 @@ public class ChatService {
 	
 	public int isWaiting(String username) {
 		return dao.isWaiting(username);
+	}
+	
+	public String newone() {
+		System.out.println("锚辑厚胶 积己");
+		return "chatService 积己";
 	}
 }
