@@ -51,17 +51,18 @@ public class PayController {
 			) {
 		
 		System.out.println("user_id 페이 컨트롤러 : "+user_id);
+		System.out.println("세션아이디:"+(String)req.getSession().getAttribute("user_id"));
+		PaymentVo vo;
 		if(!user_id.equals("none")) {
-			PaymentVo vo;
 			if(req.getSession().getAttribute("user_id")!=null) {
 				vo = service.getUserInfo((String)req.getSession().getAttribute("user_id"));
 			}else {
 				vo = service.getUserInfo(user_id);
 			}
-			
-			model.addAttribute("pvo", vo);
+		}else {
+			vo = service.getUserInfo((String)req.getSession().getAttribute("user_id"));
 		}
-		
+		model.addAttribute("pvo", vo);
 		model.addAttribute("service_name",service_name);
 		model.addAttribute("cate_number",cate_number);
 		model.addAttribute("service_number",service_number);
