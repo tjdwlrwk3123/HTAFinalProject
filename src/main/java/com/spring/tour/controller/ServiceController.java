@@ -245,7 +245,7 @@ public class ServiceController {
 					return ".error";
 				}
 			}
-			
+		model.addAttribute("accom_service_number", accom_service_number);
 		return "redirect:/accomoption"; 
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -253,7 +253,7 @@ public class ServiceController {
 		}
 	}
 	@GetMapping("/accomoptiondelete")
-	public String accomoptiondelete(String accom_option_number) {
+	public String accomoptiondelete(String accom_service_number, String accom_option_number, Model model) {
 		ImageVo vo = new ImageVo(0, null, null, Integer.parseInt(accom_option_number), 555);
 		List<ImageVo> list=service.selectImageList(vo);
 		service.deleteImg(vo);
@@ -263,13 +263,53 @@ public class ServiceController {
 			f.delete();
 		}
 		service.deleteAccomOption(accom_option_number);
+		model.addAttribute("accom_service_number", accom_service_number);
 		return "redirect:/accomoption"; 
 	}
 
 	@GetMapping("/accomoptionupdate")
 	public String accomoptionupdatepage(String accom_option_number, Model model) {
-		
 		model.addAttribute("vo", service.selectAccomOption(accom_option_number));
 		return ".service.accomoptionupdate"; 
+	}
+	@PostMapping("/accomoptionupdate")
+	public String accomoptionupdate(String accom_option_number, String accom_service_number, String accom_rooms_option, int accom_min_people, int accom_max_people, int accom_price, int discount, MultipartFile[] img, Model model) {
+		try { 
+			String path = sc.getRealPath("/resources/upload");
+			System.out.println(path);
+			
+			AccomOptionVo vo = new AccomOptionVo(Integer.parseInt(accom_option_number), 0, accom_rooms_option, accom_min_people, accom_max_people, accom_price, discount);
+			service.updateAccomOption(vo);
+
+			ImageVo ivo = new ImageVo(0, null, null, Integer.parseInt(accom_option_number), 555);
+			List<ImageVo> list=service.selectImageList(ivo);
+			service.deleteImg(ivo);
+			for (ImageVo v : list) {
+				File f=new File(path+"\\"+v.getImgsavename());
+				f.delete();
+			}
+			for(int i=0;i<img.length;i++) {
+				String orgfilename=img[i].getOriginalFilename();
+				String savefilename=UUID.randomUUID()+"_"+orgfilename;
+				try {
+					InputStream is=img[i].getInputStream();
+					FileOutputStream fos=new FileOutputStream(path+"\\"+savefilename);
+					FileCopyUtils.copy(is, fos);
+					is.close();
+					fos.close();
+					ImageVo vo1=new ImageVo(0, orgfilename, savefilename, Integer.parseInt(accom_option_number), 555);
+					service.insertImg(vo1);
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+					return ".error";
+				}
+			}
+		model.addAttribute("accom_service_number",accom_service_number);
+		return "redirect:/accomoption"; 
+		}catch(Exception e) {
+			e.printStackTrace();
+			return ".error";
+		}
 	}
 }
