@@ -1,15 +1,21 @@
 package com.spring.tour.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.tour.security.MemberService;
@@ -45,7 +51,7 @@ public class UserController {
 	public String RegisterPost(User_InfoVo vo, Model model, RedirectAttributes rttr, HttpServletRequest req, HttpSession session) throws Exception {
 		
 		service.insert(vo, req);
-		rttr.addFlashAttribute("authmsg" , "가입시 사용한 이메일로 인증해주 3");
+		rttr.addFlashAttribute("authmsg" , "가입시 사용한 이메일로 인증해주세요");
 		return "redirect:/";
 	}
 	
@@ -58,4 +64,39 @@ public class UserController {
 		return "/userjoin/emailConfirm";
 	}
 	
+	@RequestMapping(value="/findidBtn")
+	public String findidBtn() {
+		return ".userjoin.findId";
+	}
+	@RequestMapping(value="/findId", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	@ResponseBody
+	public HashMap<String,Object> findid(String user_email) {
+		
+		HashMap<String,Object> map = new HashMap<String,Object>();
+		map.put("user_email", user_email);
+		
+		List<User_InfoVo> findVo = service.findid(user_email);
+		ArrayList<String> user_id=new ArrayList<String>();
+		for(User_InfoVo vo :findVo) {
+			String dbEmail = vo.getUser_email();
+			if(dbEmail.equals(user_email)) {
+				user_id.add(vo.getUser_id());
+			}else {}
+		}
+		map.put("user_id", user_id);
+		return map;
+	}
+	
+	@RequestMapping(value="/sendPwdEmail")
+	public String sendPwdEmail(String user_email) throws Exception{
+		User_InfoVo vo = new User_InfoVo();
+		vo.setUser_email(user_email);
+		service.changePwdMail(vo);
+		return ".home";
+	}
+	
+	@RequestMapping(value="/findPwdBtn")
+	public String findPwd() {
+		return ".userjoin.findPwd";
+	}
 }
