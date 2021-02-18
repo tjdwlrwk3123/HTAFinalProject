@@ -2,6 +2,8 @@ package com.spring.tour.controller;
 
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,9 +21,10 @@ public class TourDetailController {
 	
 	// 아이디 정보랑, cate_number, service_number 넘겨받기
 	@RequestMapping(value = "/tourDetail")
-	public String tourDetail(String user_id, int cate_number, int service_number, Model model) {
+	public String tourDetail(int cate_number, int service_number, Model model, HttpServletRequest req) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		System.out.println("user_id 투어디테일 컨트롤러 : "+user_id);
+		String user_id = (String)req.getSession().getAttribute("user_id");
+		
 		map.put("user_id",user_id);
 		map.put("cate_number",cate_number);
 		map.put("service_number",service_number);

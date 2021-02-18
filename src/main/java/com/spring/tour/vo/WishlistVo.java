@@ -8,6 +8,7 @@ public class WishlistVo {
 	private String tour_type;
 	private String tour_name;
 	private double avgpoint;
+	private int rcnt; // ¸®ºä´Þ¸°  °¹¼ö
 	private int img_num;
 	private String imgsavename; 
 	private int tour_price;
@@ -18,8 +19,8 @@ public class WishlistVo {
 	}
 
 	public WishlistVo(int cate_number, int service_number, int wishnum, String user_id, String tour_type,
-			String tour_name, double avgpoint, int img_num, String imgsavename, int tour_price, int tour_amount,
-			int discount) {
+			String tour_name, double avgpoint, int rcnt, int img_num, String imgsavename, int tour_price,
+			int tour_amount, int discount) {
 		super();
 		this.cate_number = cate_number;
 		this.service_number = service_number;
@@ -28,6 +29,7 @@ public class WishlistVo {
 		this.tour_type = tour_type;
 		this.tour_name = tour_name;
 		this.avgpoint = avgpoint;
+		this.rcnt = rcnt;
 		this.img_num = img_num;
 		this.imgsavename = imgsavename;
 		this.tour_price = tour_price;
@@ -61,6 +63,10 @@ public class WishlistVo {
 
 	public double getAvgpoint() {
 		return avgpoint;
+	}
+
+	public int getRcnt() {
+		return rcnt;
 	}
 
 	public int getImg_num() {
@@ -111,6 +117,10 @@ public class WishlistVo {
 		this.avgpoint = avgpoint;
 	}
 
+	public void setRcnt(int rcnt) {
+		this.rcnt = rcnt;
+	}
+
 	public void setImg_num(int img_num) {
 		this.img_num = img_num;
 	}
@@ -135,8 +145,7 @@ public class WishlistVo {
 	public String toString() {
 		return "WishlistVo [cate_number=" + cate_number + ", service_number=" + service_number + ", wishnum=" + wishnum
 				+ ", user_id=" + user_id + ", tour_type=" + tour_type + ", tour_name=" + tour_name + ", avgpoint="
-				+ avgpoint + ", img_num=" + img_num + ", imgsavename=" + imgsavename + ", tour_price=" + tour_price
-				+ ", tour_amount=" + tour_amount + ", discount=" + discount + "]";
+				+ avgpoint + ", rcnt=" + rcnt + ", img_num=" + img_num + ", imgsavename=" + imgsavename
+				+ ", tour_price=" + tour_price + ", tour_amount=" + tour_amount + ", discount=" + discount + "]";
 	}
-
 }

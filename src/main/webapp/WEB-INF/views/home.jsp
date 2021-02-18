@@ -28,7 +28,7 @@
 	</c:otherwise>
 </c:choose>
 <%
-	session.setAttribute("user_id", "test");
+	session.setAttribute("user_id", "kaka");
 %>
 </body>
 </html>
