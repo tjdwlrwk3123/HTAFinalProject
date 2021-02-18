@@ -55,7 +55,7 @@ public class UserController {
 		service.stateUp(user_email);
 		model.addAttribute("user_email", user_email);
 
-		return "/tour/userjoin/emailConfirm";
+		return "/userjoin/emailConfirm";
 	}
 	
 }
