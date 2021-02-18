@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.spring.tour.dao.ServiceDao;
 import com.spring.tour.vo.AccomInfoVo;
+import com.spring.tour.vo.AccomOptionVo;
 import com.spring.tour.vo.Accom_serviceVo;
 import com.spring.tour.vo.ImageVo;
 import com.spring.tour.vo.TourServiceVo;
@@ -22,8 +23,14 @@ public class ServiceService {
 	public String selectAccomServiceMax(String user_id) {
 		return dao.selectAccomServiceMax(user_id);
 	} 
+	public String selectAccomOptioneMax(String accom_service_number) {
+		return dao.selectAccomOptioneMax(accom_service_number);
+	} 
 	public AccomInfoVo selectAccomInfo(String accom_service_number) {
 		return dao.selectAccomInfo(accom_service_number);
+	}
+	public List<AccomOptionVo> selectAccomOptionList(String accom_service_number) {
+		return dao.selectAccomOptionList(accom_service_number);
 	}
 	public List<TourServiceVo> selectTourList(String user_id) {
 		return dao.selectTourList(user_id);
@@ -37,6 +44,9 @@ public class ServiceService {
 	}
 	public int inserAccomInfo(AccomInfoVo vo) {
 		return dao.insertAccomInfo(vo);
+	}
+	public int insertAccomOption(AccomOptionVo vo) {
+		return dao.insertAccomOption(vo);
 	}
 	public int insertImg(ImageVo vo) {
 		return dao.insertImg(vo);

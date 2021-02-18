@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.spring.tour.vo.AccomInfoVo;
+import com.spring.tour.vo.AccomOptionVo;
 import com.spring.tour.vo.Accom_serviceVo;
 import com.spring.tour.vo.ImageVo;
 import com.spring.tour.vo.TourServiceVo;
@@ -25,8 +26,14 @@ public class ServiceDao {
 	public String selectAccomServiceMax(String user_id){ 
 		return sqlSession.selectOne(NAMESPACE+".selectAccomServiceMax",user_id);
 	}
+	public String selectAccomOptioneMax(String accom_service_number){ 
+		return sqlSession.selectOne(NAMESPACE+".selectAccomOptioneMax",accom_service_number);
+	}
 	public AccomInfoVo selectAccomInfo(String accom_service_number){ 
 		return sqlSession.selectOne(NAMESPACE+".selectAccomInfo",accom_service_number);
+	}
+	public List<AccomOptionVo> selectAccomOptionList(String accom_service_number){
+		return sqlSession.selectList(NAMESPACE+".selectAccomOptionList",accom_service_number);
 	}
 	public List<TourServiceVo> selectTourList(String user_id){
 		return sqlSession.selectList(NAMESPACE+".selectTourList",user_id);
@@ -40,6 +47,9 @@ public class ServiceDao {
 	}
 	public int insertAccomInfo(AccomInfoVo vo) {
 		return sqlSession.insert(NAMESPACE+".insertAccomInfo",vo);
+	}
+	public int insertAccomOption(AccomOptionVo vo) {
+		return sqlSession.insert(NAMESPACE+".insertAccomOption",vo);
 	}
 	public int insertImg(ImageVo vo) {
 		return sqlSession.insert(NAMESPACE+".insertImg",vo);

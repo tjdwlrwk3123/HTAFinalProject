@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.tour.service.ServiceService;
 import com.spring.tour.vo.AccomInfoVo;
+import com.spring.tour.vo.AccomOptionVo;
 import com.spring.tour.vo.Accom_serviceVo;
 import com.spring.tour.vo.ImageVo;
 
@@ -67,11 +68,6 @@ public class ServiceController {
 			return ".userjoin.userlogin";
 		}
 	} 
-	@GetMapping("/accomoption")
-	public String accomoption(String accom_service_number) {
-		
-		return ".service.accomoption"; 
-	}
 	@GetMapping("/accominsert")
 	public String accominsertpage() {
 		return ".service.accominsert"; 
@@ -209,5 +205,51 @@ public class ServiceController {
 			return ".error";
 		}
 	}
-	
+
+	@GetMapping("/accomoption")
+	public String accomoption(String accom_service_number, Model model) {
+		List<AccomOptionVo> list = service.selectAccomOptionList(accom_service_number);
+		model.addAttribute("list",list);
+		model.addAttribute("accom_service_number",accom_service_number);
+		return ".service.accomoption"; 
+	}
+
+	@GetMapping("/accomoptioninsert")
+	public String accomoptioninsertpage(String accom_service_number, Model model) {
+		model.addAttribute("accom_service_number", accom_service_number);
+		return ".service.accomoptioninsert"; 
+	}
+	@PostMapping("/accomoptioninsert")
+	public String accomoptioninsert(String accom_service_number, String accom_rooms_option, int accom_min_people, int accom_max_people, int accom_price, int discount, MultipartFile[] img, Model model) {
+		try { 
+			String path = sc.getRealPath("/resources/upload");
+			System.out.println(path);
+			
+			AccomOptionVo vo = new AccomOptionVo(0, Integer.parseInt(accom_service_number), accom_rooms_option, accom_min_people, accom_max_people, accom_price, discount);
+			service.insertAccomOption(vo);
+
+			for(int i=0;i<img.length;i++) {
+				String orgfilename=img[i].getOriginalFilename();
+				String savefilename=UUID.randomUUID()+"_"+orgfilename;
+				try {
+					InputStream is=img[i].getInputStream();
+					FileOutputStream fos=new FileOutputStream(path+"\\"+savefilename);
+					FileCopyUtils.copy(is, fos);
+					is.close();
+					fos.close();
+					ImageVo vo1=new ImageVo(0, orgfilename, savefilename, Integer.parseInt(service.selectAccomOptioneMax(accom_service_number)), 555);
+					service.insertImg(vo1);
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+					return ".error";
+				}
+			}
+			
+		return "redirect:/accomoptionmain"; 
+		}catch(Exception e) {
+			e.printStackTrace();
+			return ".error";
+		}
+	}
 }
