@@ -26,6 +26,7 @@
   	<typeAlias type="com.spring.tour.vo.ChatVo" alias="chatvo"/>
   	<typeAlias type="com.spring.tour.vo.PaymentVo" alias="payment"/>
   	<typeAlias type="com.spring.tour.vo.CouponInfoVo" alias="couponInfo"/>
+  	<typeAlias type="com.spring.tour.vo.CouponVo" alias="couponVo"/>
   </typeAliases>
   
   <!-- 읽어올 Mapper파일 설정 -->
@@ -35,7 +36,7 @@
 			<mapper resource="com/spring/tour/mapper/MypageMapper.xml"/>
 			<mapper resource="com/spring/tour/mapper/AccomMapper.xml"/>
 			<mapper resource="com/spring/tour/mapper/BookingMapper.xml"/>
-
+			<mapper resource="com/spring/tour/mapper/MemberManageMapper.xml"/>
 			<mapper resource="com/spring/tour/mapper/UserMapper.xml"/>
 
 			<mapper resource="com/spring/tour/mapper/ServiceMapper.xml"/>
