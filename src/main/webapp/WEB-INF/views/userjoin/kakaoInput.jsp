@@ -48,7 +48,7 @@
 			<tr>
 				<td align="left">메일 주소 : </td>
 				<td colspan="6">
-					<input type="hidden" name="user_email" value="${user_email }">
+					<input type="hidden" name="user_email" value="${user_id }">
 				</td>
 			</tr>
 		</table>
