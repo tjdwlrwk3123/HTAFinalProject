@@ -23,6 +23,8 @@ import com.spring.tour.vo.AccomInfoVo;
 import com.spring.tour.vo.AccomOptionVo;
 import com.spring.tour.vo.Accom_serviceVo;
 import com.spring.tour.vo.ImageVo;
+import com.spring.tour.vo.TourServiceVo;
+import com.spring.tour.vo.Tour_infoVo;
 
 @Controller
 public class ServiceController {
@@ -34,12 +36,13 @@ public class ServiceController {
 	public String tourmain(HttpSession session,Model model) {
 		try {
 			System.out.println(session);
+			session.setAttribute("user_id", "tset");
 			String user_id=(String)session.getAttribute("user_id");
 			System.out.println(session.getAttribute("user_id"));
 			if(user_id.equals("")||user_id==null) {
 				return ".userjoin.userlogin";
 			}else {
-				List<Accom_serviceVo> list = service.selectAccomServiceList(user_id);
+				List<TourServiceVo> list = service.selectTourServiceList(user_id);
 				model.addAttribute("list",list);
 				return ".service.tourmain";
 			}
@@ -47,6 +50,52 @@ public class ServiceController {
 			e.printStackTrace();
 			return ".userjoin.userlogin";
 		}
+	}
+	@GetMapping("/tourinsert")
+	public String tourinsertpage() {
+		return ".service.tourinsert"; 
+	}
+	@PostMapping("/tourinsert")
+	public String tourinsert(String tour_name, String tour_addr, String tour_content, String tour_how, String tour_rule, String tour_warn, String tour_type, MultipartFile[] img, HttpSession session, Model model) {
+		try {
+			String path = sc.getRealPath("/resources/upload");
+			System.out.println(path);
+			String user_id="";
+			try {
+				user_id=(String)session.getAttribute("user_id");
+				System.out.println(user_id);
+			}catch(Exception e){
+				e.printStackTrace();
+				return ".userjoin.userlogin"; 
+			}
+			TourServiceVo servicevo=new TourServiceVo(0, 1, user_id, tour_name, tour_addr, tour_type);
+			service.insertTourService(servicevo);
+			Tour_infoVo infovo=new Tour_infoVo(0, Integer.parseInt(service.selectTourServiceMax(user_id)) , tour_content, tour_how, tour_rule, tour_warn);
+			service.inserTourInfo(infovo);
+
+			for(int i=0;i<img.length;i++) {
+				String orgfilename=img[i].getOriginalFilename();
+				String savefilename=UUID.randomUUID()+"_"+orgfilename;
+				try {
+					InputStream is=img[i].getInputStream();
+					FileOutputStream fos=new FileOutputStream(path+"\\"+savefilename);
+					FileCopyUtils.copy(is, fos);
+					is.close();
+					fos.close();
+					ImageVo vo=new ImageVo(0, orgfilename, savefilename, Integer.parseInt(service.selectAccomServiceMax(user_id)), 1);
+					service.insertImg(vo);
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+					return ".error";
+				}
+			}
+			return "redirect:/tourmain";
+		}catch(Exception e) {
+			e.printStackTrace();
+			return ".error";
+		}
+		
 	}
 
 	@GetMapping("/accommain")
@@ -178,8 +227,8 @@ public class ServiceController {
 				c+=","+conven[i];
 			}
 			Accom_serviceVo servicevo=new Accom_serviceVo(0, Integer.parseInt(cate), user_id, accom_name, accom_addr);
-			AccomInfoVo infovo=new AccomInfoVo(0, Integer.parseInt(service.selectAccomServiceMax(user_id)), accom_info_content, accom_how, accom_rule, accom_checkinfo, f, c);
 			service.insertAccomService(servicevo);
+			AccomInfoVo infovo=new AccomInfoVo(0, Integer.parseInt(service.selectAccomServiceMax(user_id)), accom_info_content, accom_how, accom_rule, accom_checkinfo, f, c);
 			service.inserAccomInfo(infovo);
 
 			for(int i=0;i<img.length;i++) {

@@ -5,7 +5,7 @@
 	<div>
 		<ul>
 			<li><a href="${cp }/accommain">숙소서비스</a></li>
-			<li><a href="${cp }]/tourmain">투어서비스</a></li>
+			<li><a href="${cp }/tourmain">투어서비스</a></li>
 		</ul>
 	</div>
 	<div>

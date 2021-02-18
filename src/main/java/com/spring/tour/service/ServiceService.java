@@ -11,17 +11,24 @@ import com.spring.tour.vo.AccomOptionVo;
 import com.spring.tour.vo.Accom_serviceVo;
 import com.spring.tour.vo.ImageVo;
 import com.spring.tour.vo.TourServiceVo;
+import com.spring.tour.vo.Tour_infoVo;
 @Service
 public class ServiceService {
 	@Autowired private ServiceDao dao;
 	public List<Accom_serviceVo> selectAccomServiceList(String user_id) {
 		return dao.selectAccomServiceList(user_id);
 	}
+	public List<TourServiceVo> selectTourServiceList(String user_id) {
+		return dao.selectTourServiceList(user_id);
+	}
 	public Accom_serviceVo selectAccomService(String accom_service_number) {
 		return dao.selectAccomService(accom_service_number);
 	} 
 	public String selectAccomServiceMax(String user_id) {
 		return dao.selectAccomServiceMax(user_id);
+	} 
+	public String selectTourServiceMax(String user_id) {
+		return dao.selectTourServiceMax(user_id);
 	} 
 	public String selectAccomOptioneMax(String accom_service_number) {
 		return dao.selectAccomOptioneMax(accom_service_number);
@@ -41,7 +48,7 @@ public class ServiceService {
 	public List<ImageVo> selectImageList(ImageVo vo) {
 		return dao.selectImageList(vo);
 	}
-	
+
 	public int insertAccomService(Accom_serviceVo vo) {
 		return dao.insertAccomService(vo);
 	}
@@ -50,6 +57,12 @@ public class ServiceService {
 	}
 	public int insertAccomOption(AccomOptionVo vo) {
 		return dao.insertAccomOption(vo);
+	}
+	public int insertTourService(TourServiceVo vo) {
+		return dao.insertTourService(vo);
+	}
+	public int inserTourInfo(Tour_infoVo vo) {
+		return dao.insertTourInfo(vo);
 	}
 	public int insertImg(ImageVo vo) {
 		return dao.insertImg(vo);
