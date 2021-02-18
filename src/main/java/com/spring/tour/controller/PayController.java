@@ -218,10 +218,11 @@ public class PayController {
 				pe.printStackTrace();
 				return ".pay.payment";
 			}
-		}else if(cate_number==2) {
+		}else if(cate_number!=1) {
 			try {
 			//여기엔 숙소book 저장코드
 			System.out.println("숙소 결제 입니다.");
+			System.out.println("포인트결제"+pointUsing);
 		
 			HashMap<String, Object> abMap = new HashMap<String, Object>(); // accom_Book
 			HashMap<String, Object> viMap = new HashMap<String, Object>(); // visitor_info
@@ -276,7 +277,7 @@ public class PayController {
 			//선생님께 질문! 많은 파라미터를 갖은 map에 동일한 내용이 있지만 그 중 한두개의 값만 쓴다면 그 map을 그대로 가져다 쓰는게 효율적인가 ? 아니면 새로운 map을 생성하는게 효휼적인가??
 			// 필요 없으면  update관련한 map은 지우기 
 			upMap.put("user_id", user_id);
-			upMap.put("point_useramount", pointUsing);
+			upMap.put("point_useamount", pointUsing);
 			if(!couponUsing.equals("none") || couponUsing!=null) {
 				upMap.put("coupon_usecondition", couponUsing);
 			}
