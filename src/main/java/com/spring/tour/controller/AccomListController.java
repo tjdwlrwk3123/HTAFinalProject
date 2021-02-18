@@ -45,10 +45,10 @@ public class AccomListController {
 			wholeMap.put("maxprice", maxprice);
 		}
 		
+		int howLong=service.howLong(wholeMap);
 		HashMap<String, Object> result=new HashMap<String, Object>(); //결과로 보낼 해시맵
 		
 		List<AccomServiceReviewJoinVo> resultlist=service.accom_service_list(wholeMap);
-		System.out.println(resultlist);
 //		List<Integer> list2=new ArrayList<Integer>();
 //		HashMap<String, Object> pmap=new HashMap<String, Object>();
 //		for(AccomServiceReviewJoinVo vo : resultlist) {
@@ -64,6 +64,7 @@ public class AccomListController {
 		result.put("list",resultlist);
 //		result.put("price", resultprice);
 		result.put("classification", classification);
+		result.put("howLong", howLong);
 		return result;
 	}
 }

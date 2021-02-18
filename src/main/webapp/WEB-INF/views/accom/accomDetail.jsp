@@ -146,6 +146,8 @@
 	</div>
 	<div id="option">
 	</div>
+	<input type="hidden" value="${service.cate_number }" id="catNum">
+	<input type="hidden" value="${service.accom_name }" id="serviceName">
 	<div id="detail" >
 		<div id="info">
 			<!-- 기본정보 : 상품정보(제공사항), 주의사항, 이용방법, 위치안내, 취소환불 규정, 후기 -->			
@@ -375,13 +377,22 @@
 	function getOptions(param){
 		$("#option").empty();
 		$.getJSON('${cp}/accomDetail_list',param, function(data) {
-			if(data.options==null){
-				$("#option").append("조건에 해당하는 방이 없습니다.");
+			if(data.options.length==0){
+				$("#option").append("<h2>조건에 해당하는 방이 없습니다.</h2>");
 			}
 			for(let i=0;i<data.options.length;i++){
 				var optNum=data.options[i].accom_option_number;
-				console.log(data.using[i]);
-				console.log(data.image[i]);
+				var serviceNum=data.options[i].accom_service_number;
+				var startDate=param.startDate;
+				var endDate=param.endDate;
+				var count=param.count;
+				var service_option=data.options[i].accom_rooms_option;
+				var howLong=data.howLong;
+				var price=data.options[i].accom_price;
+				var totPrice=price*howLong;
+				var cateNumber=document.getElementById("catNum").value;
+				var serviceName=document.getElementById("serviceName").value;
+				
 				var imgdiv='<div class="fotorama" data-width="200" data-heigth="200"'+
 				' data-allowfullscreen="native" width="200">';
 				for(let j=0;j<data.image[i].length;j++){
@@ -393,7 +404,18 @@
 				if(data.using[i]=='예약가능'){
 					var endContent=
 						'<div style="float:right; margin-top:180px; margin-right:20px;">'+
-						'<span style="font-size:1.5em;"><a href="">예약</a></span>'+
+						'<form action="${cp}/payment" method="post">'+
+						'<input type="hidden" name="serviceName" value="'+serviceName+'">'+
+						'<input type="hidden" name="cateNumber" value="'+cateNumber+'">'+
+						'<input type="hidden" name="serviceNumber" value="'+serviceNum+'">'+
+						'<input type="hidden" name="startDate" value="'+startDate+'">'+
+						'<input type="hidden" name="endDate" value="'+endDate+'">'+
+						'<input type="hidden" name="option_index" value="'+optNum+'">'+
+						'<input type="hidden" name="service_option" value="'+service_option+'">'+
+						'<input type="hidden" name="count" value="'+count+'">'+
+						'<input type="hidden" name="optionPrice" value="'+totPrice+'">'+
+						'<input type="submit" value="예약">'+
+						'</form>'+
 						'</div>'+
 						'</div>';
 				}else{
@@ -403,10 +425,6 @@
 						'</div>'+
 						'</div>';
 				}
-				var count=data.count;
-				var howLong=data.howLong;
-				var price=data.options[i].accom_price;
-				var totPrice=count*howLong*price;
 				
 				var content=
 					'<div class="tableformOpt">'+
@@ -417,7 +435,7 @@
 					'<h4>'+data.options[i].accom_rooms_option+'</h4>'+
 					'<span>기준인원:'+data.options[i].accom_min_people+'/최대인원:'+data.options[i].accom_max_people+'</span><br>'+
 					'<span style="font:\'bold\'">'+howLong+'박 총'+totPrice+'원</span>'+
-					'<p style="font-size: 0.7em;">1인당 '+howLong*price+'원</p>'+
+					'<p style="font-size: 0.7em;">1인당 '+parseInt(totPrice/count)+'원</p>'+
 					'</div>'+
 					endContent;
 					

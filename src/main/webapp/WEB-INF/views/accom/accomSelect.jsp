@@ -71,15 +71,13 @@
 
 
 <div style="width: 1000px; height: 60px; background-color: #E4F7BA;">
-<div style="display: inline-block;">
-	<input type="text" id="search">
-</div>
-<div style="display: inline-block;">
-	날짜<input type="text" id="d1" readonly="readonly" size="10">~
+
+<div style="display: inline-block; width: 300px; text-align: center;">
+	날짜: <input type="text" id="d1" readonly="readonly" size="10">~
 	<input type="text" id="d2" readonly="readonly" size="10">
 </div>
 <div style="display: inline-block;">
-	<div id="numCount" name="nCount">
+	<div id="numCount" name="nCount" style="width: 50px; text-align: center;">
 	<span id="totCount" name="nCount">1명</span>
 	</div>
 	<div id="changeCount" name="nCount">
@@ -132,6 +130,7 @@
 <input type="checkbox" name="cck" value="금연">금연<br>
 <input type="checkbox" name="cck" value="반려동물동반">반려동물동반<br>
 </div>
+<br>
 <p>
   <label for="amount">총 숙박 요금</label>
   <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
@@ -222,6 +221,7 @@ var totcnt=1; //총 인원수
 					var cate_number=data.list[i].cate_number;
 					var minprice=data.list[i].minp;
 					var maxprice=data.list[i].maxp;
+					var howLong=data.howLong;
 					console.log(accomName);
 					console.log(minprice);
 					var content="<a href='${cp}/accomDetail?accomNum="+accomNum+
@@ -234,8 +234,9 @@ var totcnt=1; //총 인원수
 					"<div class='accomSelectInfo'>"+
 					"<h3>"+accomName+"</h3>"+
 					"<p>숙소정보</p>"+
-					"<p>1박 총 "+minprice+"원</p>"+
-					"<p style='font-size: 0.7em;'>1인당 "+parseInt(minprice/count)+"원</p>"+
+					"<p style='font-weight:bold; display:inline-block;'>총 "+minprice*howLong+"부터~</p>"+
+					"<div style='font-size: 0.7em; display:inline-block; margin-left:10px;'>(1인당 "+parseInt(minprice*howLong/count)+"원)</div>"+
+					"<div>1박 "+minprice+"원</div>"+
 					"</div>"+
 				"</section>"+
 				"</a>";

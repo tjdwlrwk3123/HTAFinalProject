@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <!-- <script src="https://kit.fontawesome.com/b99e675b6e.js"></script> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4b7621e8665f6a2b7f8fcf343ba118b6&libraries=services"></script>
 <style type="text/css">
 	.tourBookingWrapper{
 		display: flex;
@@ -65,7 +66,7 @@
 		
 	}
 	
-	#mask {  
+	#tourmask {  
     position:absolute;  
     z-index:9000;  
     background-color:#000;  
@@ -169,10 +170,14 @@
 	</div>
 </div>
 
-<div id="mask">
+<div id="tourmask">
 </div>
 
 <div class="detailPopup">
+<div class="detailPop"></div>
+<input type="button" onclick="getMap()" value="지도보기" style="margin-left: 220px;">
+<div id="map" style="width:350px; height:200px; margin:auto;">
+</div>
 </div>
 
 <div class="cancelPopup">
@@ -203,12 +208,12 @@ function wrapWindowByMask(){
     var maskWidth = $(window).width();  
 
     //마스크의 높이와 너비를 화면 것으로 만들어 전체 화면을 채운다.
-    $("#mask").css({"width":maskWidth,"height":maskHeight});  
+    $("#tourmask").css({"width":maskWidth,"height":maskHeight});  
 
     //애니메이션 효과 - 일단 0초동안 까맣게 됐다가 60% 불투명도로 간다.
 
-    $("#mask").fadeIn(0);      
-    $("#mask").fadeTo("slow",0.6);    
+    $("#tourmask").fadeIn(0);      
+    $("#tourmask").fadeTo("slow",0.6);    
 
     //윈도우 같은 거 띄운다.
     $(".cancelPopup").show();
@@ -222,12 +227,12 @@ function wrapWindowByDetailMask(bookNumber){
     var maskWidth = $(window).width();  
 
     //마스크의 높이와 너비를 화면 것으로 만들어 전체 화면을 채운다.
-    $("#mask").css({"width":maskWidth,"height":maskHeight});  
+    $("#tourmask").css({"width":maskWidth,"height":maskHeight});  
 
     //애니메이션 효과 - 일단 0초동안 까맣게 됐다가 60% 불투명도로 간다.
 
-    $("#mask").fadeIn(0);      
-    $("#mask").fadeTo("slow",0.6);    
+    $("#tourmask").fadeIn(0);      
+    $("#tourmask").fadeTo("slow",0.6);
 	
     
     $.ajax({
@@ -235,11 +240,12 @@ function wrapWindowByDetailMask(bookNumber){
 		dataType: 'json',
 		data: {"bookNumber":bookNumber},
 		success: function(data) {
-			$(".detailPopup").empty();
+			$(".detailPop").empty();
 			for(let i=0;i<data.detail.length;i++){
 				var optName=data.detail[i].tour_option;
 				var count=data.count[i];
 				var price=data.detail[i].tour_price;
+				var addr=data.addr;
 				
 				var content='<div style="margin:20px;">'+
 				'<div style="display:inline-block">'+
@@ -251,15 +257,53 @@ function wrapWindowByDetailMask(bookNumber){
 				'</div>'+
 				'</div>';
 				
-				$(".detailPopup").append(content);
-				
+				$(".detailPop").append(content);
 			}
+			$(".detailPop").append('<input type="hidden" value="'+addr+'" id="addr">');
 		}
 	});
     
     //윈도우 같은 거 띄운다.
     $(".detailPopup").show();
 
+}
+
+function getMap(){
+	
+	var addr=document.getElementById("addr").value;
+	
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+
+	mapOption = {
+	    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+	    level: 3 
+	};
+
+	//지도를 생성합니다    
+	var map = new kakao.maps.Map(mapContainer, mapOption); 
+	//주소-좌표 변환 객체를 생성합니다
+	var geocoder = new kakao.maps.services.Geocoder();
+
+
+	//주소로 좌표를 검색합니다
+	geocoder.addressSearch(addr, function(result, status) {
+		// 정상적으로 검색이 완료됐으면 
+		 if (status === kakao.maps.services.Status.OK) {
+		    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+		    // 결과값으로 받은 위치를 마커로 표시합니다
+		    var marker = new kakao.maps.Marker({
+		        map: map,
+		        position: coords
+		    });
+		    // 인포윈도우로 장소에 대한 설명을 표시합니다
+		    var infowindow = new kakao.maps.InfoWindow({
+		        content: '<div style="width:150px;text-align:center;padding:6px 0;">숙소위치</div>'
+		    });
+		    infowindow.open(map, marker);
+		    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+		    map.setCenter(coords);
+		} 
+	});
 }
 
 $(document).ready(function(){
@@ -284,11 +328,11 @@ $(document).ready(function(){
         //링크 기본동작은 작동하지 않도록 한다.
         e.preventDefault();
         bookNumber=0;
-        $("#mask, .cancelPopup").hide();  
+        $("#tourmask, .cancelPopup").hide();  
     });
 
     //검은 막을 눌렀을 때
-    $("#mask").click(function () {  
+    $("#tourmask").click(function () {  
     	bookNumber=0;
         $(this).hide();
         $(".cancelPopup").hide();
@@ -299,7 +343,7 @@ $(document).ready(function(){
         //링크 기본동작은 작동하지 않도록 한다.
         e.preventDefault();
         location.href="/tour/tourCancel?bookNumber="+bookNumber;
-        $("#mask, .cancelPopup").hide();
+        $("#tourmask, .cancelPopup").hide();
     });  
 
 });

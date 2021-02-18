@@ -2,11 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
-<head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
 <!-- <script src="https://kit.fontawesome.com/b99e675b6e.js"></script> -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4b7621e8665f6a2b7f8fcf343ba118b6&libraries=services"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
 <style type="text/css">
 	.accompastTripWrapper{
@@ -64,12 +62,28 @@
 		margin-top: 15px;
 	}
 	.accompastTripWrapper .accompastTripMain .accompastTripPaging{
-		text-align: center;
-		
+		text-align: center;	
 	}
+	#pastmask {  
+    position:absolute;  
+    z-index:9000;  
+    background-color:#000;  
+    display:none;  
+    left:0;
+    top:0;
+	}
+	.detailPopup{
+    display: none;
+    position:absolute;
+    left:65%;
+    top:200px;
+    margin-left: -500px;
+    width:500px;
+    height:400px;
+    background-color:#FFF;
+    z-index:10000;   
+ 	}
 </style>
-</head>
-<body>
 
 <div class="accompastTripWrapper">
 	<div class="bookingSidebar">
@@ -88,22 +102,38 @@
 	</div>
 	<div class="accompastTripMain">
 		<div id="accompastTripWrap">
-			<h2 style="text-align: center;">지난여행/후기</h2>
+			<h2 style="text-align: center; height: 30px;">지난여행/후기</h2>
 			<c:forEach var="vo" items="${bookingList }" varStatus="status">
 				<div class="accompastTripList">
 					<div style="display: inline-block;">
 						<img src="${cp}/resources/gimgs/${image[status.index][0].imgsavename}" 
 						style="width: 100px; height: 100px;">
 					</div>
-					<div style="display: inline-block;">
+					<div style="display: inline-block; width:320px;">
 						<h3><a href="${cp }/accomDetail?accomNum=${detail[status.index].accom_service_number}
 						&cate_number=${service[status.index].cate_number}">${vo.service_name }</a></h3>
 						<span>${detail[status.index].accom_rooms_option }</span><br>
 						<span>여행날짜:</span><span>${vo.accom_startdate }~${vo.accom_enddate }</span>
 						<br>
-						<span>총 결제금액:</span><span>${vo.total_price }</span><span>원</span>
+						<c:choose>
+						<c:when test="${vo.coupon_usecondition!=null }">
+						<span>사용 쿠폰:</span><span>${vo.coupon_usecondition }</span><br>
+						</c:when>
+						<c:otherwise>
+						<br>
+						</c:otherwise>
+						</c:choose>
+						<span>총 결제금액:</span><span>${vo.total_price+vo.point_useamount }</span><span>원</span>
+						<c:if test="${vo.point_useamount!='0' }">
+						<span style="font-size: 0.5em;">(포인트 사용금액:</span><span style="font-size: 0.5em;">${vo.point_useamount }원)</span><br>
+						</c:if>
 					</div>
-					<div style="display:inline-block; position: relative; left: 100px;">
+					<div style="display:inline-block; position: relative; left:40px;">
+						<a href="#" class="openBookDetail">상세보기</a>
+						<input type="hidden" value="${vo.accom_book_number }">
+						<input type="hidden" value="${vo.accom_option_number }">
+					</div>
+					<div style="display:inline-block; position: relative; left: 70px;">
 						<a href="">리뷰쓰기</a>
 					</div>
 				</div>
@@ -123,5 +153,152 @@
 		</div>
 	</div>
 </div>
-</body>
-</html>
+
+<div id="pastmask">
+</div>
+
+<div class="detailPopup">
+<div class="detailPop"></div>
+<input type="button" onclick="getMap()" value="지도보기" style="margin-left: 220px;">
+<div id="map" style="width:350px; height:200px; margin:auto;">
+</div>
+</div>
+
+<script>
+function wrapWindowByDetailMask(bookNumber){
+	 
+    //화면의 높이와 너비를 구한다.
+    var maskHeight = $(document).height();  
+    var maskWidth = $(window).width();  
+
+    //마스크의 높이와 너비를 화면 것으로 만들어 전체 화면을 채운다.
+    $("#pastmask").css({"width":maskWidth,"height":maskHeight});  
+
+    //애니메이션 효과 - 일단 0초동안 까맣게 됐다가 60% 불투명도로 간다.
+
+    $("#pastmask").fadeIn(0);      
+    $("#pastmask").fadeTo("slow",0.6);    
+	
+    
+    $.ajax({
+		url: '${cp}/accomBookDetail',
+		dataType: 'json',
+		data: {"bookNumber":bookNumber,"optNum":optNum},
+		success: function(data) {
+			$(".detailPop").empty();
+			var visitorName=data.visitor.visitor_name;
+			var visitorEmail=data.visitor.visitor_email;
+			var visitorPhone=data.visitor.visitor_phone;
+			var roomOption=data.detail.accom_rooms_option;
+			var price=data.detail.accom_price;
+			var addr=data.service.accom_addr;
+			
+			var content='<div style="margin:20px;">'+
+			'<div>'+
+			'<p style="font-size:1.5em; text-align:center;">'+roomOption+'</p>'+
+			'<br>'+
+			'</div>'+
+			'<div>'+
+			'<div style="display:inline-block;">'+
+			'<span>방문자 이름: '+visitorName+'</span><br>'+
+			'<span>방문자 이메일: '+visitorEmail+'</span><br>'+
+			'<span>방문자 전화번호: '+visitorPhone+'</span><br>'+
+			'</div>'+
+			'<div style="display:inline-block; float:right;">'+
+			'<span>기본 가격: '+price+'원</span>'+
+			'</div>'+
+			'<input type="hidden" value="'+addr+'" id="addr">'+
+			'</div>'+
+			'</div>';
+			
+			$(".detailPop").append(content);
+			
+				
+			}
+		});
+    
+    //윈도우 같은 거 띄운다.
+    $(".detailPopup").show();
+}
+
+
+function getMap(){
+	
+	var addr=document.getElementById("addr").value;
+	
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+
+	mapOption = {
+	    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+	    level: 3 
+	};
+
+	//지도를 생성합니다    
+	var map = new kakao.maps.Map(mapContainer, mapOption); 
+	//주소-좌표 변환 객체를 생성합니다
+	var geocoder = new kakao.maps.services.Geocoder();
+
+
+	//주소로 좌표를 검색합니다
+	geocoder.addressSearch(addr, function(result, status) {
+		// 정상적으로 검색이 완료됐으면 
+		 if (status === kakao.maps.services.Status.OK) {
+		    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+		    // 결과값으로 받은 위치를 마커로 표시합니다
+		    var marker = new kakao.maps.Marker({
+		        map: map,
+		        position: coords
+		    });
+		    // 인포윈도우로 장소에 대한 설명을 표시합니다
+		    var infowindow = new kakao.maps.InfoWindow({
+		        content: '<div style="width:150px;text-align:center;padding:6px 0;">숙소위치</div>'
+		    });
+		    infowindow.open(map, marker);
+		    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+		    map.setCenter(coords);
+		} 
+	});
+}
+
+$(document).ready(function(){
+	var bookNumber=0;
+
+    //검은 막 띄우기
+    $(".openMask").click(function(e){
+        e.preventDefault();
+        bookNumber=$(e.target).next().val();
+        wrapWindowByMask();
+    });
+    $(".openBookDetail").click(function(e){
+        e.preventDefault();
+        bookNumber=$(e.target).next().val();
+        optNum=$(e.target).next().next().val();
+        wrapWindowByDetailMask(bookNumber,optNum);
+        
+    });
+
+    //닫기 버튼을 눌렀을 때
+    $(".cancelPopup .close").click(function (e) {  
+        //링크 기본동작은 작동하지 않도록 한다.
+        e.preventDefault();
+        bookNumber=0;
+        $("#pastmask, .cancelPopup").hide();  
+    });       
+
+    //검은 막을 눌렀을 때
+    $("#pastmask").click(function () {  
+    	bookNumber=0;
+        $(this).hide();
+        $(".cancelPopup").hide();
+        $(".detailPopup").hide();
+    });
+    
+    $(".cancelPopup .cancelApply").click(function (e) {  
+        //링크 기본동작은 작동하지 않도록 한다.
+        e.preventDefault();
+        location.href="/tour/accomCancel?bookNumber="+bookNumber;
+        $("#pastmask, .cancelPopup").hide();
+    });  
+
+});
+</script>

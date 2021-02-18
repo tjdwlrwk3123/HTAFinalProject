@@ -27,6 +27,7 @@ import com.spring.tour.vo.ImageVo;
 import com.spring.tour.vo.TourBookOptionVo;
 import com.spring.tour.vo.TourBookVo;
 import com.spring.tour.vo.TourOptionVo;
+import com.spring.tour.vo.TourServiceVo;
 import com.spring.tour.vo.VisitorInfoVo;
 
 
@@ -139,7 +140,7 @@ public class BookingCheckController {
 		//테스트용 유저 생성
 		HttpServletRequest request=((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
 		HttpSession session = request.getSession();
-		session.setAttribute("user_id","dd");
+		session.setAttribute("user_id","ck");
 		
 		//유저의 아이디 가져오기
 		String user_id=(String)session.getAttribute("user_id");
@@ -315,16 +316,21 @@ public class BookingCheckController {
 		List<TourBookOptionVo> tbo=service.tourBookOption(bookNumber);
 		List<Integer> count=new ArrayList<Integer>();
 		List<TourOptionVo> detail=new ArrayList<TourOptionVo>();
+		String addr="";
 		for(TourBookOptionVo vo:tbo) {
 			int optNum=vo.getTour_option_index();
 			int cnt=vo.getCnt();
 			count.add(cnt);
 			TourOptionVo optvo=tourService.getTourOption(optNum);
 			detail.add(optvo);
+			int serviceNum=optvo.getService_number();
+			TourServiceVo tsv=tourService.getTourService(serviceNum);
+			addr=tsv.getTour_addr();
 		}
 		HashMap<String, Object> result=new HashMap<String, Object>();
 		result.put("count", count);
 		result.put("detail", detail);
+		result.put("addr", addr);
 		return result;
 	}
 	

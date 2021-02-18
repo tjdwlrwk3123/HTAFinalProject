@@ -61,6 +61,7 @@ public class AccomDetailController {
 			//숙소 각 방들에 대한 이미지
 			List<ImageVo> roomImage=service.accomRoomImage(optNum);
 			image.add(roomImage);
+			
 		}
 		
 		result.put("using", using);

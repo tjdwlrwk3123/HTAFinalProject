@@ -66,7 +66,7 @@
 		
 	}
 	
-	#mask {  
+	#accommask {  
     position:absolute;  
     z-index:9000;  
     background-color:#000;  
@@ -117,7 +117,7 @@
 	</div>
 	<div class="accomBookingMain">
 		<div id="accomListWrap">
-			<h2 style="text-align: center;">숙소 예약내역</h2>
+			<h2 style="text-align: center; height: 50px;">숙소 예약내역</h2>
 			<c:forEach var="vo" items="${bookingList }" varStatus="status">
 				<div class="accomBookList">
 					<div style="display: inline-block;">
@@ -170,7 +170,7 @@
 	</div>
 </div>
 
-<div id="mask">
+<div id="accommask">
 </div>
 
 <div class="detailPopup">
@@ -207,12 +207,12 @@ function wrapWindowByMask(){
     var maskWidth = $(window).width();  
 
     //마스크의 높이와 너비를 화면 것으로 만들어 전체 화면을 채운다.
-    $("#mask").css({"width":maskWidth,"height":maskHeight});  
+    $("#accommask").css({"width":maskWidth,"height":maskHeight});  
 
     //애니메이션 효과 - 일단 0초동안 까맣게 됐다가 60% 불투명도로 간다.
 
-    $("#mask").fadeIn(0);      
-    $("#mask").fadeTo("slow",0.6);    
+    $("#accommask").fadeIn(0);      
+    $("#accommask").fadeTo("slow",0.6);    
 
     //윈도우 같은 거 띄운다.
     $(".cancelPopup").show();
@@ -226,12 +226,12 @@ function wrapWindowByDetailMask(bookNumber){
     var maskWidth = $(window).width();  
 
     //마스크의 높이와 너비를 화면 것으로 만들어 전체 화면을 채운다.
-    $("#mask").css({"width":maskWidth,"height":maskHeight});  
+    $("#accommask").css({"width":maskWidth,"height":maskHeight});  
 
     //애니메이션 효과 - 일단 0초동안 까맣게 됐다가 60% 불투명도로 간다.
 
-    $("#mask").fadeIn(0);      
-    $("#mask").fadeTo("slow",0.6);    
+    $("#accommask").fadeIn(0);      
+    $("#accommask").fadeTo("slow",0.6);    
 	
     
     $.ajax({
@@ -336,11 +336,11 @@ $(document).ready(function(){
         //링크 기본동작은 작동하지 않도록 한다.
         e.preventDefault();
         bookNumber=0;
-        $("#mask, .cancelPopup").hide();  
+        $("#accommask, .cancelPopup").hide();  
     });       
 
     //검은 막을 눌렀을 때
-    $("#mask").click(function () {  
+    $("#accommask").click(function () {  
     	bookNumber=0;
         $(this).hide();
         $(".cancelPopup").hide();
@@ -351,7 +351,7 @@ $(document).ready(function(){
         //링크 기본동작은 작동하지 않도록 한다.
         e.preventDefault();
         location.href="/tour/accomCancel?bookNumber="+bookNumber;
-        $("#mask, .cancelPopup").hide();
+        $("#accommask, .cancelPopup").hide();
     });  
 
 });
