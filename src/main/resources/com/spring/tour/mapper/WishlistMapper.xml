@@ -7,10 +7,10 @@
 	<insert id="insert" parameterType="wishlist">
   		insert into wishlist values(wish_seq.nextval,#{cate_number},#{service_number},#{user_id})
  	</insert>
-  	
+ 	
  	<select id="list" parameterType="string" resultType="wishlist">
- 		select g.cate_number,g.service_number, wishnum, user_id, tour_type, tour_name, avgpoint, rcnt, img_num, imgsavename, tour_price, tour_amount, discount  from (
-		    select distinct  e.cate_number, e.service_number, tour_type, tour_name, avgpoint, rcnt, img_num, imgsavename,  tour_price, tour_amount, discount  from 
+ 		select g.cate_number,g.service_number, wishnum, user_id, tour_type, tour_name, avgpoint, rcnt, img_num, imgsavename, tour_price, tour_amount, discount, dcnt  from (
+		    select distinct  e.cate_number, e.service_number, tour_type, tour_name, avgpoint, rcnt, img_num, imgsavename,  tour_price, tour_amount, discount, dcnt  from 
 		    (
 		         select img_num,imgsavename, b.service_number, a.cate_number, tour_name,tour_type  from 
 		            (           
@@ -19,15 +19,22 @@
 		                select tour_name, cate_number, service_number, tour_type from tour_service)
 		                b on a.cate_number=b.cate_number and general_number = service_number
 		            )e join (
-		        select avgpoint, rcnt, cate_number, c.service_number, tour_price, tour_amount, discount from 
+		        select avgpoint, rcnt, cate_number, c.service_number, tour_price, tour_amount, discount ,dcnt from 
 		            (
 		                select avg(star_point) avgpoint, count(review_number)rcnt, cate_number, service_number from review group by service_number,cate_number,service_number order by service_number)
 		                c join (
-                        select service_number, min(tour_price) tour_price, max(tour_amount) tour_amount, count(discount)discount from tour_option group by service_number order by service_number
+                           select aa.service_number, tour_price, tour_amount, dcnt, discount from 
+                          (
+                            select service_number, max(tour_amount) tour_amount, count(discount)dcnt from tour_option group by service_number order by service_number
+                            )aa join (
+                            select distinct service_number, tour_price, discount from tour_option where (service_number, tour_price) 
+                            in (select service_number, min(tour_price) tour_price from (select * from tour_option where tour_amount >0) group by service_number) order by service_number
+                            ) bb on aa.service_number = bb.service_number
                     )
 		                d on c.service_number = d.service_number
 		            )f on e.cate_number=f.cate_number and e.service_number = f.service_number order by avgpoint desc
 		)g join (select * from wishlist where user_id=#{user_id})h on g.cate_number = h.cate_number and g.service_number = h.service_number order by avgpoint desc
+ 	
  	</select>
  	
  	<delete id="delete" parameterType="wishlist">

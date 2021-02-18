@@ -1,6 +1,6 @@
 package com.spring.tour.vo;
 
-public class TourBookOptionVo {
+public class TourBookOptionVo { //payment 결제 정보 중 tour service 마다 딸려있는 option에 대한 상세 구매정보
 	private int tour_book_option_number;
 	private int tour_book_number;
 	private int tour_option_index;

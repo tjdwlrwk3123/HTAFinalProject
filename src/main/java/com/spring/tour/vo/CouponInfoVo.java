@@ -2,7 +2,7 @@ package com.spring.tour.vo;
 
 import java.sql.Date;
 
-public class CouponInfoVo {
+public class CouponInfoVo { //payment 페이지에 쿠폰 목록 리스트 만들용
 	
 	private String coupon_name;
 	private int discount_price;
