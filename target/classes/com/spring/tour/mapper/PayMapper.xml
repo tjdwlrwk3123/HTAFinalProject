@@ -39,7 +39,7 @@
 	
 	<!-- 숙박 예약 관련 -->
 	<insert id="insertAccomBook" parameterType="hashmap"  >
-		insert into accom_book values(ab_seq.nextval,#{user_id},#{optionNum},#{service_name},#{startDate},#{endDate}, #{payment_condition},#{total_price}, #{point_useramount}, #{coupon_usecondition}, #{payment_method})
+		insert into accom_book values(ab_seq.nextval,#{user_id},#{optionNum},#{service_name},#{startDate},#{endDate}, #{payment_condition},#{total_price}, #{point_useamount}, #{coupon_usecondition}, #{payment_method})
 	</insert>
 	<select id="AccomBookMax" resultType="int">
 		select max(accom_book_number) from accom_book
