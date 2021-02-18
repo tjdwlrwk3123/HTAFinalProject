@@ -214,13 +214,14 @@ CREATE TABLE review
 	review_image varchar2(100),
 	review_comment varchar2(100),
 	cate_number number NOT NULL,
+	review_date date,
 	PRIMARY KEY (review_number)
 );
 
 
 CREATE TABLE review_answer
 (
-	review_answer_review number NOT NULL,
+	review_answer_number number NOT NULL,
 	review_number number NOT NULL,
 	review_content varchar2(100),
 	review_answer_Date date,
