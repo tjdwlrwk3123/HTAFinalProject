@@ -19,11 +19,17 @@ public class ServiceService {
 	public Accom_serviceVo selectAccomService(String accom_service_number) {
 		return dao.selectAccomService(accom_service_number);
 	} 
+	public String selectAccomServiceMax(String user_id) {
+		return dao.selectAccomServiceMax(user_id);
+	} 
 	public AccomInfoVo selectAccomInfo(String accom_service_number) {
 		return dao.selectAccomInfo(accom_service_number);
 	}
 	public List<TourServiceVo> selectTourList(String user_id) {
 		return dao.selectTourList(user_id);
+	}
+	public List<ImageVo> selectImageList(ImageVo vo) {
+		return dao.selectImageList(vo);
 	}
 	
 	public int insertAccomService(Accom_serviceVo vo) {

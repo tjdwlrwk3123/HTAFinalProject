@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div>
-	<form action="${cp }/accominsert" method="post" enctype="multipart/form-data" onsubmit="return check()">
+	<form action="${cp }/accomupdate" method="post" enctype="multipart/form-data" onsubmit="return check()">
 		<input type="hidden" name="accom_service_number" value="${vo1.accom_service_number }">
 		<select name="cate" id="cate">
 		<c:choose>
@@ -33,7 +33,7 @@
 		숙소소개 <textarea rows="5" cols="30" name="accom_info_content">${vo2.accom_info_content }</textarea><br><br>
 		숙소이용안내  <textarea rows="5" cols="30" name="accom_how">${vo2.accom_how }</textarea><br><br>
 		숙소취소및환불규정  <textarea rows="5" cols="30" name="accom_rule">${vo2.accom_rule }</textarea><br><br>
-		숙소 체크인/아웃 정보 <textarea rows="5" cols="30" name="accom_checkinfo">${vo2.accom_checkinfo }</textarea><br><br>
+		숙소 체크인/아웃 정보 <textarea rows="5" cols="30" name="accom_checkinfo">${vo2.accom_chekinfo }</textarea><br><br>
 		편의시설<br>
 		<div>
 			<input type="checkbox" name="facility" value="바베큐">바베큐<br>

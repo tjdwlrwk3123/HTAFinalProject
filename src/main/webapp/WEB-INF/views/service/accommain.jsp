@@ -4,8 +4,8 @@
 <div>
 	<div>
 		<ul>
-			<li><a href="/accommain">숙소서비스</a></li>
-			<li><a href="/tourmain">투어서비스</a></li>
+			<li><a href="${cp }/accommain">숙소서비스</a></li>
+			<li><a href="${cp }]/tourmain">투어서비스</a></li>
 		</ul>
 	</div>
 	<div>
@@ -18,15 +18,15 @@
 			</tr>
 			<c:forEach var="vo" items="${list}">
 				<tr>
-					<td><a href="/accomservice?accom_service_number=${vo.accom_service_number }">${vo.accom_name }</a></td>
-					<td><a href="/accomoption?accom_service_number=${vo.accom_service_number }">옵션</a></td>
-					<td><a href="/accomupdate?accom_service_number=${vo.accom_service_number }">수정</a></td>
-					<td><a href="/accomdelete?accom_service_number=${vo.accom_service_number }&cate_number=${vo.cate_number }">삭제</a></td>
+					<td><a href="${cp }/accomservice?accom_service_number=${vo.accom_service_number }">${vo.accom_name }</a></td>
+					<td><a href="${cp }/accomoption?accom_service_number=${vo.accom_service_number }">옵션</a></td>
+					<td><a href="${cp }/accomupdate?accom_service_number=${vo.accom_service_number }">수정</a></td>
+					<td><a href="${cp }/accomdelete?accom_service_number=${vo.accom_service_number }&cate_number=${vo.cate_number }">삭제</a></td>
 				</tr> 
 			</c:forEach>
 		</table>
 	</div>
 	<div>
-		<a href="/accominsert">서비스추가</a>
+		<a href="${cp }/accominsert">서비스추가</a>
 	</div>
 </div>

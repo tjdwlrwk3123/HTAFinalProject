@@ -1,5 +1,6 @@
 package com.spring.tour.controller;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -51,6 +52,7 @@ public class ServiceController {
 	public String accommain(HttpSession session,Model model) {
 		try {
 			System.out.println(session);
+			session.setAttribute("user_id", "tset");
 			String user_id=(String)session.getAttribute("user_id");
 			System.out.println(session.getAttribute("user_id"));
 			if(user_id.equals("")||user_id==null) {
@@ -80,7 +82,7 @@ public class ServiceController {
 		AccomInfoVo vo2=service.selectAccomInfo(accom_service_number);
 		model.addAttribute("vo1",vo1);
 		model.addAttribute("vo2",vo2); 
-		return "service.accomupdate"; 
+		return ".service.accomupdate"; 
 	}
 	@PostMapping("/accomupdate")
 	public String accomupdate(String accom_service_number, String cate, String accom_name, String accom_addr, String accom_info_content, String accom_how, String accom_rule, String accom_checkinfo, String[] facility, String[] conven, MultipartFile[] img, HttpSession session, Model model) {
@@ -104,13 +106,22 @@ public class ServiceController {
 			for (int i = 1; i < conven.length; i++) {
 				c+=","+conven[i];
 			}
+			System.out.println(f);
+			System.out.println(c);
 			Accom_serviceVo servicevo=new Accom_serviceVo(Integer.parseInt(accom_service_number), Integer.parseInt(cate), user_id, accom_name, accom_addr);
 			AccomInfoVo infovo=new AccomInfoVo(0, Integer.parseInt(accom_service_number), accom_info_content, accom_how, accom_rule, accom_checkinfo, f, c);
-			
+			System.out.println(infovo);
 			service.updateAccomService(servicevo);
 			service.updateAccomInfo(infovo);
-			
-			service.deleteImg(new ImageVo(0, null, null, Integer.parseInt(accom_service_number), Integer.parseInt(cate)));
+
+			ImageVo dvo = new ImageVo(0, null, null, Integer.parseInt(accom_service_number), Integer.parseInt(cate));
+			System.out.println(dvo.getGeneral_number()+"/////"+dvo.getCate_number());
+			List<ImageVo> list=service.selectImageList(dvo);
+			service.deleteImg(dvo);
+			for (ImageVo v : list) {
+				File ff=new File(path+"\\"+v.getImgsavename());
+				ff.delete();
+			}
 			for(int i=0;i<img.length;i++) {
 				String orgfilename=img[i].getOriginalFilename();
 				String savefilename=UUID.randomUUID()+"_"+orgfilename;
@@ -120,7 +131,7 @@ public class ServiceController {
 					FileCopyUtils.copy(is, fos);
 					is.close();
 					fos.close();
-					ImageVo vo=new ImageVo(0, orgfilename, savefilename, 0, Integer.parseInt(cate));
+					ImageVo vo=new ImageVo(0, orgfilename, savefilename, Integer.parseInt(accom_service_number), Integer.parseInt(cate));
 					service.insertImg(vo);
 					
 				} catch (IOException e) {
@@ -128,7 +139,7 @@ public class ServiceController {
 					return ".error";
 				}
 			}
-			return "/accommain";
+			return "redirect:/accommain";
 		}catch(Exception e) {
 			e.printStackTrace();
 			return ".error";
@@ -136,10 +147,17 @@ public class ServiceController {
 	}
 	@GetMapping("/accomdelete")
 	public String accomdelete(String accom_service_number, String cate_number) {
-		service.deleteImg(new ImageVo(0, null, null, Integer.parseInt(accom_service_number), Integer.parseInt(cate_number)));
+		ImageVo vo = new ImageVo(0, null, null, Integer.parseInt(accom_service_number), Integer.parseInt(cate_number));
+		List<ImageVo> list=service.selectImageList(vo);
+		service.deleteImg(vo);
+		String path=sc.getRealPath("/resources/upload");
+		for (ImageVo v : list) {
+			File f=new File(path+"\\"+v.getImgsavename());
+			f.delete();
+		}
 		service.deleteAccomInfo(accom_service_number);
 		service.deleteAccomService(accom_service_number);
-		return "/accommain"; 
+		return "redirect:/accommain"; 
 	}
 	@PostMapping("/accominsert")
 	public String accominsert(String cate, String accom_name, String accom_addr, String accom_info_content, String accom_how, String accom_rule, String accom_checkinfo, String[] facility, String[] conven, MultipartFile[] img, HttpSession session, Model model) {
@@ -164,7 +182,7 @@ public class ServiceController {
 				c+=","+conven[i];
 			}
 			Accom_serviceVo servicevo=new Accom_serviceVo(0, Integer.parseInt(cate), user_id, accom_name, accom_addr);
-			AccomInfoVo infovo=new AccomInfoVo(0, 0, accom_info_content, accom_how, accom_rule, accom_checkinfo, f, c);
+			AccomInfoVo infovo=new AccomInfoVo(0, Integer.parseInt(service.selectAccomServiceMax(user_id)), accom_info_content, accom_how, accom_rule, accom_checkinfo, f, c);
 			service.insertAccomService(servicevo);
 			service.inserAccomInfo(infovo);
 
@@ -177,7 +195,7 @@ public class ServiceController {
 					FileCopyUtils.copy(is, fos);
 					is.close();
 					fos.close();
-					ImageVo vo=new ImageVo(0, orgfilename, savefilename, 0, Integer.parseInt(cate));
+					ImageVo vo=new ImageVo(0, orgfilename, savefilename, Integer.parseInt(service.selectAccomServiceMax(user_id)), Integer.parseInt(cate));
 					service.insertImg(vo);
 					
 				} catch (IOException e) {
@@ -185,7 +203,7 @@ public class ServiceController {
 					return ".error";
 				}
 			}
-			return "/accommain";
+			return "redirect:/accommain";
 		}catch(Exception e) {
 			e.printStackTrace();
 			return ".error";
