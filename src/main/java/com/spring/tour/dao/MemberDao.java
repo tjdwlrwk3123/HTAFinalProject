@@ -47,7 +47,7 @@ public class MemberDao {
 	
 	public User_InfoVo loginCheck(User_InfoVo vo) {
 		System.out.println("로그인됬니");
-		
+		System.out.println(vo.getUser_id());
 		return sqlSession.selectOne(NAMESPACE+".loginCheck",vo);
 	}
 	
