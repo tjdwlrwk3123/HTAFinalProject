@@ -53,8 +53,10 @@ public class LoginController {
 					session.setAttribute("user_id", vo.getUser_id());
 				}else if(con.equals("0")){
 					mav.addObject("msg","메일 인증 안됌");
-				}else {
+				}else if(con.equals("2")){
 					mav.addObject("msg","탈퇴한 회원");
+				}else if(con.equals("3")) {
+					mav.addObject("msg","블랙리스트");
 				}
 			}else {
 				mav.addObject("msg","가입 안됬음");

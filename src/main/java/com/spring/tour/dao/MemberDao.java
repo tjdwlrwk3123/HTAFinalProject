@@ -1,5 +1,7 @@
 package com.spring.tour.dao;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
@@ -54,5 +56,9 @@ public class MemberDao {
 	public void logout(HttpSession session) {
 		System.out.println("·Î±×¾Æ¿ô ‰ç´Ï");
 		session.invalidate();
+	}
+	
+	public List<User_InfoVo> findid(String user_email) {
+		return sqlSession.selectList(NAMESPACE+".findid",user_email);
 	}
 }

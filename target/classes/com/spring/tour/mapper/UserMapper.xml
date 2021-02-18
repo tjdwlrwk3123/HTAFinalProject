@@ -62,4 +62,9 @@
 			WHERE user_id = #{user_id}
 		]]>
 	</select>
+	
+	<select id="findid" parameterType="String" resultType="com.spring.tour.vo.User_InfoVo">
+		SELECT * FROM user_info
+		where user_email=#{user_email}
+	</select>
 </mapper>

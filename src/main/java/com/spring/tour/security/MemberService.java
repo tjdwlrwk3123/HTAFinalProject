@@ -1,5 +1,7 @@
 package com.spring.tour.security;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -50,6 +52,18 @@ public class MemberService {
 		return 1;
 	}
 	
+	public int changePwdMail(User_InfoVo vo) throws Exception{
+		System.out.println(vo.getUser_email());
+		MailHandler sendMail = new MailHandler(mailSender);
+		sendMail.setSubject("[비밀번호 변경]");
+		sendMail.setText(
+				new StringBuffer().append("<h3>비밀번호 변경</h3>").append("<a href='http://localhost:8081/tour/changePwd?user_email=").append(vo.getUser_email()).append("' target='_blenk'>비밀번호 변경</a>").toString());
+		sendMail.setFrom("dhrmstn11@gmail.com", "관리자");
+		sendMail.setTo(vo.getUser_email());
+		sendMail.send();
+		return 1;
+	}
+	
 	public MemberUserDetail userDetail(String user_id) {
 		return dao.getAuthsList(user_id);
 	}
@@ -61,5 +75,9 @@ public class MemberService {
 	
 	public void stateUp(String user_email) {
 		 dao.stateUp(user_email);
+	}
+	
+	public List<User_InfoVo> findid(String user_email){
+		return dao.findid(user_email);
 	}
 }

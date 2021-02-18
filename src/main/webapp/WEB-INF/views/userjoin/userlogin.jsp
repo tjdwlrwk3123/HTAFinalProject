@@ -46,4 +46,12 @@
 			$("#loginform").submit();
 		}
 	});
+	
+	$("#findidBtn").click(function(){
+		location.href="/tour/findidBtn";
+	});
+	
+	$("#findpwdBtn").click(function(){
+		location.href="/tour/findPwdBtn";
+	});
 </script>
