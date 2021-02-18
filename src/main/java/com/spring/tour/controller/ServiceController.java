@@ -246,10 +246,30 @@ public class ServiceController {
 				}
 			}
 			
-		return "redirect:/accomoptionmain"; 
+		return "redirect:/accomoption"; 
 		}catch(Exception e) {
 			e.printStackTrace();
 			return ".error";
 		}
+	}
+	@GetMapping("/accomoptiondelete")
+	public String accomoptiondelete(String accom_option_number) {
+		ImageVo vo = new ImageVo(0, null, null, Integer.parseInt(accom_option_number), 555);
+		List<ImageVo> list=service.selectImageList(vo);
+		service.deleteImg(vo);
+		String path=sc.getRealPath("/resources/upload");
+		for (ImageVo v : list) {
+			File f=new File(path+"\\"+v.getImgsavename());
+			f.delete();
+		}
+		service.deleteAccomOption(accom_option_number);
+		return "redirect:/accomoption"; 
+	}
+
+	@GetMapping("/accomoptionupdate")
+	public String accomoptionupdatepage(String accom_option_number, Model model) {
+		
+		model.addAttribute("vo", service.selectAccomOption(accom_option_number));
+		return ".service.accomoptionupdate"; 
 	}
 }

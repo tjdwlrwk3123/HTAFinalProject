@@ -22,6 +22,9 @@
 	<select id="selectAccomOptionList" resultType="com.spring.tour.vo.AccomOptionVo" parameterType="string">
 		select * from accom_option where accom_service_number=#{accom_service_number}
 	</select>
+	<select id="selectAccomOption" resultType="com.spring.tour.vo.AccomOptionVo" parameterType="string">
+		select * from accom_option where accom_option_number=#{accom_option_number}
+	</select>
 	<select id="selectTourList" resultType="com.spring.tour.vo.TourServiceVo" parameterType="string">
 		select * from tour_service where user_id=#{user_id}
 	</select>
@@ -54,6 +57,9 @@
 	</delete>
 	<delete id="deleteAccomInfo" parameterType="string">
 		delete from accom_Info where accom_service_number=#{accom_service_number}
+	</delete>
+	<delete id="deleteAccomOption" parameterType="string">
+		delete from accom_option where accom_option_number=#{accom_option_number}
 	</delete>
 	<delete id="deleteImg" parameterType="com.spring.tour.vo.ImageVo">
 		delete from image where general_number=#{general_number} and cate_number=#{cate_number}
