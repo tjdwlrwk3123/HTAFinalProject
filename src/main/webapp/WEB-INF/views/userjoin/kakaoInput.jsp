@@ -20,7 +20,7 @@
 			</tr>
 			<tr>
 				<td align="left">아이디 : </td>
-				<td colspan="6"><input type="text" name="user_id" value="${user_email }"  readonly>
+				<td colspan="6"><input type="text" name="user_id" value="${user_id }"  readonly>
 				<span id="idchk"></span></td>
 			</tr>
 			<tr>
