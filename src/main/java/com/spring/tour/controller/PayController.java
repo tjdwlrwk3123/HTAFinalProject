@@ -249,7 +249,7 @@ public class PayController {
 			
 			abMap.put("payment_condition","결제완료");
 			abMap.put("total_price", thePrice);
-			abMap.put("point_useramount", pointUsing);
+			abMap.put("point_useamount", pointUsing);
 
 			if(!couponUsing.equals("none") || couponUsing!=null) {
 				abMap.put("coupon_usecondition", couponUsing); //사용한 쿠폰의 이름이 들어감 사용했다면 user_info도 업데이트!!!
