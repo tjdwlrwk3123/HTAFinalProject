@@ -35,6 +35,9 @@ public class ServiceDao {
 	public List<AccomOptionVo> selectAccomOptionList(String accom_service_number){
 		return sqlSession.selectList(NAMESPACE+".selectAccomOptionList",accom_service_number);
 	}
+	public AccomOptionVo selectAccomOption(String accom_option_number){
+		return sqlSession.selectOne(NAMESPACE+".selectAccomOption",accom_option_number);
+	}
 	public List<TourServiceVo> selectTourList(String user_id){
 		return sqlSession.selectList(NAMESPACE+".selectTourList",user_id);
 	}
@@ -67,6 +70,9 @@ public class ServiceDao {
 	}
 	public int deleteAccomInfo(String accom_service_number) {
 		return sqlSession.delete(NAMESPACE+".deleteAccomInfo",accom_service_number);
+	}
+	public int deleteAccomOption(String accom_option_number) {
+		return sqlSession.delete(NAMESPACE+".deleteAccomOption",accom_option_number);
 	}
 	public int deleteImg(ImageVo vo) {
 		return sqlSession.delete(NAMESPACE+".deleteImg",vo);

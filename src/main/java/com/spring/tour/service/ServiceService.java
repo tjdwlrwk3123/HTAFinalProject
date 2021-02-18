@@ -32,6 +32,9 @@ public class ServiceService {
 	public List<AccomOptionVo> selectAccomOptionList(String accom_service_number) {
 		return dao.selectAccomOptionList(accom_service_number);
 	}
+	public AccomOptionVo selectAccomOption(String accom_option_number) {
+		return dao.selectAccomOption(accom_option_number);
+	}
 	public List<TourServiceVo> selectTourList(String user_id) {
 		return dao.selectTourList(user_id);
 	}
@@ -64,6 +67,9 @@ public class ServiceService {
 	}
 	public int deleteAccomInfo(String accom_service_number) {
 		return dao.deleteAccomInfo(accom_service_number);
+	}
+	public int deleteAccomOption(String accom_option_number) {
+		return dao.deleteAccomOption(accom_option_number);
 	}
 	public int deleteImg(ImageVo vo) {
 		return dao.deleteImg(vo);
