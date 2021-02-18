@@ -9,10 +9,11 @@ public class AccomOptionVo {
 	private int accom_min_people;
 	private int accom_max_people;
 	private int accom_price;
+	private int discount;
 	private List<ImageVo> room_image;
 	public AccomOptionVo() {}
 	public AccomOptionVo(int accom_option_number, int accom_service_number, String accom_rooms_option,
-			int accom_min_people, int accom_max_people, int accom_price, List<ImageVo> room_image) {
+			int accom_min_people, int accom_max_people, int accom_price, int discount) {
 		super();
 		this.accom_option_number = accom_option_number;
 		this.accom_service_number = accom_service_number;
@@ -20,7 +21,7 @@ public class AccomOptionVo {
 		this.accom_min_people = accom_min_people;
 		this.accom_max_people = accom_max_people;
 		this.accom_price = accom_price;
-		this.room_image = room_image;
+		this.discount = discount;
 	}
 	public int getAccom_option_number() {
 		return accom_option_number;
@@ -63,5 +64,11 @@ public class AccomOptionVo {
 	}
 	public void setRoom_image(List<ImageVo> room_image) {
 		this.room_image = room_image;
+	}
+	public int getDiscount() {
+		return discount;
+	}
+	public void setDiscount(int discount) {
+		this.discount = discount;
 	}
 }
