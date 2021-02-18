@@ -59,10 +59,13 @@ public class ServiceDao {
 	}
 	
 	public int updateAccomService(Accom_serviceVo vo) {
-		return sqlSession.insert(NAMESPACE+".updateAccomService",vo);
+		return sqlSession.update(NAMESPACE+".updateAccomService",vo);
 	}
 	public int updateAccomInfo(AccomInfoVo vo) {
-		return sqlSession.insert(NAMESPACE+".updateAccomInfo",vo);
+		return sqlSession.update(NAMESPACE+".updateAccomInfo",vo);
+	}
+	public int updateAccomOption(AccomOptionVo vo) {
+		return sqlSession.update(NAMESPACE+".updateAccomOption",vo);
 	}
 	
 	public int deletAccomService(String accom_service_number) {

@@ -53,13 +53,13 @@
 			}
 		}
 		function check(){
-			let accom_rooms_name=document.getElementsByName("accom_rooms_name")[0].value;
+			let accom_rooms_option=document.getElementsByName("accom_rooms_option")[0].value;
 			let accom_min_people=document.getElementsByName("accom_min_people")[0].value;
 			let accom_max_people=document.getElementsByName("accom_max_people")[0].value;
 			let accom_price=document.getElementsByName("accom_price")[0].value;
 			let img=document.getElementsByName("img");
 			let imgcheck=true;
-			if(accom_rooms_name.replaceAll(" ","")==""){
+			if(accom_rooms_option.replaceAll(" ","")==""){
 				alert("옵션 이름을 입력하세요.");
 				return false;
 			}

@@ -2,12 +2,13 @@
     pageEncoding="UTF-8"%>
 
 <div>
-	<form action="${cp }/accomoptioninsert" method="post" enctype="multipart/form-data" onsubmit="return check()">
-		<input type="hidden" name="accom_service_number" value="${accom_service_number }">
-		옵션이름(등급) <input type="text" name="accom_rooms_option"><br><br>
-		최소인원 <input type="number" name="accom_min_people"><br><br>
-		최대인원 <input type="number" name="accom_max_people"><br><br> 
-		숙소가격 <input type="number" name="accom_price"><br><br>
+	<form action="${cp }/accomoptionupdate" method="post" enctype="multipart/form-data" onsubmit="return check()">
+		<input type="hidden" name="accom_option_number" value="${vo.accom_option_number }">
+		<input type="hidden" name="accom_service_number" value="${vo.accom_service_number }">
+		옵션이름(등급) <input type="text" name="accom_rooms_option" value="${vo.accom_rooms_option }"><br><br>
+		최소인원 <input type="number" name="accom_min_people" value="${vo.accom_min_people }"><br><br>
+		최대인원 <input type="number" name="accom_max_people" value="${vo.accom_max_people }"><br><br> 
+		숙소가격 <input type="number" name="accom_price" value="${vo.accom_price }"><br><br>
 		할인율<br>
 		<select name="discount" id="discount">
 			<option value="0" selected="selected">0%</option>
@@ -53,13 +54,13 @@
 			}
 		}
 		function check(){
-			let accom_rooms_name=document.getElementsByName("accom_rooms_name")[0].value;
+			let accom_rooms_option=document.getElementsByName("accom_rooms_option")[0].value;
 			let accom_min_people=document.getElementsByName("accom_min_people")[0].value;
 			let accom_max_people=document.getElementsByName("accom_max_people")[0].value;
 			let accom_price=document.getElementsByName("accom_price")[0].value;
 			let img=document.getElementsByName("img");
 			let imgcheck=true;
-			if(accom_rooms_name.replaceAll(" ","")==""){
+			if(accom_rooms_option.replaceAll(" ","")==""){
 				alert("옵션 이름을 입력하세요.");
 				return false;
 			}
@@ -89,9 +90,17 @@
 				alert("숙소 메인이미지를 모두 입력해주세요.");
 				return false;
 			}
-			
-			
 			return true;
 		}
+		function checkdiscount(){
+			let discount = document.getElementsByName("discount")[0].childNodes;
+			for (let i = 0; i < discount.length; i++) {
+				if(discount[i].value=='${vo.discount}'){
+					discount[i].setAttribute("selected","selected");
+					break;
+				}
+			}
+		}
+		checkdiscount();
 	</script>
 </div>

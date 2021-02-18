@@ -51,6 +51,9 @@
 	<update id="updateAccomInfo" parameterType="com.spring.tour.vo.AccomInfoVo">
 		update accom_info set accom_info_content=#{accom_info_content}, accom_how=#{accom_how}, accom_rule=#{accom_rule}, accom_chekinfo=#{accom_chekinfo}, facility=#{facility}, conven=#{conven} where accom_service_number=#{accom_service_number}
 	</update>
+	<update id="updateAccomOption" parameterType="com.spring.tour.vo.AccomOptionVo">
+		update accom_option set accom_rooms_option=#{accom_rooms_option}, accom_min_people=#{accom_min_people}, accom_max_people=#{accom_max_people}, accom_price=#{accom_price}, discount=#{discount} where accom_option_number=#{accom_option_number}
+	</update>
 	
 	<delete id="deleteAccomService" parameterType="string">
 		delete from accom_service where accom_service_number=#{accom_service_number}

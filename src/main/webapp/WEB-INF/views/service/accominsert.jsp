@@ -85,7 +85,7 @@
 					facilitycheck=true;
 					break;
 				}
-			}
+			};
 			let conven=document.getElementsByName("conven");
 			let convencheck=false;
 			for(let i=0;i<conven.length;i++){
@@ -93,7 +93,7 @@
 					convencheck=true;
 					break;
 				}
-			}
+			};
 			let img=document.getElementsByName("img");
 			let imgcheck=true;
 			for(let i=0;i<img.length;i++){

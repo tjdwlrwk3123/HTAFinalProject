@@ -61,6 +61,9 @@ public class ServiceService {
 	public int updateAccomInfo(AccomInfoVo vo) {
 		return dao.updateAccomInfo(vo);
 	}
+	public int updateAccomOption(AccomOptionVo vo) {
+		return dao.updateAccomOption(vo);
+	}
 	
 	public int deleteAccomService(String accom_service_number) {
 		return dao.deletAccomService(accom_service_number);

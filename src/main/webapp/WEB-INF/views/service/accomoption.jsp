@@ -19,7 +19,7 @@
 				<tr>
 					<td>${vo.accom_rooms_option }</td>
 					<td><a href="${cp }/accomoptionupdate?accom_option_number=${vo.accom_option_number }">수정</a></td>
-					<td><a href="${cp }/accomoptiondelete?accom_option_number=${vo.accom_option_number }">삭제</a></td>
+					<td><a href="${cp }/accomoptiondelete?accom_service_number=${accom_service_number }&accom_option_number=${vo.accom_option_number }">삭제</a></td>
 				</tr> 
 			</c:forEach>
 		</table>
