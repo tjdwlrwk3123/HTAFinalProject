@@ -130,8 +130,9 @@ public class PayController {
 						@RequestParam(value="pointUsing") int pointUsing,
 						@RequestParam(value="thePrice") int thePrice,
 						@RequestParam(value="waytopay") String waytopay,
-						@RequestParam(value="agreecheck") List<String> agreecheckList) {
-
+						@RequestParam(value="agreecheck") List<String> agreecheckList,
+						HttpServletRequest req) {
+		
 		//¿É¼Ç ÀÎµ¦½º + ÀÎµ¦½ºº° °¹¼ö
 //		System.out.println("user_id"+user_id);
 //		System.out.println("cate_number"+cate_number);
@@ -161,6 +162,8 @@ public class PayController {
 //			System.out.println("tour_option_index :" + eachOptionIndex.get(i));
 //			System.out.println("cnt : "+ eachOptionCount.get(i));
 //		}
+		
+		user_id=(String)req.getSession().getAttribute("user_id");
 		
 		System.out.println("pointUsing : "+pointUsing);
 		if(cate_number ==1) {
