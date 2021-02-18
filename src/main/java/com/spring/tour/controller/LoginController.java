@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.spring.tour.login.KakaoUserInfo;
 import com.spring.tour.login.Kakao_restAPI;
 import com.spring.tour.login.Login_Interface;
 import com.spring.tour.login.PasswordEncoding;
@@ -77,24 +78,43 @@ public class LoginController {
 		//카카오 컨트롤러
 		@RequestMapping(value="/kakaologin",produces = "application/json", method = { RequestMethod.GET, RequestMethod.POST})
 		public String kakaoLogin(@RequestParam("code") String code, Model model, HttpSession session) {
+			
 			System.out.println("로그인 할때 임시 코드값");
 	        //카카오 홈페이지에서 받은 결과 코드
 	        System.out.println(code);
 	        System.out.println("로그인 후 결과값");
 	        
+	        
 	        //카카오 rest api 객체 선언
 	        Kakao_restAPI kr = new Kakao_restAPI();
 	        //결과값을 node에 담아줌
 	        JsonNode node = kr.getAccessToken(code);
-	        //결과값 출력
-	        System.out.println(node);
-	        //노드 안에 있는 access_token값을 꺼내 문자열로 변환
-	        String token = node.get("access_token").toString();
+	        // access_token을 통해 사용자 정보 요청
+	        JsonNode userInfo = KakaoUserInfo.getKakaoUserInfo(node.get("access_token"));
+	        // Get id
+	        String email = null;
+	        String name = null;
+	        // 유저정보 카카오에서 가져오기 Get properties
+	        JsonNode kakao_account = userInfo.path("kakao_account");
+	        JsonNode properties = userInfo.path("properties");
+	        email = kakao_account.path("email").asText();
+	        name = properties.path("nickname").asText();
 	        //세션에 담아준다.
-	        session.setAttribute("token", token);
-	        
-	        return ".userjoin.kakaoTest";
-
+	        session.setAttribute("user_id", email);
+	        session.setAttribute("token", node.get("access_token"));
+	        //아이디 조회
+	        User_InfoVo vo = new User_InfoVo(email,"","","","","","","","","");
+	        String result = login_Interface.kakaoinput(vo);
+	        System.out.println("브이오"+vo.getUser_id());
+	        System.out.println(email);
+	        System.out.println(result);
+	        if(result.equals(email)) {
+	        	return ".userjoin.successTest";
+	        }else {
+	        	model.addAttribute("user_id", email);
+	        	model.addAttribute("user_name",name);
+	        	return ".userjoin.kakaoInput";
+	        }
 		}
 		
 		@RequestMapping(value = "/kakaologout", produces = "application/json")
@@ -106,5 +126,45 @@ public class LoginController {
 	        //결과 값 출력
 	        System.out.println("로그인 후 반환되는 아이디 : " + node.get("id"));
 	        return "redirect:/";
-	    } 
+	    }
+		
+		@RequestMapping(value="/kakaoInput",produces = "application/json", method = { RequestMethod.GET, RequestMethod.POST})
+		public ModelAndView kakaoInput(@RequestParam("code") String code, Model model, HttpSession session) {
+			
+			ModelAndView mav= new ModelAndView();
+			mav.setViewName(".userjoin.kakaoInput");
+			System.out.println("로그인 할때 임시 코드값");
+	        //카카오 홈페이지에서 받은 결과 코드
+	        System.out.println(code);
+	        System.out.println("로그인 후 결과값");
+	        
+	        //카카오 rest api 객체 선언
+	        Kakao_restAPI kr = new Kakao_restAPI();
+	        //결과값을 node에 담아줌
+	        JsonNode node = kr.getAccessToken(code);
+	        
+	        // access_token을 통해 사용자 정보 요청
+	        JsonNode userInfo = KakaoUserInfo.getKakaoUserInfo(node.get("access_token"));
+	 
+	        // Get id
+	        String id = userInfo.path("id").asText();
+	        String name = null;
+	        String email = null;
+	 
+	        // 유저정보 카카오에서 가져오기 Get properties
+	        JsonNode properties = userInfo.path("properties");
+	        JsonNode kakao_account = userInfo.path("kakao_account");
+	 
+	        name = properties.path("nickname").asText();
+	        email = kakao_account.path("email").asText();
+	        
+	        System.out.println("id : " + id);
+	        System.out.println("name : " + name);
+	        System.out.println("email : " + email);
+	        
+	        mav.addObject("user_id",email);
+	        mav.addObject("user_name",name);
+	        return mav;
+
+		}
 }

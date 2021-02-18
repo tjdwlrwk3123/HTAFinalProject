@@ -24,7 +24,9 @@
 		        <input type="button" value="아이디 찾기" id="findidBtn">
 		        <input type="button" value="비밀번호 찾기" id="findpwdBtn">
 		      </td>
-		    
+		    <td>
+		    	<a href=https://kauth.kakao.com/oauth/authorize?client_id=1f17a34c3d9a0bc7805ae2a78679576f&redirect_uri=http://localhost:8081/tour/kakaologin&response_type=code>카카오가입</a>
+		    <td>
 		</tr>
 	</table>
 </form:form>

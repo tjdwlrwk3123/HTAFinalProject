@@ -5,14 +5,14 @@
 <div>
 	<form:form action="/tour/userinput" method="post">
 	<input type="hidden" id="usertype" name ="usertype" value="${ usertype}">
-	<h2 align="center">회원 가입</h2>
+	<h2 align="center">카카오 회원 세부정보 입력</h2>
 		<table align="center">
 			<tr>
 				<td colspan="7" align="center">회원 정보 입력</td>
 			</tr>
 			<tr>
 				<td align="left">이름 : </td>
-				<td colspan="6"><input type="text" name="user_name" id="username" maxlength="12"></td>
+				<td colspan="6"><input type="text" name="user_name" value="${user_name }"></td>
 			</tr>
 			<tr>
 				<td align="left">전화번호 : </td>
@@ -20,13 +20,13 @@
 			</tr>
 			<tr>
 				<td align="left">아이디 : </td>
-				<td colspan="6"><input type="text" name="user_id" id="userid" maxlength="12">
+				<td colspan="6"><input type="text" name="user_id" value="${user_email }"  readonly>
 				<span id="idchk"></span></td>
 			</tr>
 			<tr>
 				<td align="left">비밀번호 : </td>
 				<td colspan="6"><input type="password" id="fpwd" name="user_pass" maxlength="15">
-				15자리 이내의 비밀번호를 입력하세요</td>
+				15자리 이내의 영문 대소문자와 숫자를 입력하세요</td>
 			</tr>
 			<tr>
 				<td align="left">비밀번호 확인 : </td>
@@ -42,24 +42,17 @@
 					<input type="text" id="ex_address" placeholder="주소" readonly><br>
 					<input type="text" id="ex_detailAddress" placeholder="상세주소">
 					<input type="text" id="ex_extraAddress" placeholder="참고항목" readonly>
-					<input type="hidden" name="user_addr" id="user_addr">
+					<input type="hidden" name="user_addr" id="user_addr" value="일단 테스트">
 				</td>
 			</tr>
 			<tr>
 				<td align="left">메일 주소 : </td>
 				<td colspan="6">
-					<input type="text" name="email" id="email">@
-					<input type="text" name="domain" id="domain">
-					<select id="seldomain" name="seldomain">
-							<option value="naver.com">naver.com</option>
-							<option value="gmail.com">gmail.com</option>
-							<option value="daum.net">daum.net</option>
-							<option value="직접입력" selected>직접 입력</option>
-					</select>
+					<input type="hidden" name="user_email" value="${user_email }">
 				</td>
 			</tr>
 		</table>
-		<input type="hidden" name="user_email" id=useremail>
+		
 		<p align="center">
 			<input type="submit" value="회원가입">
 			<input type="reset" value="다시입력">
@@ -75,42 +68,6 @@
 	$("#ex_detailAddress").keyup(function(){
 		$("#user_addr").val($("#ex_address").val()+" "+$("#ex_detailAddress").val());
 	});
-
-	$("#seldomain").change(function(){
-		var value=$(this).val();
-		var dom=document.getElementById("domain");
-		if(value=='naver.com'){
-			dom.value='naver.com';
-			$("#domain").prop('readonly',true);
-		}else if(value=='gmail.com'){
-			dom.value='gmail.com';
-			$("#domain").prop('readonly',true);
-			
-		}else if(value=='daum.net'){
-			dom.value='daum.net';
-			$("#domain").prop('readonly',true);
-		}else{
-			dom.value="";
-			$("#domain").prop('readonly',false);
-			$("#domain").keyup(function(e){
-				$("#useremail").val($("#email").val()+'@'+$("#domain").val());
-			});
-		}
-		$("#useremail").val($("#email").val()+'@'+$("#domain").val());
-	});
-	
-	$("#userid").keyup(function(e){
-        var id=$(this).val();
-        //var idchk=document.getElementById("idchk");
-        if(id.length<4){
-          //  idchk.innerHTML="아이디를 4자이상 입력해주세요";
-            $("#idchk").text("아이디를 4자이상 입력해주세요");
-        }else{
-        	$("#idchk").text("");
-           // idchk.innerHTML="";
-        }
-        console.log($("#usertype").val());
-    });
     
     $("#lpwd").keyup(function(e){
        var lpwd=$("#lpwd").val();

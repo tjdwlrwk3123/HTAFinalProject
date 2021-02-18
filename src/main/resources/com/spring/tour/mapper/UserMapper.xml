@@ -56,7 +56,7 @@
 		where user_email=#{user_email}
 	</update>
 	
-	<select id="loginCheck" resultType="com.spring.tour.vo.User_InfoVo">
+	<select id="loginCheck" parameterType="com.spring.tour.vo.User_InfoVo" resultType="com.spring.tour.vo.User_InfoVo">
 		<![CDATA[
 			SELECT * FROM user_info
 			WHERE user_id = #{user_id}
