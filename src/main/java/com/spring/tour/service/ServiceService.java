@@ -18,33 +18,36 @@ public class ServiceService {
 	public List<Accom_serviceVo> selectAccomServiceList(String user_id) {
 		return dao.selectAccomServiceList(user_id);
 	}
-	public List<TourServiceVo> selectTourServiceList(String user_id) {
-		return dao.selectTourServiceList(user_id);
-	}
 	public Accom_serviceVo selectAccomService(String accom_service_number) {
 		return dao.selectAccomService(accom_service_number);
-	} 
-	public String selectAccomServiceMax(String user_id) {
-		return dao.selectAccomServiceMax(user_id);
-	} 
-	public String selectTourServiceMax(String user_id) {
-		return dao.selectTourServiceMax(user_id);
-	} 
-	public String selectAccomOptioneMax(String accom_service_number) {
-		return dao.selectAccomOptioneMax(accom_service_number);
 	} 
 	public AccomInfoVo selectAccomInfo(String accom_service_number) {
 		return dao.selectAccomInfo(accom_service_number);
 	}
+	public String selectAccomServiceMax(String user_id) {
+		return dao.selectAccomServiceMax(user_id);
+	} 
+	public String selectAccomOptioneMax(String accom_service_number) {
+		return dao.selectAccomOptioneMax(accom_service_number);
+	} 
 	public List<AccomOptionVo> selectAccomOptionList(String accom_service_number) {
 		return dao.selectAccomOptionList(accom_service_number);
 	}
 	public AccomOptionVo selectAccomOption(String accom_option_number) {
 		return dao.selectAccomOption(accom_option_number);
 	}
-	public List<TourServiceVo> selectTourList(String user_id) {
-		return dao.selectTourList(user_id);
+	public List<TourServiceVo> selectTourServiceList(String user_id) {
+		return dao.selectTourServiceList(user_id);
 	}
+	public TourServiceVo selectTourService(String service_number) {
+		return dao.selectTourService(service_number);
+	} 
+	public Tour_infoVo selectTourInfo(String service_number) {
+		return dao.selectTourInfo(service_number);
+	}
+	public String selectTourServiceMax(String user_id) {
+		return dao.selectTourServiceMax(user_id);
+	} 
 	public List<ImageVo> selectImageList(ImageVo vo) {
 		return dao.selectImageList(vo);
 	}
@@ -76,6 +79,12 @@ public class ServiceService {
 	}
 	public int updateAccomOption(AccomOptionVo vo) {
 		return dao.updateAccomOption(vo);
+	}
+	public int updateTourService(TourServiceVo vo) {
+		return dao.updateTourService(vo);
+	}
+	public int updateTourInfo(Tour_infoVo vo) {
+		return dao.updateTourInfo(vo);
 	}
 	
 	public int deleteAccomService(String accom_service_number) {

@@ -21,23 +21,17 @@ public class ServiceDao {
 	public List<Accom_serviceVo> selectAccomServiceList(String user_id){ 
 		return sqlSession.selectList(NAMESPACE+".selectAccomServiceList",user_id);
 	} 
-	public List<TourServiceVo> selectTourServiceList(String user_id){ 
-		return sqlSession.selectList(NAMESPACE+".selectTourServiceList",user_id);
-	} 
 	public Accom_serviceVo selectAccomService(String accom_service_number){ 
 		return sqlSession.selectOne(NAMESPACE+".selectAccomService",accom_service_number);
+	}
+	public AccomInfoVo selectAccomInfo(String accom_service_number){ 
+		return sqlSession.selectOne(NAMESPACE+".selectAccomInfo",accom_service_number);
 	}
 	public String selectAccomServiceMax(String user_id){ 
 		return sqlSession.selectOne(NAMESPACE+".selectAccomServiceMax",user_id);
 	}
-	public String selectTourServiceMax(String user_id){ 
-		return sqlSession.selectOne(NAMESPACE+".selectTourServiceMax",user_id);
-	}
 	public String selectAccomOptioneMax(String accom_service_number){ 
 		return sqlSession.selectOne(NAMESPACE+".selectAccomOptioneMax",accom_service_number);
-	}
-	public AccomInfoVo selectAccomInfo(String accom_service_number){ 
-		return sqlSession.selectOne(NAMESPACE+".selectAccomInfo",accom_service_number);
 	}
 	public List<AccomOptionVo> selectAccomOptionList(String accom_service_number){
 		return sqlSession.selectList(NAMESPACE+".selectAccomOptionList",accom_service_number);
@@ -45,8 +39,17 @@ public class ServiceDao {
 	public AccomOptionVo selectAccomOption(String accom_option_number){
 		return sqlSession.selectOne(NAMESPACE+".selectAccomOption",accom_option_number);
 	}
-	public List<TourServiceVo> selectTourList(String user_id){
-		return sqlSession.selectList(NAMESPACE+".selectTourList",user_id);
+	public List<TourServiceVo> selectTourServiceList(String user_id){ 
+		return sqlSession.selectList(NAMESPACE+".selectTourServiceList",user_id);
+	} 
+	public TourServiceVo selectTourService(String service_number){ 
+		return sqlSession.selectOne(NAMESPACE+".selectTourService",service_number);
+	}
+	public Tour_infoVo selectTourInfo(String service_number){ 
+		return sqlSession.selectOne(NAMESPACE+".selectTourInfo",service_number);
+	}
+	public String selectTourServiceMax(String user_id){ 
+		return sqlSession.selectOne(NAMESPACE+".selectTourServiceMax",user_id);
 	}
 	public List<ImageVo> selectImageList(ImageVo vo){
 		return sqlSession.selectList(NAMESPACE+".selectImageList",vo);
@@ -79,6 +82,12 @@ public class ServiceDao {
 	}
 	public int updateAccomOption(AccomOptionVo vo) {
 		return sqlSession.update(NAMESPACE+".updateAccomOption",vo);
+	}
+	public int updateTourService(TourServiceVo vo) {
+		return sqlSession.update(NAMESPACE+".updateTourService",vo);
+	}
+	public int updateTourInfo(Tour_infoVo vo) {
+		return sqlSession.update(NAMESPACE+".updateTourInfo",vo);
 	}
 	
 	public int deletAccomService(String accom_service_number) {

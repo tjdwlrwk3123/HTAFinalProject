@@ -12,12 +12,14 @@
 		<table>
 			<tr>
 				<th>서비스이름</th>
+				<th>옵션</th>
 				<th>수정</th>
 				<th>삭제</th>
 			</tr>
 			<c:forEach var="vo" items="${list }">
 				<tr>
 					<td><a href="${cp }/tourservice?service_number=${vo.service_number }">${vo.tour_name }</a></td>
+					<td><a href="${cp }/touroption?service_number=${vo.service_number }">옵션</a></td>
 					<td><a href="${cp }/tourupdate?service_number=${vo.service_number }">수정</a></td>
 					<td><a href="${cp }/tourdelete?service_number=${vo.service_number }">삭제</a></td>
 				</tr>

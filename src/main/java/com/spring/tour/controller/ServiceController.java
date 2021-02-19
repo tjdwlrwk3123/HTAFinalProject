@@ -61,10 +61,6 @@ public class ServiceController {
 		try {
 			String path = sc.getRealPath("/resources/upload");
 			System.out.println(path);
-			System.out.println(tour_expire);
-			if(tour_expire==null) {
-				System.out.println("³Î!!!!");
-			}
 			String user_id="";
 			try {
 				user_id=(String)session.getAttribute("user_id");
@@ -113,7 +109,63 @@ public class ServiceController {
 		}
 		service.deleteTourInfo(service_number);
 		service.deleteTourService(service_number);
-		return "redirect:/accommain"; 
+		return "redirect:/tourmain"; 
+	}
+	@GetMapping("/tourupdate")
+	public String tourupdatepage(String service_number, Model model) {
+		TourServiceVo vo1 = service.selectTourService(service_number);
+		Tour_infoVo vo2=service.selectTourInfo(service_number);
+		model.addAttribute("vo1",vo1);
+		model.addAttribute("vo2",vo2); 
+		return ".service.tourupdate"; 
+	}
+	@PostMapping("/tourupdate")
+	public String tourupdate(String service_number, String tour_name, String tour_addr, String tour_content, String tour_how, String tour_rule, String tour_type, Date tour_expire, MultipartFile[] img, HttpSession session, Model model) {
+		try {
+			String path = sc.getRealPath("/resources/upload");
+			System.out.println(path);
+			String user_id="";
+			try {
+				user_id=(String)session.getAttribute("user_id");
+				System.out.println(user_id);
+			}catch(Exception e){
+				e.printStackTrace();
+				return ".userjoin.userlogin"; 
+			}
+			TourServiceVo servicevo=new TourServiceVo(Integer.parseInt(service_number), 1, user_id, tour_name, tour_addr, tour_type);
+			service.updateTourService(servicevo);
+			Tour_infoVo infovo=new Tour_infoVo(0, Integer.parseInt(service_number) , tour_content, tour_how, tour_rule, tour_expire);
+			service.updateTourInfo(infovo);
+			
+			ImageVo vo = new ImageVo(0, null, null, Integer.parseInt(service_number), 1);
+			List<ImageVo> list=service.selectImageList(vo);
+			service.deleteImg(vo);
+			for (ImageVo v : list) {
+				File f=new File(path+"\\"+v.getImgsavename());
+				f.delete();
+			}
+			for(int i=0;i<img.length;i++) {
+				String orgfilename=img[i].getOriginalFilename();
+				String savefilename=UUID.randomUUID()+"_"+orgfilename;
+				try {
+					InputStream is=img[i].getInputStream();
+					FileOutputStream fos=new FileOutputStream(path+"\\"+savefilename);
+					FileCopyUtils.copy(is, fos);
+					is.close();
+					fos.close();
+					ImageVo vo1=new ImageVo(0, orgfilename, savefilename, Integer.parseInt(service_number), 1);
+					service.insertImg(vo1);
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+					return ".error";
+				}
+			}
+			return "redirect:/tourmain";
+		}catch(Exception e) {
+			e.printStackTrace();
+			return ".error";
+		}
 	}
 
 	@GetMapping("/accommain")
