@@ -41,6 +41,10 @@
 		margin:3px;
 	
 	}
+	
+	#cardbox .card:hover{
+		border: 2px dashed black;
+	}	
 	.heartbox{
 		position: absolute;
 		bottom:0;

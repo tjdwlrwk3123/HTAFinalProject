@@ -69,14 +69,19 @@ a:hover{
 	height:auto;
 	padding : 10px;
 }
+#tour_content .card p{
+	margin:3px;
+}
 #tour_content .card:hover{
 	border: 2px dotted black;
 }
 
+
 #tour_content div h5{
-	font-weight: 700;
-	font-size :16px;
-	
+	margin-top:15px;
+	font-weight: 800;
+	font-size :24px;
+	margin-bottom: 20px;
 }
 #tour_option{
 	text-align: right;
