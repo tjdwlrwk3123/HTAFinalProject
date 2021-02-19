@@ -17,33 +17,61 @@
 			<option value="취미/클래스">취미/클래스</option>
 			<option value="맛집">맛집</option>
 		</select><br><br>
-		투어 메인 이미지
-		<input type="button" onclick="addimg()" value="+">
-		<input type="button" onclick="removeimg()" value="-">
-		<div id="imgbox">
-			<div><input type="file" name="img"></div>
+		섬네일 이미지
+		<input type="button" onclick="addimg1()" value="+">
+		<input type="button" onclick="removeimg1()" value="-">
+		<div id="imgbox1">
+			<div><input type="file" name="img1"></div>
+		</div><br>
+		홍보 이미지
+		<input type="button" onclick="addimg2()" value="+">
+		<input type="button" onclick="removeimg2()" value="-">
+		<div id="imgbox2">
+			<div><input type="file" name="img2"></div>
 		</div><br>
 		<input type="submit" value="전송">
 	</form>
 	<script>
-		var maximg=5;
-		var countimg=1;
-		function addimg() {
-			if(countimg<maximg){
-				countimg++;
-				let imgbox=document.getElementById("imgbox");
+	var maximg1=5;
+	var countimg1=1;
+	var maximg2=5;
+	var countimg2=1;
+		function addimg1() {
+			if(countimg1<maximg1){
+				countimg1++;
+				let imgbox=document.getElementById("imgbox1");
 				let div=document.createElement("div");
-				div.innerHTML="<input type='file' name='img'>";
+				div.innerHTML="<input type='file' name='img1'>";
 				imgbox.appendChild(div);
 			}else{
 				alert("이미지는 최대 "+maximg+"개 까지 추가할 수 있습니다.");
 			}
 		}
-		function removeimg() {
-			if(countimg>1){
-				let imgbox=document.getElementById("imgbox");
+		function removeimg1() {
+			if(countimg1>1){
+				let imgbox=document.getElementById("imgbox1");
 				imgbox.removeChild(imgbox.lastChild);
-				countimg--;
+				countimg1--;
+			}else{
+				alert("메인이미지는 최소 1개 이상이어야 합니다.");
+			}
+		}
+		function addimg2() {
+			if(countimg2<maximg2){
+				countimg2++;
+				let imgbox=document.getElementById("imgbox2");
+				let div=document.createElement("div");
+				div.innerHTML="<input type='file' name='img2'>";
+				imgbox.appendChild(div);
+			}else{
+				alert("이미지는 최대 "+maximg+"개 까지 추가할 수 있습니다.");
+			}
+		}
+		function removeimg2() {
+			if(countimg2>1){
+				let imgbox=document.getElementById("imgbox2");
+				imgbox.removeChild(imgbox.lastChild);
+				countimg2--;
 			}else{
 				alert("메인이미지는 최소 1개 이상이어야 합니다.");
 			}

@@ -59,7 +59,7 @@ public class ServiceController {
 		return ".service.tourinsert"; 
 	}
 	@PostMapping("/tourinsert")
-	public String tourinsert(String tour_name, String tour_addr, String tour_content, String tour_how, String tour_rule, String tour_type, Date tour_expire, MultipartFile[] img, HttpSession session, Model model) {
+	public String tourinsert(String tour_name, String tour_addr, String tour_content, String tour_how, String tour_rule, String tour_type, Date tour_expire, MultipartFile[] img1, MultipartFile[] img2, HttpSession session, Model model) {
 		try {
 			String path = sc.getRealPath("/resources/upload");
 			System.out.println(path);
@@ -76,16 +76,33 @@ public class ServiceController {
 			Tour_infoVo infovo=new Tour_infoVo(0, Integer.parseInt(service.selectTourServiceMax(user_id)) , tour_content, tour_how, tour_rule, tour_expire);
 			service.inserTourInfo(infovo);
 
-			for(int i=0;i<img.length;i++) {
-				String orgfilename=img[i].getOriginalFilename();
+			for(int i=0;i<img1.length;i++) {
+				String orgfilename=img1[i].getOriginalFilename();
 				String savefilename=UUID.randomUUID()+"_"+orgfilename;
 				try {
-					InputStream is=img[i].getInputStream();
+					InputStream is=img1[i].getInputStream();
 					FileOutputStream fos=new FileOutputStream(path+"\\"+savefilename);
 					FileCopyUtils.copy(is, fos);
 					is.close();
 					fos.close();
 					ImageVo vo=new ImageVo(0, orgfilename, savefilename, Integer.parseInt(service.selectTourServiceMax(user_id)), 1);
+					service.insertImg(vo);
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+					return ".error";
+				}
+			}
+			for(int i=0;i<img2.length;i++) {
+				String orgfilename=img2[i].getOriginalFilename();
+				String savefilename=UUID.randomUUID()+"_"+orgfilename;
+				try {
+					InputStream is=img2[i].getInputStream();
+					FileOutputStream fos=new FileOutputStream(path+"\\"+savefilename);
+					FileCopyUtils.copy(is, fos);
+					is.close();
+					fos.close();
+					ImageVo vo=new ImageVo(0, orgfilename, savefilename, Integer.parseInt(service.selectTourServiceMax(user_id)), 111);
 					service.insertImg(vo);
 					
 				} catch (IOException e) {
@@ -122,7 +139,7 @@ public class ServiceController {
 		return ".service.tourupdate"; 
 	}
 	@PostMapping("/tourupdate")
-	public String tourupdate(String service_number, String tour_name, String tour_addr, String tour_content, String tour_how, String tour_rule, String tour_type, Date tour_expire, MultipartFile[] img, HttpSession session, Model model) {
+	public String tourupdate(String service_number, String tour_name, String tour_addr, String tour_content, String tour_how, String tour_rule, String tour_type, Date tour_expire, MultipartFile[] img1, MultipartFile[] img2, HttpSession session, Model model) {
 		try {
 			String path = sc.getRealPath("/resources/upload");
 			System.out.println(path);
@@ -138,25 +155,49 @@ public class ServiceController {
 			service.updateTourService(servicevo);
 			Tour_infoVo infovo=new Tour_infoVo(0, Integer.parseInt(service_number) , tour_content, tour_how, tour_rule, tour_expire);
 			service.updateTourInfo(infovo);
-			
-			ImageVo vo = new ImageVo(0, null, null, Integer.parseInt(service_number), 1);
-			List<ImageVo> list=service.selectImageList(vo);
-			service.deleteImg(vo);
-			for (ImageVo v : list) {
+
+			ImageVo vo1 = new ImageVo(0, null, null, Integer.parseInt(service_number), 1);
+			List<ImageVo> list1=service.selectImageList(vo1);
+			service.deleteImg(vo1);
+			ImageVo vo2 = new ImageVo(0, null, null, Integer.parseInt(service_number), 111);
+			List<ImageVo> list2=service.selectImageList(vo2);
+			service.deleteImg(vo2);
+			for (ImageVo v : list1) {
 				File f=new File(path+"\\"+v.getImgsavename());
 				f.delete();
 			}
-			for(int i=0;i<img.length;i++) {
-				String orgfilename=img[i].getOriginalFilename();
+			for (ImageVo v : list2) {
+				File f=new File(path+"\\"+v.getImgsavename());
+				f.delete();
+			}
+			for(int i=0;i<img1.length;i++) {
+				String orgfilename=img1[i].getOriginalFilename();
 				String savefilename=UUID.randomUUID()+"_"+orgfilename;
 				try {
-					InputStream is=img[i].getInputStream();
+					InputStream is=img1[i].getInputStream();
 					FileOutputStream fos=new FileOutputStream(path+"\\"+savefilename);
 					FileCopyUtils.copy(is, fos);
 					is.close();
 					fos.close();
-					ImageVo vo1=new ImageVo(0, orgfilename, savefilename, Integer.parseInt(service_number), 1);
-					service.insertImg(vo1);
+					ImageVo vo11=new ImageVo(0, orgfilename, savefilename, Integer.parseInt(service_number), 1);
+					service.insertImg(vo11);
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+					return ".error";
+				}
+			}
+			for(int i=0;i<img2.length;i++) {
+				String orgfilename=img2[i].getOriginalFilename();
+				String savefilename=UUID.randomUUID()+"_"+orgfilename;
+				try {
+					InputStream is=img2[i].getInputStream();
+					FileOutputStream fos=new FileOutputStream(path+"\\"+savefilename);
+					FileCopyUtils.copy(is, fos);
+					is.close();
+					fos.close();
+					ImageVo vo12=new ImageVo(0, orgfilename, savefilename, Integer.parseInt(service_number), 111);
+					service.insertImg(vo12);
 					
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -182,7 +223,7 @@ public class ServiceController {
 		return ".service.touroptioninsert"; 
 	}
 	@PostMapping("/touroptioninsert")
-	public String touroptioninsert(String service_number, int tour_price, String tour_option, int tour_amount, int discount, MultipartFile[] img, Model model) {
+	public String touroptioninsert(String service_number, int tour_price, String tour_option, int tour_amount, int discount, Model model) {
 		try { 
 			String path = sc.getRealPath("/resources/upload");
 			System.out.println(path);
@@ -190,23 +231,6 @@ public class ServiceController {
 			TourOptionVo vo = new TourOptionVo(0, Integer.parseInt(service_number), tour_price, 0, tour_option, tour_amount, discount);
 			service.insertTourOption(vo);
 
-			for(int i=0;i<img.length;i++) {
-				String orgfilename=img[i].getOriginalFilename();
-				String savefilename=UUID.randomUUID()+"_"+orgfilename;
-				try {
-					InputStream is=img[i].getInputStream();
-					FileOutputStream fos=new FileOutputStream(path+"\\"+savefilename);
-					FileCopyUtils.copy(is, fos);
-					is.close();
-					fos.close();
-					ImageVo vo1=new ImageVo(0, orgfilename, savefilename, Integer.parseInt(service.selectTourOptioneMax(service_number)), 111);
-					service.insertImg(vo1);
-					
-				} catch (IOException e) {
-					e.printStackTrace();
-					return ".error";
-				}
-			}
 		model.addAttribute("service_number", service_number);
 		return "redirect:/touroption"; 
 		}catch(Exception e) {
@@ -216,14 +240,7 @@ public class ServiceController {
 	}
 	@GetMapping("/touroptiondelete")
 	public String touroptiondelete(String service_number, String tour_option_number, Model model) {
-		ImageVo vo = new ImageVo(0, null, null, Integer.parseInt(tour_option_number), 111);
-		List<ImageVo> list=service.selectImageList(vo);
-		service.deleteImg(vo);
-		String path=sc.getRealPath("/resources/upload");
-		for (ImageVo v : list) {
-			File f=new File(path+"\\"+v.getImgsavename());
-			f.delete();
-		}
+		
 		service.updateTourOptionIndex(tour_option_number);
 		service.deleteTourOption(tour_option_number);
 		model.addAttribute("service_number", service_number);
@@ -235,7 +252,7 @@ public class ServiceController {
 		return ".service.touroptionupdate"; 
 	}
 	@PostMapping("/touroptionupdate")
-	public String touroptionupdate(String service_number, String tour_option_number, int tour_price, String tour_option, int tour_amount, int discount, MultipartFile[] img, Model model) {
+	public String touroptionupdate(String service_number, String tour_option_number, int tour_price, String tour_option, int tour_amount, int discount, Model model) {
 		try { 
 			String path = sc.getRealPath("/resources/upload");
 			System.out.println(path);
@@ -243,30 +260,6 @@ public class ServiceController {
 			TourOptionVo vo = new TourOptionVo(Integer.parseInt(tour_option_number), Integer.parseInt(service_number), tour_price, 0, tour_option, tour_amount, discount);
 			service.updateTourOption(vo);
 
-			ImageVo ivo = new ImageVo(0, null, null, Integer.parseInt(tour_option_number), 111);
-			List<ImageVo> list=service.selectImageList(ivo);
-			service.deleteImg(ivo);
-			for (ImageVo v : list) {
-				File f=new File(path+"\\"+v.getImgsavename());
-				f.delete();
-			}
-			for(int i=0;i<img.length;i++) {
-				String orgfilename=img[i].getOriginalFilename();
-				String savefilename=UUID.randomUUID()+"_"+orgfilename;
-				try {
-					InputStream is=img[i].getInputStream();
-					FileOutputStream fos=new FileOutputStream(path+"\\"+savefilename);
-					FileCopyUtils.copy(is, fos);
-					is.close();
-					fos.close();
-					ImageVo vo1=new ImageVo(0, orgfilename, savefilename, Integer.parseInt(tour_option_number), 111);
-					service.insertImg(vo1);
-					
-				} catch (IOException e) {
-					e.printStackTrace();
-					return ".error";
-				}
-			}
 		model.addAttribute("service_number",service_number);
 		return "redirect:/touroption"; 
 		}catch(Exception e) {
