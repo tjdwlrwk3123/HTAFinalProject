@@ -8,7 +8,8 @@
 		투어 내용 <textarea rows="5" cols="30" name="tour_content"></textarea><br><br>
 		투어이용 안내  <textarea rows="5" cols="30" name="tour_how"></textarea><br><br>
 		취소 및 환불 규정  <textarea rows="5" cols="30" name="tour_rule"></textarea><br><br>
-<!-- 		투어 주의사항 <textarea rows="5" cols="30" name="tour_warn"></textarea><br><br> -->
+		유효기간 <input type="checkbox" onchange="datecheck(this)" id="datec"><br>
+		<div id="dated"></div><br>
 		투어 타입 
 		<select name="tour_type" id="tour_type">
 			<option value="1" selected="selected">티켓/패스</option>
@@ -45,15 +46,23 @@
 				alert("메인이미지는 최소 1개 이상이어야 합니다.");
 			}
 		}
+		function datecheck(e) {
+			let div = document.getElementById("dated");
+			if(e.checked){
+				div.innerHTML="<input type='date' name='tour_expire'>";
+			}else{
+				div.innerHTML="";
+			}
+		}
 		function check(){
 			let tour_name=document.getElementsByName("tour_name")[0].value;
 			let tour_addr=document.getElementsByName("tour_addr")[0].value;
 			let tour_content=document.getElementsByName("tour_content")[0].value;
 			let tour_how=document.getElementsByName("tour_how")[0].value;
 			let tour_rule=document.getElementsByName("tour_rule")[0].value;
-// 			let tour_warn=document.getElementsByName("tour_warn")[0].value;
 			let img=document.getElementsByName("img");
 			let imgcheck=true;
+			let datec=document.getElementById("datec");
 			for(let i=0;i<img.length;i++){
 				if(img[i].value.replaceAll(" ","")==""){
 					imgcheck=false;
@@ -80,13 +89,13 @@
 				alert("취소 및 환불 규정을  입력하세요.");
 				return false;
 			}
-// 			if(tour_warn.replaceAll(" ","")==""){
-// 				alert("투어 주의사항");
-// 				return false;
-// 			}
 			if(!imgcheck){
 				alert("투어 메인이미지를 모두 입력해주세요.");
 				return false;
+			}
+			if(datec.checked){
+				let tour_expire=document.getElementsByName("tour_expire")[0].value;
+				alert(tour_expire);
 			}
 			return true;
 		}

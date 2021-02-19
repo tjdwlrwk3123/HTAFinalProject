@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -56,10 +57,11 @@ public class ServiceController {
 		return ".service.tourinsert"; 
 	}
 	@PostMapping("/tourinsert")
-	public String tourinsert(String tour_name, String tour_addr, String tour_content, String tour_how, String tour_rule, /*String tour_warn,*/ String tour_type, MultipartFile[] img, HttpSession session, Model model) {
+	public String tourinsert(String tour_name, String tour_addr, String tour_content, String tour_how, String tour_rule, String tour_type, Date tour_expire, MultipartFile[] img, HttpSession session, Model model) {
 		try {
 			String path = sc.getRealPath("/resources/upload");
 			System.out.println(path);
+			System.out.println(tour_expire);
 			String user_id="";
 			try {
 				user_id=(String)session.getAttribute("user_id");
@@ -70,7 +72,7 @@ public class ServiceController {
 			}
 			TourServiceVo servicevo=new TourServiceVo(0, 1, user_id, tour_name, tour_addr, tour_type);
 			service.insertTourService(servicevo);
-			Tour_infoVo infovo=new Tour_infoVo(0, Integer.parseInt(service.selectTourServiceMax(user_id)) , tour_content, tour_how, tour_rule /*, tour_warn*/);
+			Tour_infoVo infovo=new Tour_infoVo(0, Integer.parseInt(service.selectTourServiceMax(user_id)) , tour_content, tour_how, tour_rule, tour_expire);
 			service.inserTourInfo(infovo);
 
 			for(int i=0;i<img.length;i++) {
