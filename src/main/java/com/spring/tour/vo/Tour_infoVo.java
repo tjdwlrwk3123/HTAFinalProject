@@ -1,11 +1,14 @@
 package com.spring.tour.vo;
 
+import java.sql.Date;
+
 public class Tour_infoVo {
 	private int tour_info_number; //투어정보 고유번호
 	private int service_number;//서비스 고유 번호
 	private String tour_content;// 투어내용
 	private String tour_how; // 투어이용 안내
 	private String tour_rule; // 취소 및 환불 규정
+	private Date tour_expire; // 마감일 . 널가능
 	public Tour_infoVo() {
 		super();
 		// TODO Auto-generated constructor stub
