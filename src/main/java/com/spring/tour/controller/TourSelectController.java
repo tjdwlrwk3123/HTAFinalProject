@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.tour.service.TourPageService;
 import com.spring.tour.vo.TourSelectVo;
+import com.spring.tour.vo.WishlistVo;
 
 
 @Controller
@@ -39,7 +42,9 @@ public class TourSelectController {
 			@RequestParam(value = "targetPrice", defaultValue = "0") int targetPrice,
 			@RequestParam(value = "tourType", defaultValue = "0") int tourType,//전체, 테마파크 , 맛집 등등 
 			@RequestParam(value = "classification", defaultValue = "1") int classification, // 리뷰많은순, 가격 싼순 등등
-			String keyword) {
+			String keyword,
+			HttpServletRequest req
+			) {
 		System.out.println("-----------------------------");
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("startDate", startDate);
@@ -57,15 +62,22 @@ public class TourSelectController {
 			map.put("targetPrice", targetPrice);
 		}
 		
-		List<TourSelectVo> list = service.tourSelectList(map);
+		if(req.getSession().getAttribute("user_id")!=null) {
+			map.put("user_id",req.getSession().getAttribute("user_id"));
+			System.out.println("user_id 있음");
+		}else {
+			System.out.println("user_id 없음");
+		}
+		
+		List<WishlistVo> list = service.tourSelectList(map);
 		int maxprice = 0;
 		int minprice = 10000000;
-		for(TourSelectVo vo : list) { //최저가 최고가 구하는 코드
-			if(maxprice <vo.getTour_price()) {
-				maxprice= vo.getTour_price();
+		for(WishlistVo vo : list) { //최저가 최고가 구하는 코드 
+			if(maxprice <vo.getDcprice()) {
+				maxprice= vo.getDcprice();
 			};
-			if(minprice>vo.getTour_price()) {
-				minprice=vo.getTour_price();
+			if(minprice>vo.getDcprice()) {
+				minprice=vo.getDcprice();
 			}
 		}
 

@@ -144,7 +144,6 @@
 					<input type="hidden" value="0" name="count" oninput="sync(this)"><input type="hidden" value="${o.tour_option}" name="service_option"><input type="hidden" name="tour_price" value="${o.tour_price}">
 					<input type="hidden" value="${o.tour_option_index}" name="option_index"><span class="sign" onclick="minus(this)"><i class="fas fa-minus"></i></span><span class="cnt">0</span><span class="sign" onclick="plus(this)"><i class="fas fa-plus"></i></span></span>
 					<span>${o.tour_amount}개 남음</span><br>
-					
 					</div>
 				</c:otherwise>
 			</c:choose>

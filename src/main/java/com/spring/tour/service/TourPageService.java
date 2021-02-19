@@ -29,7 +29,7 @@ public class TourPageService {
 	
 	/////////////////////////////////
 	// 투어 선택 페이지 데이터
-	public List<TourSelectVo> tourSelectList(HashMap<String, Object> map){
+	public List<WishlistVo> tourSelectList(HashMap<String, Object> map){
 		return dao.tourSelectList(map);
 	}
 	

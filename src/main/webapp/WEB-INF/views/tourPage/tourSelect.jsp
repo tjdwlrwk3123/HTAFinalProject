@@ -16,10 +16,152 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/174a2d5b3b.js" crossorigin="anonymous"></script>
 
-
 <!-- 데이트피커 -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<style>
+
+*{
+	margin:0;
+	padding:0;
+	box-sizing: border-box;
+	text-decoration: none;
+	list-style: none;
+	
+}
+#tourSelect_wrapper {
+	width: 1000px;
+	margin: auto;
+	display : flex;
+	background-color: #FFCA6C;
+}
+a{
+	color:black;
+	font-weight:500;
+}
+a:hover{
+	text-decoration:none;
+	color:black;
+	font-weight:800;
+}
+
+#tour_filterbox {
+	width: 200px;
+	height: 100%;
+	background-color: #FFCA6C;
+	padding: 30px 0;
+}
+#tour_filterbox h3{
+	text-align:center;
+	margin-bottom:20px;	
+}
+
+#tour_filterbox ul li{
+	padding: 15px;
+	border-top: 0.5px solid yellow;
+	border-bottom: 0.5px solid yellow;
+}
+
+#tour_contentbox {
+	width: 85%;
+	background-color: #D9E5FF;
+	height:auto;
+	padding : 10px;
+}
+#tour_content .card:hover{
+	border: 2px dotted black;
+}
+
+#tour_content div h5{
+	font-weight: 700;
+	font-size :16px;
+	
+}
+#tour_option{
+	text-align: right;
+	padding: 10px;
+}
+
+#tour_option a{
+	padding:15px;	
+}
+
+#loading {
+	height: 100%;
+	width: 100%;
+	left: 0px;
+	top: 0px;
+	position: fixed;
+	_position:absolute; 
+	filter:alpha(opacity=50);
+	-moz-opacity:0.5;
+	opacity : 0.5;
+}
+.loading {
+	background-color: white;
+	z-index: 199;
+}
+#loading_img{
+	position:absolute; 
+	top:50%;
+	left:50%;
+	height:35px;
+	margin-top:-75px;
+	margin-left:-75px;	
+	z-index: 200;
+}
+
+
+h5{
+	margin-top:15px;
+	font-weight: 800;
+	font-size :24px;
+	margin-bottom: 20px;
+}
+#cardbox div p{
+	margin:3px;
+
+}
+.heartbox{
+		position: absolute;
+		bottom:0;
+		padding-right:3px;
+		margin-bottom:3px;
+	 	width: 100%;
+	 	text-align: right;
+}
+.heartbox i{
+	right:3px;
+	bottom:3px;
+}
+.discountImg{
+		position: absolute;
+		top:3px;
+		left:3px;
+}
+.heartImg{
+		position: absolute;
+		width:25px;
+		bottom:3px;
+		right:3px;
+ 	
+}
+.starImg{
+	width:20px;
+}
+
+#sorryMsg{
+	text-align: center;
+}
+
+#sorryMsg p{
+	font-size:50px;
+	font-weight: 800;
+}
+
+
+</style>
 
 <div id="tourSelect_wrapper">
 	<div id="tour_filterbox">
@@ -28,15 +170,15 @@
 			<input type="hidden" id="user_id" value="${sessionScope.user_id}">
 			<input type="hidden" id="tourType" value="${tourType}">
 			<ul>
-				<li><a href="javascript:cateChange(0);" <c:if test='${tourType==0}'>style="background-color:gray;"</c:if>>전체</a></li>
-				<li><a href="javascript:cateChange(1);" <c:if test='${tourType==1}'>style="background-color:gray;"</c:if>>티켓/패스</a></li>
-				<li><a href="javascript:cateChange(2);" <c:if test='${tourType==2}'>style="background-color:gray;"</c:if>>테마파크</a></li>
-				<li><a href="javascript:cateChange(3);" <c:if test='${tourType==3}'>style="background-color:gray;"</c:if>>취미/클래스</a></li>
-				<li><a href="javascript:cateChange(4);" <c:if test='${tourType==4}'>style="background-color:gray;"</c:if>>맛집</a></li>
+				<li><a href="javascript:cateChange(0);" <c:if test='${tourType==0}'>style="font-weight: 800;"</c:if>>전체</a></li>
+				<li><a href="javascript:cateChange(1);" <c:if test='${tourType==1}'>style="font-weight: 800;"</c:if>>티켓/패스</a></li>
+				<li><a href="javascript:cateChange(2);" <c:if test='${tourType==2}'>style="font-weight: 800;"</c:if>>테마파크</a></li>
+				<li><a href="javascript:cateChange(3);" <c:if test='${tourType==3}'>style="font-weight: 800;"</c:if>>취미/클래스</a></li>
+				<li><a href="javascript:cateChange(4);" <c:if test='${tourType==4}'>style="font-weight: 800;"</c:if>>맛집</a></li>
 			</ul>
 		</div>
 		<div id="filter">
-			<button onclick="clearFilter();" id="clear">필터초기화</button><br>
+			<button onclick="clearFilter();" value="<img src='${cp }/resources/images/reset.svg'>" id="clear">필터초기화</button><br>
 			<p>조회기간</p>
 			<input type="text" id="from" placeholder="시작일 지정" size="10" onchange="dateChange();"><br> <!-- 유효기간 + 티켓 갯수 남은애들 -->
 			<input type="text" id="to" placeholder="마지막날 지정" size="10" onchange="dateChange();"><br>
@@ -52,10 +194,10 @@
 		<div id="tour_option">
 			<input type="text" placeholder="검색어 입력" id="keyword"><button id="btn1" onclick="search()">검색</button>
 			<input type="hidden" id="classification">
-			<a href="javascript:orderChange(1);"<c:if test='${classification==1}'>style="color:gray;"</c:if>>추천순</a>
-			<a href="javascript:orderChange(2);"<c:if test='${classification==2}'>style="color:gray;"</c:if>>리뷰많은순</a>
-			<a href="javascript:orderChange(3);"<c:if test='${classification==3}'>style="color:gray;"</c:if>>가격낮은순</a>
-			<a href="javascript:orderChange(4);"<c:if test='${classification==4}'>style="color:gray;"</c:if>>가격높은순</a>
+			<a href="javascript:orderChange(1);"<c:if test='${classification==1}'>style="font-weight: 800;"</c:if>>추천순</a>
+			<a href="javascript:orderChange(2);"<c:if test='${classification==2}'>style="font-weight: 800;"</c:if>>리뷰많은순</a>
+			<a href="javascript:orderChange(3);"<c:if test='${classification==3}'>style="font-weight: 800;"</c:if>>낮은가격순</a>
+			<a href="javascript:orderChange(4);"<c:if test='${classification==4}'>style="font-weight: 800;"</c:if>>높은가격순</a>
 		</div>
 		<div id="tour_content">
 		</div>
@@ -222,8 +364,18 @@
 	function initialPage(param){
 		$.getJSON('${cp}/tourSelectList', param, function(data){
 			$("#tour_content").empty();
+			console.log(data.list.length);
+			if(data.list.length==0){
+				console.log("yes");
+				
+				var str = "<div id='sorryMsg'><img src='${cp }/resources/images/sorry.jpg' style='width:500px;'><br>"+
+							"<p>Sorry, There is nothing</p><div>";
+				$("#tour_content").append(str);
+				return;
+			}
+			
 			var str = "";
-			str+="<div class='row row-cols-1 row-cols-md-4'>";
+			str+="<div class='row row-cols-1 row-cols-md-3'>"; //첫번째 div
 			$("#tourType").val(param.tourType);
 			
 			let minprice= data.minprice;
@@ -247,33 +399,61 @@
 				let imgsavename= data.list[i].imgsavename;
 				let tour_name= data.list[i].tour_name;
 				let tourType= data.list[i].tour_type;
-				let avgpoint= Math.round(data.list[i].avgpoint);
+				let avgpoint= data.list[i].avgpoint;
 				let tour_price= data.list[i].tour_price;
 				let rcnt= data.list[i].rcnt;
-				var stars = "";
-				for(let k=0; k<avgpoint; k++){
-					stars+="<i class='fas fa-star'></i>";
+				let discount = data.list[i].discount;
+				let dcnt = data.list[i].dcnt;
+				let user_id = data.list[i].user_id;
+				
+				
+				var fullstars = Math.floor(avgpoint);
+				var decimal =  Math.round(avgpoint*10%10);
+				var stars ="";
+				for(let k=0; k<fullstars; k++){
+					stars+="<img src='${cp }/resources/images/fullStar.svg' class='starImg'>";
 				}
-				for(let l=0; l<5-avgpoint; l++){
-					stars+="<i class='far fa-star'></i>";
+				if(decimal>=1 && decimal<3){
+					stars+="<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>";
+				}else if(decimal>=3 && decimal<8 ){
+					stars+="<img src='${cp }/resources/images/halfStar.svg' class='starImg'>";
+				}else if(decimal>=8){
+					stars+="<img src='${cp }/resources/images/fullStar.svg' class='starImg'>";
 				}
-				str+= "<div class='col mb-4'>"+
-					"<div class='card h-100 mx-auto' style='width: 11rem;'>"+
-				   	 "<input type='hidden' name='cate_number' value='"+cate_number+"'>"+
-				   	 "<input type='hidden' name='service_number' value='"+service_number+"'>"+
-				 	 "<img src='${cp}/resources/images/"+imgsavename+"' class='card-img-top' onclick='move(event)' alt='"+tour_name+"'>"+
-				 	  "<div class='card-body'>"+
-				   		 "<h5 class='card-title'>"+tour_name+"</h5><br>"+
-				   		 "<div class='bottomline'>"+
-				   		 "<p>"+tourType+"</p>"+
-				   		 stars+"&nbsp;("+rcnt+")<br>"+
-				   		 "<p>"+tour_price+"원/명</p>"+
-				   		 "</div>"+
-			 		 "</div>"+
-			 		 "</div>"+
-		 		 "</div>"
+				for(let l=0; l<5-fullstars-1; l++){
+					stars+="<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>";
+				}
+				
+				str+="<div class='col mb-4'>"+ //두번째 div
+						"<div class='card h-100' style='width: 14rem;'>"+  //3번째 div
+						   	 "<input type='hidden' name='cate_number' value='"+cate_number+"'>"+
+						   	 "<input type='hidden' name='service_number' value='"+service_number+"'>"+
+						 	 "<img src='${cp }/resources/images/"+imgsavename+"' class='card-img-top'  alt='"+tour_name+"' onclick='move(event)'>"+
+						 	 "<div class="+tour_name+">"+ //4번째 div
+						   		 "<h5 class='card-title'>"+tour_name+"</h5>"+
+							   	 "<p class='card-text'>"+tourType+"</p>"+
+							   	 "<p class='card-text'>"+stars+"("+rcnt+")"+"</p>";
+				if(discount>0){
+							str+="<p class='card-text' style='text-decoration:line-through'>옵션최저가 "+tour_price+"원/명</p>"+
+								 "<p class='card-text'>할인특가 "+(tour_price-tour_price*discount/100)+"원/명</p>"+
+								 "<img src='${cp }/resources/images/discount1.svg' class='discountImg'>";  
+				}else if(dcnt>0){
+							str+="<p class='card-text'>옵션최저가 "+tour_price+"원/명</p>"+
+								 "<p class='card-text'>할인된 옵션이 있습니다</p>"+
+								 "<img src='${cp }/resources/images/discount1.svg' class='discountImg'>";
+				}else{
+							str+="<p class='card-text'>옵션최저가 "+tour_price+"원/명</p>";
+				}			   	 
+			   	 		str+="</div>";//4번째 div
+			   	if(user_id!=null){
+					  	 	str +="<div class='heartbox'><img src='${cp }/resources/images/Heart.svg' class='heartImg' onclick='wish(this)' alt='heart'></div>";
+			   	}else{
+					  	 	str +="<div class='heartbox'><img src='${cp }/resources/images/emptyHRT.svg' class='heartImg' onclick='wish(this)' alt='emptyheart'></div>";
+			   	}
+				 str+="</div>"+  //3번째 div
+				  "</div>";  //두번째 div
 			}
-			str+="</div>";
+			str+="</div>"; //1번째 div
 			$("#tour_content").append(str);
 		});
 		MAXPRICE= $("#price_range").prop("max");
@@ -328,15 +508,52 @@
 		showAnim:"toggle"
 	});
 	
+	function wish(img){
+		var cate_number= img.parentNode.parentNode.firstChild
+		var service_number= cate_number.nextSibling;
+		
+		if(img.alt=='heart'){
+			$.getJSON("${cp}/wishDelete", {"cate_number":cate_number.value,"service_number":service_number.value },
+				function(data) {
+				let result = data.code;
+				if(result=='delete_success'){
+					img.src="${cp }/resources/images/brokenHRT.svg"
+					img.alt = 'brokenHRT';
+				}else if(result=='delete_fail'){
+					alert("delete ERROR");
+				}
+			});
+// 			console.log(user_id.value+"/"+cate_number.value+"/"+service_number.value);
+		}else if(img.alt=='brokenHRT' ){
+			$.getJSON("${cp}/wishInsert", {"cate_number":cate_number.value,"service_number":service_number.value},
+				function(data) {
+				let result = data.code;
+				if(result=='insert_success'){
+					img.src="${cp}/resources/images/Heart.svg"
+					img.alt = 'heart';
+				}else if(result=='insert_fail'){
+					alert("insert ERROR");
+				}
+			});
+		}else if(img.alt=='emptyheart'){
+			$.getJSON("${cp}/wishInsert", {"cate_number":cate_number.value,"service_number":service_number.value},
+				function(data) {
+				let result = data.code;
+				if(result=='insert_success'){
+					img.src="${cp }/resources/images/Heart.svg"
+					img.alt = 'heart';
+				}else if(result=='insert_fail'){
+					alert("insert ERROR");
+				}
+			});
+		}
+	}
 	
 	
 	function move(e){
-		var user_id=$("#user_id").val();
 		var cate_number=parseInt(e.target.previousSibling.previousSibling.value);
 		var service_number=parseInt(e.target.previousSibling.value);
-		console.log(cate_number+"//"+service_number);
-		
-		window.location.href="${cp}/tourDetail?user_id="+user_id+"&cate_number="+cate_number+"&service_number="+service_number;
+		window.location.href="${cp}/tourDetail?cate_number="+cate_number+"&service_number="+service_number;
 	}
 </script>
 </div>

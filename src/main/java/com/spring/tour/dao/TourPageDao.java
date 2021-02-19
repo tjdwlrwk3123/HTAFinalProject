@@ -33,7 +33,7 @@ public class TourPageDao {
 	/////////////////////////////////////////
 	//투어 선택 페이지 데이터
 	
-	public List<TourSelectVo> tourSelectList(HashMap<String, Object> map){
+	public List<WishlistVo> tourSelectList(HashMap<String, Object> map){
 		return sqlsession.selectList(NAMESPACE+".selectlist", map);
 	}
 	
