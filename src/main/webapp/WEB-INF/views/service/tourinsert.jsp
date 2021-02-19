@@ -8,7 +8,7 @@
 		투어 내용 <textarea rows="5" cols="30" name="tour_content"></textarea><br><br>
 		투어이용 안내  <textarea rows="5" cols="30" name="tour_how"></textarea><br><br>
 		취소 및 환불 규정  <textarea rows="5" cols="30" name="tour_rule"></textarea><br><br>
-		투어 주의사항 <textarea rows="5" cols="30" name="tour_warn"></textarea><br><br>
+<!-- 		투어 주의사항 <textarea rows="5" cols="30" name="tour_warn"></textarea><br><br> -->
 		투어 타입 
 		<select name="tour_type" id="tour_type">
 			<option value="1" selected="selected">티켓/패스</option>
@@ -51,7 +51,7 @@
 			let tour_content=document.getElementsByName("tour_content")[0].value;
 			let tour_how=document.getElementsByName("tour_how")[0].value;
 			let tour_rule=document.getElementsByName("tour_rule")[0].value;
-			let tour_warn=document.getElementsByName("tour_warn")[0].value;
+// 			let tour_warn=document.getElementsByName("tour_warn")[0].value;
 			let img=document.getElementsByName("img");
 			let imgcheck=true;
 			for(let i=0;i<img.length;i++){
@@ -80,10 +80,10 @@
 				alert("취소 및 환불 규정을  입력하세요.");
 				return false;
 			}
-			if(tour_warn.replaceAll(" ","")==""){
-				alert("투어 주의사항");
-				return false;
-			}
+// 			if(tour_warn.replaceAll(" ","")==""){
+// 				alert("투어 주의사항");
+// 				return false;
+// 			}
 			if(!imgcheck){
 				alert("투어 메인이미지를 모두 입력해주세요.");
 				return false;

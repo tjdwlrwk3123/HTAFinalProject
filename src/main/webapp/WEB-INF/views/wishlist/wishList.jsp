@@ -44,11 +44,30 @@
 	.heartbox{
 		position: absolute;
 		bottom:0;
+		padding-right:3px;
+		margin-bottom:3px;
 	 	width: 100%;
-/* 	 	background-color:MistyRose; */
 	 	text-align: right;
 	}
-	
+	.heartbox i{
+		right:3px;
+		bottom:3px;
+	}
+	.discountImg{
+ 		position: absolute;
+ 		top:3px;
+ 		left:3px;
+	}
+	.heartImg{
+ 		position: absolute;
+ 		width:25px;
+ 		bottom:3px;
+ 		right:3px;
+	 	
+	}
+	.starImg{
+		width:20px;
+	}
 	
 	#loading {
 		height: 100%;
@@ -77,11 +96,10 @@
 </style>
 <div id="wishlist_wrapper">
 	<div id="wishlist_title">
-		<h1>${user_id}님의 위시리스트</h1>
+		<h1>${user_id}님의 위시리스트<img src="${cp }/resources/images/HRT.svg" style="width:40px; margin-bottom:10px;"></h1>
 	</div>
 	
 	<div id="wishlist_list">
-
 	</div>
 </div>
 
@@ -107,6 +125,10 @@
 			var str = "";
 			str+="<div class='row row-cols-1 row-cols-md-4' id='cardbox'>";
 			for(let i=0; i<data.list.length; i++){
+				let tour_amount = data.list[i].tour_amount;
+				if(tour_amount==0){
+					continue;
+				}
 				let cate_number = data.list[i].cate_number;
 				let service_number = data.list[i].service_number;
 				let user_id = data.list[i].user_id;
@@ -116,7 +138,8 @@
 				let rcnt = data.list[i].rcnt; //리뷰 갯수
 				let imgsavename = data.list[i].imgsavename;
 				let tour_price = data.list[i].tour_price;
-				let discount = data.list[i].discount; // 할인 적용되면 정보 주기 0보다 큰 숫자면 해당 서비스에 할인 옵션이 있다는 의미.
+				let discount = data.list[i].discount; // 최저가에 붙은 할인
+				let dcnt = data.list[i].dcnt; // 할인 적용되면 정보 주기 0보다 큰 숫자면 해당 서비스에 할인 옵션이 있다는 의미.
 // 				console.log("cate_number"+cate_number);
 // 				console.log("service_number"+service_number);
 // 				console.log("user_id"+user_id);
@@ -127,13 +150,12 @@
 // 				console.log("imgsavename"+imgsavename);
 // 				console.log("tour_price"+tour_price);
 // 				console.log("discount"+discount);
-
 				var stars = ""; // 가능하면 반개 별도 쓸수 있으면 좋음
 				for(let k=0; k<avgpoint; k++){
-					stars+="<i class='fas fa-star'></i>";
+					stars+="<img src='${cp }/resources/images/fullStar.svg' class='starImg'>";
 				}
 				for(let l=0; l<5-avgpoint; l++){
-					stars+="<i class='far fa-star'></i>";
+					stars+="<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>";
 				}
 				
 				str+="<div class='col mb-4'>"+
@@ -145,15 +167,20 @@
 						 	 "<div class="+tour_name+">"+
 						   		 "<h5 class='card-title'>"+tour_name+"</h5>"+
 							   	 "<p class='card-text'>"+tour_type+"</p>"+
-							   	 "<p class='card-text'>"+stars+"("+rcnt+")"+"</p>"+
-							   	 "<p class='card-text'>"+tour_price+"원/명</p>"; 
-			   	 if(discount>0){
-				   	 str += "<p class='card-text'>특가판매중</p>";
-			   	 }else{
-// 			   		 str+= "<br>";
-			   	 }
-			   	 str+= 	"</div>"+
-					   	"<div class='heartbox'><i class='fas fa-heart fa-lg' onclick='wish(this)'></i></div>" +
+							   	 "<p class='card-text'>"+stars+"("+rcnt+")"+"</p>";
+				if(discount>0){
+							str+="<p class='card-text' style='text-decoration:line-through'>옵션최저가 "+tour_price+"원/명</p>"+
+								 "<p class='card-text'>할인특가 "+(tour_price-tour_price*discount/100)+"원/명</p>"+
+								 "<img src='${cp }/resources/images/discount1.svg' class='discountImg'>";  
+				}else if(dcnt>0){
+							str+="<p class='card-text'>옵션최저가 "+tour_price+"원/명</p>"+
+								 "<p class='card-text'>할인된 옵션이 있습니다</p>"+
+								 "<img src='${cp }/resources/images/discount1.svg' class='discountImg'>";
+				}else{
+							str+="<p class='card-text'>옵션최저가 "+tour_price+"원/명</p>";
+				}			   	 
+			   	 		str+="</div>"+
+					   	"<div class='heartbox'><img src='${cp }/resources/images/Heart.svg' class='heartImg' onclick='wish(this)' alt='heart'></div>" +
 				 	 "</div>"+
 				  "</div>";
 			}
@@ -163,28 +190,30 @@
 	}
 
 	
-	function wish(i){
-		var user_id= i.parentNode.parentNode.firstChild
+	function wish(img){
+		var user_id= img.parentNode.parentNode.firstChild
 		var cate_number= user_id.nextSibling;
 		var service_number= cate_number.nextSibling;
 		
-		if(i.className=='fas fa-heart fa-lg'){
+		if(img.alt=='heart'){
 			$.getJSON("${cp}/wishDelete", {"cate_number":cate_number.value,"service_number":service_number.value,"user_id":user_id.value },
 				function(data) {
 				let result = data.code;
 				if(result=='delete_success'){
-					i.className = 'fas fa-heart-broken fa-lg';
+					img.src="${cp }/resources/images/brokenHRT.svg"
+					img.alt = 'brokenHRT';
 				}else if(result=='delete_fail'){
 					alert("delete ERROR");
 				}
 			});
 // 			console.log(user_id.value+"/"+cate_number.value+"/"+service_number.value);
-		}else if(i.className='fas fa-heart-broken fa-lg' ){
+		}else if(img.alt=='brokenHRT' ){
 			$.getJSON("${cp}/wishInsert", {"cate_number":cate_number.value,"service_number":service_number.value,"user_id":user_id.value },
 				function(data) {
 				let result = data.code;
 				if(result=='insert_success'){
-					i.className = 'fas fa-heart fa-lg';
+					img.src="${cp }/resources/images/Heart.svg"
+					img.alt = 'heart';
 				}else if(result=='insert_fail'){
 					alert("insert ERROR");
 				}

@@ -60,7 +60,7 @@ public class TourSelectController {
 		List<TourSelectVo> list = service.tourSelectList(map);
 		int maxprice = 0;
 		int minprice = 10000000;
-		for(TourSelectVo vo : list) {
+		for(TourSelectVo vo : list) { //최저가 최고가 구하는 코드
 			if(maxprice <vo.getTour_price()) {
 				maxprice= vo.getTour_price();
 			};

@@ -6,7 +6,7 @@ public class TourOptionVo {
 	 private int tour_price;
 	 private int tour_option_index;
 	 private String tour_option;
-	 private int tour_amount; // 티켓 개수/  없으면 전체가 비어버린다.
+	 private int tour_amount; 
 	 private int discount;
 	 
 	public TourOptionVo() {
