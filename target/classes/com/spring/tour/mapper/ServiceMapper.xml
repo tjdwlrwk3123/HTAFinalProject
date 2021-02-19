@@ -37,6 +37,15 @@
 	<select id="selectTourServiceMax" resultType="string" parameterType="string">
 		select max(service_number) from tour_service where user_id=#{user_id}
 	</select> 
+	<select id="selectTourOptioneMax" resultType="string" parameterType="string">
+		select max(tour_option_number) from tour_option where service_number=#{service_number}
+	</select> 
+	<select id="selectTourOptionList" resultType="com.spring.tour.vo.TourOptionVo" parameterType="string">
+		select * from tour_option where service_number=#{service_number}
+	</select>
+	<select id="selectTourOption" resultType="com.spring.tour.vo.TourOptionVo" parameterType="string">
+		select * from tour_option where tour_option_number=#{tour_option_number}
+	</select>
 	<select id="selectImageList" resultType="com.spring.tour.vo.ImageVo" parameterType="com.spring.tour.vo.ImageVo">
 		select * from image where general_number=#{general_number} and cate_number=#{cate_number}
 	</select>
@@ -47,14 +56,17 @@
 	<insert id="insertAccomInfo" parameterType="com.spring.tour.vo.AccomInfoVo">
 		insert into accom_info values((select nvl(max(accom_info_number)+1,0) from accom_info),#{accom_service_number},#{accom_info_content},#{accom_how},#{accom_rule},#{accom_chekinfo},#{facility},#{conven})
 	</insert>
+	<insert id="insertAccomOption" parameterType="com.spring.tour.vo.AccomOptionVo">
+		insert into accom_option values((select nvl(max(accom_option_number)+1,0) from accom_option),#{accom_service_number},#{accom_rooms_option},#{accom_min_people},#{accom_max_people},#{accom_price},#{discount})
+	</insert>
 	<insert id="insertTourService" parameterType="com.spring.tour.vo.TourServiceVo">
 		insert into tour_service values((select nvl(max(service_number)+1,0) from tour_service),#{cate_number},#{user_id},#{tour_name},#{tour_addr},#{tour_type})
 	</insert>
 	<insert id="insertTourInfo" parameterType="com.spring.tour.vo.Tour_infoVo"> 
 		insert into tour_info values((select nvl(max(tour_info_number)+1,0) from tour_info),#{service_number},#{tour_content},#{tour_how},#{tour_rule},#{tour_expire})
 	</insert>
-	<insert id="insertAccomOption" parameterType="com.spring.tour.vo.AccomOptionVo">
-		insert into accom_option values((select nvl(max(accom_option_number)+1,0) from accom_option),#{accom_service_number},#{accom_rooms_option},#{accom_min_people},#{accom_max_people},#{accom_price},#{discount})
+	<insert id="insertTourOption" parameterType="com.spring.tour.vo.TourOptionVo">
+		insert into tour_option values((select nvl(max(tour_option_number)+1,0) from tour_option),#{service_number},(select nvl(max(tour_option_index)+1,1) from tour_option where service_number=#{service_number}),#{tour_option},#{tour_price},#{tour_amount},#{discount})
 	</insert>
 	<insert id="insertImg" parameterType="com.spring.tour.vo.ImageVo">
 		insert into image values((select nvl(max(img_num)+1,0) from image),#{imgorgname},#{imgsavename},#{general_number}, #{cate_number})
@@ -75,6 +87,12 @@
 	<update id="updateTourInfo" parameterType="com.spring.tour.vo.Tour_infoVo">
 		update tour_info set tour_content=#{tour_content}, tour_how=#{tour_how}, tour_rule=#{tour_rule}, tour_expire=#{tour_expire} where service_number=#{service_number}
 	</update>
+	<update id="updateTourOption" parameterType="com.spring.tour.vo.TourOptionVo">
+		update tour_option set tour_price=#{tour_price}, tour_option=#{tour_option}, tour_amount=#{tour_amount}, discount=#{discount} where tour_option_number=#{tour_option_number}
+	</update>
+	<update id="updateTourOptionIndex" parameterType="string">
+		update tour_option set tour_option_index=tour_option_index-1 where tour_option_index > #{tour_option_index}
+	</update>
 	
 	<delete id="deleteAccomService" parameterType="string">
 		delete from accom_service where accom_service_number=#{accom_service_number}
@@ -90,6 +108,9 @@
 	</delete>
 	<delete id="deleteTourInfo" parameterType="string">
 		delete from tour_Info where service_number=#{service_number}
+	</delete>
+	<delete id="deleteTourOption" parameterType="string">
+		delete from tour_option where tour_option_number=#{tour_option_number}
 	</delete>
 	<delete id="deleteImg" parameterType="com.spring.tour.vo.ImageVo">
 		delete from image where general_number=#{general_number} and cate_number=#{cate_number}

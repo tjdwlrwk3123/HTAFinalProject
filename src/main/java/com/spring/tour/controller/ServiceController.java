@@ -24,6 +24,7 @@ import com.spring.tour.vo.AccomInfoVo;
 import com.spring.tour.vo.AccomOptionVo;
 import com.spring.tour.vo.Accom_serviceVo;
 import com.spring.tour.vo.ImageVo;
+import com.spring.tour.vo.TourOptionVo;
 import com.spring.tour.vo.TourServiceVo;
 import com.spring.tour.vo.Tour_infoVo;
 
@@ -167,7 +168,113 @@ public class ServiceController {
 			return ".error";
 		}
 	}
+	@GetMapping("/touroption")
+	public String touroption(String service_number, Model model) {
+		List<TourOptionVo> list = service.selectTourOptionList(service_number);
+		model.addAttribute("list",list);
+		model.addAttribute("service_number",service_number);
+		return ".service.touroption"; 
+	}
+	@GetMapping("/touroptioninsert")
+	public String touroptioninsertpage(String service_number, Model model) {
+		model.addAttribute("service_number", service_number);
+		return ".service.touroptioninsert"; 
+	}
+	@PostMapping("/touroptioninsert")
+	public String touroptioninsert(String service_number, int tour_price, String tour_option, int tour_amount, int discount, MultipartFile[] img, Model model) {
+		try { 
+			String path = sc.getRealPath("/resources/upload");
+			System.out.println(path);
+			
+			TourOptionVo vo = new TourOptionVo(0, Integer.parseInt(service_number), tour_price, 0, tour_option, tour_amount, discount);
+			service.insertTourOption(vo);
 
+			for(int i=0;i<img.length;i++) {
+				String orgfilename=img[i].getOriginalFilename();
+				String savefilename=UUID.randomUUID()+"_"+orgfilename;
+				try {
+					InputStream is=img[i].getInputStream();
+					FileOutputStream fos=new FileOutputStream(path+"\\"+savefilename);
+					FileCopyUtils.copy(is, fos);
+					is.close();
+					fos.close();
+					ImageVo vo1=new ImageVo(0, orgfilename, savefilename, Integer.parseInt(service.selectTourOptioneMax(service_number)), 111);
+					service.insertImg(vo1);
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+					return ".error";
+				}
+			}
+		model.addAttribute("service_number", service_number);
+		return "redirect:/touroption"; 
+		}catch(Exception e) {
+			e.printStackTrace();
+			return ".error";
+		}
+	}
+	@GetMapping("/touroptiondelete")
+	public String touroptiondelete(String service_number, String tour_option_number, Model model) {
+		ImageVo vo = new ImageVo(0, null, null, Integer.parseInt(tour_option_number), 111);
+		List<ImageVo> list=service.selectImageList(vo);
+		service.deleteImg(vo);
+		String path=sc.getRealPath("/resources/upload");
+		for (ImageVo v : list) {
+			File f=new File(path+"\\"+v.getImgsavename());
+			f.delete();
+		}
+		service.deleteTourOption(tour_option_number);
+		service.updateTourOptionIndex(tour_option_number);
+		model.addAttribute("service_number", service_number);
+		return "redirect:/touroption"; 
+	}
+	@GetMapping("/touroptionupdate")
+	public String touroptionupdatepage(String tour_option_number, Model model) {
+		model.addAttribute("vo", service.selectTourOption(tour_option_number));
+		return ".service.touroptionupdate"; 
+	}
+	@PostMapping("/touroptionupdate")
+	public String touroptionupdate(String service_number, String tour_option_number, int tour_price, String tour_option, int tour_amount, int discount, MultipartFile[] img, Model model) {
+		try { 
+			String path = sc.getRealPath("/resources/upload");
+			System.out.println(path);
+			
+			TourOptionVo vo = new TourOptionVo(Integer.parseInt(tour_option_number), Integer.parseInt(service_number), tour_price, 0, tour_option, tour_amount, discount);
+			service.updateTourOption(vo);
+
+			ImageVo ivo = new ImageVo(0, null, null, Integer.parseInt(tour_option_number), 111);
+			List<ImageVo> list=service.selectImageList(ivo);
+			service.deleteImg(ivo);
+			for (ImageVo v : list) {
+				File f=new File(path+"\\"+v.getImgsavename());
+				f.delete();
+			}
+			for(int i=0;i<img.length;i++) {
+				String orgfilename=img[i].getOriginalFilename();
+				String savefilename=UUID.randomUUID()+"_"+orgfilename;
+				try {
+					InputStream is=img[i].getInputStream();
+					FileOutputStream fos=new FileOutputStream(path+"\\"+savefilename);
+					FileCopyUtils.copy(is, fos);
+					is.close();
+					fos.close();
+					ImageVo vo1=new ImageVo(0, orgfilename, savefilename, Integer.parseInt(tour_option_number), 111);
+					service.insertImg(vo1);
+					
+				} catch (IOException e) {
+					e.printStackTrace();
+					return ".error";
+				}
+			}
+		model.addAttribute("service_number",service_number);
+		return "redirect:/accomoption"; 
+		}catch(Exception e) {
+			e.printStackTrace();
+			return ".error";
+		}
+	}
+	
+	
 	@GetMapping("/accommain")
 	public String accommain(HttpSession session,Model model) {
 		try {

@@ -10,6 +10,7 @@ import com.spring.tour.vo.AccomInfoVo;
 import com.spring.tour.vo.AccomOptionVo;
 import com.spring.tour.vo.Accom_serviceVo;
 import com.spring.tour.vo.ImageVo;
+import com.spring.tour.vo.TourOptionVo;
 import com.spring.tour.vo.TourServiceVo;
 import com.spring.tour.vo.Tour_infoVo;
 @Service
@@ -48,6 +49,15 @@ public class ServiceService {
 	public String selectTourServiceMax(String user_id) {
 		return dao.selectTourServiceMax(user_id);
 	} 
+	public String selectTourOptioneMax(String service_number) {
+		return dao.selectTourOptioneMax(service_number);
+	} 
+	public List<TourOptionVo> selectTourOptionList(String service_number) {
+		return dao.selectTourOptionList(service_number);
+	}
+	public TourOptionVo selectTourOption(String tour_option_number) {
+		return dao.selectTourOption(tour_option_number);
+	}
 	public List<ImageVo> selectImageList(ImageVo vo) {
 		return dao.selectImageList(vo);
 	}
@@ -66,6 +76,9 @@ public class ServiceService {
 	}
 	public int inserTourInfo(Tour_infoVo vo) {
 		return dao.insertTourInfo(vo);
+	}
+	public int insertTourOption(TourOptionVo vo) {
+		return dao.insertTourOption(vo);
 	}
 	public int insertImg(ImageVo vo) {
 		return dao.insertImg(vo);
@@ -86,6 +99,12 @@ public class ServiceService {
 	public int updateTourInfo(Tour_infoVo vo) {
 		return dao.updateTourInfo(vo);
 	}
+	public int updateTourOption(TourOptionVo vo) {
+		return dao.updateTourOption(vo);
+	}
+	public int updateTourOptionIndex(String tour_option_index) {
+		return dao.updateTourOptionIndex(tour_option_index);
+	}
 	
 	public int deleteAccomService(String accom_service_number) {
 		return dao.deletAccomService(accom_service_number);
@@ -101,6 +120,9 @@ public class ServiceService {
 	}
 	public int deleteTourInfo(String service_number) {
 		return dao.deleteTourInfo(service_number);
+	}
+	public int deleteTourOption(String tour_option_number) {
+		return dao.deleteTourOption(tour_option_number);
 	}
 	public int deleteImg(ImageVo vo) {
 		return dao.deleteImg(vo);
