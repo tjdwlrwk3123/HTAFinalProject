@@ -20,7 +20,7 @@ import com.spring.tour.vo.WishlistVo;
 
 
 @Controller
-public class TourSelectController {
+public class TourSelectController { 
 
 	@Autowired	
 	private TourPageService service;
@@ -64,9 +64,6 @@ public class TourSelectController {
 		
 		if(req.getSession().getAttribute("user_id")!=null) {
 			map.put("user_id",req.getSession().getAttribute("user_id"));
-			System.out.println("user_id 있음");
-		}else {
-			System.out.println("user_id 없음");
 		}
 		
 		List<WishlistVo> list = service.tourSelectList(map);
