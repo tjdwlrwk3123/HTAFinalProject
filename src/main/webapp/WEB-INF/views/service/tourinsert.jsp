@@ -12,10 +12,10 @@
 		<div id="dated"></div><br>
 		투어 타입 
 		<select name="tour_type" id="tour_type">
-			<option value="1" selected="selected">티켓/패스</option>
-			<option value="2">테마파크</option>
-			<option value="3">취미/클래스</option>
-			<option value="4">맛집</option>
+			<option value="티켓/패스" selected="selected">티켓/패스</option>
+			<option value="테마파크">테마파크</option>
+			<option value="취미/클래스">취미/클래스</option>
+			<option value="맛집">맛집</option>
 		</select><br><br>
 		투어 메인 이미지
 		<input type="button" onclick="addimg()" value="+">

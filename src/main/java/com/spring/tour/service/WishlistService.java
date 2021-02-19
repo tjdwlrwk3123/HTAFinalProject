@@ -1,5 +1,6 @@
 package com.spring.tour.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +15,11 @@ public class WishlistService {
 	@Autowired
 	private WishlistDao dao;
 	
-	public int  wishlist_insert(WishlistVo vo ) {
-		return dao.wishlist_insert(vo);
+	public int  wishlist_insert(HashMap<String, Object> wishMap ) {
+		return dao.wishlist_insert(wishMap);
 	}
-	public int wishlist_delete(WishlistVo vo ) {
-		return dao.wishlist_delete(vo);
+	public int wishlist_delete(HashMap<String, Object> wishMap) {
+		return dao.wishlist_delete(wishMap);
 	}
 	public List<WishlistVo> wishlist_list(String user_id){
 		return dao.wishlist_list(user_id);

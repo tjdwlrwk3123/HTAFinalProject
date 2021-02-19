@@ -1,5 +1,6 @@
 package com.spring.tour.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -16,12 +17,12 @@ public class WishlistDao {
 	
 	private final String NAMESPACE = "com.spring.tour.mapper.WishlistMapper";
 	
-	public int wishlist_insert(WishlistVo vo) {
-		return sqlsession.insert(NAMESPACE+".insert",vo);
+	public int wishlist_insert(HashMap<String, Object> wishMap) {
+		return sqlsession.insert(NAMESPACE+".insert",wishMap);
 	}
 	
-	public int wishlist_delete(WishlistVo vo) {
-		return sqlsession.delete(NAMESPACE+".delete",vo);
+	public int wishlist_delete(HashMap<String, Object> wishMap) {
+		return sqlsession.delete(NAMESPACE+".delete",wishMap);
 	}
 	
 	public List<WishlistVo> wishlist_list(String user_id){

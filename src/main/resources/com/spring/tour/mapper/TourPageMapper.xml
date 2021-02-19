@@ -28,11 +28,12 @@
 		) <![CDATA[where rownum <=8]]>
  	</select>
  	
- 	<select id="selectlist" parameterType="hashmap" resultType="tourselect">
-select * from
-(
-    select  cate_number, h.service_number, tour_name, tour_type, avgpoint, rcnt, tour_price, tour_amount, tour_expire, img_num, imgsavename from (
-        select distinct img_num,imgsavename, f.service_number, f.cate_number, tour_name,tour_type,avgpoint,tour_price,tour_amount, rcnt  from 
+ 	<select id="selectlist" parameterType="hashmap" resultType="wishlist">
+<if test="user_id!=null">
+select i.cate_number,i.service_number, tour_type, tour_name, avgpoint, rcnt, img_num, imgsavename, tour_price, tour_amount, discount, dcnt, tour_expire, user_id, dcprice from(
+</if> 
+	select g.cate_number,g.service_number, tour_type, tour_name, avgpoint, rcnt, img_num, imgsavename, tour_price, tour_amount, discount, dcnt, tour_expire, nvl(tour_price-tour_price/100*discount,tour_price) dcprice from (
+        select distinct  e.cate_number, e.service_number, tour_type, tour_name, avgpoint, rcnt, img_num, imgsavename,  tour_price, tour_amount, discount, dcnt  from 
 		    (
 		         select img_num,imgsavename, b.service_number, a.cate_number, tour_name,tour_type  from 
 		            (           
@@ -41,17 +42,24 @@ select * from
 		                select tour_name, cate_number, service_number, tour_type from tour_service)
 		                b on a.cate_number=b.cate_number and general_number = service_number
 		            )e join (
-            select avgpoint, cate_number,c.service_number, tour_price,tour_amount, rcnt from 
+		        select avgpoint, rcnt, cate_number, c.service_number, tour_price, tour_amount, discount ,dcnt from 
 		            (
 		                select avg(star_point) avgpoint, count(review_number)rcnt, cate_number, service_number from review group by service_number,cate_number,service_number order by service_number)
 		                c join (
-                       select * from tour_option where (service_number, tour_option_index, tour_price) in 
-                        (select service_number, min(tour_option_index), min(tour_price) from tour_option where (service_number, tour_price) in 
-                        (select service_number, min(tour_price) from tour_option where tour_amount>0 group by service_number) group by service_number)
-                    )d on c.service_number = d.service_number
-            )f on e.cate_number=f.cate_number and e.service_number = f.service_number
-        )g join (select tour_expire,service_number from tour_info)h on g.service_number = h.service_number
- )
+                           select aa.service_number, tour_price, tour_amount, dcnt, discount from 
+                          (
+                            select service_number, max(tour_amount) tour_amount, count(discount)dcnt from (select * from tour_option where tour_amount>0) group by service_number order by service_number
+                            )aa join (
+                            select distinct service_number, tour_price, discount from tour_option where (service_number, tour_price) 
+                            in (select service_number, min(tour_price) tour_price from (select * from tour_option where tour_amount >0) group by service_number) order by service_number
+                            ) bb on aa.service_number = bb.service_number
+                    )
+		                d on c.service_number = d.service_number
+		            )f on e.cate_number=f.cate_number and e.service_number = f.service_number order by avgpoint desc
+		)g join (select tour_expire,service_number from tour_info)h on g.service_number = h.service_number
+<if test="user_id!=null">
+    )i left join (select service_number, user_id from wishlist where user_id=#{user_id})j on i.service_number = j.service_number
+</if>
 		<where>
 			<![CDATA[
 			((tour_expire <= #{endDate} and tour_expire >= #{startDate})
@@ -78,7 +86,7 @@ select * from
 				and avgpoint >= #{targetPoint}
 			</if>
 			<if test="targetPrice!=null">
-				<![CDATA[and tour_price<= #{targetPrice}]]>
+				<![CDATA[and dcprice<= #{targetPrice}]]>
 			</if>
 			<if test="classification!=null">
 				<if test="classification==1">
@@ -88,10 +96,10 @@ select * from
 					order by rcnt desc
 				</if>
 				<if test="classification==3">
-					order by tour_price
+					order by dcprice
 				</if>
 				<if test="classification==4">
-					order by tour_price desc
+					order by dcprice desc
 				</if>
 			</if>
 		</where>

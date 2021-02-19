@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
   <mapper namespace="com.spring.tour.mapper.WishlistMapper">
-	<insert id="insert" parameterType="wishlist">
+	<insert id="insert" parameterType="hashmap">
   		insert into wishlist values(wish_seq.nextval,#{cate_number},#{service_number},#{user_id})
  	</insert>
  	
@@ -25,7 +25,7 @@
 		                c join (
                            select aa.service_number, tour_price, tour_amount, dcnt, discount from 
                           (
-                            select service_number, max(tour_amount) tour_amount, count(discount)dcnt from tour_option group by service_number order by service_number
+                            select service_number, max(tour_amount) tour_amount, count(discount)dcnt from (select * from tour_option where tour_amount>0) group by service_number order by service_number
                             )aa join (
                             select distinct service_number, tour_price, discount from tour_option where (service_number, tour_price) 
                             in (select service_number, min(tour_price) tour_price from (select * from tour_option where tour_amount >0) group by service_number) order by service_number
@@ -37,7 +37,7 @@
  	
  	</select>
  	
- 	<delete id="delete" parameterType="wishlist">
+ 	<delete id="delete" parameterType="hashmap">
  		delete wishlist where cate_number=#{cate_number} and service_number=#{service_number} and user_id=#{user_id}
  	</delete>
   </mapper>

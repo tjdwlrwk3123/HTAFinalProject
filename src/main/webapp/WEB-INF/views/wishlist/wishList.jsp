@@ -96,6 +96,7 @@
 </style>
 <div id="wishlist_wrapper">
 	<div id="wishlist_title">
+		<div id="testStar"></div>
 		<h1>${user_id}님의 위시리스트<img src="${cp }/resources/images/HRT.svg" style="width:40px; margin-bottom:10px;"></h1>
 	</div>
 	
@@ -117,7 +118,7 @@
 		});
 		
 		list();
-		
+
 	});
 	
 	function list(){
@@ -134,7 +135,7 @@
 				let user_id = data.list[i].user_id;
 				let tour_type = data.list[i].tour_type;
 				let tour_name = data.list[i].tour_name;
-				let avgpoint= Math.round(data.list[i].avgpoint);
+				let avgpoint= data.list[i].avgpoint;
 				let rcnt = data.list[i].rcnt; //리뷰 갯수
 				let imgsavename = data.list[i].imgsavename;
 				let tour_price = data.list[i].tour_price;
@@ -150,17 +151,26 @@
 // 				console.log("imgsavename"+imgsavename);
 // 				console.log("tour_price"+tour_price);
 // 				console.log("discount"+discount);
-				var stars = ""; // 가능하면 반개 별도 쓸수 있으면 좋음
-				for(let k=0; k<avgpoint; k++){
+				
+				var fullstars = Math.floor(avgpoint);
+				var decimal =  Math.round(avgpoint*10%10);
+				var stars ="";
+				for(let k=0; k<fullstars; k++){
 					stars+="<img src='${cp }/resources/images/fullStar.svg' class='starImg'>";
 				}
-				for(let l=0; l<5-avgpoint; l++){
+				if(decimal>=1 && decimal<3){
+					stars+="<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>";
+				}else if(decimal>=3 && decimal<8 ){
+					stars+="<img src='${cp }/resources/images/halfStar.svg' class='starImg'>";
+				}else if(decimal>=8){
+					stars+="<img src='${cp }/resources/images/fullStar.svg' class='starImg'>";
+				}
+				for(let l=0; l<5-fullstars-1; l++){
 					stars+="<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>";
 				}
-				
+
 				str+="<div class='col mb-4'>"+
 						"<div class='card h-100' style='width: 14rem;'>"+
-						   	 "<input type='hidden' name='user_id' value='"+user_id+"'>"+
 						   	 "<input type='hidden' name='cate_number' value='"+cate_number+"'>"+
 						   	 "<input type='hidden' name='service_number' value='"+service_number+"'>"+
 						 	 "<img src='${cp }/resources/images/"+imgsavename+"' class='card-img-top'  alt='"+tour_name+"' onclick='move(event)'>"+
@@ -180,7 +190,7 @@
 							str+="<p class='card-text'>옵션최저가 "+tour_price+"원/명</p>";
 				}			   	 
 			   	 		str+="</div>"+
-					   	"<div class='heartbox'><img src='${cp }/resources/images/Heart.svg' class='heartImg' onclick='wish(this)' alt='heart'></div>" +
+					   	"<div class='heartbox'><img src='${cp }/resources/images/HRT.svg' class='heartImg' onclick='wish(this)' alt='heart'></div>" +
 				 	 "</div>"+
 				  "</div>";
 			}
@@ -191,12 +201,11 @@
 
 	
 	function wish(img){
-		var user_id= img.parentNode.parentNode.firstChild
-		var cate_number= user_id.nextSibling;
+		var cate_number= img.parentNode.parentNode.firstChild
 		var service_number= cate_number.nextSibling;
 		
 		if(img.alt=='heart'){
-			$.getJSON("${cp}/wishDelete", {"cate_number":cate_number.value,"service_number":service_number.value,"user_id":user_id.value },
+			$.getJSON("${cp}/wishDelete", {"cate_number":cate_number.value,"service_number":service_number.value},
 				function(data) {
 				let result = data.code;
 				if(result=='delete_success'){
@@ -208,11 +217,11 @@
 			});
 // 			console.log(user_id.value+"/"+cate_number.value+"/"+service_number.value);
 		}else if(img.alt=='brokenHRT' ){
-			$.getJSON("${cp}/wishInsert", {"cate_number":cate_number.value,"service_number":service_number.value,"user_id":user_id.value },
+			$.getJSON("${cp}/wishInsert", {"cate_number":cate_number.value,"service_number":service_number.value},
 				function(data) {
 				let result = data.code;
 				if(result=='insert_success'){
-					img.src="${cp }/resources/images/Heart.svg"
+					img.src="${cp }/resources/images/HRT.svg"
 					img.alt = 'heart';
 				}else if(result=='insert_fail'){
 					alert("insert ERROR");
