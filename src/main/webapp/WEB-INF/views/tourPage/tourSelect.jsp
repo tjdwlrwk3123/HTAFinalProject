@@ -415,20 +415,26 @@ h5{
 				var fullstars = Math.floor(avgpoint);
 				var decimal =  Math.round(avgpoint*10%10);
 				var stars ="";
-				for(let k=0; k<fullstars; k++){
-					stars+="<img src='${cp }/resources/images/fullStar.svg' class='starImg'>";
-				}
-				if(decimal>=1 && decimal<3){
-					stars+="<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>";
-				}else if(decimal>=3 && decimal<8 ){
-					stars+="<img src='${cp }/resources/images/halfStar.svg' class='starImg'>";
-				}else if(decimal>=8){
-					stars+="<img src='${cp }/resources/images/fullStar.svg' class='starImg'>";
-				}
-				for(let l=0; l<5-fullstars-1; l++){
-					stars+="<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>";
-				}
 				
+				if(avgpoint==0){
+					for(let l=0; l<5; l++){
+						stars+="<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>";
+					}
+				}else{
+					for(let k=0; k<fullstars; k++){
+						stars+="<img src='${cp }/resources/images/fullStar.svg' class='starImg'>";
+					}
+					if(decimal>=1 && decimal<3){
+						stars+="<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>";
+					}else if(decimal>=3 && decimal<8 ){
+						stars+="<img src='${cp }/resources/images/halfStar.svg' class='starImg'>";
+					}else if(decimal>=8){
+						stars+="<img src='${cp }/resources/images/fullStar.svg' class='starImg'>";
+					}
+					for(let l=0; l<5-fullstars-1; l++){
+						stars+="<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>";
+					}
+				}
 				str+="<div class='col mb-4'>"+ //두번째 div
 						"<div class='card h-100' style='width: 14rem;'>"+  //3번째 div
 						   	 "<input type='hidden' name='cate_number' value='"+cate_number+"'>"+
