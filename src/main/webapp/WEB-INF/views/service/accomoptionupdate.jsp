@@ -39,7 +39,9 @@
 			if(countimg<maximg){
 				countimg++;
 				let imgbox=document.getElementById("imgbox");
-				imgbox.innerHTML+="<div><input type='file' name='img'></div>";
+				let div=document.createElement("div");
+				div.innerHTML="<input type='file' name='img'>";
+				imgbox.appendChild(div);
 			}else{
 				alert("이미지는 최대 "+maximg+"개 까지 추가할 수 있습니다.");
 			}
