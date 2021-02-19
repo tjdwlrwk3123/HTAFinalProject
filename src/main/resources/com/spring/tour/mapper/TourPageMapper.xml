@@ -37,7 +37,7 @@ select i.cate_number,i.service_number, tour_type, tour_name, avgpoint, rcnt, img
 		    (
 		         select img_num,imgsavename, b.service_number, a.cate_number, tour_name,tour_type  from 
 		            (           
-		                select * from image where img_num in (select min(img_num) from image group by general_number))
+		                 select * from image where (img_num,cate_number) in (select min(img_num) img_num, cate_number from image group by general_number, cate_number having cate_number=1))
 		                a join (
 		                select tour_name, cate_number, service_number, tour_type from tour_service)
 		                b on a.cate_number=b.cate_number and general_number = service_number
