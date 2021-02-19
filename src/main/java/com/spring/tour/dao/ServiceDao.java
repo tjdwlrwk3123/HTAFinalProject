@@ -90,6 +90,12 @@ public class ServiceDao {
 	public int deleteAccomOption(String accom_option_number) {
 		return sqlSession.delete(NAMESPACE+".deleteAccomOption",accom_option_number);
 	}
+	public int deletTourService(String service_number) {
+		return sqlSession.delete(NAMESPACE+".deleteTourService",service_number);
+	}
+	public int deleteTourInfo(String service_number) {
+		return sqlSession.delete(NAMESPACE+".deleteTourInfo",service_number);
+	}
 	public int deleteImg(ImageVo vo) {
 		return sqlSession.delete(NAMESPACE+".deleteImg",vo);
 	}

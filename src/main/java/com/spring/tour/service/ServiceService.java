@@ -87,6 +87,12 @@ public class ServiceService {
 	public int deleteAccomOption(String accom_option_number) {
 		return dao.deleteAccomOption(accom_option_number);
 	}
+	public int deleteTourService(String service_number) {
+		return dao.deletTourService(service_number);
+	}
+	public int deleteTourInfo(String service_number) {
+		return dao.deleteTourInfo(service_number);
+	}
 	public int deleteImg(ImageVo vo) {
 		return dao.deleteImg(vo);
 	}

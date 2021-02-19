@@ -3,6 +3,11 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+    <settings>
+    	<setting name="cacheEnabled" value="false" />
+        <setting name="jdbcTypeForNull" value="NULL" />
+    </settings>
+    
   <typeAliases>
   	<typeAlias type="com.spring.tour.vo.WishlistVo" alias="wishlist"/>
   	<typeAlias type="com.spring.tour.vo.TourPageVo" alias="tourpage"/>
@@ -28,7 +33,6 @@
   	<typeAlias type="com.spring.tour.vo.CouponInfoVo" alias="couponInfo"/>
   	<typeAlias type="com.spring.tour.vo.CouponVo" alias="couponVo"/>
   </typeAliases>
-  
   <!-- 읽어올 Mapper파일 설정 -->
 	<mappers>
 			<mapper resource="com/spring/tour/mapper/WishlistMapper.xml"/>

@@ -95,7 +95,10 @@
 			}
 			if(datec.checked){
 				let tour_expire=document.getElementsByName("tour_expire")[0].value;
-				alert(tour_expire);
+				if(tour_expire==""){
+					alert("유효기간을 입력하세요");
+					return false;
+				}
 			}
 			return true;
 		}

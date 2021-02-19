@@ -37,7 +37,7 @@ public class ServiceController {
 	public String tourmain(HttpSession session,Model model) {
 		try {
 			System.out.println(session);
-			session.setAttribute("user_id", "tset");
+			session.setAttribute("user_id", "test");
 			String user_id=(String)session.getAttribute("user_id");
 			System.out.println(session.getAttribute("user_id"));
 			if(user_id.equals("")||user_id==null) {
@@ -62,6 +62,9 @@ public class ServiceController {
 			String path = sc.getRealPath("/resources/upload");
 			System.out.println(path);
 			System.out.println(tour_expire);
+			if(tour_expire==null) {
+				System.out.println("³Î!!!!");
+			}
 			String user_id="";
 			try {
 				user_id=(String)session.getAttribute("user_id");
@@ -84,7 +87,7 @@ public class ServiceController {
 					FileCopyUtils.copy(is, fos);
 					is.close();
 					fos.close();
-					ImageVo vo=new ImageVo(0, orgfilename, savefilename, Integer.parseInt(service.selectAccomServiceMax(user_id)), 1);
+					ImageVo vo=new ImageVo(0, orgfilename, savefilename, Integer.parseInt(service.selectTourServiceMax(user_id)), 1);
 					service.insertImg(vo);
 					
 				} catch (IOException e) {
@@ -97,14 +100,27 @@ public class ServiceController {
 			e.printStackTrace();
 			return ".error";
 		}
-		
+	}
+	@GetMapping("/tourdelete")
+	public String tourdelete(String service_number) {
+		ImageVo vo = new ImageVo(0, null, null, Integer.parseInt(service_number), 1);
+		List<ImageVo> list=service.selectImageList(vo);
+		service.deleteImg(vo);
+		String path=sc.getRealPath("/resources/upload");
+		for (ImageVo v : list) {
+			File f=new File(path+"\\"+v.getImgsavename());
+			f.delete();
+		}
+		service.deleteTourInfo(service_number);
+		service.deleteTourService(service_number);
+		return "redirect:/accommain"; 
 	}
 
 	@GetMapping("/accommain")
 	public String accommain(HttpSession session,Model model) {
 		try {
 			System.out.println(session);
-			session.setAttribute("user_id", "tset");
+			session.setAttribute("user_id", "test");
 			String user_id=(String)session.getAttribute("user_id");
 			System.out.println(session.getAttribute("user_id"));
 			if(user_id.equals("")||user_id==null) {
