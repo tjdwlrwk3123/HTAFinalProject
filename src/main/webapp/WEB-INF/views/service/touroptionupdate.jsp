@@ -4,7 +4,7 @@
 <div>
 	<form action="${cp }/touroptionupdate" method="post" enctype="multipart/form-data" onsubmit="return check()">
 		<input type="hidden" name="service_number" value="${vo.service_number }">
-		<input type="hidden" name="tour_option_number" value="${vo.tour_option }">
+		<input type="hidden" name="tour_option_number" value="${vo.tour_option_number }">
 		투어 가격 <input type="number" name="tour_price" value="${vo.tour_price }"><br><br>
 		투어 옵션 <input type="text" name="tour_option" value="${vo.tour_option }"><br><br> 
 		투어 수량 <input type="number" name="tour_amount" value="${vo.tour_amount }"><br><br>
