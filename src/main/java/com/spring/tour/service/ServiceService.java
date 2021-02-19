@@ -102,8 +102,8 @@ public class ServiceService {
 	public int updateTourOption(TourOptionVo vo) {
 		return dao.updateTourOption(vo);
 	}
-	public int updateTourOptionIndex(String tour_option_index) {
-		return dao.updateTourOptionIndex(tour_option_index);
+	public int updateTourOptionIndex(String tour_option_number) {
+		return dao.updateTourOptionIndex(tour_option_number);
 	}
 	
 	public int deleteAccomService(String accom_service_number) {

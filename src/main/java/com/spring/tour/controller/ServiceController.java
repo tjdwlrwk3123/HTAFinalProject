@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -223,8 +224,8 @@ public class ServiceController {
 			File f=new File(path+"\\"+v.getImgsavename());
 			f.delete();
 		}
-		service.deleteTourOption(tour_option_number);
 		service.updateTourOptionIndex(tour_option_number);
+		service.deleteTourOption(tour_option_number);
 		model.addAttribute("service_number", service_number);
 		return "redirect:/touroption"; 
 	}

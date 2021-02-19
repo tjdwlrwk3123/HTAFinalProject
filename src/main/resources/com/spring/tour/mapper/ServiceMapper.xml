@@ -90,8 +90,8 @@
 	<update id="updateTourOption" parameterType="com.spring.tour.vo.TourOptionVo">
 		update tour_option set tour_price=#{tour_price}, tour_option=#{tour_option}, tour_amount=#{tour_amount}, discount=#{discount} where tour_option_number=#{tour_option_number}
 	</update>
-	<update id="updateTourOptionIndex" parameterType="string">
-		update tour_option set tour_option_index=tour_option_index-1 where tour_option_index > #{tour_option_index}
+	<update id="updateTourOptionIndex" parameterType="hashmap">
+		update tour_option set tour_option_index=tour_option_index-1 where tour_option_index > (select tour_option_index from tour_option where tour_option_number=#{tour_option_number}) and service_number=(select service_number from tour_option where tour_option_number=#{tour_option_number})
 	</update>
 	
 	<delete id="deleteAccomService" parameterType="string">

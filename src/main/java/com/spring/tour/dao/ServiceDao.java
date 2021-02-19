@@ -105,8 +105,8 @@ public class ServiceDao {
 	public int updateTourOption(TourOptionVo vo) {
 		return sqlSession.update(NAMESPACE+".updateTourOption", vo);
 	}
-	public int updateTourOptionIndex(String tour_option_index) {
-		return sqlSession.update(NAMESPACE+".updateTourOptionIndex", tour_option_index);
+	public int updateTourOptionIndex(String tour_option_number) {
+		return sqlSession.update(NAMESPACE+".updateTourOptionIndex", tour_option_number);
 	}
 	
 	public int deletAccomService(String accom_service_number) {
