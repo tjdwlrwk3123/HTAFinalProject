@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 
 <div>
-	<form action="${cp }/touroptioninsert" method="post" enctype="multipart/form-data" onsubmit="return check()">
+	<form action="${cp }/touroptionupdate" method="post" enctype="multipart/form-data" onsubmit="return check()">
 		<input type="hidden" name="service_number" value="${vo.service_number }">
 		<input type="hidden" name="tour_option_number" value="${vo.tour_option }">
 		투어 가격 <input type="number" name="tour_price" value="${vo.tour_price }"><br><br>

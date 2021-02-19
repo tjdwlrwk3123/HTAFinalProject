@@ -267,7 +267,7 @@ public class ServiceController {
 				}
 			}
 		model.addAttribute("service_number",service_number);
-		return "redirect:/accomoption"; 
+		return "redirect:/touroption"; 
 		}catch(Exception e) {
 			e.printStackTrace();
 			return ".error";
