@@ -128,6 +128,10 @@ h5{
 	margin:3px;
 
 }
+.card-img-top{
+	width:222px;
+	height:170px;
+}
 .heartbox{
 		position: absolute;
 		bottom:0;
@@ -199,10 +203,10 @@ h5{
 		<div id="tour_option">
 			<input type="text" placeholder="검색어 입력" id="keyword"><button id="btn1" onclick="search()">검색</button>
 			<input type="hidden" id="classification">
-			<a href="javascript:orderChange(1);"<c:if test='${classification==1}'>style="font-weight: 800;"</c:if>>추천순</a>
-			<a href="javascript:orderChange(2);"<c:if test='${classification==2}'>style="font-weight: 800;"</c:if>>리뷰많은순</a>
-			<a href="javascript:orderChange(3);"<c:if test='${classification==3}'>style="font-weight: 800;"</c:if>>낮은가격순</a>
-			<a href="javascript:orderChange(4);"<c:if test='${classification==4}'>style="font-weight: 800;"</c:if>>높은가격순</a>
+			<a href="javascript:orderChange(1,this);" class="classification">추천순</a>
+			<a href="javascript:orderChange(2,this);" class="classification">리뷰많은순</a>
+			<a href="javascript:orderChange(3,this);" class="classification" >낮은가격순</a>
+			<a href="javascript:orderChange(4,this);" class="classification">높은가격순</a>
 		</div>
 		<div id="tour_content">
 		</div>
@@ -291,7 +295,11 @@ h5{
 		initialPage(param);
 	}
 	
-	function orderChange(classification){ // 정렬 순서 변할때 
+	function orderChange(classification,h){ // 정렬 순서 변할때 
+		$(".classification").each(function(){
+			$(this).css({"font-weight":400,"hover":"font-weight:800"});
+		});
+		h.style="font-weight:800";
 		var startDate=$("#from").val();
 		var endDate=$("#to").val();
 		var tourType="0";
@@ -436,10 +444,10 @@ h5{
 					}
 				}
 				str+="<div class='col mb-4'>"+ //두번째 div
-						"<div class='card h-100' style='width: 14rem;'>"+  //3번째 div
+						"<div class='card h-100' style='width: 14rem;' onclick='move(this)'>"+  //3번째 div
 						   	 "<input type='hidden' name='cate_number' value='"+cate_number+"'>"+
 						   	 "<input type='hidden' name='service_number' value='"+service_number+"'>"+
-						 	 "<img src='${cp }/resources/images/"+imgsavename+"' class='card-img-top'  alt='"+tour_name+"' onclick='move(event)'>"+
+						 	 "<img src='${cp }/resources/upload/"+imgsavename+"' class='card-img-top'  alt='"+tour_name+"' >"+
 						 	 "<div class="+tour_name+">"+ //4번째 div
 						   		 "<h5 class='card-title'>"+tour_name+"</h5>"+
 							   	 "<p class='card-text'>"+tourType+"</p>"+
@@ -520,6 +528,7 @@ h5{
 	});
 	
 	function wish(img){
+		event.stopPropagation(); //이벤트 중복일때 후순위 이벤트는 일어나지 않도록 막는 메소드
 		var cate_number= img.parentNode.parentNode.firstChild
 		var service_number= cate_number.nextSibling;
 		
@@ -561,9 +570,9 @@ h5{
 	}
 	
 	
-	function move(e){
-		var cate_number=parseInt(e.target.previousSibling.previousSibling.value);
-		var service_number=parseInt(e.target.previousSibling.value);
+	function move(m){
+		var cate_number=parseInt(m.firstChild.value);
+		var service_number=parseInt(m.firstChild.nextSibling.value);
 		window.location.href="${cp}/tourDetail?cate_number="+cate_number+"&service_number="+service_number;
 	}
 </script>

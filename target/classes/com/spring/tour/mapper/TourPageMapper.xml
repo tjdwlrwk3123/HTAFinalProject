@@ -30,7 +30,7 @@
  	
  	<select id="selectlist" parameterType="hashmap" resultType="wishlist">
 <if test="user_id!=null">
-select i.cate_number,i.service_number, tour_type, tour_name, nvl(avgpoint,0) avgpoint, nvl(rcnt,0) rcnt, img_num, imgsavename, tour_price, tour_amount, discount, dcnt, tour_expire, user_id, dcprice from(
+select i.cate_number,i.service_number, tour_type, tour_name, nvl(avgpoint,0) avgpoint, nvl(rcnt,0) rcnt, img_num, imgsavename, tour_price, tour_amount, discount, nvl(dcnt,0), tour_expire, user_id, dcprice from(
 </if> 
 		select g.cate_number,g.service_number, tour_type, tour_name, avgpoint, rcnt, img_num, imgsavename, tour_price, tour_amount, discount, dcnt, tour_expire, nvl(tour_price-tour_price/100*discount,tour_price) dcprice from (
         select distinct  e.cate_number, e.service_number, tour_type, tour_name, avgpoint, rcnt, img_num, imgsavename,  tour_price, tour_amount, discount, dcnt  from 
@@ -46,14 +46,18 @@ select i.cate_number,i.service_number, tour_type, tour_name, nvl(avgpoint,0) avg
                     (
                        select avg(star_point) avgpoint, count(review_number)rcnt, cate_number, service_number from review group by service_number,cate_number,service_number having cate_number = 1 )
                         c right join (
-                           select aa.service_number, tour_price, tour_amount, dcnt, discount from 
-                          (
-                            select service_number, max(tour_amount) tour_amount, count(discount)dcnt from (select * from tour_option where tour_amount>0) group by service_number 
-                            )aa join (
-                            select distinct service_number, tour_price, discount from tour_option where (service_number, tour_price) 
-                            in (select service_number, min(tour_price) tour_price from (select * from tour_option where tour_amount >0) group by service_number)
-                            ) bb on aa.service_number = bb.service_number) 
-                            d on c.service_number = d.service_number
+                           select aa.service_number, tour_price, tour_amount, dcnt, discount from
+                            (
+                                select service_number, tour_price, max(discount) discount, max(tour_amount)tour_amount from
+                                (
+                                    select service_number, tour_price, discount, tour_amount from tour_option 
+                                    where (service_number, tour_price) in (select service_number, min(tour_price) tour_price from (select * from tour_option where tour_amount >0) group by service_number) order by service_number
+                                ) 
+                                group by service_number, tour_price order by service_number
+                            )aa left join (
+                        select service_number, count(discount) dcnt from( select service_number, discount from tour_option where discount!=0) group by service_number
+                        )bb on aa.service_number=bb.service_number
+                       )d on c.service_number = d.service_number
 		            )f on e.cate_number=f.cate_number and e.service_number = f.service_number order by avgpoint desc
 		)g join (select tour_expire,service_number from tour_info)h on g.service_number = h.service_number
 <if test="user_id!=null">

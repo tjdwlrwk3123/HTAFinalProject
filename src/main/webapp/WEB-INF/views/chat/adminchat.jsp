@@ -124,7 +124,7 @@
 		
 		writeResponse1("SYSTEM접속중...");
 		if(ws1!= undefined && ws.readyState != WebSocket.CLOSED){
-			writeResponse1("ws WebSocket is already opended");
+			writeResponse1("SYSTEMws WebSocket is already opended");
 			return;
 		}
 		
@@ -155,7 +155,7 @@
 		writeResponse2("SYSTEM접속중...");
 	
 		if(ws2!= undefined && ws.readyState != WebSocket.CLOSED){
-			writeResponse2("ws WebSocket is already opended");
+			writeResponse2("SYSTEMws WebSocket is already opended");
 			return;
 		}
 		
@@ -185,7 +185,7 @@
 		writeResponse3("SYSTEM접속중...");
 	
 		if(ws3!= undefined && ws.readyState != WebSocket.CLOSED){
-			writeResponse3("ws WebSocket is already opended");
+			writeResponse3("SYSTEMws WebSocket is already opended");
 			return;
 		}
 		
@@ -215,7 +215,7 @@
 		writeResponse4("SYSTEM접속중...");
 	
 		if(ws4!= undefined && ws.readyState != WebSocket.CLOSED){
-			writeResponse4("ws WebSocket is already opended");
+			writeResponse4("SYSTEMws WebSocket is already opended");
 			return;
 		}
 		
@@ -248,10 +248,8 @@
 	function send(){
 		var text = document.getElementById("messageinput").value;
 		if(text==""){
-			console.log("잉1?");
 			return;
 		}
-			console.log("잉2?");
 		text= text+","+document.getElementById("sender").value;
 		console.log("text는 "+text);
 		

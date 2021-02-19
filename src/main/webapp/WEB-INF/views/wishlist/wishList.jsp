@@ -39,9 +39,14 @@
 	}
 	#cardbox div p{
 		margin:3px;
-	
 	}
-	
+	.card-img-top{
+		width:222px;
+		height:170px;
+	}
+	.card {
+		
+	}
 	#cardbox .card:hover{
 		border: 2px dashed black;
 	}	
@@ -112,7 +117,7 @@
 
 
 	$(document).ready(function(){
-		var loading = $('<div id="loading" class="loading"></div><img id="loading_img" alt="loading" src="${cp}/resources/gimgs/viewLoading.gif" />').appendTo(document.body).hide();
+		var loading = $('<div id="loading" class="loading"></div><img id="loading_img" alt="loading" src="${cp}/resources/images/viewLoading.gif" />').appendTo(document.body).hide();
 		$(window)	
 		.ajaxStart(function(){
 		loading.show();
@@ -174,10 +179,10 @@
 				}
 
 				str+="<div class='col mb-4'>"+
-						"<div class='card h-100' style='width: 14rem;'>"+
+						"<div class='card h-100' style='width: 14rem;' onclick='move(this)'>"+
 						   	 "<input type='hidden' name='cate_number' value='"+cate_number+"'>"+
 						   	 "<input type='hidden' name='service_number' value='"+service_number+"'>"+
-						 	 "<img src='${cp }/resources/images/"+imgsavename+"' class='card-img-top'  alt='"+tour_name+"' onclick='move(event)'>"+
+						 	 "<img src='${cp }/resources/upload/"+imgsavename+"' class='card-img-top'  alt='"+tour_name+"'>"+
 						 	 "<div class="+tour_name+">"+
 						   		 "<h5 class='card-title'>"+tour_name+"</h5>"+
 							   	 "<p class='card-text'>"+tour_type+"</p>"+
@@ -203,11 +208,44 @@
 		});
 	}
 
+// 	$(".heartImg").on('click',function(e){
+// 		var cate_number= e.target.parentNode.parentNode.firstChild
+// 		var service_number= cate_number.nextSibling;
+		
+// 		if(img.alt=='heart'){
+// 			alert("bb");
+// 			$.getJSON("${cp}/wishDelete", {"cate_number":cate_number.value,"service_number":service_number.value},
+// 				function(data) {
+// 				let result = data.code;
+// 				if(result=='delete_success'){
+// 					img.src="${cp }/resources/images/brokenHRT.svg"
+// 					img.alt = 'brokenHRT';
+// 				}else if(result=='delete_fail'){
+// 					alert("delete ERROR");
+// 				}
+// 			});
+// // 			console.log(user_id.value+"/"+cate_number.value+"/"+service_number.value);
+// 		}else if(img.alt=='brokenHRT' ){
+// 			alert("bb");
+// 			$.getJSON("${cp}/wishInsert", {"cate_number":cate_number.value,"service_number":service_number.value},
+// 				function(data) {
+// 				let result = data.code;
+// 				if(result=='insert_success'){
+// 					img.src="${cp }/resources/images/HRT.svg"
+// 					img.alt = 'heart';
+// 				}else if(result=='insert_fail'){
+// 					alert("insert ERROR");
+// 				}
+// 			});
+// 		}
+// 	});
 	
+
 	function wish(img){
+		event.stopPropagation();
 		var cate_number= img.parentNode.parentNode.firstChild
 		var service_number= cate_number.nextSibling;
-		
+		console.log(cate_number);
 		if(img.alt=='heart'){
 			$.getJSON("${cp}/wishDelete", {"cate_number":cate_number.value,"service_number":service_number.value},
 				function(data) {
@@ -234,9 +272,9 @@
 		}
 	}
 	
-	function move(e){
-		var cate_number=parseInt(e.target.previousSibling.previousSibling.value);
-		var service_number=parseInt(e.target.previousSibling.value);
+	function move(m){
+		var cate_number=parseInt(m.firstChild.value);
+		var service_number=parseInt(m.firstChild.nextSibling.value);
 		console.log(cate_number+"//"+service_number);
 		
 		window.location.href="${cp}/tourDetail?cate_number="+cate_number+"&service_number="+service_number;

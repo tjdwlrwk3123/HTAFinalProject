@@ -122,7 +122,7 @@
 		<div id="messages">
 		</div>
 		<div id="btnbox">
-			<textarea id="inputtext" rows="7" cols="31" style="resize:none;" ></textarea>
+			<textarea id="inputtext" style="width:230px; height:150px; resize:none;" ></textarea>
 			<input type="button" value="SEND" id="send" onclick="send()" style="float:right; margin:5px;"><br>
 		</div>
 	</div>
@@ -133,16 +133,28 @@
 	
 	var messages = document.getElementById("messages"); 
 	
+	
+    var doubleSubmitFlag = false;
+    function doubleSubmitCheck(){
+        if(doubleSubmitFlag){
+            return doubleSubmitFlag;
+        }else{
+            doubleSubmitFlag = true;
+            return false;
+        }
+    }
+
 	$("#chat_icon").on("click",function(){ 
 		$("#chat_window").toggle(500);
 	});
 	
 	
 	$("#closebtn").on("click",function(){ // 닫으면 종료
-		closeSocket();
-		clearText();
-		$("#chat_window").toggle(500);
 		
+		closeSocket();
+		doubleSubmitFlag=false;
+		$("#chat_window").toggle(500);
+		$("#messages").empty();
 		$.getJSON("${cp}/logout.do", {"username":$("#sender").val()}, // 디비에서 로그아웃 로그해주기
 				function(data) {
 			console.log("DB데이터처리는 ! : "+data.code);
@@ -150,8 +162,8 @@
 		$("#callwrap").fadeIn(700);
 	});
 	
-	
-	$("#call").click(function(){
+	$("#call").on('click',function(){
+		if(doubleSubmitCheck()) return;
 		$.getJSON("${cp}/login.do", function(data) {
 			if(data.code=='success'){
 				var username = data.username;
@@ -169,7 +181,7 @@
 	function openSocket(){
 		writeResponse("SYSTEM잠시만 기다려주세요.");
 		if(ws!= undefined && ws.readyState != WebSocket.CLOSED){
-			writeResponse("ws WebSocket is already opended");
+			writeResponse("SYSTEMws WebSocket is already opended");
 			return;
 		}
 		//웹 소켓 만드는 코드
@@ -203,7 +215,8 @@
 			writeResponse(event.data);
 		}
 		ws.onclose=function(event){
-			writeResponse("대화를 종료합니다.");
+			writeResponse("SYSTEM대화를 종료합니다.");
+			$("#messages").empty();
 		}
 	}
 	
