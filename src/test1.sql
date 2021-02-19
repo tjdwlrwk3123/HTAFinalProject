@@ -454,8 +454,6 @@ ALTER TABLE tour_book
 ALTER TABLE tour_book_option
 	ADD FOREIGN KEY (tour_book_number)
 	REFERENCES tour_book (tour_book_number)
-	ADD FOREIGN KEY (tour_option_index)
-	REFERENCES tour_option (tour_option_number)
 ;
 
 
