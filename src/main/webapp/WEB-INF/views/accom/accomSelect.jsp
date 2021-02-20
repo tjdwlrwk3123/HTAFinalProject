@@ -54,6 +54,7 @@
 	#accomWrap{width: 1000px; height: 1000px;}
 	.accomSelectSection{width:500px; height:200px;}
 	.accomSelectSection .accomSelectImage{display:inline-block; margin-right:10px;}
+	.accomSelectSection .accomSelectImage img{width: 150px; height: 150px;}
 	.accomSelectSection .accomSelectInfo{display:inline-block;}
 	
 	#accomOrderBox {
@@ -161,7 +162,7 @@ var totcnt=1; //총 인원수
 
 
 	$(document).ready(function(){
-		var loading = $('<div id="loading" class="loading"></div><img id="loading_img" alt="loading" src="${cp}/resources/gimgs/viewLoading.gif" />').appendTo(document.body).hide();
+		var loading = $('<div id="loading" class="loading"></div><img id="loading_img" alt="loading" src="${cp}/resources/images/viewLoading.gif" />').appendTo(document.body).hide();
 		$(window)	
 		.ajaxStart(function(){
 		loading.show();
@@ -222,6 +223,12 @@ var totcnt=1; //총 인원수
 					var minprice=data.list[i].minp;
 					var maxprice=data.list[i].maxp;
 					var howLong=data.howLong;
+					var image=data.image[i];
+					if(image==null){
+						var imageName="sorry.jpg";
+					}else{
+						var imageName=data.image[i].imgsavename;
+					}
 					console.log(accomName);
 					console.log(minprice);
 					var content="<a href='${cp}/accomDetail?accomNum="+accomNum+
@@ -229,11 +236,10 @@ var totcnt=1; //총 인원수
 							"&count="+count+"&cate_number="+cate_number+"'>"+
 				"<section class='accomSelectSection'>"+
 					"<div class='accomSelectImage'>"+
-					"<img src='${cp}/resources/images/1.png'>"+
+					"<img src='${cp}/resources/upload/"+imageName+"'>"+
 					"</div>"+
 					"<div class='accomSelectInfo'>"+
 					"<h3>"+accomName+"</h3>"+
-					"<p>숙소정보</p>"+
 					"<p style='font-weight:bold; display:inline-block;'>총 "+minprice*howLong+"부터~</p>"+
 					"<div style='font-size: 0.7em; display:inline-block; margin-left:10px;'>(1인당 "+parseInt(minprice*howLong/count)+"원)</div>"+
 					"<div>1박 "+minprice+"원</div>"+

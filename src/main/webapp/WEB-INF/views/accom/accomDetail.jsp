@@ -51,7 +51,7 @@
 	#accomDetail_wrapper #detail #info #infobox #mapbox{width:500px; height:330px; margin-top:20px; border:3px solid black; overflow: hidden;}
 	#accomDetail_wrapper #detail #info #infobox #mapbox #map{width:490px; height:300px; margin:auto;}
 	#accomDetail_wrapper #option .fotorama{width: 230px; display: inline-block;}
-	#accomDetail_wrapper #option .tableformOpt{border: 1px solid black; margin: 1px; padding: 2px; width: 600px; height:250px;}
+	#accomDetail_wrapper #option .tableformOpt{border: 1px solid black; margin: 1px; padding: 2px; width: 600px; height:200px;}
 	#accomDetail_wrapper #option .opt{display: inline-block; position: relative; float: left; top:50px;}
 	#adultNum{
 		-ms-user-select: none;
@@ -119,7 +119,7 @@
 	<!-- 메인 사진들 -->
 	<div class="fotorama" data-nav="thumbs" data-width="500" data-heigth="500">
 		<c:forEach var="p" items="${wholeImage }" varStatus="status">
-			<img src='${cp}/resources/gimgs/${p.imgsavename}' width="500" height="500">
+			<img src='${cp}/resources/upload/${p.imgsavename}' width="500" height="500">
 		</c:forEach>
 	</div>
 	<div style="width: 1100px; background-color: #E4F7BA;">
@@ -331,7 +331,7 @@
 	
 	///////////////재검색 ajax////////////////////
 	$(document).ready(function(){
-		var loading = $('<div id="loading" class="loading"></div><img id="loading_img" alt="loading" src="${cp}/resources/gimgs/viewLoading.gif" />').appendTo(document.body).hide();
+		var loading = $('<div id="loading" class="loading"></div><img id="loading_img" alt="loading" src="${cp}/resources/images/viewLoading.gif" />').appendTo(document.body).hide();
 		$(window)	
 		.ajaxStart(function(){
 		loading.show();
@@ -397,13 +397,13 @@
 				' data-allowfullscreen="native" width="200">';
 				for(let j=0;j<data.image[i].length;j++){
 					var img=data.image[i][j].imgsavename;
-					imgdiv+='<img src="${cp}/resources/gimgs/'+img+'">'
+					imgdiv+='<img src="${cp}/resources/upload/'+img+'">'
 				}
 				imgdiv+='</div>';
 				//예약 가능불가능 확인
 				if(data.using[i]=='예약가능'){
 					var endContent=
-						'<div style="float:right; margin-top:180px; margin-right:20px;">'+
+						'<div style="float:right; margin-top:130px; margin-right:20px;">'+
 						'<form action="${cp}/payment" method="post">'+
 						'<input type="hidden" name="serviceName" value="'+serviceName+'">'+
 						'<input type="hidden" name="cateNumber" value="'+cateNumber+'">'+
@@ -420,8 +420,8 @@
 						'</div>';
 				}else{
 					var endContent=
-						'<div style="float:right; top:50px;">'+
-						'<span style="font-size:1.5em;">예약불가</span>'+
+						'<div style="float:right; margin-top:130px; margin-right:20px;">'+
+						'<span style="font-size:1.3em;">예약불가</span>'+
 						'</div>'+
 						'</div>';
 				}

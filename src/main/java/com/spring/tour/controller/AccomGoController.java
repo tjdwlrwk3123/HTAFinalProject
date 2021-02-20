@@ -69,9 +69,9 @@ public class AccomGoController {
 		AccomInfoVo infoVo=service.accomInfo(accomNum);
 		Accom_serviceVo serviceVo=service.accomService(accomNum);
 		infoVo.setAccom_info_content(infoVo.getAccom_info_content().replace("\\n","<br>"));
-		infoVo.setAccom_how(infoVo.getAccom_how().replace("\\n","<br>"));
-		infoVo.setAccom_rule(infoVo.getAccom_rule().replace("\\n", "<br>"));
-		infoVo.setAccom_chekinfo(infoVo.getAccom_chekinfo().replace("\\n", "<br>"));
+		infoVo.setAccom_how(infoVo.getAccom_how().replaceAll("\\n","<br>"));
+		infoVo.setAccom_rule(infoVo.getAccom_rule().replaceAll("\\n", "<br>"));
+		infoVo.setAccom_chekinfo(infoVo.getAccom_chekinfo().replaceAll("\\n", "<br>"));
 		model.addAttribute("info", infoVo);
 		model.addAttribute("service", serviceVo);
 		model.addAttribute("accomNum", accomNum);

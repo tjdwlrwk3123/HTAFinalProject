@@ -20,4 +20,13 @@ public class MemberManagementService {
 	public int couponCount(HashMap<String, Object> map) {
 		return dao.couponCount(map);
 	}
+	public int createCoupon(HashMap<String, Object> map) {
+		return dao.createCoupon(map);
+	}
+	public int disposalCoupon() {
+		return dao.disposalCoupon();
+	}
+	public int deleteCoupon(HashMap<String, Object> map) {
+		return dao.deleteCoupon(map);
+	}
 }

@@ -55,12 +55,23 @@
 		<th>쿠폰명</th>
 		<th>할인율</th>
 		<th>유효기간</th>
+		<th>삭제</th>
 	</tr>
 	<c:forEach var="coup" items="${couponList }">
 	<tr>
 		<td>${coup.coupon_name }</td>
 		<td>${coup.discount_price }</td>
 		<td>${coup.expire_date }</td>
+		<td>
+			<form action="${cp }/deleteCoupon" method="post" onsubmit="warnDel()">
+			<input type="hidden" value="${coup.coupon_name }" name="coupName">
+			<input type="hidden" value="${coup.discount_price }" name="discount">
+			<c:if test="${coup.expire_date !=null }">
+			<input type="hidden" value="${coup.expire_date }" name="expire">
+			</c:if>
+			<button>쿠폰삭제</button>
+			</form>
+		</td>
 	</tr>
 	</c:forEach>
 </table>
@@ -78,6 +89,8 @@
 </div>
 <div id="createCoup">
 <a href="${cp }/goCreateCoupon">쿠폰발급</a>
+<a href="javascript:couponDisposal()">쿠폰정리</a>
+<input type="hidden" id="disposal" value="${result }">
 </div>
 <div class="couponPaging">
 	<c:forEach var="i" begin="${pu.startPageNum }" end="${pu.endPageNum }">
@@ -105,6 +118,13 @@ $(document).ready(function(){
 		$("#notpicker").css("display","");
 		$("#picker").val("");
 	}
+	
+	if($("#disposal").val()=="success"){
+		alert("삭제 완료했습니다.");
+	}else if($("#disposal").val()=="fail"){
+		alert("삭제실패!");
+	}
+	
 });
 
 $("#field").on('change',function(){
@@ -129,6 +149,24 @@ $("#picker").datepicker({
 	minDate:0,
 	showAnim:"toggle"
 });
+
+function couponDisposal(){
+	var result=confirm("기간이 지난쿠폰 및 사용한 쿠폰들을 정리해서 제거합니다.");
+	if(result){
+		location.href="${cp}/disposalCoupon";
+	}else{
+		
+	}
+}
+
+function warnDel(){
+	var warndel=confirm("이 쿠폰을 소지하고 있는 회원들의 목록에서도 사라집니다. 삭제하시겠습니까?");
+	if(warndel){
+		return true;
+	}else{
+		return false;
+	}
+}
 </script>
 </body>
 </html>

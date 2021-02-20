@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.spring.tour.service.AccomService;
 import com.spring.tour.vo.AccomServiceReviewJoinVo;
 import com.spring.tour.vo.Accom_serviceVo;
+import com.spring.tour.vo.ImageVo;
 
 @RestController
 public class AccomListController {
@@ -49,20 +50,16 @@ public class AccomListController {
 		HashMap<String, Object> result=new HashMap<String, Object>(); //결과로 보낼 해시맵
 		
 		List<AccomServiceReviewJoinVo> resultlist=service.accom_service_list(wholeMap);
-//		List<Integer> list2=new ArrayList<Integer>();
-//		HashMap<String, Object> pmap=new HashMap<String, Object>();
-//		for(AccomServiceReviewJoinVo vo : resultlist) {
-//			int serviceNum= vo.getAccom_service_number();
-//			System.out.println(vo.getAccom_name());
-//			list2.add(serviceNum);
-//		}
-//		pmap.put("snum", list2);
-//		if(classification==3 ||classification==4) {
-//			pmap.put("classification", classification);
-//		}
-//		List<HashMap<String, Object>> resultprice=service.accom_minprice(pmap);
+		
+		List<ImageVo> image=new ArrayList<ImageVo>();
+		for(AccomServiceReviewJoinVo vo:resultlist) {
+			int serviceNum=vo.getAccom_service_number();
+			ImageVo ivo=service.accomRepresentImage(serviceNum);		
+			image.add(ivo);
+		}
+		
 		result.put("list",resultlist);
-//		result.put("price", resultprice);
+		result.put("image",image);
 		result.put("classification", classification);
 		result.put("howLong", howLong);
 		return result;

@@ -48,7 +48,7 @@
 		]]>
 		</if>
 		<if test="category!=null">
-		and cate_number=#{category}
+		and accom_service.cate_number=#{category}
 		</if>
 		</where>
 		) natural join accom_option group by accom_service_number,cate_number,accom_name,avgpoint,rcnt
@@ -108,6 +108,14 @@
 		SELECT trunc(to_date(#{endDate},'yyyy-mm-dd')) - trunc(to_date(#{startDate},'yyyy-mm-dd')) howLong 
 		FROM DUAL
 		]]>
+	</select>
+	<!-- 대표하는 이미지 한개만 뽑기 -->
+	<select id="accom_represent_image" parameterType="int" resultType="image">
+		select * from image where img_num=
+		(
+		select min(img_num) from image 
+		where cate_number in(2,3,4,5) and general_number=#{general_number}
+		)
 	</select>
 	<select id="accom_whole_image" parameterType="int" resultType="image">
 		select * from image where cate_number in(2,3,4,5) and general_number=#{general_number}

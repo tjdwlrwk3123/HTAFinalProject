@@ -36,4 +36,31 @@
 		</if>
 	</if>
 </select>
+
+<insert id="createCoupon" parameterType="hashmap">
+	insert into coupon
+	select coupon_seq.nextval,#{coupon_name},user_id,#{discount_price},#{expire_date, jdbcType=DATE},0 
+	from user_info 
+	where upper(user_grade) in
+	<foreach collection="user_grade" item="item" open="(upper(" close="))" separator="),upper(">
+	#{item}
+	</foreach>
+</insert>
+
+<delete id="disposalCoupon">
+<![CDATA[
+	delete from coupon where coupon_usecondition=1 or expire_date < sysdate
+]]>
+</delete>
+
+<delete id="deleteCoupon" parameterType="hashmap">
+	delete from coupon where coupon_name=#{coupName} 
+	and discount_price=#{discount}
+	<if test="expire!=null">
+	and expire_date=#{expire}
+	</if>
+	<if test="expire==null">
+	and expire_date is null
+	</if>
+</delete>
 </mapper>

@@ -35,6 +35,9 @@ public class AccomDao {
 	public List<AccomOptionVo> accomOption(HashMap<String, Object> map){
 		return sqlSession.selectList(NAMESPACE+".accom_option_detail", map);
 	}
+	public ImageVo accomRepresentImage(int serviceNum) {
+		return sqlSession.selectOne(NAMESPACE+".accom_represent_image", serviceNum);
+	}
 	public List<ImageVo> accomWholeImage(int accomNum){
 		return sqlSession.selectList(NAMESPACE+".accom_whole_image", accomNum);
 	}

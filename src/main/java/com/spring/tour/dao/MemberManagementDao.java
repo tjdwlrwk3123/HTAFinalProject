@@ -22,4 +22,13 @@ public class MemberManagementDao {
 	public int couponCount(HashMap<String, Object> map) {
 		return sqlSession.selectOne(NAMESPACE+".couponCount", map);
 	}
+	public int createCoupon(HashMap<String, Object> map) {
+		return sqlSession.insert(NAMESPACE+".createCoupon", map);
+	}
+	public int disposalCoupon() {
+		return sqlSession.delete(NAMESPACE+".disposalCoupon");
+	}
+	public int deleteCoupon(HashMap<String, Object> map) {
+		return sqlSession.delete(NAMESPACE+".deleteCoupon", map);
+	}
 }

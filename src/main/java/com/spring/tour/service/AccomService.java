@@ -33,6 +33,9 @@ public class AccomService {
 	public List<AccomOptionVo> accomOption(HashMap<String, Object> map){
 		return dao.accomOption(map);
 	}
+	public ImageVo accomRepresentImage(int serviceNum) {
+		return dao.accomRepresentImage(serviceNum);
+	}
 	public List<ImageVo> accomWholeImage(int accomNum){
 		return dao.accomWholeImage(accomNum);
 	}
