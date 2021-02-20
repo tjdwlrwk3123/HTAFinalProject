@@ -10,12 +10,11 @@ public class User_InfoVo {
 	private String user_phone;
 	private String user_condition;
 	private String user_point;
-	private String user_enabled;
 	
 	public User_InfoVo() {}
-
+	
 	public User_InfoVo(String user_id, String user_pass, String user_name, String user_grade, String user_email,
-			String user_addr, String user_phone, String user_condition, String user_point,String user_enabled) {
+			String user_addr, String user_phone, String user_condition, String user_point) {
 		super();
 		this.user_id = user_id;
 		this.user_pass = user_pass;
@@ -26,17 +25,8 @@ public class User_InfoVo {
 		this.user_phone = user_phone;
 		this.user_condition = user_condition;
 		this.user_point = user_point;
-		this.user_enabled=user_enabled;
 	}
 
-	public String getUser_enabled() {
-		return user_enabled;
-	}
-
-	public void setUser_enabled(String user_enabled) {
-		this.user_enabled=user_enabled;
-	}
-	
 	public String getUser_id() {
 		return user_id;
 	}
@@ -114,8 +104,7 @@ public class User_InfoVo {
 		return "User_InfoVo [user_id=" + user_id + ", user_pass=" + user_pass + ", user_name=" + user_name
 				+ ", user_grade=" + user_grade + ", user_email=" + user_email + ", user_addr=" + user_addr
 				+ ", user_phone=" + user_phone + ", user_condition=" + user_condition + ", user_point=" + user_point
-				+ ", user_enabled=" + user_enabled + "]";
+				+ "]";
 	}
-	
 	
 }
