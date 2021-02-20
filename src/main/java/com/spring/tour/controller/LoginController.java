@@ -105,7 +105,7 @@ public class LoginController {
 	        session.setAttribute("user_id", email);
 	        session.setAttribute("token", node.get("access_token"));
 	        //아이디 조회
-	        User_InfoVo vo = new User_InfoVo(email,"","","","","","","","","");
+	        User_InfoVo vo = new User_InfoVo(email,"","","","","","","","");
 	        String result = login_Interface.kakaoinput(vo);
 	        System.out.println("브이오"+vo.getUser_id());
 	        System.out.println(email);
