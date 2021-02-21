@@ -123,7 +123,7 @@
 	<div id="option">
 		<form action="${cp }/payment" method="post" id="optionInfo">
 			<input type="hidden" name="serviceName" value="${detail.tour_name}">
-			<input type="hidden" name="cateNumber" value="${detail.service_number }">
+			<input type="hidden" name="cateNumber" value="${detail.cate_number }">
 			<input type="hidden" name="serviceNumber" value="${detail.service_number }">
 			<input type="hidden" name="endDate" value="${detail.tour_expire }">
 		<c:forEach var="o" items="${option}">
