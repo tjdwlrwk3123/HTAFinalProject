@@ -67,4 +67,21 @@
 		SELECT * FROM user_info
 		where user_email=#{user_email}
 	</select>
+	
+	<update id="changePwd" parameterType="userinfo">
+		update user_info
+		set user_pass = #{user_pass}
+		where user_email=#{user_id}
+	</update>
+	
+	<update id="dropUser" parameterType="String">
+		update user_info
+		set user_condition='3'
+		where user_id=#{user_id}
+	</update>
+	
+	<select id="checkId" parameterType="String" resultType="String">
+		select user_condition from user_info 
+		where user_id=#{user_id}
+	</select>
 </mapper>
