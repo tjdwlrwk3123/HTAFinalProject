@@ -61,4 +61,15 @@ public class MemberDao {
 	public List<User_InfoVo> findid(String user_email) {
 		return sqlSession.selectList(NAMESPACE+".findid",user_email);
 	}
+	
+	public void changePwd(User_InfoVo vo) {
+		sqlSession.update(NAMESPACE+".changePwd",vo);
+	}
+	
+	public void dropUser(String user_id) {
+		sqlSession.update(NAMESPACE+".dropUser",user_id);
+	}
+	public String checkId(String user_id) {
+		return sqlSession.selectOne(NAMESPACE+".checkId",user_id);
+	}
 }

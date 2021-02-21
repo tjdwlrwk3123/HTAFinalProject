@@ -41,23 +41,33 @@ public class MemberService {
 		//dao.createAuthKey(vo.getUser_email(), key);
 		
 		dao.insert(avo);
-		MailHandler sendMail = new MailHandler(mailSender);
-		sendMail.setSubject("[기홍투어 인증 이메일]");
-		sendMail.setText(
-				new StringBuffer().append("<h1>메일인증</h1>").append("<a href='http://localhost:8081/tour/emailConfirm?user_email=").append(vo.getUser_email()).append("&key=").append(key).append("' target='_blenk'>이메일 인증 확인</a>").toString());
-		sendMail.setFrom("dhrmstn11@gmail.com", "관리자");
-		sendMail.setTo(vo.getUser_email());
-		sendMail.send();
-		
+		if(type.equals("member")) {
+			MailHandler sendMail = new MailHandler(mailSender);
+			sendMail.setSubject("[ConnecTrip 일반 회원 인증 이메일]");
+			sendMail.setText(
+					new StringBuffer().append("<h1>메일인증</h1>").append("<a href='http://localhost:8081/tour/emailConfirm?user_email=").append(vo.getUser_email()).append("&key=").append(key).append("' target='_blenk'>이메일 인증 확인</a>").toString());
+			sendMail.setFrom("dhrmstn11@gmail.com", "관리자");
+			sendMail.setTo(vo.getUser_email());
+			sendMail.send();
+		}else if(type.equals("partner")) {
+			MailHandler sendMail = new MailHandler(mailSender);
+			sendMail.setSubject("[ConnecTrip 사업자 인증 이메일]");
+			sendMail.setText(
+					new StringBuffer().append("<h1>사업자는 관리자 승인후 이용가능합니다</h1>").toString());
+			sendMail.setFrom("dhrmstn11@gmail.com", "관리자");
+			sendMail.setTo(vo.getUser_email());
+			sendMail.send();
+		}
 		return 1;
 	}
 	
 	public int changePwdMail(User_InfoVo vo) throws Exception{
 		System.out.println(vo.getUser_email());
+		System.out.println(vo.getUser_id());
 		MailHandler sendMail = new MailHandler(mailSender);
-		sendMail.setSubject("[비밀번호 변경]");
+		sendMail.setSubject("[ConnecTrip 비밀번호 변경]");
 		sendMail.setText(
-				new StringBuffer().append("<h3>비밀번호 변경</h3>").append("<a href='http://localhost:8081/tour/changePwd?user_email=").append(vo.getUser_email()).append("' target='_blenk'>비밀번호 변경</a>").toString());
+				new StringBuffer().append("<h3>비밀번호 변경</h3>").append("<a href='http://localhost:8081/tour/changePwdPage?user_email=").append(vo.getUser_email()).append("&user_id=").append(vo.getUser_id()).append("' target='_blenk'>비밀번호 변경</a>").toString());
 		sendMail.setFrom("dhrmstn11@gmail.com", "관리자");
 		sendMail.setTo(vo.getUser_email());
 		sendMail.send();
@@ -79,5 +89,18 @@ public class MemberService {
 	
 	public List<User_InfoVo> findid(String user_email){
 		return dao.findid(user_email);
+	}
+	
+	public void changePwd(String user_email,String user_pass) {
+		User_InfoVo vo = new User_InfoVo();
+		
+		vo.setUser_email(user_email);
+		vo.setUser_pass(encoder.encode(user_pass));
+		dao.changePwd(vo);
+	}
+	
+	public void dropUser(String user_id) {
+		dao.dropUser(user_id);
+		
 	}
 }

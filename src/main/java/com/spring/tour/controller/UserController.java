@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.mail.Session;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -91,6 +92,11 @@ public class UserController {
 	public String sendPwdEmail(String user_email) throws Exception{
 		User_InfoVo vo = new User_InfoVo();
 		vo.setUser_email(user_email);
+		List<User_InfoVo> findVo = service.findid(user_email);
+		for(User_InfoVo uvo :findVo) {
+			String dbId=uvo.getUser_id();
+			vo.setUser_id(dbId);
+		}
 		service.changePwdMail(vo);
 		return ".home";
 	}
@@ -99,4 +105,31 @@ public class UserController {
 	public String findPwd() {
 		return ".userjoin.findPwd";
 	}
+	
+	@RequestMapping(value="/changePwdPage", method=RequestMethod.GET)
+	public String changePwd(String user_id,String user_email,Model model) {
+		service.findid(user_email);
+		User_InfoVo vo=new User_InfoVo();
+		List<User_InfoVo> findVo = service.findid(user_email);
+		for(User_InfoVo uvo :findVo) {
+			String dbId=uvo.getUser_id();
+			vo.setUser_id(dbId);
+			vo.setUser_email(user_email);
+		}
+		model.addAttribute("vo",vo);
+		return ".userjoin.changePwd";
+	}
+	
+	@RequestMapping(value="/changePwd", method=RequestMethod.POST)
+	public String changeAct(String user_pass,String user_id) {
+		service.changePwd(user_id, user_pass);
+		return ".userjoin.userlogin";
+	}
+	@RequestMapping(value="/dropUser" ,method=RequestMethod.GET)
+	public String dropUser(HttpSession session) {
+		String user_id = (String)session.getAttribute("user_id");
+		service.dropUser(user_id);
+		return ".home";
+	}
+	
 }
