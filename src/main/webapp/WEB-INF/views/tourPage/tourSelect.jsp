@@ -36,10 +36,12 @@
 	display : flex;
 	background-color: #FFCA6C;
 }
+
 a{
 	color:black;
 	font-weight:500;
 }
+
 a:hover{
 	text-decoration:none;
 	color:black;
@@ -117,7 +119,6 @@ a:hover{
 	z-index: 200;
 }
 
-
 h5{
 	margin-top:15px;
 	font-weight: 800;
@@ -169,6 +170,9 @@ h5{
 	font-weight: 800;
 }
 
+/* .classification:hover{ */
+/* 	font-weight:800; */
+/* } */
 
 </style>
 
@@ -179,18 +183,19 @@ h5{
 			<input type="hidden" id="user_id" value="${sessionScope.user_id}">
 			<input type="hidden" id="tourType" value="${tourType}">
 			<ul>
-				<li><a href="javascript:cateChange(0);" <c:if test='${tourType==0}'>style="font-weight: 800;"</c:if>>전체</a></li>
-				<li><a href="javascript:cateChange(1);" <c:if test='${tourType==1}'>style="font-weight: 800;"</c:if>>티켓/패스</a></li>
-				<li><a href="javascript:cateChange(2);" <c:if test='${tourType==2}'>style="font-weight: 800;"</c:if>>테마파크</a></li>
-				<li><a href="javascript:cateChange(3);" <c:if test='${tourType==3}'>style="font-weight: 800;"</c:if>>취미/클래스</a></li>
-				<li><a href="javascript:cateChange(4);" <c:if test='${tourType==4}'>style="font-weight: 800;"</c:if>>맛집</a></li>
+				<li><a href="javascript:cateChange(0);" >전체</a></li>
+				<li><a href="javascript:cateChange(1);" >티켓/패스</a></li>
+				<li><a href="javascript:cateChange(2);" >테마파크</a></li>
+				<li><a href="javascript:cateChange(3);" >취미/클래스</a></li>
+				<li><a href="javascript:cateChange(4);" >맛집</a></li>
 			</ul>
 		</div>
 		<div id="filter">
-			<button onclick="clearFilter();" value="<img src='${cp }/resources/images/reset.svg'>" id="clear">필터초기화</button><br>
+			<label for="clear">필터초기화 </label><img src='${cp }/resources/images/reset.svg' name='clear' id="clear" onclick="clearFilter()" style="width:30px;"><br>
 			<p>조회기간</p>
 			<input type="text" id="from" placeholder="시작일 지정" size="10" onchange="dateChange();"><br> <!-- 유효기간 + 티켓 갯수 남은애들 -->
 			<input type="text" id="to" placeholder="마지막날 지정" size="10" onchange="dateChange();"><br>
+			<input type="checkbox" name="isDiscount" id="isDiscount" onclick="discountChange(this)"><label for="isDiscount">할인 상품만 보기</label><br>
 			<input type="radio" name="starPoint" id="starDefault" onclick="starChange(this.value)" value='0' checked="checked" >전체<br> <!-- 평균 별점 갯수 + 티켓개수 남은애들 -->
 			<input type="radio" name="starPoint" onclick="starChange(this.value)" value='4.5'>별5개 만<br>
 			<input type="radio" name="starPoint" onclick="starChange(this.value)" value='4'>별4개 이상<br>
@@ -203,10 +208,10 @@ h5{
 		<div id="tour_option">
 			<input type="text" placeholder="검색어 입력" id="keyword"><button id="btn1" onclick="search()">검색</button>
 			<input type="hidden" id="classification">
-			<a href="javascript:orderChange(1,this);" class="classification">추천순</a>
-			<a href="javascript:orderChange(2,this);" class="classification">리뷰많은순</a>
-			<a href="javascript:orderChange(3,this);" class="classification" >낮은가격순</a>
-			<a href="javascript:orderChange(4,this);" class="classification">높은가격순</a>
+			<a href="javascript:orderChange(1);" class="classification">추천순</a>
+			<a href="javascript:orderChange(2);" class="classification">리뷰많은순</a>
+			<a href="javascript:orderChange(3);" class="classification" >낮은가격순</a>
+			<a href="javascript:orderChange(4);" class="classification">높은가격순</a>
 		</div>
 		<div id="tour_content">
 		</div>
@@ -225,13 +230,14 @@ h5{
 		loading.hide();
 		});
 		
+		$("li:eq(0) a").css({"font-weight":800, "font-size":'18px'});
+		$(".classification:eq(0)").css({"font-weight":800, "font-size":'17px'});
+		
 		$("#from").datepicker('setDate','today');
 		$("#to").datepicker('setDate','+1M');
 		var startDate=$("#from").val();
 		var endDate=$("#to").val();
-		
 		var tourType=$("#tourType").val();
-		
 		var param={
 				"startDate" : startDate,
 				"endDate" : endDate,
@@ -245,10 +251,12 @@ h5{
 		var keyword = $("#keyword").val();
 		var startDate=$("#from").val();
 		var endDate=$("#to").val();
+		var isDiscount= $("#isDiscount").prop("checked");
 		var param={
 				"startDate" : startDate,
 				"endDate" : endDate,
-				"keyword" : keyword
+				"keyword" : keyword,
+				"isDiscount" : isDiscount
 		}
 		initialPage(param);		
 	}
@@ -257,6 +265,28 @@ h5{
 			search();
 		}
 	}, false);
+
+	
+	function clearFilter(){
+		$("#from").datepicker('setDate','today');
+		$("#to").datepicker('setDate','+1M');
+		var startDate=$("#from").val();
+		var endDate=$("#to").val();
+		var tourType="0";
+		$("#isDiscount").prop("checked",false);
+		if(document.getElementById("tourType").value!=null){
+			tourType= document.getElementById("tourType").value;
+		}
+		$("#price_range").val(MAXPRICE);
+		$("#showRange").html($("#price_range").prop("min")+"원  ~ "+ $("#price_range").val()+"원");
+		var param={
+				"startDate" : startDate,
+				"endDate" : endDate,
+				"tourType":tourType
+		}
+		$("#starDefault").prop("checked","checked");
+	}
+
 	
 	function dateChange(){
 		var startDate=$("#from").val();
@@ -271,6 +301,7 @@ h5{
 		var targetPoint = $("input:radio[name=starPoint]:checked").val();
 		var targetPrice = $("price_range").val();
 		var keyword = $("#keyword").val();
+		var isDiscount= $("#isDiscount").prop("checked");
 		var param={
 				"startDate" : startDate,
 				"endDate" : endDate,
@@ -278,28 +309,32 @@ h5{
 				"classification": classification,
 				"targetPoint": targetPoint,
 				"targetPrice": targetPrice,
-				"keyword": keyword
+				"keyword": keyword,
+				"isDiscount" : isDiscount
 		}
 		initialPage(param);
 	}
 	
 	
 	function cateChange(tourType){ // 필터 항상 초기화 
+		console.log(tourType);
+		$("li a").css({"font-weight":400, "font-size":'16px'});
+		$("li:eq("+tourType+") a").css({"font-weight":800, "font-size":'18px'});
 		var startDate=$("#from").val();
 		var endDate=$("#to").val();
+		var isDiscount= $("#isDiscount").prop("checked");
 		var param={
 				"startDate" : startDate,
 				"endDate" : endDate,
-				"tourType": tourType
+				"tourType": tourType,
+				"isDiscount" : isDiscount
 		}
 		initialPage(param);
 	}
 	
-	function orderChange(classification,h){ // 정렬 순서 변할때 
-		$(".classification").each(function(){
-			$(this).css({"font-weight":400,"hover":"font-weight:800"});
-		});
-		h.style="font-weight:800";
+	function orderChange(cnum){ // 정렬 순서 변할때 
+		$(".classification").css({"font-weight":400, "font-size":'16px'});
+		$(".classification:eq("+(cnum-1)+")").css({"font-weight":800, "font-size":'17px'});
 		var startDate=$("#from").val();
 		var endDate=$("#to").val();
 		var tourType="0";
@@ -309,6 +344,37 @@ h5{
 		var targetPoint = $("input:radio[name=starPoint]:checked").val();
 		var targetPrice = $("price_range").val();
 		var keyword = $("#keyword").val();
+		var isDiscount= $("#isDiscount").prop("checked");
+		var param={
+				"startDate" : startDate,
+				"endDate" : endDate,
+				"tourType": tourType,
+				"classification": cnum,
+				"targetPoint": targetPoint,
+				"targetPrice": targetPrice,
+				"keyword": keyword,
+				"isDiscount" : isDiscount
+		}
+		initialPage(param);
+	}
+	
+	function discountChange(isdc){ // 정렬 순서 변할때 
+		console.log(isdc.checked);
+		var isDiscount =  $(this).prop("checked");		
+		var startDate=$("#from").val();
+		var endDate=$("#to").val();
+		var tourType="0";
+		if(document.getElementById("tourType").value!=null){
+			tourType= document.getElementById("tourType").value;
+		}
+		var classification="0";
+		if(document.getElementById("classification").value!=null){
+			classification= document.getElementById("classification").value;
+		}
+		var targetPoint = $("input:radio[name=starPoint]:checked").val();
+		var targetPrice = $("price_range").val();
+		var keyword = $("#keyword").val();
+		var isDiscount= $("#isDiscount").prop("checked");
 		var param={
 				"startDate" : startDate,
 				"endDate" : endDate,
@@ -316,7 +382,8 @@ h5{
 				"classification": classification,
 				"targetPoint": targetPoint,
 				"targetPrice": targetPrice,
-				"keyword": keyword
+				"keyword": keyword,
+				"isDiscount" : isDiscount
 		}
 		initialPage(param);
 	}
@@ -328,11 +395,13 @@ h5{
 		if(document.getElementById("tourType").value!=null){
 			tourType= document.getElementById("tourType").value;
 		}
+		var classification="0";
 		if(document.getElementById("classification").value!=null){
 			classification= document.getElementById("classification").value;
 		}
 		var targetPrice = $("price_range").val();
 		var keyword = $("#keyword").val();
+		var isDiscount= $("#isDiscount").prop("checked");
 		var param={
 				"startDate" : startDate,
 				"endDate" : endDate,
@@ -340,7 +409,8 @@ h5{
 				"classification": classification,
 				"targetPoint": val,
 				"targetPrice": targetPrice,
-				"keyword": keyword
+				"keyword": keyword,
+				"isDiscount" : isDiscount
 		}
 		initialPage(param);
 	}
@@ -361,6 +431,7 @@ h5{
 		}
 		var targetPoint = $("input:radio[name=starPoint]:checked").val();
 		var keyword = $("#keyword").val();
+		var isDiscount= $("#isDiscount").prop("checked");
 		var param={
 				"startDate" : startDate,
 				"endDate" : endDate,
@@ -368,7 +439,8 @@ h5{
 				"classification": classification,
 				"targetPoint": targetPoint,
 				"targetPrice": val,
-				"keyword": keyword
+				"keyword": keyword,
+				"isDiscount" : isDiscount
 		}
 		initialPage(param);
 		
@@ -422,6 +494,7 @@ h5{
 				
 				var fullstars = Math.floor(avgpoint);
 				var decimal =  Math.round(avgpoint*10%10);
+				console.log("decimal= "+decimal);
 				var stars ="";
 				
 				if(avgpoint==0){
@@ -429,18 +502,24 @@ h5{
 						stars+="<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>";
 					}
 				}else{
-					for(let k=0; k<fullstars; k++){
-						stars+="<img src='${cp }/resources/images/fullStar.svg' class='starImg'>";
-					}
-					if(decimal>=1 && decimal<3){
-						stars+="<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>";
-					}else if(decimal>=3 && decimal<8 ){
-						stars+="<img src='${cp }/resources/images/halfStar.svg' class='starImg'>";
-					}else if(decimal>=8){
-						stars+="<img src='${cp }/resources/images/fullStar.svg' class='starImg'>";
-					}
-					for(let l=0; l<5-fullstars-1; l++){
-						stars+="<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>";
+					if(fullstars==5){ // 평점이 5점이면~ 
+						for(let k=0; k<fullstars; k++){
+							stars+="<img src='${cp }/resources/images/fullStar.svg' class='starImg'>";
+						}
+					}else{
+						for(let k=0; k<fullstars; k++){
+							stars+="<img src='${cp }/resources/images/fullStar.svg' class='starImg'>";
+						}
+						if(decimal>=1 && decimal<3){
+							stars+="<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>";
+						}else if(decimal>=3 && decimal<8 ){
+							stars+="<img src='${cp }/resources/images/halfStar.svg' class='starImg'>";
+						}else if(decimal>=8){
+							stars+="<img src='${cp }/resources/images/fullStar.svg' class='starImg'>";
+						}
+						for(let l=0; l<5-fullstars-1; l++){
+							stars+="<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>";
+						}
 					}
 				}
 				str+="<div class='col mb-4'>"+ //두번째 div
@@ -452,9 +531,9 @@ h5{
 						   		 "<h5 class='card-title'>"+tour_name+"</h5>"+
 							   	 "<p class='card-text'>"+tourType+"</p>"+
 							   	 "<p class='card-text'>"+stars+"("+rcnt+")"+"</p>";
-				if(discount>0){
+				if(discount>0){	
 							str+="<p class='card-text' style='text-decoration:line-through'>옵션최저가 "+tour_price+"원/명</p>"+
-								 "<p class='card-text'>할인특가 "+(tour_price-tour_price*discount/100)+"원/명</p>"+
+								 "<p class='card-text'>할인특가 "+Math.ceil(tour_price-tour_price*discount/100)+"원/명</p>"+
 								 "<img src='${cp }/resources/images/discount1.svg' class='discountImg'>";  
 				}else if(dcnt>0){
 							str+="<p class='card-text'>옵션최저가 "+tour_price+"원/명</p>"+
@@ -477,27 +556,6 @@ h5{
 		});
 		MAXPRICE= $("#price_range").prop("max");
 	}
-	
-	function clearFilter(){
-		$("#from").datepicker('setDate','today');
-		$("#to").datepicker('setDate','+1M');
-		var startDate=$("#from").val();
-		var endDate=$("#to").val();
-		var tourType="0";
-		if(document.getElementById("tourType").value!=null){
-			tourType= document.getElementById("tourType").value;
-		}
-		$("#price_range").val(MAXPRICE);
-		$("#showRange").html($("#price_range").prop("min")+"원  ~ "+ $("#price_range").val()+"원");
-		var param={
-				"startDate" : startDate,
-				"endDate" : endDate,
-				"tourType":tourType
-		}
-		$("#starDefault").prop("checked","checked");
-	}
-
-
 	
 	$("#from").datepicker({
 		dateFormat:'yy-mm-dd',

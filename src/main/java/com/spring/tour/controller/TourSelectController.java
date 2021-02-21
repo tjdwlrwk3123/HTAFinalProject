@@ -40,6 +40,7 @@ public class TourSelectController {
 			@RequestParam(value = "endDate") Date endDate, 
 			@RequestParam(value = "targetPoint", defaultValue = "0") double targetPoint, 
 			@RequestParam(value = "targetPrice", defaultValue = "0") int targetPrice,
+			@RequestParam(value = "isDiscount", defaultValue = "false") boolean isDiscount,
 			@RequestParam(value = "tourType", defaultValue = "0") int tourType,//전체, 테마파크 , 맛집 등등 
 			@RequestParam(value = "classification", defaultValue = "1") int classification, // 리뷰많은순, 가격 싼순 등등
 			String keyword,
@@ -51,7 +52,7 @@ public class TourSelectController {
 		map.put("endDate", endDate);
 		map.put("keyword", keyword);
 		map.put("classification",classification); // 1:추천순  / 2:리뷰많은순 / 3:가격 낮은순 / 4:가격 높은순
-		
+		map.put("isDiscount", isDiscount);
 		if(tourType!=0) { //0: 전체
 			map.put("tourType",tourType); //1 티켓/패스   , 2:테마파크 , 3:취미/클래스 , 4:맛집
 		}

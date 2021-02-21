@@ -132,6 +132,7 @@
 	
 	function list(){
 		$.getJSON('${cp}/wishlist_list', {'user_id':'${user_id}'}, function(data) {
+			console.log("들어옴");
 			var str = "";
 			str+="<div class='row row-cols-1 row-cols-md-4' id='cardbox'>";
 			for(let i=0; i<data.list.length; i++){
@@ -164,20 +165,31 @@
 				var fullstars = Math.floor(avgpoint);
 				var decimal =  Math.round(avgpoint*10%10);
 				var stars ="";
-				for(let k=0; k<fullstars; k++){
-					stars+="<img src='${cp }/resources/images/fullStar.svg' class='starImg'>";
+				if(avgpoint==0){
+					for(let l=0; l<5; l++){
+						stars+="<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>";
+					}
+				}else{
+					if(fullstars==5){ // 평점이 5점이면~ 
+						for(let k=0; k<fullstars; k++){
+							stars+="<img src='${cp }/resources/images/fullStar.svg' class='starImg'>";
+						}
+					}else{
+						for(let k=0; k<fullstars; k++){
+							stars+="<img src='${cp }/resources/images/fullStar.svg' class='starImg'>";
+						}
+						if(decimal>=1 && decimal<3){
+							stars+="<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>";
+						}else if(decimal>=3 && decimal<8 ){
+							stars+="<img src='${cp }/resources/images/halfStar.svg' class='starImg'>";
+						}else if(decimal>=8){
+							stars+="<img src='${cp }/resources/images/fullStar.svg' class='starImg'>";
+						}
+						for(let l=0; l<5-fullstars-1; l++){
+							stars+="<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>";
+						}
+					}
 				}
-				if(decimal>=1 && decimal<3){
-					stars+="<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>";
-				}else if(decimal>=3 && decimal<8 ){
-					stars+="<img src='${cp }/resources/images/halfStar.svg' class='starImg'>";
-				}else if(decimal>=8){
-					stars+="<img src='${cp }/resources/images/fullStar.svg' class='starImg'>";
-				}
-				for(let l=0; l<5-fullstars-1; l++){
-					stars+="<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>";
-				}
-
 				str+="<div class='col mb-4'>"+
 						"<div class='card h-100' style='width: 14rem;' onclick='move(this)'>"+
 						   	 "<input type='hidden' name='cate_number' value='"+cate_number+"'>"+
