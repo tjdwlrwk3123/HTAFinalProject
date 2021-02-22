@@ -1,5 +1,7 @@
 package com.spring.tour.dao;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -71,5 +73,11 @@ public class MemberDao {
 	}
 	public String checkId(String user_id) {
 		return sqlSession.selectOne(NAMESPACE+".checkId",user_id);
+	}
+	public List<String> ptnSearch(){
+		return sqlSession.selectList(NAMESPACE+".ptnSearch");
+	}
+	public String getEmail(String user_id) {
+		return sqlSession.selectOne(NAMESPACE+".getEmail",user_id);
 	}
 }
