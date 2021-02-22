@@ -36,7 +36,7 @@ public class MyPageController {
 	@PostMapping("/changeuserinfo")
 	public String changeuserinfo(String pwd, Model model,HttpSession session) {
 		String user_id=(String)session.getAttribute("user_id");
-		User_InfoVo vo = service.select(user_id);
+		User_InfoVo vo = service.getinfo(user_id);
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		if(encoder.matches(pwd, vo.getUser_pass())) {
 			return ".mypage.changeuserinfo";

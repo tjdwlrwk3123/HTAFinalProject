@@ -19,6 +19,7 @@
 <a href="${cp }/couponManage">회원관리(관리자페이지)</a>
 <a href='${cp }/userterms'>회원 테스트페이지</a>
 <a href='${cp }/adminchat'>관리자 채팅 페이지</a>
+<a href='${cp }/AdminMail'>관리자 메일 테스트</a>
 
 <c:choose>
 	<c:when test="${empty sessionScope.user_id }">
@@ -30,6 +31,7 @@
 		<a href='${cp }/dropUser'>회원 탈퇴</a>
 	</c:otherwise>
 </c:choose>
+
 <%
 	//session.setAttribute("user_id", "kaka");
 %>

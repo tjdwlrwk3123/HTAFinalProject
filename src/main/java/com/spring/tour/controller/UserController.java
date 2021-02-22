@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonArrayFormatVisitor;
 import com.spring.tour.security.MemberService;
 import com.spring.tour.vo.User_InfoVo;
 
@@ -132,4 +133,28 @@ public class UserController {
 		return ".home";
 	}
 	
+	@RequestMapping(value="/ptnSearch", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	@ResponseBody
+	public HashMap<String,Object> ptnSearch() {
+		
+		HashMap<String,Object> map = new HashMap<String,Object>();
+		List<String> ptnList = service.ptnSearch();
+		ArrayList<String> userid = new ArrayList<String>();
+		for(String ptn :ptnList) {
+			userid.add(ptn);
+		}
+		map.put("user_id", userid);
+		return map;
+	}
+	
+	@RequestMapping(value="/adminSend")
+	public String adminSendMail(String user_id,String textarea) throws Exception{
+		service.adminEmailSend(user_id, textarea);
+		return ".admin.adminlayout";
+	}
+	
+	@RequestMapping(value="/AdminMail")
+	public String adminMail() {
+		return ".admin.service.MailSend";
+	}
 }
