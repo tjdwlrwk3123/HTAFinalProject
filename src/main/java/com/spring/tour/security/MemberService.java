@@ -1,5 +1,6 @@
 package com.spring.tour.security;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -74,6 +75,21 @@ public class MemberService {
 		return 1;
 	}
 	
+	public int adminEmailSend(String user_id,String contents) throws Exception{
+		String user_email=dao.getEmail(user_id);
+		MailHandler sendMail=new MailHandler(mailSender);
+		System.out.println("user_email");
+		System.out.println("contents");
+		sendMail.setSubject("[ConnecTrip 파트너 이메일]");
+		sendMail.setText(
+				new StringBuffer().append(contents.replaceAll("\\n", "<br>")).toString());
+		sendMail.setFrom("dhrmstn11@gmail.com", "관리자");
+		sendMail.setTo(user_email);
+		sendMail.send();
+		
+		return 1;
+	}
+	
 	public MemberUserDetail userDetail(String user_id) {
 		return dao.getAuthsList(user_id);
 	}
@@ -102,5 +118,9 @@ public class MemberService {
 	public void dropUser(String user_id) {
 		dao.dropUser(user_id);
 		
+	}
+	
+	public List<String> ptnSearch(){
+		return dao.ptnSearch();
 	}
 }
