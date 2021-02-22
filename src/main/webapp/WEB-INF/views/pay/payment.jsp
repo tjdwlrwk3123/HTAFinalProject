@@ -155,7 +155,7 @@
 </style>
 
 <div id="pay_wrapper">
-	<form action="${cp}/payit" method="post">
+	<form action="${cp}/payit" method="post" id="paymentInfo">
 	<div id="paybox">
 		<div id="paytitle">
 			<h1>결제하기</h1>
@@ -192,18 +192,17 @@
 				<p>예약자 연락처</p>
 				<input type="tel" id="bookerPhone" name="bookerPhone" placeholder="010-9999-9999" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" required>
 			</div>
-<%-- 			<c:if test="${cate_number==2}"><!-- 숙박 상품일 경우 --> --%>
+			<c:if test="${cate_number==2}"><!-- 숙박 상품일 경우 -->
 				<div id="accomInfo">
 					<input type="checkbox" id="isSame" name="isSame"><label for="isSame">위 정보와 동일</label><br>
 					<p>이용자 성명</p>
 					<input type="text" name="visitorName" id="visitorName" placeholder="홍길동" required="required"><br>
 					<p>이용자 연락처</p>
 					<input type="tel" id="visitorPhone" name="visitorPhone" placeholder="010-9999-9999" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" required><br>
-<!-- 				<input type="text" name="visitorPhone" id="visitorPhone" placeholder="이용하실 고객 연락처" required="required"><br> -->
 					<p>이용자 이메일</p>
 					<input type="email" name="visitorEmail" id="visitorEmail" placeholder="example@me.com" required="required"><br>
 				</div>
-<%-- 			</c:if> --%>
+			</c:if>
 		</div>
 		<div id="rightwing">
 			<div id="priceInfo">
@@ -261,13 +260,29 @@
 				<input type="checkbox" name="agreecheck" id="no2" value="no2" required="required"><label for="no2">개인정보 제공 동의(필수)</label><br>
 				<input type="checkbox" name="agreecheck" id="no3" value="no3"><label for="no3">특가 및 할인 안내 동의(선택)</label><br>
 			</div>
-			<div style="text-align: center;"><input type="submit" value="결제하기"></div>
+			<div style="text-align: center;"><input type="button" value="결제하기" onclick="pay()"></div>
 		</div>
 	</div>
 	</form>
 </div>
 
 <script>
+	
+	var doubleSubmitFlag = false;
+	function doubleSubmitCheck(){
+	    if(doubleSubmitFlag){
+	        return doubleSubmitFlag;
+	    }else{
+	        doubleSubmitFlag = true;
+	        return false;
+	    }
+	}
+	function pay(){
+		if(doubleSubmitCheck()) return;
+		document.getElementById("paymentInfo").submit();
+	}
+
+
 	$("#isSame").on("click",function(){
 		if($("#isSame").is(":checked")){
 			$("#visitorName").val($("#bookerName").val());

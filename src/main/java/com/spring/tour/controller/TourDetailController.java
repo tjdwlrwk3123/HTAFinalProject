@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.spring.tour.service.TourPageService;
+import com.spring.tour.vo.TourDetailVo;
 import com.spring.tour.vo.WishlistVo;
 
 
@@ -29,14 +30,18 @@ public class TourDetailController {
 		map.put("cate_number",cate_number);
 		map.put("service_number",service_number);
 		
-		model.addAttribute("detail",service.tourDetailList(map));
+		TourDetailVo vo = service.tourDetailList(map);
+		vo.setTour_how(vo.getTour_how().replace("\n", "<br>"));
+		vo.setTour_rule(vo.getTour_rule().replace("\n","<br>"));
+		
+		model.addAttribute("detail", vo);
 		model.addAttribute("option",service.tourOptionList(service_number));
 		model.addAttribute("de_image",service.tourDetailImage(service_number));
 		model.addAttribute("pa_image",service.tourDetailPamphlet(service_number));
 		model.addAttribute("review",service.tourReviewList(map));
 		
-		WishlistVo vo= service.tourDetailIsinWish(map);
-		if(vo==null || vo.getUser_id().equals("")) {
+		WishlistVo wvo= service.tourDetailIsinWish(map);
+		if(wvo==null || wvo.getUser_id().equals("")) {
 			model.addAttribute("wishlist", false);
 		}else {
 			model.addAttribute("wishlist", true);

@@ -21,7 +21,7 @@
 		(
 		select user_id, user_name,user_phone, user_point from user_info where user_id=#{user_id}
 			) a left join (
-		select user_id, coupon_name, discount_price, expire_date from coupon where expire_date >= sysdate and coupon_usecondition=0)b 
+		select user_id, coupon_name, discount_price, expire_date from coupon where (expire_date >= sysdate or expire_date is null) and coupon_usecondition=0)b 
 		on a.user_id=b.user_id order by discount_price desc
 	</select>
 	

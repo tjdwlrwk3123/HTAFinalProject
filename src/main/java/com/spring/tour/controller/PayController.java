@@ -1,6 +1,5 @@
 package com.spring.tour.controller;
 
-import java.net.http.HttpRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -169,7 +168,6 @@ public class PayController {
 		if(cate_number ==1) {
 			try {
 			//여기엔 투어book 저장 코드
-			System.out.println("투어/티켓 결제 입니다");
 			HashMap<String, Object> tbMap = new HashMap<String, Object>(); // tourBook
 			HashMap<String, Object> tboMap = new HashMap<String, Object>(); // tourBookOption
 			HashMap<String, Object> upMap = new HashMap<String, Object>(); // update는 그냥 같이 쓰자
@@ -223,17 +221,11 @@ public class PayController {
 			}
 		}else if(cate_number!=1) {
 			try {
-			//여기엔 숙소book 저장코드
-			System.out.println("숙소 결제 입니다.");
-			System.out.println("포인트결제"+pointUsing);
 		
 			HashMap<String, Object> abMap = new HashMap<String, Object>(); // accom_Book
 			HashMap<String, Object> viMap = new HashMap<String, Object>(); // visitor_info
 			HashMap<String, Object> upMap = new HashMap<String, Object>(); // update는 그냥 같이 쓰자
 			
-			// accom_book 관련
-			//insert into accom_book values(ab_seq.nextval,#{user_id},#{optionNum},#{service_name},#{startDate},#{endDate},
-			//#{payment_condition},#{total_price}, #{point_useramount}, #{coupon_usecondition}, #payment_method})
 			if(user_id!=null) {
 				abMap.put("user_id", user_id);
 			}else {
@@ -260,25 +252,11 @@ public class PayController {
 			}
 			abMap.put("payment_method", waytopay);
 			
-			
-			//insert into visitor_info values(vi_seq.nextval, #{accom_book_number},#{visitor_name},#{visitor_email},#{visitor_phone})
-			//필요 정보 : #{accom_book_number},#{visitor_name},#{visitor_email},#{visitor_phone}
-			
 			// #{accom_book_number}은 서비스에서 추가해준다.
 			viMap.put("visitor_name", visitorName);
 			viMap.put("visitor_email", visitorEmail);
 			viMap.put("visitor_phone", visitorPhone);
 
-			
-//			update user_info set user_point = (select user_point from user_info where user_id=#{user_id})- #{pointUsing} where user_id=#{user_id}
-//			update coupon set coupon_usecondition = 1 where user_id=#{user_id} and coupon_name=#{couponUsing}
-			//필요 정보 : #{user_id} #{pointUsing} #{couponUsing}
-			
-//			update accom_option????????????
-			//질문!!!! accom_option은 바꿔줄게 없는가? 다시말해, 예약이 되었다는 기록을 어떻게 잡아줘야 하는가? 
-			
-			//선생님께 질문! 많은 파라미터를 갖은 map에 동일한 내용이 있지만 그 중 한두개의 값만 쓴다면 그 map을 그대로 가져다 쓰는게 효율적인가 ? 아니면 새로운 map을 생성하는게 효휼적인가??
-			// 필요 없으면  update관련한 map은 지우기 
 			upMap.put("user_id", user_id);
 			upMap.put("point_useamount", pointUsing);
 			if(!couponUsing.equals("none") || couponUsing!=null) {

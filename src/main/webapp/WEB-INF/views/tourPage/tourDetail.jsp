@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!-- Required meta tags -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -18,25 +18,160 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=def622213948a607b8b4062c406ef1e5&libraries=services"></script>
 
+
 <style>
-	#payment{width:300px; height:250px; position:fixed; padding:30px; right:5%; top:130px; background-color: red; z-index: 99;}
-	#payment #wishbox{background-color: skyblue;}
+
 	
-	#tourDetail_wrapper{width:1100px; position:relative; margin:auto; background-color: royalblue;}
-	#tourDetail_wrapper #title{width:100%; height:130px; position:relative; padding:20px; border-bottom:1px solid gray; background-color: green; }
-	#tourDetail_wrapper #title #starbox{width:100%; position:relative; margin:10px; right:10px; background-color: pink; }
-	#tourDetail_wrapper #option{width:100%; margin:auto; position:relative; padding:20px; border-bottom:1px solid gray; background-color: orange;}
-	#tourDetail_wrapper #detail{width:100%; position:relative; margin:auto; background-color: yellow;}
-	#tourDetail_wrapper #detail #photozone{width:100%; position:relative; margin:auto; padding:20px; align-content:center; background-color: gray;}
-	#tourDetail_wrapper #detail #photozone #thumbnail{width:100%; position:relative; margin:auto; text-align:center; align-content:center; align-items:center; background-color: gray;}
-	#tourDetail_wrapper #detail #info{width:100%; position:relative; padding:20px; border-bottom:1px solid gray; background-color: yellow;}
-	#tourDetail_wrapper #detail #info #infobox{width:100%; position:relative; padding:20px; border-top:1px solid gray; border-bottom:1px solid gray; background-color: yellow;}
-	#tourDetail_wrapper #detail #info #rulebox{width:100%; position:relative; padding:20px; border-bottom:1px solid gray; background-color: yellow;}
-	#tourDetail_wrapper #detail #info #reviewbox{width:100%; position:relative; padding:20px; border-bottom:1px solid gray; background-color: yellow;}
-	#tourDetail_wrapper #detail #info #infobox #mapbox{width:500px; height:330px; margin-top:20px; border:3px solid black; overflow: hidden;}
-	#tourDetail_wrapper #detail #info #infobox #mapbox #map{width:490px; height:300px; margin:auto;}
-	#basket{text-align:right;}
-	.sign{margin-left:5px; margin-right:5px;}
+	#tourDetail_wrapper{
+		width:1000px; 
+		position:relative;
+		margin:auto;
+		background-color: royalblue;
+		border:3px solid black;
+		display: flex;
+	}
+	#tourDetail_wrapper #title{
+		width:100%; 
+		height:130px; 
+		position:relative; 
+		padding:20px; 
+		border-bottom:1px solid gray; 
+		background-color: green; 
+	}
+	#content_wrapper{
+		width:700px; 
+		position:relative; 
+		border: 3px solid red;
+		
+	}
+	#wish_wrapper{
+		width:300px; 
+		height:250px; 
+		position: sticky;
+		left:700px;
+		top:50px; 
+		border:3px dashed black;
+	}
+
+	
+	#starbox{
+		width:100%; 
+		position:relative; 
+		margin:10px; 
+		right:10px; 
+		background-color: pink; 
+	}
+	
+	#option{
+		width:100%; 
+		margin:auto; 
+		position:relative; 
+		padding:20px; 
+		border-bottom:1px solid gray; 
+		background-color: orange;
+	}
+	
+	table{
+		width:100%;
+		border-collapse: separate;
+		border-spacing:10px;
+		vertical-align: middle;
+	}
+	table td:nth-child(1) {
+		width: 65%;
+	}
+	.optionTable td:nth-child(2){
+		width: 20%; text-align: center; 
+	}
+	.optionTable td:nth-child(3){
+		width: 15%; text-align: center;
+	}
+	#detail{
+		width:100%; 
+		position:relative; 
+		margin:auto;
+		background-color: yellow;
+	}
+	#photozone{
+		width:100%; 
+		position:relative;
+		margin:auto; 
+		padding:20px;
+		align-content:center; 
+		background-color: gray;
+	}
+	#thumbnail{
+		width:100%;
+		position:relative; 
+		margin:auto; 
+		text-align:center; 
+		align-content:center; 
+		align-items:center; 
+		background-color: gray;
+	}
+	#info{
+		width:100%;
+		position:relative; 
+		padding:20px;
+		border-bottom:1px solid gray; 
+		background-color: yellow;
+	}
+	#infobox{
+		width:100%; 
+		position:relative;
+		padding:20px;
+		border-top:1px solid gray;
+		border-bottom:1px solid gray;
+		background-color: yellow;
+	}
+		
+	#rulebox{
+		width:100%;
+		position:relative; 
+		padding:20px; 
+		border-bottom:1px solid gray; 
+		background-color: yellow;
+	}
+	#reviewbox{
+		width:100%; 
+		position:relative; 
+		padding:20px; 
+		border-bottom:1px solid gray;
+		background-color: yellow;
+	}
+	#mapbox{
+		width:500px; 
+		height:330px; 
+		margin-top:20px; 
+		border:3px solid black; 
+		overflow: hidden;
+	}
+	#map{
+		width:490px;
+		height:300px; 
+		margin:auto;
+	}
+	#basket{
+		text-align:right;
+	}
+	.sign{
+		margin-left:5px;
+		margin-right:5px;
+	}
+	.starImg{
+		width:20px;
+	}
+	
+	#wishbox{
+		width:100%;
+		align-items: center;
+		background-color: white;
+	}
+	
+	.btn{
+		width:200px;
+		margin:15px;
+	}
 </style>
 
 <!--
@@ -78,134 +213,194 @@
 	true or false
  -->
 
-<div id="payment">
-<!-- 결제할 금액 / 결제버튼 / 위시리스트 넣기 버튼 -->
-	<c:choose>
-		<c:when test="${empty option}"><!-- option이 비엇으면 전체 티켓 개수 0 -->
-			<span style="font-size:30px; font-weight:700; color:royalblue;">매진된상품입니다</span>
-		</c:when>
-		<c:otherwise>
-			<span style="font-size:30px; font-weight:700; color:royalblue;" id="price">${detail.minp}원 <span style="font-size:15px;">부터</span></span>
-			<br>
-<!-- 			<span style="width:200px; margin:auto; align-content: center;"><input type="button" value="결제하기" id="payBtn"></span> -->
-			<!-- 옵션중 최저가 보여주기, 나중에 옵션 추가 제거 하면 금액 변동시키기-->
-		</c:otherwise>
-	</c:choose>
-	<div id="wishbox">
-		<c:choose>
-			<c:when test="${wishlist==false}">
-				<input type="button" value="위시리스트추가" id="wishbtn">
-			</c:when>
-			<c:otherwise>
-				<input type="button" value="위시리스트제거" id="wishbtn">
-			</c:otherwise>
-		</c:choose>
-		<input type="hidden" value="${detail.cate_number }" id="cate_number"><br>
-		<input type="hidden" value="${detail.service_number }" id="service_number"><br>
-		<input type="hidden" value="${sessionScope.user_id }" id="user_id">
-	</div>
-
-</div>
-
 
 <div id="tourDetail_wrapper" >
-	<div id="title">
-		<!-- 제목 + 리뷰평점 -->
-		<h3 style="font-weight:700;" id="tour_name">${detail.tour_name }</h3>
-		<div id="starbox">
-			<span style="font-size:20px; font-weight:600;">평점 : ${detail.avgpoint} &nbsp; (${fn:length(review)})
-			<c:if test="${!empty detail.tour_expire }">
-				<p style="float:right;">유효기간 : ${detail.tour_expire}</p>
-			</c:if>
-			</span>
-		</div>
-	</div>
-	<div id="option">
-		<form action="${cp }/payment" method="post" id="optionInfo">
-			<input type="hidden" name="serviceName" value="${detail.tour_name}">
-			<input type="hidden" name="cateNumber" value="${detail.service_number }">
-			<input type="hidden" name="serviceNumber" value="${detail.service_number }">
-			<input type="hidden" name="endDate" value="${detail.tour_expire }">
-		<c:forEach var="o" items="${option}">
-			<c:choose>
-				<c:when test="${o.tour_amount==0 }">
-					<span style="font-size:15px; font-weight:600;">[${o.tour_option_index}] ${o.tour_option}
-					<input type="hidden" value="${o.tour_price}" name="optionPrice">
-					<input type="hidden" value="0" name="count"><input type="hidden" value="${o.tour_option}" name="service_option"><input type="hidden" name="tour_price" value="${o.tour_price}">
-					<input type="hidden" value="${o.tour_option_index}" name="option_index"><span class="sign"><i class="fas fa-minus"></i></span><span>0</span><span class="sign"><i class="fas fa-plus"></i></span>
-					<span style="color:blue;">매진된 상품입니다</span><br>
-					</span>
-				</c:when>
-				<c:otherwise>
-					<div style="font-size:15px; font-weight:600;">[${o.tour_option_index}] ${o.tour_option}
-					<input type="hidden" value="${o.tour_price}" name="optionPrice">
-					<span style="padding-left:20px;">${o.tour_price}원 /명</span>
-					<span style="padding-left:20px;">
-					<input type="hidden" value="0" name="count" oninput="sync(this)"><input type="hidden" value="${o.tour_option}" name="service_option"><input type="hidden" name="tour_price" value="${o.tour_price}">
-					<input type="hidden" value="${o.tour_option_index}" name="option_index"><span class="sign" onclick="minus(this)"><i class="fas fa-minus"></i></span><span class="cnt">0</span><span class="sign" onclick="plus(this)"><i class="fas fa-plus"></i></span></span>
-					<span>${o.tour_amount}개 남음</span><br>
-					</div>
-				</c:otherwise>
-			</c:choose>
-		</c:forEach>
-		<div id="basket" style="border:2px solid black;"></div>
-			<input type="hidden" name="userId" value="${sessionScope.user_id}">
-		</form>
-	</div>
-	<div id="detail" >
-		<div id="photozone" >
-			<div id="thumbnailbox">
-				<c:forEach var="tm" items="${de_image}">
-					<div style="width:200px; height:200px; margin:20px; display:inline-block; border:3px solid red;" onclick="showshow(event)">
-						<img src='${cp}/resources/images/${tm.imgsavename}'>
-					</div>
-				</c:forEach>
-			
+	<div id="content_wrapper">
+		<div id="title">
+			<!-- 제목 + 리뷰평점 -->
+			<h3 style="font-weight:700;" id="tour_name">${detail.tour_name }</h3>
+			<div id="starbox">
+				<c:choose>
+					<c:when test="${detail.avgpoint==0}">
+						<c:forEach begin="1" end="5">
+							<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>
+						</c:forEach>
+					</c:when>
+					<c:when test="${detail.avgpoint>0}">
+						<c:set var="full" value="${detail.avgpoint-(detail.avgpoint%1)}"/>
+						<c:set var="decimal" value="${(detail.avgpoint%1)*10}"/>
+						<c:choose>
+							<c:when test="${detail.avgpoint==5}">
+								<c:forEach begin="1" end="5">
+									<img src='${cp }/resources/images/fullStar.svg' class='starImg'>
+								</c:forEach>
+							</c:when>
+							<c:when test="${detail.avgpoint!=5 }">
+								<c:forEach begin="1" end="${full}">
+									<img src='${cp }/resources/images/fullStar.svg' class='starImg'>
+								</c:forEach>
+								<c:choose>
+									<c:when test="${decimal>=0 && decimal <3}">
+										<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>
+									</c:when> 
+									<c:when test="${decimal>=3 && decimal <8 }">
+										<img src='${cp }/resources/images/halfStar.svg' class='starImg'>
+									</c:when>
+									<c:when test="${decimal>=8 }">
+										<img src='${cp }/resources/images/fullStar.svg' class='starImg'>
+									</c:when>
+								</c:choose>
+								<c:forEach var="e" begin="1" end="${5-full-1}">
+									<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>			
+								</c:forEach>
+							</c:when>
+						</c:choose>
+					</c:when>
+				</c:choose>
+				<span style="font-size:20px; font-weight:600;">평점 : ${detail.avgpoint+ ((detail.avgpoint%0.1>0.05)?(0.1-(detail.avgpoint%0.1))%0.1:-(detail.avgpoint%0.1))} &nbsp; (${fn:length(review)})
+				<c:if test="${!empty detail.tour_expire }">
+					<p style="float:right;"> 유효기간 : ${detail.tour_expire}</p>
+				</c:if>
+				</span>
 			</div>
-			<!-- 사진으로 된 홍보물 자리 -->
-			<c:forEach var="p" items="${pa_image}">
-				<img src='${cp}/resources/images/${p.imgsavename}' style="width:100%"alt="${cp}${p.imgsavename}">
-			</c:forEach>
 		</div>
-		<div id="info">
-			<!-- 기본정보 : 상품정보(제공사항), 주의사항, 이용방법, 위치안내, 취소환불 규정, 후기 -->			
-			<c:if test="${!empty detail.tour_how}">
-				<div id="infobox">
-					<h2>상품정보</h2>
-					<span>${detail.tour_how}</span>
-					<br>
-					<c:if test="${!empty detail.tour_addr }">
-						<div id="mapbox">
-							<div id="map">
-							</div>
-							<span style="margin-bottom:0px;">${detail.tour_addr }</span>
+		<div id="option">
+			<form action="${cp }/payment" method="post" id="optionInfo">
+				<input type="hidden" name="serviceName" value="${detail.tour_name}">
+				<input type="hidden" name="cateNumber" value="${detail.cate_number }">
+				<input type="hidden" name="serviceNumber" value="${detail.service_number }">
+				<input type="hidden" name="endDate" value="${detail.tour_expire }">
+				<table id="optionTable" class="optionTable">
+				<c:forEach var="o" items="${option}">
+					<c:choose>
+						<c:when test="${o.tour_amount==0 }">
+							<tr>
+								<td><!-- 옵션 명 -->
+									${o.tour_option}
+									<input type="hidden" value="${o.tour_price}" name="optionPrice">
+								</td>
+								<td ><!-- 옵션 가격 -->
+									<fmt:formatNumber value="${o.tour_price}" pattern="###,###,###원/명" /> 
+								</td>
+								<td style="width: 20%; text-align: center;"><!-- 버튼과 갯수 -->
+									<input type="hidden" value="0" name="count"><input type="hidden" value="${o.tour_option}" name="service_option"><input type="hidden" name="tour_price" value="${o.tour_price}">
+									<input type="hidden" value="${o.tour_option_index}" name="option_index"><span style="color:blue;">매진된 상품입니다</span>
+									
+								</td>
+							<tr>
+						</c:when>
+						<c:otherwise>
+							<tr>
+								<td ><!-- 옵션 명 -->
+									${o.tour_option}
+									<input type="hidden" value="${o.tour_price}" name="optionPrice">
+								</td>
+								<td ><!-- 옵션 가격 -->
+									<fmt:formatNumber value="${o.tour_price}" pattern="###,###,###원/명" /> 
+								</td>
+								<td ><!-- 버튼과 갯수 -->
+									<input type="hidden" value="0" name="count" oninput="sync(this)"><input type="hidden" value="${o.tour_option}" name="service_option"><input type="hidden" name="tour_price" value="${o.tour_price}">
+									<input type="hidden" value="${o.tour_option_index}" name="option_index"><span class="sign" onclick="minus(this)"><i class="fas fa-minus"></i></span><span class="cnt">0</span><span class="sign" onclick="plus(this)"><i class="fas fa-plus"></i></span>
+								</td>
+							<tr>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+				</table>
+				<div id="basket"></div>
+			</form>
+		</div>
+		<div id="detail" >
+			<div id="photozone" >
+				<div id="thumbnailbox">
+					<c:forEach var="tm" items="${de_image}">
+						<div style="width:200px; height:200px; margin:20px; display:inline-block; border:3px solid red;" onclick="showshow(event)">
+							<img src='${cp}/resources/upload/${tm.imgsavename}' style="width:200px;">
 						</div>
+					</c:forEach>
+				
+				</div>
+				<!-- 사진으로 된 홍보물 자리 -->
+				<c:forEach var="p" items="${pa_image}">
+					<img src='${cp}/resources/upload/${p.imgsavename}' style="width:100%"alt="${cp}${p.imgsavename}">
+				</c:forEach>
+			</div>
+			<div id="info">
+				<!-- 기본정보 : 상품정보(제공사항), 주의사항, 이용방법, 위치안내, 취소환불 규정, 후기 -->			
+				<c:if test="${!empty detail.tour_how}">
+					<div id="infobox">
+						<h2>상품정보</h2>
+						<span>${detail.tour_how}</span>
+						<br>
+						<c:if test="${!empty detail.tour_addr }">
+							<div id="mapbox">
+								<div id="map">
+								</div>
+								<span style="margin-bottom:0px;">${detail.tour_addr }</span>
+							</div>
+						</c:if>
+					</div>
+				</c:if> 
+				<c:if test="${!empty detail.tour_rule}">
+					<div id="rulebox">
+						<h2>취소 및 환불 규정</h2>
+						<span>${detail.tour_rule}</span>
+						<br>
+					</div>
+				</c:if>
+				<div id="reviewbox">
+					<c:if test="${!empty review }">
+						<span>후기 ${fn:length(review)}</span><br>
+						<c:forEach var="r" items="${review}">
+							<span>[${r.star_point}] ${r.user_id} : ${r.review_content} </span><br>
+						</c:forEach>
 					</c:if>
 				</div>
-			</c:if> 
-			<c:if test="${!empty detail.tour_rule}">
-				<div id="rulebox">
-					<h2>취소 및 환불 규정</h2>
-					<span>${detail.tour_rule}</span>
-					<br>
-				</div>
-			</c:if>
-			<div id="reviewbox">
-				<c:if test="${!empty review }">
-					<span>후기 ${fn:length(review)}</span><br>
-					<c:forEach var="r" items="${review}">
-						<span>[${r.star_point}] ${r.user_id} : ${r.review_content} </span><br>
-					</c:forEach>
-				</c:if>
 			</div>
+		</div>
+	</div>
+	<!-- 결제할 금액 / 결제버튼 / 위시리스트 넣기 버튼 -->
+	<div id="wish_wrapper">
+		<div id="summaryBox" style="padding:15px;  background-color:pink;">
+			<c:choose>
+				<c:when test="${empty option}"><!-- option이 비엇으면 전체 티켓 개수 0 -->
+					<span style="font-size:40px; font-weight:700; color:royalblue;">매진된상품입니다</span>
+				</c:when>
+				<c:otherwise>
+					<span style="font-size:40px; font-weight:700; color:peru;" id="price"><fmt:formatNumber value="${detail.minp}" pattern="###,###,###원" /> <span style="font-size:15px;">부터</span></span>
+					<!-- 옵션중 최저가 보여주기, 나중에 옵션 추가 제거 하면 금액 변동시키기-->
+				</c:otherwise>
+			</c:choose>
+		</div>
+		<div id="wishbox" > 
+			<button id="goTicket" class="btn">티켓보기</button>
+			<c:choose>
+				<c:when test="${wishlist==false}">
+					<input type="button" value="위시리스트추가" id="wishbtn" class="btn">
+				</c:when>
+				<c:otherwise>
+					<input type="button" value="위시리스트제거" id="wishbtn" class="btn">
+				</c:otherwise>
+			</c:choose>
+			<input type="hidden" value="${detail.cate_number }" id="cate_number"><br>
+			<input type="hidden" value="${detail.service_number }" id="service_number"><br>
+			<input type="hidden" value="${sessionScope.user_id }" id="user_id">
 		</div>
 	</div>
 </div>
+
 <script>
+
+	$("#goTicket").on("click",function(){ 
+		var scrollPosition = $("#content_wrapper").offset().top;
+		$("html").animate({
+			scrollTop: scrollPosition
+		}, 500);
+	});
 
 	$("#wishbtn").click(function(){
 		if($("#wishbtn").val()=="위시리스트추가"){
-			$.getJSON("${cp}/wishInsert", {"cate_number":$("#cate_number").val(),"service_number":$("#service_number").val(),"user_id":$("#user_id").val() },
+			$.getJSON("${cp}/wishInsert", {"cate_number":$("#cate_number").val(),"service_number":$("#service_number").val()},
 				function(data) {
 				let result = data.code;
 				if(result=='insert_success'){
@@ -215,7 +410,7 @@
 				}
 			});
 		}else{
-			$.getJSON("${cp}/wishDelete", {"cate_number":$("#cate_number").val(),"service_number":$("#service_number").val(),"user_id":$("#user_id").val() },
+			$.getJSON("${cp}/wishDelete", {"cate_number":$("#cate_number").val(),"service_number":$("#service_number").val()},
 				function(data) {
 				let result = data.code;
 				if(result=='delete_success'){
@@ -283,6 +478,7 @@
 		console.log(count.value);
 	}
 	
+	//결제페이지로 이동
 	function pay(){
 		document.getElementById("optionInfo").submit();
 	}

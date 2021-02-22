@@ -152,7 +152,6 @@
 	$("#closebtn").on("click",function(){ // 닫으면 종료
 		
 		closeSocket();
-		doubleSubmitFlag=false;
 		$("#chat_window").toggle(500);
 		$("#messages").empty();
 		$.getJSON("${cp}/logout.do", {"username":$("#sender").val()}, // 디비에서 로그아웃 로그해주기
@@ -217,6 +216,7 @@
 		ws.onclose=function(event){
 			writeResponse("SYSTEM대화를 종료합니다.");
 			$("#messages").empty();
+			doubleSubmitFlag=false;
 		}
 	}
 	
