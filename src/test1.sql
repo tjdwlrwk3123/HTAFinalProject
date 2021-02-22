@@ -382,6 +382,8 @@ ALTER TABLE accom_option
 ALTER TABLE accom_service
 	ADD FOREIGN KEY (cate_number)
 	REFERENCES category (cate_number)
+	ADD FOREIGN KEY (user_accom_boss_name)
+	REFERENCES user_info(user_id)
 ;
 
 
