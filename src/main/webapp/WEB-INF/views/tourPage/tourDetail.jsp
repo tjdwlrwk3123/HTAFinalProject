@@ -18,6 +18,14 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=def622213948a607b8b4062c406ef1e5&libraries=services"></script>
 
+<!-- 이미지 슬라이드 -->
+
+<!-- jQuery 1.8 or later, 33 KB -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<!-- Fotorama from CDNJS, 19 KB -->
+<link  href="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js"></script>
 
 <style>
 
@@ -26,49 +34,65 @@
 		width:1000px; 
 		position:relative;
 		margin:auto;
-		background-color: royalblue;
-		border:3px solid black;
 		display: flex;
+		background-color:white;
 	}
-	#tourDetail_wrapper #title{
+	#title{
 		width:100%; 
 		height:130px; 
 		position:relative; 
 		padding:20px; 
-		border-bottom:1px solid gray; 
-		background-color: green; 
+		border-bottom:1px solid gray;
+		display:table;
+		background-color: white;
 	}
 	#content_wrapper{
-		width:700px; 
+		width:675px; 
 		position:relative; 
-		border: 3px solid red;
-		
 	}
 	#wish_wrapper{
 		width:300px; 
-		height:250px; 
+		height:150px; 
 		position: sticky;
-		left:700px;
+		margin-left:25px;
 		top:50px; 
-		border:3px dashed black;
+		border:3px dashed gray;
+		background-color:white;
+		display:table;
 	}
-
+	#summaryBox{
+		padding:15px;
+		text-align: center;
+	}
+	#wishbox{
+		width:100%;
+		height:150px;
+		maring:auto;
+		text-align: center;
+		background-color: white;
+		display:table-row;
+	}
+	.btn{
+		position:relative;
+		width:200px;
+		margin:10px;
+	}
 	
 	#starbox{
 		width:100%; 
 		position:relative; 
-		margin:10px; 
+		margin:10px;
+		margin-top:30px;
 		right:10px; 
-		background-color: pink; 
+		background-color: white; 
 	}
 	
 	#option{
 		width:100%; 
 		margin:auto; 
 		position:relative; 
-		padding:20px; 
 		border-bottom:1px solid gray; 
-		background-color: orange;
+		background-color: white;
 	}
 	
 	table{
@@ -90,39 +114,37 @@
 		width:100%; 
 		position:relative; 
 		margin:auto;
-		background-color: yellow;
+		background-color: gray;
 	}
 	#photozone{
 		width:100%; 
 		position:relative;
 		margin:auto; 
-		padding:20px;
 		align-content:center; 
-		background-color: gray;
+		border-bottom:1px solid gray; 
+		background-color: white;
 	}
-	#thumbnail{
+	#thumbnailbox{
 		width:100%;
 		position:relative; 
 		margin:auto; 
 		text-align:center; 
 		align-content:center; 
 		align-items:center; 
-		background-color: gray;
+		background-color: white;
 	}
 	#info{
 		width:100%;
 		position:relative; 
-		padding:20px;
 		border-bottom:1px solid gray; 
-		background-color: yellow;
+		background-color: white;
 	}
 	#infobox{
 		width:100%; 
 		position:relative;
 		padding:20px;
-		border-top:1px solid gray;
 		border-bottom:1px solid gray;
-		background-color: yellow;
+		background-color: white;
 	}
 		
 	#rulebox{
@@ -130,20 +152,19 @@
 		position:relative; 
 		padding:20px; 
 		border-bottom:1px solid gray; 
-		background-color: yellow;
+		background-color: white;
 	}
 	#reviewbox{
 		width:100%; 
 		position:relative; 
 		padding:20px; 
-		border-bottom:1px solid gray;
-		background-color: yellow;
+		background-color: white;
 	}
 	#mapbox{
 		width:500px; 
 		height:330px; 
 		margin-top:20px; 
-		border:3px solid black; 
+		border:2px solid black; 
 		overflow: hidden;
 	}
 	#map{
@@ -159,18 +180,12 @@
 		margin-right:5px;
 	}
 	.starImg{
-		width:20px;
+		width:30px;
+		vertical-align: top;
 	}
-	
-	#wishbox{
-		width:100%;
-		align-items: center;
-		background-color: white;
-	}
-	
-	.btn{
-		width:200px;
-		margin:15px;
+	h4{
+		margin-bottom: 20px;
+		font-weight: 600;
 	}
 </style>
 
@@ -218,7 +233,7 @@
 	<div id="content_wrapper">
 		<div id="title">
 			<!-- 제목 + 리뷰평점 -->
-			<h3 style="font-weight:700;" id="tour_name">${detail.tour_name }</h3>
+			<h4 style="font-weight:700;" id="tour_name">${detail.tour_name }</h4>
 			<div id="starbox">
 				<c:choose>
 					<c:when test="${detail.avgpoint==0}">
@@ -313,12 +328,12 @@
 		<div id="detail" >
 			<div id="photozone" >
 				<div id="thumbnailbox">
+					<!-- Add images to <div class="fotorama"></div> -->
+					<div class="fotorama" data-nav="thumbs" data-allowfullscreen="native" >
 					<c:forEach var="tm" items="${de_image}">
-						<div style="width:200px; height:200px; margin:20px; display:inline-block; border:3px solid red;" onclick="showshow(event)">
-							<img src='${cp}/resources/upload/${tm.imgsavename}' style="width:200px;">
-						</div>
+					    <a href="${cp}/resources/upload/${tm.imgsavename}"><img src='${cp}/resources/upload/${tm.imgsavename}' data-fit="contain"></a>
 					</c:forEach>
-				
+					</div>
 				</div>
 				<!-- 사진으로 된 홍보물 자리 -->
 				<c:forEach var="p" items="${pa_image}">
@@ -329,7 +344,7 @@
 				<!-- 기본정보 : 상품정보(제공사항), 주의사항, 이용방법, 위치안내, 취소환불 규정, 후기 -->			
 				<c:if test="${!empty detail.tour_how}">
 					<div id="infobox">
-						<h2>상품정보</h2>
+						<h4>상품정보</h4>
 						<span>${detail.tour_how}</span>
 						<br>
 						<c:if test="${!empty detail.tour_addr }">
@@ -343,14 +358,14 @@
 				</c:if> 
 				<c:if test="${!empty detail.tour_rule}">
 					<div id="rulebox">
-						<h2>취소 및 환불 규정</h2>
+						<h4>취소 및 환불 규정</h4>
 						<span>${detail.tour_rule}</span>
 						<br>
 					</div>
 				</c:if>
 				<div id="reviewbox">
 					<c:if test="${!empty review }">
-						<span>후기 ${fn:length(review)}</span><br>
+						<h4>후기 (${fn:length(review)})</h4>
 						<c:forEach var="r" items="${review}">
 							<span>[${r.star_point}] ${r.user_id} : ${r.review_content} </span><br>
 						</c:forEach>
@@ -361,7 +376,7 @@
 	</div>
 	<!-- 결제할 금액 / 결제버튼 / 위시리스트 넣기 버튼 -->
 	<div id="wish_wrapper">
-		<div id="summaryBox" style="padding:15px;  background-color:pink;">
+		<div id="summaryBox">
 			<c:choose>
 				<c:when test="${empty option}"><!-- option이 비엇으면 전체 티켓 개수 0 -->
 					<span style="font-size:40px; font-weight:700; color:royalblue;">매진된상품입니다</span>
@@ -373,15 +388,17 @@
 			</c:choose>
 		</div>
 		<div id="wishbox" > 
-			<button id="goTicket" class="btn">티켓보기</button>
+			
 			<c:choose>
 				<c:when test="${wishlist==false}">
-					<input type="button" value="위시리스트추가" id="wishbtn" class="btn">
+					<button type="button" id="wishbtn" class="btn btn-danger btn-lg">위시리스트추가</button>
 				</c:when>
 				<c:otherwise>
-					<input type="button" value="위시리스트제거" id="wishbtn" class="btn">
+					<button type="button" id="wishbtn" class="btn btn-outline-danger btn-lg">위시리스트제거</button>
 				</c:otherwise>
 			</c:choose>
+			<button type="button" id="goTicket" class="btn btn-outline-secondary btn-lg">티켓보기</button>
+			
 			<input type="hidden" value="${detail.cate_number }" id="cate_number"><br>
 			<input type="hidden" value="${detail.service_number }" id="service_number"><br>
 			<input type="hidden" value="${sessionScope.user_id }" id="user_id">
@@ -391,6 +408,8 @@
 
 <script>
 
+	
+	
 	$("#goTicket").on("click",function(){ 
 		var scrollPosition = $("#content_wrapper").offset().top;
 		$("html").animate({
@@ -399,12 +418,15 @@
 	});
 
 	$("#wishbtn").click(function(){
-		if($("#wishbtn").val()=="위시리스트추가"){
+		console.log($("#wishbtn").text());
+		if($("#wishbtn").text()=="위시리스트추가"){
 			$.getJSON("${cp}/wishInsert", {"cate_number":$("#cate_number").val(),"service_number":$("#service_number").val()},
 				function(data) {
 				let result = data.code;
 				if(result=='insert_success'){
-					$("#wishbtn").val("위시리스트제거");
+					$("#wishbtn").text("위시리스트제거");
+					$("#wishbtn").prop("class","");
+					$("#wishbtn").addClass("btn btn-outline-danger btn-lg");
 				}else if(result=='insert_fail'){
 					alert("insert ERROR");
 				}
@@ -414,7 +436,9 @@
 				function(data) {
 				let result = data.code;
 				if(result=='delete_success'){
-					$("#wishbtn").val("위시리스트추가");
+					$("#wishbtn").text("위시리스트추가");
+					$("#wishbtn").prop("class","");
+					$("#wishbtn").addClass("btn btn-danger btn-lg");
 				}else if(result=='delete_fail'){
 					alert("delete ERROR");
 				}
@@ -444,14 +468,16 @@
 		
 		count.value = parseInt(count.value)-1;
 		
+		
+		var finalprice= totalprice.toLocaleString();
+		
 		var basket= document.getElementById("basket");
 		if(totalprice==0){
 			basket.innerHTML = "";  
 		}else{
-			basket.innerHTML = "<span style='text-align:right;'>TOTAL : "+totalprice+"</span><br>"+
+			basket.innerHTML = "<span style='text-align:right;'>TOTAL : "+finalprice+"원</span><br>"+
 							"<button id='payall' onclick='pay();' >결제하기</button>";  
 		}
-		console.log(count.value);
 	}
 	function plus(e){
 		var count = e.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling;
@@ -460,11 +486,12 @@
 		}
 		var btn = e;
 		var span = btn.previousSibling;
-		var cnt = parseInt(span.textContent);
+		var cnt = parseInt(span.textContent); //몇개인지 찾고
 		
 		var indexnum = parseInt(e.previousSibling.previousSibling.previousSibling.value)-1;
 		var option = document.getElementsByName("tour_option")[indexnum];
 		var price= document.getElementsByName("tour_price")[indexnum];
+		
 		
 		count.value = parseInt(count.value)+1;
 		
@@ -472,11 +499,13 @@
 		span.innerHTML=cnt;
 		totalprice+=parseInt(price.value);
 		
+		var finalprice= totalprice.toLocaleString();
+		
 		var basket= document.getElementById("basket");
-		basket.innerHTML = "<span style='text-align:right;'>TOTAL : "+totalprice+"원</span><br>"+
+		basket.innerHTML = "<span style='text-align:right;'>TOTAL : "+ finalprice+"원</span><br>"+
 						"<button id='payall' onclick='pay();' >결제하기</button>";  
-		console.log(count.value);
 	}
+	
 	
 	//결제페이지로 이동
 	function pay(){
