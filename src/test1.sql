@@ -299,7 +299,6 @@ CREATE TABLE user_info
 	user_phone varchar2(500),
 	user_condition varchar2(200),
 	user_point number,
-	user_enabled char(1) default '1',
 	PRIMARY KEY (user_id)
 );
 
