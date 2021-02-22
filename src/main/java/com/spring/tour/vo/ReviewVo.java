@@ -2,6 +2,8 @@ package com.spring.tour.vo;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class ReviewVo {
 	private int review_number;
 	private String user_id;
@@ -11,6 +13,8 @@ public class ReviewVo {
 	private String review_image;
 	private String review_comment;
 	private int cate_number;
+	
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date review_date;
 	public ReviewVo() {}
 	public ReviewVo(int review_number, String user_id, int service_number, int star_point, String review_content,

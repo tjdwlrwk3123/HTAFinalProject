@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.spring.tour.vo.ImageVo;
+import com.spring.tour.vo.ReviewVo;
 import com.spring.tour.vo.TourDetailVo;
 import com.spring.tour.vo.TourOptionVo;
 import com.spring.tour.vo.TourReviewVo;
@@ -49,7 +50,7 @@ public class TourPageDao {
 		return sqlsession.selectList(NAMESPACE+".tour_option_list",service_number);
 	}
 	//투어 리뷰 정보 리스트(cate_number, service_number)
-	public List<TourReviewVo> tourReviewList(HashMap<String, Object> map){
+	public List<ReviewVo> tourReviewList(HashMap<String, Object> map){
 		return sqlsession.selectList(NAMESPACE+".tour_review_list",map);
 	}	
 	//투어 실황 사진들 리스트

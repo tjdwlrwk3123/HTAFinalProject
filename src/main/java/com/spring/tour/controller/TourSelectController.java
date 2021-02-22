@@ -49,9 +49,14 @@ public class TourSelectController {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("startDate", startDate);
 		map.put("endDate", endDate);
-		map.put("keyword", keyword);
 		map.put("classification",classification); // 1:추천순  / 2:리뷰많은순 / 3:가격 낮은순 / 4:가격 높은순
-		map.put("isDiscount", isDiscount);
+		
+		if(keyword!=null) {
+			map.put("keyword", keyword);
+		}
+		if(isDiscount) {
+			map.put("isDiscount", isDiscount);
+		}
 		if(tourType!=0) { //0: 전체
 			map.put("tourType",tourType); //1 티켓/패스   , 2:테마파크 , 3:취미/클래스 , 4:맛집
 		}
@@ -61,10 +66,11 @@ public class TourSelectController {
 		if(targetPrice!=0) {
 			map.put("targetPrice", targetPrice);
 		}
-		
 		if(req.getSession().getAttribute("user_id")!=null) {
 			map.put("user_id",req.getSession().getAttribute("user_id"));
 		}
+
+			
 		
 		List<WishlistVo> list = service.tourSelectList(map);
 		int maxprice = 0;

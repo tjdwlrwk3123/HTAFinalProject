@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.spring.tour.dao.TourPageDao;
 import com.spring.tour.vo.ImageVo;
+import com.spring.tour.vo.ReviewVo;
 import com.spring.tour.vo.TourDetailVo;
 import com.spring.tour.vo.TourOptionVo;
 import com.spring.tour.vo.TourReviewVo;
@@ -44,7 +45,7 @@ public class TourPageService {
 		return dao.tourOptionList(service_number);
 	}
 	//투어 리뷰 정보 리스트(cate_number, service_number)
-	public List<TourReviewVo> tourReviewList(HashMap<String, Object> map){
+	public List<ReviewVo> tourReviewList(HashMap<String, Object> map){
 		return dao.tourReviewList(map);
 	}
 	

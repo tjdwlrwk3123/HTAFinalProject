@@ -55,7 +55,7 @@
 		position: sticky;
 		margin-left:25px;
 		top:50px; 
-		border:3px dashed gray;
+		border:2px solid gray;
 		background-color:white;
 		display:table;
 	}
@@ -65,10 +65,8 @@
 	}
 	#wishbox{
 		width:100%;
-		height:150px;
 		maring:auto;
 		text-align: center;
-		background-color: white;
 		display:table-row;
 	}
 	.btn{
@@ -104,13 +102,16 @@
 		vertical-align: middle;
 	}
 	table td:nth-child(1) {
-		width: 65%;
+		width: 55%;
 	}
 	.optionTable td:nth-child(2){
-		width: 20%; text-align: center; 
+		width: 15%; text-align: center; 
 	}
 	.optionTable td:nth-child(3){
-		width: 15%; text-align: center;
+		width: 20%; text-align: center; 
+	}
+	.optionTable td:nth-child(4){
+		width: 10%; text-align: center;
 	}
 	#detail{
 		width:100%; 
@@ -191,9 +192,22 @@
 		width:30px;
 		vertical-align: top;
 	}
+	
+	.reviewStar{
+		width:20px;
+		vertical-align: -15%;
+	}
+	
 	h4{
 		margin-bottom: 20px;
 		font-weight: 600;
+	}
+	
+	.card{
+		border:none;
+	}
+	.row{
+		box-shadow: 3px 3px 5px 5px gray;
 	}
 </style>
 
@@ -210,12 +224,15 @@
 	private Double avgpoint; //리뷰평점
 	
 	 ${option} 리스트
-	private int tour_option_number;
-	private int tour_price;
-	private int tour_option_index;
-	private String tour_option;
-	private int tour_amount;
-
+	 private int tour_option_number;
+	 private int service_number;
+	 private int tour_price;
+	 private int tour_option_index;
+	 private String tour_option;
+	 private int tour_amount; 
+	 private int discount;
+	 
+	 
 	 ${review} 리스트
 	private int review_number;
 	private String user_id;
@@ -280,7 +297,7 @@
 						</c:choose>
 					</c:when>
 				</c:choose>
-				<span style="font-size:20px; font-weight:600;">평점 : ${detail.avgpoint+ ((detail.avgpoint%0.1>0.05)?(0.1-(detail.avgpoint%0.1))%0.1:-(detail.avgpoint%0.1))} &nbsp; (${fn:length(review)})
+				<span style="font-size:20px; font-weight:600;">평점 : <fmt:formatNumber value="${detail.avgpoint}" pattern="0.0" />&nbsp; (${fn:length(review)})
 				<c:if test="${!empty detail.tour_expire }">
 					<p style="float:right;"> 유효기간 : ${detail.tour_expire}</p>
 				</c:if>
@@ -302,12 +319,17 @@
 									${o.tour_option}
 									<input type="hidden" value="${o.tour_price}" name="optionPrice">
 								</td>
-								<td ><!-- 옵션 가격 -->
-									<fmt:formatNumber value="${o.tour_price}" pattern="###,###,###원/명" /> 
+								<td>
+									<span style="font-size:12px; color:red; margin-right:5px; text-decoration: line-through;">
+										<fmt:formatNumber value="${o.tour_price}" pattern="###,###,###원/명" /> 
+									</span>
 								</td>
-								<td style="width: 20%; text-align: center;"><!-- 버튼과 갯수 -->
+								<td ><!-- 옵션 가격 -->
+									<fmt:formatNumber value="${o.tour_price-o.tour_price/100*o.discount}" pattern="###,###,###원/명" /> 
+								</td>
+								<td><!-- 버튼과 갯수 -->
 									<input type="hidden" value="0" name="count"><input type="hidden" value="${o.tour_option}" name="service_option"><input type="hidden" name="tour_price" value="${o.tour_price}">
-									<input type="hidden" value="${o.tour_option_index}" name="option_index"><span style="color:blue;">매진된 상품입니다</span>
+									<input type="hidden" value="${o.tour_option_index}" name="option_index"><span style="color:red; font-weight:700;">매진</span>
 								</td>
 							<tr>
 						</c:when>
@@ -317,8 +339,22 @@
 									${o.tour_option}
 									<input type="hidden" value="${o.tour_price}" name="optionPrice">
 								</td>
+								<td>
+									<c:if test="${o.discount!=0 }">
+										<span style="font-size:12px; color:red; margin-right:5px; text-decoration: line-through;">
+											<fmt:formatNumber value="${o.tour_price}" pattern="###,###,###원/명" /> 
+										 </span>
+									</c:if>
+								</td>
 								<td ><!-- 옵션 가격 -->
-									<fmt:formatNumber value="${o.tour_price}" pattern="###,###,###원/명" /> 
+									<c:choose>
+										<c:when test="${o.discount!=0 }">
+											<fmt:formatNumber value="${o.tour_price-o.tour_price/100*o.discount}" pattern="###,###,###원/명" /> 
+										</c:when>
+										<c:otherwise>
+											<fmt:formatNumber value="${o.tour_price}" pattern="###,###,###원/명" /> 
+										</c:otherwise>
+									</c:choose>
 								</td>
 								<td ><!-- 버튼과 갯수 -->
 									<input type="hidden" value="0" name="count" oninput="sync(this)"><input type="hidden" value="${o.tour_option}" name="service_option"><input type="hidden" name="tour_price" value="${o.tour_price}">
@@ -371,29 +407,6 @@
 					</div>
 				</c:if>
 				<div id="reviewbox">
-					<c:if test="${!empty review }">
-						<h4>후기 (${fn:length(review)})</h4>
-						<c:forEach var="r" begin="1" end="3" items="${review}">
-						<div class="card mb-3" style="max-width: 1000px;">
-							<div class="row g-0" style="border:2px solid black;">
-								<div class="col-md-10" style="background-color:peru">
-									<div class="card-body" style="background-color:pink;">
-										<h5 class="card-title">${r.user_id}</h5>
-										<p class="card-text">${r.review_content}</p>
-									</div>
-								</div>
-								<div class="col-md-2" style="background-color:yellow; text-align: center;">
-									<img src='${cp}/resources/images/${r.imglist[0].imgsavename}' style="width:100%; height:100%;">
-								</div>
-							</div>
-						</div>
-						</c:forEach>
-						<c:if test="${fn:length(review)>3}">
-							<div style="text-align: center;">
-								<button type="button" class="btn btn-outline-primary" id="moreReview">리뷰더보기</button>
-							</div>
-						</c:if>
-					</c:if>
 				</div>
 			</div>
 		</div>
@@ -406,7 +419,15 @@
 					<span style="font-size:40px; font-weight:700; color:royalblue;">매진된상품입니다</span> 
 				</c:when>
 				<c:otherwise>
-					<span style="font-size:40px; font-weight:700; color:peru;" id="price"><fmt:formatNumber value="${detail.minp}" pattern="###,###,###원" /> <span style="font-size:15px;">부터</span></span>
+					<c:choose>
+						<c:when test="${minprice!=oriprice }">
+							<span style="font-size:15px; font-weight:700; color:red; text-decoration:line-through; margin-right:5px;" id="oriprice"><fmt:formatNumber value="${oriprice}" pattern="###,###,###원" /></span>
+							<span style="font-size:30px; font-weight:700;" id="minprice"><fmt:formatNumber value="${minprice}" pattern="###,###,###원" /> <span style="font-size:15px;">부터</span></span>
+						</c:when>					
+						<c:otherwise>
+							<span style="font-size:35px; font-weight:700;" id="minprice"><fmt:formatNumber value="${minprice}" pattern="###,###,###원" /> <span style="font-size:15px;">부터</span></span>
+						</c:otherwise>
+					</c:choose>
 					<!-- 옵션중 최저가 보여주기, 나중에 옵션 추가 제거 하면 금액 변동시키기-->
 				</c:otherwise>
 			</c:choose>
@@ -430,31 +451,108 @@
 </div>
 
 <script>
-	
-	
-	$("#moreReview").on("click",function(){
-		$("#reviewbox").empty();
+	$(function(){
 		$.getJSON("${cp}/getReviewList", 
 				{"cate_number":$("#cate_number").val(),"service_number":$("#service_number").val()}, function(data) {
 			var str="";
-			for(let i in data.reviewlist){
-				str+="<div class='card mb-3' style='max-width: 1000px;'>"+
-						"<div class='row g-0' style='border:2px solid black;'>"+
-							"<div class='col-md-10' style='background-color:peru'>"+
-								"<div class='card-body' style='background-color:pink;'>"+
-									"<h5 class='card-title'>"+data.reviewlist[i].user_id+"</h5>"+
-									"<p class='card-text'>"+data.reviewlist[i].review_content+"</p>"+
+			str= "<h4>후기 ("+data.reviewlist.length+")</h4>"
+			if(data.reviewlist.length>3){
+				for(let i=0; i<3; i++){
+					var stars ="";
+					for(let f=0; f<data.reviewlist[i].star_point; f++){
+						console.log(f);
+						stars+="<img src='${cp }/resources/images/fullStar.svg' class='reviewStar'>";
+					}
+					console.log(data.reviewlist[i].star_point);
+					for(let e=0; e<5-data.reviewlist[i].star_point; e++){
+						stars+="<img src='${cp }/resources/images/emptyStar.svg' class='reviewStar'>";
+					}
+					console.log("stars"+stars);
+					str+="<div class='card mb-3' style='max-width: 1000px;'>"+
+							"<div class='row g-0'>"+
+								"<div class='col-md-10'>"+
+									"<div class='card-body' >"+
+										"<h5 class='card-title'>"+stars+"  "+data.reviewlist[i].user_id+"<small class='col-md-1'>"+data.reviewlist[i].review_date+"</small></h5>"+
+										"<p class='card-text'>"+data.reviewlist[i].review_content+"</p>"+
+									"</div>"+
+								"</div>"+
+								"<div class='col-md-2' style='text-align: center;'>"+
+									"<img src='${cp}/resources/images/"+data.reviewlist[i].review_image+"' style='width:100%; height:100px;'>"+
 								"</div>"+
 							"</div>"+
-							"<div class='col-md-2' style='background-color:yellow; text-align: center;'>"+
-								"<img src='${cp}/resources/images/"+data.reviewlist[i].imgsavename+"' style='width:100%; height:100%;'>"+
-							"</div>"+
-						"</div>"+
+						"</div>";
+				}
+				str+="<div style='text-align: center;'>"+
+						"<button type='button' class='btn btn-outline-primary' id='moreBtn' onclick='moreReview()'>리뷰더보기</button>"+
 					"</div>";
+			}else{
+				for(let i in data.reviewlist){
+					var stars ="";
+					for(let f=0; f<data.reviewlist[i].star_point; f++){
+						console.log(f);
+						stars+="<img src='${cp }/resources/images/fullStar.svg' class='reviewStar'>";
+					}
+					console.log(data.reviewlist[i].star_point);
+					for(let e=0; e<5-data.reviewlist[i].star_point; e++){
+						stars+="<img src='${cp }/resources/images/emptyStar.svg' class='reviewStar'>";
+					}
+					str+="<div class='card mb-3' style='max-width: 1000px;'>"+
+							"<div class='row g-0'>"+
+								"<div class='col-md-10' >"+
+									"<div class='card-body'>"+
+										"<h5 class='card-title'>"+stars+"  "+data.reviewlist[i].user_id+"<small class='col-md-1'>"+data.reviewlist[i].review_date+"</small></h5>"+
+										"<p class='card-text'>"+data.reviewlist[i].review_content+"</p>"+
+									"</div>"+
+								"</div>"+
+								"<div class='col-md-2' style='text-align: center;'>"+
+									"<img src='${cp}/resources/images/"+data.reviewlist[i].review_image+"' style='width:100%; height:100px;'>"+
+								"</div>"+
+							"</div>"+
+						"</div>";
+				}
 			}
 			$("#reviewbox").append(str);
 		});
 	});
+	
+	function moreReview(){
+		console.log("11");
+		$.getJSON("${cp}/getReviewList", 
+				{"cate_number":$("#cate_number").val(),"service_number":$("#service_number").val()}, function(data) {
+			var str="";
+			for(let i=3; i<data.reviewlist.length; i++){
+				var stars ="";
+				for(let f=0; f<data.reviewlist[i].star_point; f++){
+					console.log(f);
+					stars+="<img src='${cp }/resources/images/fullStar.svg' class='reviewStar'>";
+				}
+				console.log(data.reviewlist[i].star_point);
+				for(let e=0; e<5-data.reviewlist[i].star_point; e++){
+					stars+="<img src='${cp }/resources/images/emptyStar.svg' class='reviewStar'>";
+				}
+						str+="<div class='card mb-3' style='max-width: 1000px; display:none;'>"+
+						"<div class='row g-0' >"+
+							"<div class='col-md-10'>"+
+								"<div class='card-body'>"+
+									"<h5 class='card-title'>"+stars+"  "+data.reviewlist[i].user_id+"<small class='col-md-1'>"+data.reviewlist[i].review_date+"</small></h5>"+
+									"<p class='card-text'>"+data.reviewlist[i].review_content+"</p>"+
+								"</div>"+
+							"</div>"+
+							"<div class='col-md-2' style='text-align: center;'>"+
+								"<img src='${cp}/resources/images/"+data.reviewlist[i].review_image+"' style='width:100%; height:100px;'>"+
+							"</div>"+
+						"</div>"+
+					"</div>";
+			}
+			console.log(str);
+			$("#moreBtn").hide();
+			$("#reviewbox").append(str);
+			$(".card").fadeIn(2000);
+		});
+	}
+	
+	
+	
 	
 	$("#goTicket").on("click",function(){ 
 		var scrollPosition = $("#content_wrapper").offset().top;
