@@ -437,25 +437,21 @@
 		$.getJSON("${cp}/getReviewList", 
 				{"cate_number":$("#cate_number").val(),"service_number":$("#service_number").val()}, function(data) {
 			var str="";
-			console.log(data.reviewlist);
-			$(data).forEach(function(){
-				console.log($(this).user_id);
-				console.log($(this).review_content);
-				console.log($(this).imglist[0].imgsavename);
+			for(let i in data.reviewlist){
 				str+="<div class='card mb-3' style='max-width: 1000px;'>"+
 						"<div class='row g-0' style='border:2px solid black;'>"+
 							"<div class='col-md-10' style='background-color:peru'>"+
 								"<div class='card-body' style='background-color:pink;'>"+
-									"<h5 class='card-title'>"+$(this).user_id+"</h5>"+
-									"<p class='card-text'>"+$(this).review_content+"</p>"+
+									"<h5 class='card-title'>"+data.reviewlist[i].user_id+"</h5>"+
+									"<p class='card-text'>"+data.reviewlist[i].review_content+"</p>"+
 								"</div>"+
 							"</div>"+
 							"<div class='col-md-2' style='background-color:yellow; text-align: center;'>"+
-								"<img src='${cp}/resources/images/"+$(this).imglist[0].imgsavename+"' style='width:100%; height:100%;'>"+
+								"<img src='${cp}/resources/images/"+data.reviewlist[i].imgsavename+"' style='width:100%; height:100%;'>"+
 							"</div>"+
 						"</div>"+
 					"</div>";
-			});
+			}
 			$("#reviewbox").append(str);
 		});
 	});
