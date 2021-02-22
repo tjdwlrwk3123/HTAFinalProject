@@ -8,7 +8,7 @@ import com.spring.tour.vo.User_InfoVo;
 @Service
 public class MyPageService {
 	@Autowired private MyPageDao dao;
-	public User_InfoVo select(String user_id) {
+	public User_InfoVo getinfo(String user_id) {
 		return dao.getinfo(user_id);
 	}
 }

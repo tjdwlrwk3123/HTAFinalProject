@@ -9,7 +9,7 @@ import com.spring.tour.vo.User_InfoVo;
 @Repository
 public class MyPageDao {
 	@Autowired private SqlSession sqlSession;
-	private static String NAMESPACE="com.test.spring.tour.mapper.MypageMapper";
+	private static String NAMESPACE="com.spring.tour.mapper.MypageMapper";
 	public User_InfoVo getinfo(String user_id) {
 		return sqlSession.selectOne(NAMESPACE+".getinfo",user_id);
 	}
