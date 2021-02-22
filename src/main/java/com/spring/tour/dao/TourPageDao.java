@@ -71,4 +71,7 @@ public class TourPageDao {
 	public TourServiceVo getTourService(int serviceNum) {
 		return sqlsession.selectOne(NAMESPACE+".get_tour_detail", serviceNum);
 	}
+	public List<TourServiceVo> tourServiceForId(String user_id){
+		return sqlsession.selectList(NAMESPACE+".tour_service_forId", user_id);
+	}
 }

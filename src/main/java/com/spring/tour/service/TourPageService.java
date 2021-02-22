@@ -68,6 +68,9 @@ public class TourPageService {
 	public TourServiceVo getTourService(int serviceNum) {
 		return dao.getTourService(serviceNum);
 	}
+	public List<TourServiceVo> tourServiceForId(String user_id){
+		return dao.tourServiceForId(user_id);
+	}
 	/////////////////////////////////////////////////////////////
 	
 	
