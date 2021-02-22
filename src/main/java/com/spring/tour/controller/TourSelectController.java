@@ -46,7 +46,6 @@ public class TourSelectController {
 			String keyword,
 			HttpServletRequest req
 			) {
-		System.out.println("-----------------------------");
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("startDate", startDate);
 		map.put("endDate", endDate);
@@ -78,7 +77,6 @@ public class TourSelectController {
 				minprice=vo.getDcprice();
 			}
 		}
-
 		
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		result.put("startDate",startDate);
@@ -92,4 +90,5 @@ public class TourSelectController {
 		result.put("list",list);
 		return result;
 	}
+	
 }

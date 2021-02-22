@@ -5,9 +5,11 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.tour.service.TourPageService;
 import com.spring.tour.vo.TourDetailVo;
@@ -48,5 +50,19 @@ public class TourDetailController {
 		}
 		return ".tourPage.tourDetail";
 
+	}
+	
+	@RequestMapping(value = "/getReviewList",produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	@ResponseBody
+	public HashMap<String, Object> getReview(int cate_number, int service_number){
+		HashMap<String, Object> paramMap = new HashMap<>();
+		paramMap.put("cate_number", cate_number);
+		paramMap.put("service_number",service_number);
+		System.out.println(cate_number);
+		System.out.println(service_number);
+		
+		HashMap<String, Object> resultMap = new HashMap<>();
+		resultMap.put("reviewlist", service.tourReviewList(paramMap));
+		return resultMap;
 	}
 }

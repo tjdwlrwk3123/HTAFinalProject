@@ -76,6 +76,7 @@
 	}
 	.starImg{
 		width:20px;
+		vertical-align: -18%;
 	}
 	
 	#loading {
@@ -165,6 +166,7 @@
 				var fullstars = Math.floor(avgpoint);
 				var decimal =  Math.round(avgpoint*10%10);
 				var stars ="";
+				
 				if(avgpoint==0){
 					for(let l=0; l<5; l++){
 						stars+="<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>";
@@ -178,7 +180,7 @@
 						for(let k=0; k<fullstars; k++){
 							stars+="<img src='${cp }/resources/images/fullStar.svg' class='starImg'>";
 						}
-						if(decimal>=1 && decimal<3){
+						if(decimal>=0 && decimal<3){
 							stars+="<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>";
 						}else if(decimal>=3 && decimal<8 ){
 							stars+="<img src='${cp }/resources/images/halfStar.svg' class='starImg'>";

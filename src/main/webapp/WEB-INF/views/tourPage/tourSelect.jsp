@@ -159,6 +159,7 @@ h5{
 }
 .starImg{
 	width:20px;
+	vertical-align: -18%;
 }
 
 #sorryMsg{
@@ -232,6 +233,20 @@ h5{
 		
 		$("li:eq(0) a").css({"font-weight":800, "font-size":'18px'});
 		$(".classification:eq(0)").css({"font-weight":800, "font-size":'17px'});
+		
+		
+		$("li a").hover(function(){
+			$(this).css("font-weight",800);	
+		},function(){
+			$(this).css("font-weight",400);	
+		});
+		
+		$(".classification").hover(function(){
+			$(this).css("font-weight",800);	
+		},function(){
+			$(this).css("font-weight",400);	
+		});
+		
 		
 		$("#from").datepicker('setDate','today');
 		$("#to").datepicker('setDate','+1M');
@@ -496,7 +511,7 @@ h5{
 				var decimal =  Math.round(avgpoint*10%10);
 				console.log("decimal= "+decimal);
 				var stars ="";
-				
+			
 				if(avgpoint==0){
 					for(let l=0; l<5; l++){
 						stars+="<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>";
@@ -510,7 +525,7 @@ h5{
 						for(let k=0; k<fullstars; k++){
 							stars+="<img src='${cp }/resources/images/fullStar.svg' class='starImg'>";
 						}
-						if(decimal>=1 && decimal<3){
+						if(decimal>=0 && decimal<3){
 							stars+="<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>";
 						}else if(decimal>=3 && decimal<8 ){
 							stars+="<img src='${cp }/resources/images/halfStar.svg' class='starImg'>";

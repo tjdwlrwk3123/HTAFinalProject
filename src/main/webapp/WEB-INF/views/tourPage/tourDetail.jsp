@@ -28,7 +28,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js"></script>
 
 <style>
-
 	
 	#tourDetail_wrapper{
 		width:1000px; 
@@ -93,6 +92,9 @@
 		position:relative; 
 		border-bottom:1px solid gray; 
 		background-color: white;
+		user-select:none;
+		padding-top:15px;
+		padding-bottom:15px;
 	}
 	
 	table{
@@ -130,9 +132,15 @@
 		margin:auto; 
 		text-align:center; 
 		align-content:center; 
-		align-items:center; 
-		background-color: white;
+		align-items:center;
+		padding-top:15px;
+		padding-bottom:15px;
 	}
+	#fotorama{
+		width:100%;
+		margin:auto;
+	}
+	
 	#info{
 		width:100%;
 		position:relative; 
@@ -281,9 +289,9 @@
 		</div>
 		<div id="option">
 			<form action="${cp }/payment" method="post" id="optionInfo">
-				<input type="hidden" name="serviceName" value="${detail.tour_name}">
-				<input type="hidden" name="cateNumber" value="${detail.cate_number }">
-				<input type="hidden" name="serviceNumber" value="${detail.service_number }">
+				<input type="hidden"  name="serviceName" value="${detail.tour_name}">
+				<input type="hidden" id="cate_number" name="cateNumber" value="${detail.cate_number }">
+				<input type="hidden" id="service_number" name="serviceNumber" value="${detail.service_number }">
 				<input type="hidden" name="endDate" value="${detail.tour_expire }">
 				<table id="optionTable" class="optionTable">
 				<c:forEach var="o" items="${option}">
@@ -300,7 +308,6 @@
 								<td style="width: 20%; text-align: center;"><!-- 버튼과 갯수 -->
 									<input type="hidden" value="0" name="count"><input type="hidden" value="${o.tour_option}" name="service_option"><input type="hidden" name="tour_price" value="${o.tour_price}">
 									<input type="hidden" value="${o.tour_option_index}" name="option_index"><span style="color:blue;">매진된 상품입니다</span>
-									
 								</td>
 							<tr>
 						</c:when>
@@ -329,7 +336,7 @@
 			<div id="photozone" >
 				<div id="thumbnailbox">
 					<!-- Add images to <div class="fotorama"></div> -->
-					<div class="fotorama" data-nav="thumbs" data-allowfullscreen="native" >
+					<div id="fotorama" class="fotorama" data-nav="thumbs"  data-width="100%" data-allowfullscreen="native" >
 					<c:forEach var="tm" items="${de_image}">
 					    <a href="${cp}/resources/upload/${tm.imgsavename}"><img src='${cp}/resources/upload/${tm.imgsavename}' data-fit="contain"></a>
 					</c:forEach>
@@ -366,9 +373,26 @@
 				<div id="reviewbox">
 					<c:if test="${!empty review }">
 						<h4>후기 (${fn:length(review)})</h4>
-						<c:forEach var="r" items="${review}">
-							<span>[${r.star_point}] ${r.user_id} : ${r.review_content} </span><br>
+						<c:forEach var="r" begin="1" end="3" items="${review}">
+						<div class="card mb-3" style="max-width: 1000px;">
+							<div class="row g-0" style="border:2px solid black;">
+								<div class="col-md-10" style="background-color:peru">
+									<div class="card-body" style="background-color:pink;">
+										<h5 class="card-title">${r.user_id}</h5>
+										<p class="card-text">${r.review_content}</p>
+									</div>
+								</div>
+								<div class="col-md-2" style="background-color:yellow; text-align: center;">
+									<img src='${cp}/resources/images/${r.imglist[0].imgsavename}' style="width:100%; height:100%;">
+								</div>
+							</div>
+						</div>
 						</c:forEach>
+						<c:if test="${fn:length(review)>3}">
+							<div style="text-align: center;">
+								<button type="button" class="btn btn-outline-primary" id="moreReview">리뷰더보기</button>
+							</div>
+						</c:if>
 					</c:if>
 				</div>
 			</div>
@@ -376,10 +400,10 @@
 	</div>
 	<!-- 결제할 금액 / 결제버튼 / 위시리스트 넣기 버튼 -->
 	<div id="wish_wrapper">
-		<div id="summaryBox">
+		<div id="summaryBox"> 
 			<c:choose>
 				<c:when test="${empty option}"><!-- option이 비엇으면 전체 티켓 개수 0 -->
-					<span style="font-size:40px; font-weight:700; color:royalblue;">매진된상품입니다</span>
+					<span style="font-size:40px; font-weight:700; color:royalblue;">매진된상품입니다</span> 
 				</c:when>
 				<c:otherwise>
 					<span style="font-size:40px; font-weight:700; color:peru;" id="price"><fmt:formatNumber value="${detail.minp}" pattern="###,###,###원" /> <span style="font-size:15px;">부터</span></span>
@@ -388,7 +412,6 @@
 			</c:choose>
 		</div>
 		<div id="wishbox" > 
-			
 			<c:choose>
 				<c:when test="${wishlist==false}">
 					<button type="button" id="wishbtn" class="btn btn-danger btn-lg">위시리스트추가</button>
@@ -407,8 +430,35 @@
 </div>
 
 <script>
-
 	
+	
+	$("#moreReview").on("click",function(){
+		$("#reviewbox").empty();
+		$.getJSON("${cp}/getReviewList", 
+				{"cate_number":$("#cate_number").val(),"service_number":$("#service_number").val()}, function(data) {
+			var str="";
+			console.log(data.reviewlist);
+			$(data).forEach(function(){
+				console.log($(this).user_id);
+				console.log($(this).review_content);
+				console.log($(this).imglist[0].imgsavename);
+				str+="<div class='card mb-3' style='max-width: 1000px;'>"+
+						"<div class='row g-0' style='border:2px solid black;'>"+
+							"<div class='col-md-10' style='background-color:peru'>"+
+								"<div class='card-body' style='background-color:pink;'>"+
+									"<h5 class='card-title'>"+$(this).user_id+"</h5>"+
+									"<p class='card-text'>"+$(this).review_content+"</p>"+
+								"</div>"+
+							"</div>"+
+							"<div class='col-md-2' style='background-color:yellow; text-align: center;'>"+
+								"<img src='${cp}/resources/images/"+$(this).imglist[0].imgsavename+"' style='width:100%; height:100%;'>"+
+							"</div>"+
+						"</div>"+
+					"</div>";
+			});
+			$("#reviewbox").append(str);
+		});
+	});
 	
 	$("#goTicket").on("click",function(){ 
 		var scrollPosition = $("#content_wrapper").offset().top;
@@ -475,8 +525,8 @@
 		if(totalprice==0){
 			basket.innerHTML = "";  
 		}else{
-			basket.innerHTML = "<span style='text-align:right;'>TOTAL : "+finalprice+"원</span><br>"+
-							"<button id='payall' onclick='pay();' >결제하기</button>";  
+			basket.innerHTML = "<h4 style='text-align:right; margin-top:15px; margin-right:20px;'>TOTAL : "+finalprice+"원</h4>"+
+							"<button type='button' id='payall' class='btn btn-outline-primary' style='margin-bottom:35px;' onclick='pay()'>결제하기</button>";
 		}
 	}
 	function plus(e){
@@ -502,8 +552,8 @@
 		var finalprice= totalprice.toLocaleString();
 		
 		var basket= document.getElementById("basket");
-		basket.innerHTML = "<span style='text-align:right;'>TOTAL : "+ finalprice+"원</span><br>"+
-						"<button id='payall' onclick='pay();' >결제하기</button>";  
+		basket.innerHTML = "<h4 style='text-align:right; margin-top:15px; margin-right:20px;'>TOTAL : "+finalprice+"원</h4>"+
+							"<button type='button' id='payall' class='btn btn-outline-primary' style='margin-bottom:35px;' onclick='pay()'>결제하기</button>";
 	}
 	
 	
