@@ -1244,7 +1244,7 @@ Insert into FINAL.WISHLIST (WISHNUM,CATE_NUMBER,SERVICE_NUMBER,USER_ID) values (
   TABLESPACE "SYSTEM"  ENABLE;
 --------------------------------------------------------
 --  Constraints for Table TOUR_OPTION
---------------------------------------------------------
+-------------------------------------------------------- 
 
   ALTER TABLE "FINAL"."TOUR_OPTION" ADD PRIMARY KEY ("TOUR_OPTION_NUMBER")
   USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
