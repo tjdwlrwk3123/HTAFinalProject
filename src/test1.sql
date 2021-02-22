@@ -361,6 +361,9 @@ create sequence vi_seq -- visitor_info
 start with 1
 increment by 1 ;
 
+create sequence token_seq --id_token
+start with 1
+increment by 1;
 
 /* Create Foreign Keys */
 
