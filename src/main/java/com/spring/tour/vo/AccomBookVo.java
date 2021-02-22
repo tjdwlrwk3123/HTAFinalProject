@@ -2,12 +2,16 @@ package com.spring.tour.vo;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class AccomBookVo {
 	private int accom_book_number;
 	private String user_id;
 	private int accom_option_number;
 	private String service_name;
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd",timezone = "Asia/Seoul")
 	private Date accom_startdate;
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd",timezone = "Asia/Seoul")
 	private Date accom_enddate;
 	private String payment_condition;
 	private int total_price;
