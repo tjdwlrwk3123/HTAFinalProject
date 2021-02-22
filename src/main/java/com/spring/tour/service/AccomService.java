@@ -51,4 +51,7 @@ public class AccomService {
 	public AccomOptionVo accomRoomDetail(int optNum) {
 		return dao.accomRoomDetail(optNum);
 	}
+	public List<Accom_serviceVo> accomDetailForId(String user_id){
+		return dao.accomDetailForId(user_id);
+	}
 }

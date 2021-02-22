@@ -26,15 +26,19 @@
 </select>
 
 <select id="couponCount" resultType="int" parameterType="hashmap">
-	select NVL(count(*),0) cnt from coupon
+	select nvl(count(rownum),0) from
+	(
+	select coupon_name from coupon
+	group by coupon_name,discount_price,expire_date
 	<if test="field!=null and field!=''">
 		<if test="picker!=null and picker!=''">
-        	<![CDATA[ where ${field} <= #{picker} ]]>
+        	<![CDATA[ having ${field} <= #{picker} ]]>
         </if>
         <if test="keyword!=null and keyword!=''">
-			where ${field} like '%'||#{keyword}||'%' 
+			having ${field} like '%'||#{keyword}||'%' 
 		</if>
 	</if>
+	)
 </select>
 
 <insert id="createCoupon" parameterType="hashmap">
@@ -63,4 +67,73 @@
 	and expire_date is null
 	</if>
 </delete>
+
+<select id="memberManageList" parameterType="hashmap" resultType="userinfo">
+	select * from
+	(
+	    select a.*,rownum rnum from
+	    (
+	        select * from user_info
+	        <if test="field!=null and field!=''">
+				where ${field} like '%'||#{keyword}||'%' 
+			</if>
+			<if test="orderby==1">
+				order by lower(user_id)
+			</if>
+			<if test="orderby==2">
+				order by lower(user_id) desc
+			</if>
+			<if test="orderby==3">
+				order by lower(user_name)
+			</if>
+			<if test="orderby==4">
+				order by lower(user_name) desc
+			</if>
+			<if test="orderby==5">
+				order by case 
+				when lower(user_grade) in('bronze') then 0
+				when lower(user_grade) in('silver') then 1
+				when lower(user_grade) in('gold') then 2
+				when lower(user_grade) in('platinum') then 3
+				when lower(user_grade) in('vip') then 4
+				end
+				,user_grade
+			</if>
+			<if test="orderby==6">
+				order by case 
+				when lower(user_grade) in('bronze') then 4
+				when lower(user_grade) in('silver') then 3
+				when lower(user_grade) in('gold') then 2
+				when lower(user_grade) in('platinum') then 1
+				when lower(user_grade) in('vip') then 0
+				end
+				,user_grade desc
+			</if>
+	    ) a
+	)
+	<![CDATA[ where rnum>=#{startRow} and rnum<=#{endRow} ]]>
+</select>
+
+<select id="memberCount" parameterType="hashmap" resultType="int">
+	select NVL(count(*),0) cnt from user_info
+	<if test="field!=null and field!=''">
+		where ${field} like '%'||#{keyword}||'%'
+	</if>
+</select>
+<select id="memberDetail" parameterType="String" resultType="userinfo">
+	select * from user_info where user_id=#{user_id}
+</select>
+<update id="changeCondition" parameterType="hashmap">
+	update user_info set
+	<if test="user_condition==1">
+		user_condition=2
+	</if>
+	<if test="user_condition==2">
+		user_condition=1
+	</if>
+	where user_id=#{user_id}
+</update>
+<update id="changeGrade" parameterType="hashmap">
+	update user_info set user_grade=#{user_grade} where user_id=#{user_id}
+</update>
 </mapper>

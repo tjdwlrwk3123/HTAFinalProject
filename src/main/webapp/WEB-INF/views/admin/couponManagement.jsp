@@ -2,8 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
-<head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" src="/tour/resources/js/jquery-3.5.1.min.js"></script>
@@ -43,10 +41,9 @@
   	text-align: right;
   }
 </style>
-</head>
-<body>
+
 <h3><a href="${cp }/couponManage">쿠폰발급/조회</a></h3>
-<h3><a href="">회원관리</a></h3>
+<h3><a href="${cp }/memberManageList">회원관리</a></h3>
 <br>
 <div id="couponWrap">
 <h1>쿠폰관리</h1>
@@ -96,17 +93,17 @@
 	<c:forEach var="i" begin="${pu.startPageNum }" end="${pu.endPageNum }">
 		<c:choose>
 			<c:when test="${i==pu.pageNum }">
-				<a href="${cp }/couponManage?pageNum=${i}"><span style='color:blue'>[${i }]</span></a>
+				<a href="${cp }/couponManage?pageNum=${i}&field=${field}&keyword=${keyword}&picker=${picker}"><span style='color:blue'>[${i }]</span></a>
 			</c:when>
 			<c:otherwise>
-				<a href="${cp }/couponManage?pageNum=${i}"><span style='color:gray'>[${i }]</span></a>
+				<a href="${cp }/couponManage?pageNum=${i}&field=${field}&keyword=${keyword}&picker=${picker}"><span style='color:gray'>[${i }]</span></a>
 			</c:otherwise>
 		</c:choose>
 	</c:forEach>
 </div>
 </div>
-<script>
 
+<script>
 $(document).ready(function(){
 	var field=$("#field").val();
 	if(field=='expire_date'){
@@ -168,5 +165,3 @@ function warnDel(){
 	}
 }
 </script>
-</body>
-</html>

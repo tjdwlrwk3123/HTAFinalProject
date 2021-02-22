@@ -169,4 +169,12 @@
 	<delete id="tourBookOptionDel" parameterType="int">
 		delete from tour_book_option where tour_book_number=#{tour_book_number}
 	</delete>
+	
+	<!-- 회원 한명의 구매목록들 -->
+	<select id="accomBuyList" parameterType="String" resultType="accomBookVo">
+		select * from accom_book where user_id=#{user_id}
+	</select>
+	<select id="tourBuyList" parameterType="String" resultType="tourBookVo">
+		select * from tour_book where user_id=#{user_id}
+	</select>
 </mapper>

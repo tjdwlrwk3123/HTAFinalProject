@@ -85,4 +85,11 @@ public class BookingService {
 	public List<TourBookOptionVo> tourBookOption(int bookNumber){
 		return dao.tourBookOption(bookNumber);
 	}
+	//개별 회원의 결제목록
+	public List<AccomBookVo> accomBuyList(String user_id){
+		return dao.accomBuyList(user_id);
+	}
+	public List<TourBookVo> tourBuyList(String user_id){
+		return dao.tourBuyLIst(user_id);
+	}
 }

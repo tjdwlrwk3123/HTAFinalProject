@@ -32,7 +32,7 @@
 <if test="user_id!=null">
 select i.cate_number,i.service_number, tour_type, tour_name, nvl(avgpoint,0) avgpoint, nvl(rcnt,0) rcnt, img_num, imgsavename, tour_price, tour_amount, discount, nvl(dcnt,0) dcnt, tour_expire, user_id, dcprice from(
 </if> 
-		select g.cate_number,g.service_number, tour_type, tour_name, avgpoint, rcnt, img_num, imgsavename, tour_price, tour_amount, discount, dcnt, tour_expire, nvl(tour_price-tour_price/100*discount,tour_price) dcprice from (
+	  select g.cate_number,g.service_number, tour_type, tour_name, nvl(avgpoint,0) avgpoint,  nvl(rcnt,0) rcnt, img_num, imgsavename, tour_price, tour_amount, discount,  nvl(dcnt,0) dcnt, tour_expire, nvl(tour_price-tour_price/100*discount,tour_price) dcprice from (
         select distinct  e.cate_number, e.service_number, tour_type, tour_name, avgpoint, rcnt, img_num, imgsavename,  tour_price, tour_amount, discount, dcnt  from 
 		    (
 		         select img_num,imgsavename, b.service_number, a.cate_number, tour_name,tour_type  from 
@@ -58,10 +58,10 @@ select i.cate_number,i.service_number, tour_type, tour_name, nvl(avgpoint,0) avg
                         select service_number, count(discount) dcnt from( select service_number, discount from tour_option where discount!=0) group by service_number
                         )bb on aa.service_number=bb.service_number
                        )d on c.service_number = d.service_number
-		            )f on e.cate_number=f.cate_number and e.service_number = f.service_number order by avgpoint desc
-		)g join (select tour_expire,service_number from tour_info)h on g.service_number = h.service_number
+		            )f on e.cate_number=f.cate_number and e.service_number = f.service_number 
+		)g join (select tour_expire,service_number from tour_info)h on g.service_number = h.service_number order by avgpoint desc
 <if test="user_id!=null">
-    )i left join (select service_number, user_id from wishlist where user_id=#{user_id})j on i.service_number = j.service_number
+    )i left join (select service_number, user_id from wishlist where user_id=#{user_id})j on i.service_number = j.service_number order by avgpoint desc
 </if>
 		<where>
 			<![CDATA[
@@ -179,5 +179,8 @@ select i.cate_number,i.service_number, tour_type, tour_name, nvl(avgpoint,0) avg
  	</select>
  	<select id="get_tour_detail" parameterType="int" resultType="tourservice">
  		select * from tour_service where service_number=#{service_number}
+ 	</select>
+ 	<select id="tour_service_forId" parameterType="String" resultType="tourservice">
+ 		select * from tour_service where user_id=#{user_id}
  	</select>
   </mapper>

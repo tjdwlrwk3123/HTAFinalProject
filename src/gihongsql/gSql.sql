@@ -9,6 +9,8 @@ insert into category values(55,'숙소리뷰');
 insert into category values(555,'숙소디테일');
 
 insert into user_info values('ck','1234','테스트','bronze','tjdwlrwk3123@naver.com','서울시','01074253618',1,2200,1);
+insert into user_info values('test7','12s23f','스트테','vip','tte@naver.com','종로3가','01023102149',0,4242422);
+
 
 insert into accom_info values(1,1,'좋은 호텔\n입니다.\n많이들 와주세요','독채펜션\n
 · 프라이빗한 객실에서 사랑하는 가족이나 친구와 함께 행복을 찾아보세요.\n

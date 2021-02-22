@@ -88,6 +88,9 @@
 	<select id="accom_service_detail" parameterType="int" resultType="accomService">
 		select * from accom_service where accom_service_number=#{accom_service_number}
 	</select>
+	<select id="accom_service_detail_forId" parameterType="string" resultType="accomService">
+		select * from accom_service where user_accom_boss_name=#{user_id}
+	</select> 
 	<!-- 리뷰쿼리 만들어놓기 -->
 	
 	<select id="accom_option_detail" parameterType="hashmap" resultType="accomOption">

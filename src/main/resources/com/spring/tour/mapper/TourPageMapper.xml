@@ -180,4 +180,7 @@ select i.cate_number,i.service_number, tour_type, tour_name, nvl(avgpoint,0) avg
  	<select id="get_tour_detail" parameterType="int" resultType="tourservice">
  		select * from tour_service where service_number=#{service_number}
  	</select>
+ 	<select id="tour_service_forId" parameterType="String" resultType="tourservice">
+ 		select * from tour_service where user_id=#{user_id}
+ 	</select>
   </mapper>

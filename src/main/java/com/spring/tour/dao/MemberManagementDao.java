@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.spring.tour.vo.CouponVo;
+import com.spring.tour.vo.User_InfoVo;
 
 @Repository
 public class MemberManagementDao {
@@ -30,5 +31,20 @@ public class MemberManagementDao {
 	}
 	public int deleteCoupon(HashMap<String, Object> map) {
 		return sqlSession.delete(NAMESPACE+".deleteCoupon", map);
+	}
+	public List<User_InfoVo> memberManageList(HashMap<String, Object> map){
+		return sqlSession.selectList(NAMESPACE+".memberManageList", map);
+	}
+	public int memberCount(HashMap<String, Object> map) {
+		return sqlSession.selectOne(NAMESPACE+".memberCount", map);
+	}
+	public User_InfoVo memberDetail(String user_id) {
+		return sqlSession.selectOne(NAMESPACE+".memberDetail",user_id);
+	}
+	public int changeCondition(HashMap<String, Object> map) {
+		return sqlSession.update(NAMESPACE+".changeCondition", map);
+	}
+	public int changeGrade(HashMap<String, Object> map) {
+		return sqlSession.update(NAMESPACE+".changeGrade", map);
 	}
 }

@@ -53,4 +53,7 @@ public class AccomDao {
 	public AccomOptionVo accomRoomDetail(int optNum) {
 		return sqlSession.selectOne(NAMESPACE+".accom_room_detail", optNum);
 	}
+	public List<Accom_serviceVo> accomDetailForId(String user_id){
+		return sqlSession.selectList(NAMESPACE+".accom_service_detail_forId", user_id);
+	}
 }
