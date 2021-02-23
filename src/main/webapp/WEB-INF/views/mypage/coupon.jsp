@@ -13,9 +13,9 @@
 	</tr>
 	<c:forEach var="vo" items="${list }">
 		<tr>
-			<td>${vo.coupon_number }</td>
-			<td>${vo.expire_date }</td>
 			<td>${vo.coupon_name }</td>
+			<td>${vo.expire_date }</td>
+			<td>${vo.discount_price }</td>
 		</tr>
 	</c:forEach>
 </table>
