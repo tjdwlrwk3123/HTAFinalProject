@@ -95,7 +95,7 @@ CREATE TABLE tour_book
 (
 	tour_book_number number NOT NULL,
 	user_id varchar2(200) NOT NULL,
-	service_number number(5), --tour_service에서 가져온 service_number
+	service_number number(5), --tour_service�뿉�꽌 媛��졇�삩 service_number
 	service_name varchar2(1000),
 	tour_startdate date,
 	tour_enddate date,
@@ -112,7 +112,7 @@ CREATE TABLE tour_book
 CREATE TABLE tour_book_option
 (
 	tour_book_option_number number NOT NULL,
-	tour_book_number number, --tour_book에서 가져온 tour_book_number
+	tour_book_number number, --tour_book�뿉�꽌 媛��졇�삩 tour_book_number
 	tour_option_index number(5),
 	cnt number(5),
 	PRIMARY KEY (tour_book_option_number)
@@ -362,6 +362,10 @@ start with 1
 increment by 1 ;
 
 create sequence token_seq --id_token
+start with 1
+increment by 1;
+
+create sequence coupon_seq --coupon
 start with 1
 increment by 1;
 
