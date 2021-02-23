@@ -11,5 +11,10 @@
  	<update id="updateuserinfo" parameterType="com.spring.tour.vo.User_InfoVo">
  		update user_info set user_name=#{user_name}, user_email=#{user_email}, user_addr=#{user_addr}, user_phone=#{user_phone} where user_id=#{user_id}
  	</update>
-	
+	<select id="countcoupon" parameterType="hashmap" resultType="int">
+		select count(*) from coupon where user_id=#{user_id}
+	</select>
+	<select id="couponlist" parameterType="hashmap" resultType="com.spring.tour.vo.CouponVo">
+		<![CDATA[select * from (select c.*, rownum rnum from coupon c where user_id=#{user_id}) where rnum>=#{startRow} and rnum<=#{endRow}]]>
+	</select>
 </mapper>

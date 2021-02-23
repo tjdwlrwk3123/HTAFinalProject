@@ -3,6 +3,8 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <div>
+	<a href="${cp }/userinfopage">유저정보</a>
+	<a href="${cp }/usercoupon">쿠폰 내역</a>
 	<form:form action="${cp }/changeuserinfo" method="post" onsubmit="return check()">
 	<h2 align="center">정보 변경</h2>
 		<table align="center">
