@@ -165,6 +165,9 @@
 					<c:when test="${cate_number==1 }">
 					<c:forEach var="i" items="${optionCnts}" varStatus="status">
 						<c:if test="${i!=0}"> <!-- 옵션을 0개 선택했으면 보여주지 않기 -->
+							<c:if test="${optionList[status.index].discount!=0 }">
+								<c:set var="isDiscount" value="yes"/>
+							</c:if>
 							<p class="opName">${optionList[status.index].tour_option}</p>
 								<fmt:formatNumber value="${o.tour_price}" pattern="###,###,###원/명" /> 
 							<p><fmt:formatNumber value="${optionList[status.index].tour_price-optionList[status.index].tour_price/100*optionList[status.index].discount}" pattern="###,###,###"/>  X ${i}
@@ -210,19 +213,26 @@
 					<c:choose>
 						<c:when test="${!empty pvo }"><!-- user_id로 로그인 했을때만 보여짐 -->
 							<h3>쿠폰 & 포인트</h3>
-							<select id="couponSelect">
 							<c:choose>
-								<c:when test="${!empty pvo.couponlist }">
-									<option value="none">쿠폰을 선택하여 주십시오</option>
-									<c:forEach var="cpn" items="${pvo.couponlist}">
-										<option value="${cpn.coupon_name},${cpn.discount_price}">[${cpn.coupon_name} ${cpn.discount_price}%] ${cpn.expire_date}</option>										
-									</c:forEach>
+								<c:when test="${!empty discount || !empty isDiscount }">
+									<p>쿠폰 할인이 불가한 상품입니다.</p>
 								</c:when>
 								<c:otherwise>
-		 							<option value="none">적용 가능한 쿠폰이 존재하지 않습니다</option>						
+									<select id="couponSelect">
+									<c:choose>
+										<c:when test="${!empty pvo.couponlist }">
+											<option value="none">쿠폰을 선택하여 주십시오</option>
+											<c:forEach var="cpn" items="${pvo.couponlist}">
+												<option value="${cpn.coupon_name},${cpn.discount_price}">[${cpn.coupon_name} ${cpn.discount_price}%] ${cpn.expire_date}</option>										
+											</c:forEach>
+										</c:when>
+										<c:otherwise>
+				 							<option value="none">적용 가능한 쿠폰이 존재하지 않습니다</option>						
+										</c:otherwise>
+									</c:choose>
+									</select><br>
 								</c:otherwise>
 							</c:choose>
-							</select><br>
 						</c:when>
 					</c:choose>
 				<br>

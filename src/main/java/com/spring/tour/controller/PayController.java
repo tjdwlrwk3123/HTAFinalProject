@@ -47,8 +47,9 @@ public class PayController {
 					@RequestParam(value="userId", defaultValue = "none") String user_id,
 					@RequestParam(value="option_index") List<Integer> indexNum,
 					@RequestParam(value="service_option") List<String> optionName,
-					@RequestParam(value="count", defaultValue = "1") List<Integer> optionCnts,
+					@RequestParam(value="count", defaultValue = "0") List<Integer> optionCnts,
 					@RequestParam(value="optionPrice") List<Integer> optionPrice,
+					@RequestParam(value="discount",required = false) String discount,
 					Model model,
 					HttpServletRequest req
 			) {
@@ -90,6 +91,10 @@ public class PayController {
 		model.addAttribute("optionName",optionName);
 		model.addAttribute("optionCnts",optionCnts);
 		model.addAttribute("optionPrice",optionPrice);
+		
+		if(discount!=null) {
+			model.addAttribute("discount", Integer.parseInt(discount));
+		}
 		
 //		 private int tour_option_number;
 //		 private int service_number;
