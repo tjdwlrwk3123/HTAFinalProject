@@ -15,6 +15,6 @@
 		select count(*) from coupon where user_id=#{user_id}
 	</select>
 	<select id="couponlist" parameterType="hashmap" resultType="com.spring.tour.vo.CouponVo">
-		<![CDATA[select * from (select c.*, rownum rnum from (select * coupon where user_id=#{user_id}) c) where rnum>=#{startRow} and rnum<=#{endRow}]]>
+		<![CDATA[select * from (select c.*, rownum rnum from (select * from coupon where user_id=#{user_id}) c) where rnum>=#{startRow} and rnum<=#{endRow}]]>
 	</select>
 </mapper>
