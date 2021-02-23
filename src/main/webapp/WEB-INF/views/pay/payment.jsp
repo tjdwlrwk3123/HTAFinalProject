@@ -150,8 +150,9 @@
 			<div id="itemInfo" class="box">
 				<h2><a href="${cp}/tourDetail?user_id=${user_id}&cate_number=${cate_number}&service_number=${service_number}">${service_name}</a></h2>
 				<c:choose>
-					<c:when test="${cate_number==2}">
-						<p>${startDate} ~ ${endDate}</p><!-- 여기서 다시 변경 가능? -->
+					<c:when test="${cate_number!=1}">
+						<p style="font-weight: 800;">체크인 : ${startDate}</p>
+						<p style="font-weight: 800;">체크아웃 : ${endDate}</p>
 					</c:when>
 					<c:when test="${cate_number==1}">
 						<c:if test="${!empty endDate}">
@@ -160,6 +161,8 @@
 					</c:when>				
 				</c:choose>
 				<div id="price">
+					<c:choose>
+					<c:when test="${cate_number==1 }">
 					<c:forEach var="i" items="${optionCnts}" varStatus="status">
 						<c:if test="${i!=0}"> <!-- 옵션을 0개 선택했으면 보여주지 않기 -->
 							<p class="opName">${optionList[status.index].tour_option}</p>
@@ -171,6 +174,15 @@
 							<input type="hidden" name="eachOptionCount" value="${i}">
 						</c:if>
 					</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<p class="opName">${optionName}</p><br>
+							<fmt:formatNumber value="${optionPrice[0]}" pattern="###,###,###원" /><span> / ${optionCnts[0] }명</span>
+						<input type="hidden" name="eachOptionPrice" value="${optionPrice[0]}">
+						<input type="hidden" name="eachOptionIndex" value="${indexNum[0]}">
+						<input type="hidden" name="eachOptionCount" value="1">
+					</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 			<div id="bookInfo" class="box">
@@ -248,7 +260,7 @@
 				<input type="checkbox" name="agreecheck" id="no2" value="no2" required="required"><label for="no2">개인정보 제공 동의(필수)</label><br>
 				<input type="checkbox" name="agreecheck" id="no3" value="no3"><label for="no3">특가 및 할인 안내 동의(선택)</label><br>
 			</div>
-			<div style="text-align: center;"><button type="button" class="btn">결제하기</button></div>
+			<div style="text-align: center;"><button type="button" class="btn" onclick="pay()">결제하기</button></div>
 		</div>
 	</div>
 	</form>
@@ -260,7 +272,9 @@
 	var mypoint = 0;
 	$(function(){
 		$("input[name='eachOptionPrice']").each(function(){
+			console.log($(this).val());
 			totalprice+= parseInt($(this).val());
+			console.log("금액:"+totalprice);
 		});
 		
 		$(".finalPrice")[0].innerHTML=totalprice.toLocaleString(); // 옵션별 금액을 더해서 최초의 최종금액 변수에 넣고 html에 보이기
@@ -275,6 +289,7 @@
 			$("#myPoint").val(0);
 			$("#pointUsing").prop("disabled",true);
 		}
+		$("#couponSelect").val("none");
 	});
 
 	
