@@ -59,14 +59,13 @@ select i.cate_number,i.service_number, tour_type, tour_name, avgpoint, rcnt, img
                         )bb on aa.service_number=bb.service_number
                        )d on c.service_number = d.service_number
 		            )f on e.cate_number=f.cate_number and e.service_number = f.service_number 
-		)g join (select tour_expire,service_number from tour_info)h on g.service_number = h.service_number order by avgpoint desc
+		)g join (select tour_expire,service_number from tour_info)h on g.service_number = h.service_number
 <if test="user_id!=null">
     )i left join (select service_number, user_id from wishlist where user_id=#{user_id})j on i.service_number = j.service_number
 </if>
 		<where>
 			<![CDATA[
-			((tour_expire >= sysdate)
-			or (tour_expire is null))
+			((tour_expire >= sysdate and tour_expire>= #{startDate}) or (tour_expire is null))
 			]]>
 			<if test="tourType!=null">
 				<if test="tourType==1">
@@ -91,7 +90,7 @@ select i.cate_number,i.service_number, tour_type, tour_name, avgpoint, rcnt, img
 			<if test="targetPrice!=null">
 				<![CDATA[and dcprice<= #{targetPrice}]]>
 			</if>
-			<if test="isDiscount!=false">
+			<if test="isDiscount==true">
 				and dcnt != 0
 			</if>
 			<if test="classification!=null">
@@ -114,20 +113,20 @@ select i.cate_number,i.service_number, tour_type, tour_name, avgpoint, rcnt, img
  	
  	<!-- ///////////////////////////tourDetail 투어 상세페이지 데이터 ///////////////////////////-->
  	<select id="detaillist" parameterType="hashmap" resultType="tourdetail">
-		select cate_number, e.service_number, minp, tour_addr, tour_name, tour_expire, tour_how, tour_rule, nvl(avgpoint,0) avgpoint from 
+		select cate_number, e.service_number, tour_addr, tour_name, tour_expire, tour_how, tour_rule, nvl(avgpoint,0) avgpoint from 
 		(
-		    select  cate_number, c.service_number, minp, tour_addr, tour_name, tour_expire, tour_how, tour_rule from 
+		    select  cate_number, c.service_number,  tour_addr, tour_name, tour_expire, tour_how, tour_rule from 
 		    (
-		        select cate_number,a.service_number, minp, tour_addr, tour_name from 
+		        select cate_number,a.service_number,  tour_addr, tour_name from 
 		        (
-		            select min(tour_price)minp, service_number from tour_option where service_number=#{service_number}group by service_number
+		            select service_number from tour_option where service_number=#{service_number}group by service_number
 		            )a join
 		                (select cate_number,tour_addr, tour_name, service_number from tour_service where cate_number=#{cate_number} and service_number = #{service_number})b
 		        on a.service_number=b.service_number
 		    )c left join
 		        (select service_number, tour_expire, tour_how, tour_rule from tour_info where service_number =#{service_number})d
 		    on c.service_number = d.service_number
-		)e join 
+		)e left join 
 			(select service_number, avg(star_point)avgpoint from review where service_number =#{service_number} and cate_number = #{cate_number} group by service_number
 		)f
 		on e.service_number = f.service_number

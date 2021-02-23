@@ -14,7 +14,7 @@ public class ReviewVo {
 	private String review_comment;
 	private int cate_number;
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd",timezone = "Asia/Seoul")
 	private Date review_date;
 	public ReviewVo() {}
 	public ReviewVo(int review_number, String user_id, int service_number, int star_point, String review_content,

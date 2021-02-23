@@ -20,6 +20,7 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+
 <style>
 
 *{
@@ -60,7 +61,7 @@ a:hover{
 }
 
 #tour_filterbox ul li{
-	padding: 15px;
+	padding: 20px;
 	border-top: 0.5px solid yellow;
 	border-bottom: 0.5px solid yellow;
 }
@@ -75,7 +76,7 @@ a:hover{
 	margin:3px;
 }
 #tour_content .card:hover{
-	border: 2px dotted black;
+	box-shadow: 1px 1px 2px 2px gray;
 }
 
 
@@ -175,6 +176,26 @@ h5{
 /* 	font-weight:800; */
 /* } */
 
+#slider-range-max{
+	width:100%;
+}
+
+#btn1{
+	width:45px;
+	height:38px;
+}
+
+#searchInput, #btn1{
+	margin-top:8px;
+}
+#keyword{
+	border-radius: 25px 0 0 25px;
+}
+#btn1{
+	border-radius: 0 25px 25px 0;
+	margin-right:25px;
+}
+
 </style>
 
 <div id="tourSelect_wrapper">
@@ -195,33 +216,42 @@ h5{
 			<label for="clear">필터초기화 </label><img src='${cp }/resources/images/reset.svg' name='clear' id="clear" onclick="clearFilter()" style="width:30px;"><br>
 			<p>조회기간</p>
 			<input type="text" id="from" placeholder="시작일 지정" size="10" onchange="dateChange();"><br> <!-- 유효기간 + 티켓 갯수 남은애들 -->
-			<input type="text" id="to" placeholder="마지막날 지정" size="10" onchange="dateChange();"><br>
 			<input type="checkbox" name="isDiscount" id="isDiscount" onclick="discountChange(this)"><label for="isDiscount">할인 상품만 보기</label><br>
 			<input type="radio" name="starPoint" id="starDefault" onclick="starChange(this.value)" value='0' checked="checked" >전체<br> <!-- 평균 별점 갯수 + 티켓개수 남은애들 -->
 			<input type="radio" name="starPoint" onclick="starChange(this.value)" value='4.5'>별5개 만<br>
 			<input type="radio" name="starPoint" onclick="starChange(this.value)" value='4'>별4개 이상<br>
-			가격대<br> <!-- 가격대 + 티켓개수 남은애들 -->
-			<input type="range" id="price_range" step="1000" onchange="rangeChange(this.value)"><br> <!-- 숫자 보여주고 -->
-			<span id="showRange"></span>
+  			<p>
+				<label for="amount">MAX PRICE</label>
+				<input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+			</p>
+			<div id="slider-range-max"></div>
+  			
 		</div>
 	</div>
 	<div id="tour_contentbox">
-		<div id="tour_option">
-			<input type="text" placeholder="검색어 입력" id="keyword"><button id="btn1" onclick="search()">검색</button>
-			<input type="hidden" id="classification">
-			<a href="javascript:orderChange(1);" class="classification">추천순</a>
-			<a href="javascript:orderChange(2);" class="classification">리뷰많은순</a>
-			<a href="javascript:orderChange(3);" class="classification" >낮은가격순</a>
-			<a href="javascript:orderChange(4);" class="classification">높은가격순</a>
+		<div id="tour_option" style="width:100%;">
+			<div class="input-group">
+				<div class="form-outline" id="searchInput">
+					<input type="search" class="form-control" placeholder="검색어 입력" id="keyword" style="width:270px;">
+				</div>
+				<button type="button" class="btn btn-primary" id="btn1" onclick="search()">
+			   		<i class="fas fa-search"></i>
+			  	</button>
+				<input type="hidden" id="classification">
+			  	<a href="javascript:orderChange(1);" class="classification">추천순</a>
+				<a href="javascript:orderChange(2);" class="classification">리뷰많은순</a>
+				<a href="javascript:orderChange(3);" class="classification" >낮은가격순</a>
+				<a href="javascript:orderChange(4);" class="classification">높은가격순</a>
+			</div>
 		</div>
 		<div id="tour_content">
 		</div>
 	</div>
 
 <script>
-	var MAXPRICE = 0;
+	var MAXPRICE=0;
 	
-	$(document).ready(function(){
+	$(function(){
 		var loading = $('<div id="loading" class="loading"></div><img id="loading_img" alt="loading" src="${cp}/resources/gimgs/viewLoading.gif" />').appendTo(document.body).hide();
 		$(window)	
 		.ajaxStart(function(){
@@ -249,27 +279,26 @@ h5{
 		
 		
 		$("#from").datepicker('setDate','today');
-		$("#to").datepicker('setDate','+1M');
 		var startDate=$("#from").val();
-		var endDate=$("#to").val();
 		var tourType=$("#tourType").val();
 		var param={
 				"startDate" : startDate,
-				"endDate" : endDate,
 				"tourType" : tourType
 		}
-		console.log(tourType);
+		
+
+		console.log("tourtype: "+tourType);
 		initialPage(param);
+		
+		console.log("MAX"+MAXPRICE);
 		
 	});
 	function search(){
 		var keyword = $("#keyword").val();
 		var startDate=$("#from").val();
-		var endDate=$("#to").val();
 		var isDiscount= $("#isDiscount").prop("checked");
 		var param={
 				"startDate" : startDate,
-				"endDate" : endDate,
 				"keyword" : keyword,
 				"isDiscount" : isDiscount
 		}
@@ -284,9 +313,7 @@ h5{
 	
 	function clearFilter(){
 		$("#from").datepicker('setDate','today');
-		$("#to").datepicker('setDate','+1M');
 		var startDate=$("#from").val();
-		var endDate=$("#to").val();
 		var tourType="0";
 		$("#isDiscount").prop("checked",false);
 		if(document.getElementById("tourType").value!=null){
@@ -296,7 +323,6 @@ h5{
 		$("#showRange").html($("#price_range").prop("min")+"원  ~ "+ $("#price_range").val()+"원");
 		var param={
 				"startDate" : startDate,
-				"endDate" : endDate,
 				"tourType":tourType
 		}
 		$("#starDefault").prop("checked","checked");
@@ -305,7 +331,6 @@ h5{
 	
 	function dateChange(){
 		var startDate=$("#from").val();
-		var endDate=$("#to").val();
 		var tourType="0";
 		if(document.getElementById("tourType").value!=null){
 			tourType= document.getElementById("tourType").value;
@@ -319,7 +344,6 @@ h5{
 		var isDiscount= $("#isDiscount").prop("checked");
 		var param={
 				"startDate" : startDate,
-				"endDate" : endDate,
 				"tourType": tourType,
 				"classification": classification,
 				"targetPoint": targetPoint,
@@ -336,11 +360,9 @@ h5{
 		$("li a").css({"font-weight":400, "font-size":'16px'});
 		$("li:eq("+tourType+") a").css({"font-weight":800, "font-size":'18px'});
 		var startDate=$("#from").val();
-		var endDate=$("#to").val();
 		var isDiscount= $("#isDiscount").prop("checked");
 		var param={
 				"startDate" : startDate,
-				"endDate" : endDate,
 				"tourType": tourType,
 				"isDiscount" : isDiscount
 		}
@@ -351,7 +373,6 @@ h5{
 		$(".classification").css({"font-weight":400, "font-size":'16px'});
 		$(".classification:eq("+(cnum-1)+")").css({"font-weight":800, "font-size":'17px'});
 		var startDate=$("#from").val();
-		var endDate=$("#to").val();
 		var tourType="0";
 		if(document.getElementById("tourType").value!=null){
 			tourType= document.getElementById("tourType").value;
@@ -362,7 +383,6 @@ h5{
 		var isDiscount= $("#isDiscount").prop("checked");
 		var param={
 				"startDate" : startDate,
-				"endDate" : endDate,
 				"tourType": tourType,
 				"classification": cnum,
 				"targetPoint": targetPoint,
@@ -377,7 +397,6 @@ h5{
 		console.log(isdc.checked);
 		var isDiscount =  $(this).prop("checked");		
 		var startDate=$("#from").val();
-		var endDate=$("#to").val();
 		var tourType="0";
 		if(document.getElementById("tourType").value!=null){
 			tourType= document.getElementById("tourType").value;
@@ -392,7 +411,6 @@ h5{
 		var isDiscount= $("#isDiscount").prop("checked");
 		var param={
 				"startDate" : startDate,
-				"endDate" : endDate,
 				"tourType": tourType,
 				"classification": classification,
 				"targetPoint": targetPoint,
@@ -405,7 +423,6 @@ h5{
 	
 	function starChange(val){ // 별점 선택 기준 변할때 
 		var startDate=$("#from").val();
-		var endDate=$("#to").val();
 		var tourType="0";
 		if(document.getElementById("tourType").value!=null){
 			tourType= document.getElementById("tourType").value;
@@ -419,7 +436,6 @@ h5{
 		var isDiscount= $("#isDiscount").prop("checked");
 		var param={
 				"startDate" : startDate,
-				"endDate" : endDate,
 				"tourType": tourType,
 				"classification": classification,
 				"targetPoint": val,
@@ -434,7 +450,6 @@ h5{
 		$("#price_range").val(val);
 		$("#showRange").html($("#price_range").prop("min")+"원  ~ "+ $("#price_range").val()+"원");
 		var startDate=$("#from").val();
-		var endDate=$("#to").val();
 		var tourType="0";
 		
 		if(document.getElementById("tourType").value!=null){
@@ -449,7 +464,6 @@ h5{
 		var isDiscount= $("#isDiscount").prop("checked");
 		var param={
 				"startDate" : startDate,
-				"endDate" : endDate,
 				"tourType": tourType,
 				"classification": classification,
 				"targetPoint": targetPoint,
@@ -464,10 +478,10 @@ h5{
 	function initialPage(param){
 		$.getJSON('${cp}/tourSelectList', param, function(data){
 			$("#tour_content").empty();
-			console.log(data.list.length);
-			if(data.list.length==0){
-				console.log("yes");
-				
+			
+			console.log("가져올 데이터 갯수 : "+ data.list.length);
+			
+			if(data.list.length==0){ // 검색되는 데이터가 없으면
 				var str = "<div id='sorryMsg'><img src='${cp }/resources/images/sorry.jpg' style='width:500px;'><br>"+
 							"<p>Sorry, There is nothing</p><div>";
 				$("#tour_content").append(str);
@@ -477,22 +491,7 @@ h5{
 			var str = "";
 			str+="<div class='row row-cols-1 row-cols-md-3'>"; //첫번째 div
 			$("#tourType").val(param.tourType);
-			
-			let minprice= data.minprice;
-			let maxprice= data.maxprice;
-			
-			
-			let targetPrice = maxprice;
-			if(data.targetPrice!=0){
-				targetPrice=data.targetPrice;
-			}
-			if(MAXPRICE!=0){
-				$("#price_range").prop({"min":minprice,"max":MAXPRICE,"value":targetPrice});
-			}else{
-				$("#price_range").prop({"min":minprice,"max":maxprice,"value":targetPrice});
-			}
-			$("#showRange").html(minprice+"원  ~ 최대 "+ $("#price_range").val()+"원");
-			
+
 			for(let i=0; i<data.list.length; i++){
 				let cate_number= data.list[i].cate_number;
 				let service_number= data.list[i].service_number;
@@ -509,7 +508,6 @@ h5{
 				
 				var fullstars = Math.floor(avgpoint);
 				var decimal =  Math.round(avgpoint*10%10);
-				console.log("decimal= "+decimal);
 				var stars ="";
 			
 				if(avgpoint==0){
@@ -568,8 +566,42 @@ h5{
 			}
 			str+="</div>"; //1번째 div
 			$("#tour_content").append(str);
+		
+			console.log("max"+MAXPRICE);
+			
+			$( "#slider-range-max" ).slider({
+			      range: "max",
+			      min: 0,
+			      max: MAXPRICE,
+			      value: MAXPRICE,
+			      slide: function( event, ui ) {
+			        $( "#amount" ).val( ui.value+" 원" );
+			      }
+			    });
+			 $( "#amount" ).val( $( "#slider-range-max" ).slider( "value" ) +" 원");
+				
+			 
+			let minprice= data.minprice;
+			let maxprice= data.maxprice;
+			
+			console.log("min"+minprice);
+			console.log("max"+maxprice);
+			
+			let targetPrice = maxprice; //검색 max값은 리스트 내의 최대값
+			if(data.targetPrice!=null || data.targetPrice!=0){ // 컨트롤러에서 받아온게 있으면
+				targetPrice=data.targetPrice; // 현재 목표가격(max)는 받아온가격
+			}
+			console.log("tp"+targetPrice);
+			if(MAXPRICE!=0){ //미리 받아놓은 MAXPRICE 값이 있다면
+				$("#slider-range-max").slider( "option", "max", MAXPRICE );
+				$("#slider-range-max").slider( "option", "value", targetPrice );
+			}else{ // MAXPRICE가 0이면 이번에 받아온 최고가를 넣어준다.
+				$("#slider-range-max").slider( "option", "max", maxprice );
+				$("#slider-range-max").slider( "option", "value", targetPrice );
+			}
+			 $( "#amount" ).val( $( "#slider-range-max" ).slider(  "option", "max" ) +" 원");
+			 MAXPRICE= $("#slider-range-max").slider( "option", "max" );
 		});
-		MAXPRICE= $("#price_range").prop("max");
 	}
 	
 	$("#from").datepicker({
@@ -589,15 +621,6 @@ h5{
 			$("#to").datepicker("option","minDate",nextDay);
 			$("#to").datepicker("option","maxDate",nextTwo);
 		}
-	});
-	$("#to").datepicker({
-		dateFormat:'yy-mm-dd',
-		dayNamesMin:['일','월','화','수','목','금','토'],
-		monthNames:['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-		yearSuffix:"년",
-		showMonthAfterYear:true,
-		minDate:0,
-		showAnim:"toggle"
 	});
 	
 	function wish(img){

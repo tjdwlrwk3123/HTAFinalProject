@@ -37,7 +37,6 @@ public class TourSelectController {
 	@ResponseBody
 	public HashMap<String, Object> tourSelect(
 			@RequestParam(value ="startDate") Date startDate,
-			@RequestParam(value = "endDate") Date endDate, 
 			@RequestParam(value = "targetPoint", defaultValue = "0") double targetPoint, 
 			@RequestParam(value = "targetPrice", defaultValue = "0") int targetPrice,
 			@RequestParam(value = "isDiscount", defaultValue = "false") boolean isDiscount,
@@ -48,7 +47,6 @@ public class TourSelectController {
 			) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("startDate", startDate);
-		map.put("endDate", endDate);
 		map.put("classification",classification); // 1:추천순  / 2:리뷰많은순 / 3:가격 낮은순 / 4:가격 높은순
 		
 		if(keyword!=null) {
@@ -83,12 +81,20 @@ public class TourSelectController {
 				minprice=vo.getDcprice();
 			}
 		}
+		System.out.println("min"+minprice);
+		System.out.println("max"+maxprice);
+		
 		
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		result.put("startDate",startDate);
-		result.put("endDate",endDate);
-		result.put("targetPoint",targetPoint);
-		result.put("targetPrice",targetPrice);
+		if(targetPoint!=0) {
+			result.put("targetPoint",targetPoint);
+		}
+		if(targetPrice!=0) {
+			result.put("targetPrice",targetPrice);
+		}else {
+			result.put("targetPrice", 0);
+		}
 		result.put("tourType",tourType);
 		result.put("classification",classification);
 		result.put("minprice",minprice); // 리스트 내에 가장 저렴한 가격

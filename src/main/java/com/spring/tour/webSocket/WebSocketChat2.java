@@ -14,14 +14,12 @@ import javax.websocket.server.ServerEndpoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.socket.server.standard.SpringConfigurator;
 
 import com.spring.tour.service.ChatService;
 
 
 @ServerEndpoint(value = "/echo2.do", configurator = SpringConfigurator.class)
-
 public class WebSocketChat2 {
 	
 	@Autowired

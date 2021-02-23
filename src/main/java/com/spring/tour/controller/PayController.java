@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spring.tour.service.PaymentService;
+import com.spring.tour.service.TourPageService;
 import com.spring.tour.vo.PaymentVo;
+import com.spring.tour.vo.TourOptionVo;
 
 
 @Controller
@@ -23,6 +25,8 @@ public class PayController {
 	@Autowired
 	private PaymentService service;
 	
+	@Autowired
+	private TourPageService tpService;
 	// 투어랑 숙박이랑 파라미터 이름 통일 시키기 
 	/* service_name = 상품명 / 숙소이름
 	 * cate_number = 카테고리넘버
@@ -61,7 +65,9 @@ public class PayController {
 		}else {
 			vo = service.getUserInfo((String)req.getSession().getAttribute("user_id"));
 		}
+		System.out.println("포인트"+vo.getUser_point());
 		model.addAttribute("pvo", vo);
+		
 		model.addAttribute("service_name",service_name);
 		model.addAttribute("cate_number",cate_number);
 		model.addAttribute("service_number",service_number);
@@ -73,11 +79,25 @@ public class PayController {
 			model.addAttribute("endDate",endDate);
 //			System.out.println("endDate"+endDate);
 		}
+		
 		model.addAttribute("user_id",user_id);
 		model.addAttribute("indexNum",indexNum);
+		
+		
+		List<TourOptionVo> tdList = tpService.tourOptionList(service_number);
+		
+		model.addAttribute("optionList",tdList);
 		model.addAttribute("optionName",optionName);
 		model.addAttribute("optionCnts",optionCnts);
 		model.addAttribute("optionPrice",optionPrice);
+		
+//		 private int tour_option_number;
+//		 private int service_number;
+//		 private int tour_price;
+//		 private int tour_option_index;
+//		 private String tour_option;
+//		 private int tour_amount; 
+//		 private int discount;
 		
 //		System.out.println("service_name"+service_name);
 //		System.out.println("cate_number"+cate_number);
@@ -126,7 +146,7 @@ public class PayController {
 						@RequestParam(value="visitorPhone",required = false) String visitorPhone,
 						@RequestParam(value="visitorEmail",required = false) String visitorEmail,
 						@RequestParam(value="couponUsing",required = false) String couponUsing,
-						@RequestParam(value="pointUsing") int pointUsing,
+						@RequestParam(value="pointUsing", defaultValue = "0") int pointUsing,
 						@RequestParam(value="thePrice") int thePrice,
 						@RequestParam(value="waytopay") String waytopay,
 						@RequestParam(value="agreecheck") List<String> agreecheckList,
