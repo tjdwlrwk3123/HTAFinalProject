@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     
 <!-- Required meta tags -->
 <meta charset="utf-8">
@@ -17,7 +18,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/174a2d5b3b.js" crossorigin="anonymous"></script>
 
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4b7621e8665f6a2b7f8fcf343ba118b6&libraries=services"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=04c1ebe9cbcfe54ddfd424342eee90fc&libraries=services"></script>
 
 <!-- 이미지 미리보기 기능 라이브러리들 -->
 <!-- Magnific Popup core CSS file -->
@@ -38,19 +39,133 @@
 	#payment{width:300px; height:250px; position:fixed; padding:30px; right:250px; top:130px; background-color: red; z-index: 99;}
 	#payment #wishbox{background-color: skyblue;}
 	
-	#accomDetail_wrapper{width:1100px; position:relative; margin:auto; background-color: royalblue;}
-	#accomDetail_wrapper #title{width:100%; height:130px; position:relative; padding:20px; border-bottom:1px solid gray; background-color: green; }
-	#accomDetail_wrapper #title #starbox{width:100%; position:relative; margin:10px; right:10px; background-color: pink; }
-	#accomDetail_wrapper #option{width:100%; margin:auto; position:relative; padding:20px; border-bottom:1px solid gray; background-color: orange;}
-	#accomDetail_wrapper #detail{width:100%; position:relative; margin:auto; background-color: yellow;}
+	#accomDetail_wrapper{
+	width:1000px; 
+	position:relative;
+	margin:auto;
+	display: flex;
+	background-color:white;
+	}
+	#accom_content_wrapper #title{
+	width:100%; 
+	height:130px; 
+	position:relative; 
+	padding:10px; 
+	border-bottom:1px solid gray;
+	display:table;
+	background-color: white;
+	margin-bottom: 20px;
+	}
+	#accom_content_wrapper{
+	width:675px; 
+	position:relative;
+	}
+	#accom_content_wrapper #fotorama{
+	width:100%;
+	margin:auto;
+	}
+	#accomDetail_wrapper #accomWishWrapper
+	{
+	width:300px; 
+	height:150px; 
+	position: sticky;
+	margin-left:25px;
+	top:50px; 
+	border:2px solid gray;
+	background-color:white;
+	display:table;
+	padding-top: 20px;
+	}
+	#accomDetail_wrapper #accomWishWrapper #wishbox{
+	width:100%;
+	maring:auto;
+	text-align: center;
+	display:table-row;
+	}
+	#accomDetail_wrapper #accomWishWrapper #wishbox .btn{
+	position:relative;
+	width:200px;
+	margin:10px;
+	}
+	#accomDetail_wrapper #title #accom_starbox
+	{
+	width:100%; 
+	position:relative; 
+	margin:10px;
+	margin-top:30px;
+	right:10px; 
+	background-color: white;
+	}
+	#accomDetail_wrapper #title #accom_starbox .starImg{
+		width:30px;
+		vertical-align: top;
+	}
+	#accomDetail_wrapper #option{
+	width:100%; 
+	margin:auto; 
+	position:relative; 
+	border-bottom:1px solid gray; 
+	background-color: #F6F6F6;
+	user-select:none;
+	padding-top:15px;
+	padding-bottom:15px;
+	padding-left: 30px;
+	}
+	#accomDetail_wrapper #detail{
+	width:100%; 
+	position:relative; 
+	margin:auto;
+	background-color: gray; 
+	}
 	#accomDetail_wrapper #accomWholeImage{width:100%; position:relative; margin:auto; padding:20px; align-content:center; background-color: gray;}
-	#accomDetail_wrapper #detail #info{width:100%; position:relative; padding:20px; border-bottom:1px solid gray; background-color: yellow;}
-	#accomDetail_wrapper #detail #info #infobox{width:100%; position:relative; padding:20px; border-top:1px solid gray; border-bottom:1px solid gray; background-color: yellow;}
-	#accomDetail_wrapper #detail #info #rulebox{width:100%; position:relative; padding:20px; border-bottom:1px solid gray; background-color: yellow;}
-	#accomDetail_wrapper #detail #info #reviewbox{width:100%; position:relative; padding:20px; border-bottom:1px solid gray; background-color: yellow;}
-	#accomDetail_wrapper #detail #info #infobox #mapbox{width:500px; height:330px; margin-top:20px; border:3px solid black; overflow: hidden;}
-	#accomDetail_wrapper #detail #info #infobox #mapbox #map{width:490px; height:300px; margin:auto;}
-	#accomDetail_wrapper #option .fotorama{width: 230px; display: inline-block;}
+	#accomDetail_wrapper #detail #info{
+	width:100%;
+	position:relative; 
+	border-bottom:1px solid gray; 
+	background-color: white;
+	}
+	#accomDetail_wrapper #detail #info #infobox #accominfo{
+	width:100%; 
+	position:relative;
+	padding:20px;
+	border-bottom:1px solid gray;
+	background-color: white;
+	}
+	#accomDetail_wrapper #detail #info #infobox #accomhow{
+	width:100%; 
+	position:relative;
+	padding:20px;
+	border-bottom:1px solid gray;
+	background-color: white;
+	}
+	#accomDetail_wrapper #detail #info #rulebox{
+	width:100%;
+	position:relative; 
+	padding:20px; 
+	border-top:1px solid gray;
+	border-bottom:1px solid gray; 
+	background-color: white;
+	}
+	#accomDetail_wrapper #detail #info #reviewbox{
+	width:100%; 
+	position:relative; 
+	padding:20px; 
+	background-color: white;
+	}
+	#accomDetail_wrapper #detail #info #infobox #mapbox{
+	width:500px; 
+	height:330px; 
+	margin-top:20px; 
+	border:2px solid black; 
+	overflow: hidden;
+	margin-bottom: 20px;
+	}
+	#accomDetail_wrapper #detail #info #infobox #mapbox #map{
+	width:490px;
+	height:300px; 
+	margin:auto;
+	}
+	#accomDetail_wrapper #option .fotorama{width: 230px; display: inline-block; text-align: center;}
 	#accomDetail_wrapper #option .tableformOpt{border: 1px solid black; margin: 1px; padding: 2px; width: 600px; height:200px;}
 	#accomDetail_wrapper #option .opt{display: inline-block; position: relative; float: left; top:50px;}
 	#adultNum{
@@ -79,70 +194,83 @@
 </style>
 
 
-<div id="payment">
-
-<!-- 결제할 금액 / 결제버튼 / 위시리스트 넣기 버튼 -->
-<%-- 	<c:choose> --%>
-<%-- 		<c:when test=""><!-- option이 비엇으면 전체 티켓 개수 0 --> --%>
-<!-- 			<span style="font-size:30px; font-weight:700; color:royalblue;">매진된상품입니다</span> -->
-<%-- 		</c:when> --%>
-<%-- 		<c:otherwise> --%>
-<%-- 			<span style="font-size:30px; font-weight:700; color:royalblue;" id="price">${detail.minp}원 <span style="font-size:15px;">부터</span></span> --%>
-<!-- 			<br> -->
-<%-- 		</c:otherwise> --%>
-<%-- 	</c:choose> --%>
-	
-	<div id="wishbox">
-		<c:choose>
-			<c:when test="${wishlist==false}">
-				<input type="button" value="위시리스트추가" id="wishbtn">
-			</c:when>
-			<c:otherwise>
-				<input type="button" value="위시리스트제거" id="wishbtn">
-			</c:otherwise>
-		</c:choose>
-		<!-- 일단보이게 해놓고 나중에 hidden 만들자 -->
-		<input type="hidden" value="${service.cate_number }" id="cate_number"><br>
-		<input type="hidden" value="${service.accom_service_number }" id="service_number"><br>
-		<input type="hidden" value="${sessionScope.user_id }" id="user_id">
-	</div>
-
-</div>
-
 
 <div id="accomDetail_wrapper" >
+	<div id="accom_content_wrapper">
+	
 	<div id="title">
 		<!-- 제목  -->
 		<h3 style="font-weight:700;">${service.accom_name }</h3>
 		<input type="hidden" value="${accomNum }" id="accomNum">
+		<div id="accom_starbox">
+			<c:choose>
+				<c:when test="${avgpoint==0}">
+					<c:forEach begin="1" end="5">
+						<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>
+					</c:forEach>
+				</c:when>
+				<c:when test="${avgpoint>0}">
+					<c:set var="full" value="${avgpoint-(detail.avgpoint%1)}"/>
+					<c:set var="decimal" value="${(avgpoint%1)*10}"/>
+					<c:choose>
+						<c:when test="${avgpoint==5}">
+							<c:forEach begin="1" end="5">
+								<img src='${cp }/resources/images/fullStar.svg' class='starImg'>
+							</c:forEach>
+						</c:when>
+						<c:when test="${avgpoint!=5 }">
+							<c:forEach begin="1" end="${full}">
+								<img src='${cp }/resources/images/fullStar.svg' class='starImg'>
+							</c:forEach>
+							<c:choose>
+								<c:when test="${decimal>=0 && decimal <3}">
+									<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>
+								</c:when> 
+								<c:when test="${decimal>=3 && decimal <8 }">
+									<img src='${cp }/resources/images/halfStar.svg' class='starImg'>
+								</c:when>
+								<c:when test="${decimal>=8 }">
+									<img src='${cp }/resources/images/fullStar.svg' class='starImg'>
+								</c:when>
+							</c:choose>
+							<c:forEach var="e" begin="1" end="${5-full-1}">
+								<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>			
+							</c:forEach>
+						</c:when>
+					</c:choose>
+				</c:when>
+			</c:choose>
+			<span style="font-size:20px; font-weight:600;">평점 : <fmt:formatNumber value="${detail.avgpoint}" pattern="0.0" />&nbsp; (${fn:length(review)})
+			</span>
+		</div>
 	</div>
 	<!-- 메인 사진들 -->
-	<div class="fotorama" data-nav="thumbs" data-width="500" data-heigth="500">
+	<div class="fotorama" data-nav="thumbs">
 		<c:forEach var="p" items="${wholeImage }" varStatus="status">
 			<img src='${cp}/resources/upload/${p.imgsavename}' width="500" height="500">
 		</c:forEach>
 	</div>
-	<div style="width: 1100px; background-color: #E4F7BA;">
-	<div style="display: inline-block;">
-	날짜<input type="text" id="d1" readonly="readonly" size="10" value="${startDate }">~
-	<input type="text" id="d2" readonly="readonly" size="10" value="${endDate }">
-	</div>
-	<div style="display: inline-block;">
-	<div id="numCount" name="nCount">
-	<span id="totCount" name="nCount">${count }명</span>
-	</div>
-		<div id="changeCount" name="nCount">
-			인원<br><br>
-			<div name="nCount">성인
-				<i class="fas fa-minus-circle fa-2x" name="nCount" id="minCount"
-				style="color: #B2EBF4;"></i>
-				<span id="adultNum" name="nCount">1명</span>
-				<i class="fas fa-plus-circle fa-2x" name="nCount" id="plusCount"
-				style="color: #B2EBF4;"></i>
+	<div style="width: 100%; background-color: #FFEBFE; text-align: center;">
+		<div style="display: inline-block;">
+		날짜<input type="text" id="d1" readonly="readonly" size="10" value="${startDate }">~
+		<input type="text" id="d2" readonly="readonly" size="10" value="${endDate }">
+		</div>
+		<div style="display: inline-block;">
+		<div id="numCount" name="nCount">
+		<span id="totCount" name="nCount">${count }명</span>
+		</div>
+			<div id="changeCount" name="nCount">
+				인원<br><br>
+				<div name="nCount">성인
+					<i class="fas fa-minus-circle fa-2x" name="nCount" id="minCount"
+					style="color: #B2EBF4;"></i>
+					<span id="adultNum" name="nCount">1명</span>
+					<i class="fas fa-plus-circle fa-2x" name="nCount" id="plusCount"
+					style="color: #B2EBF4;"></i>
+				</div>
 			</div>
 		</div>
-	</div>
-	<input type="button" value="재검색" id="reSearch">
+		<input type="button" value="재검색" id="reSearch">
 	</div>
 	<div id="option">
 	</div>
@@ -152,12 +280,41 @@
 		<div id="info">
 			<!-- 기본정보 : 상품정보(제공사항), 주의사항, 이용방법, 위치안내, 취소환불 규정, 후기 -->			
 				<div id="infobox">
-					<h2>상품정보</h2>
-					<pre>${info.accom_info_content }</pre>
-					<br>
-					<h2>이용안내</h2>
-					<div>${info.accom_how }</div>
-					<br>
+					<div id="accominfo">
+						<h2>상품정보</h2>
+						<pre>${info.accom_info_content }</pre>
+					</div>
+					<div id="accomhow">
+						<h2>이용안내</h2>
+						<div>${info.accom_how }</div>
+					</div>
+					<div id="facilityBox">
+						<h2>편의시설</h2>
+						<div style="text-align: center;">
+						<c:forEach var="fac" items="${facility}">
+							<c:choose>
+								<c:when test="${fac =='바베큐' }">
+									<div style="display: inline-block;">${fac }</div>
+								</c:when>
+								<c:when test="${fac =='수영장' }">
+									<div style="display: inline-block;">${fac }</div>
+								</c:when>
+								<c:when test="${fac =='편의점' }">
+									<div style="display: inline-block;">${fac }</div>
+								</c:when>
+								<c:when test="${fac =='탁구장' }">
+									<div style="display: inline-block;">${fac }</div>
+								</c:when>
+								<c:when test="${fac =='연회장' }">
+									<div style="display: inline-block;">${fac }</div>
+								</c:when>
+							</c:choose>
+						</c:forEach>
+						</div>
+					</div>
+					<div id="convenBox">
+						<h2>서비스</h2>
+					</div>
 					<c:if test="${!empty service.accom_addr }">
 						<div id="mapbox">
 							<div id="map">
@@ -187,6 +344,24 @@
 			</div>
 		</div>
 	</div>
+	</div>
+	<div id="accomWishWrapper">
+		<div id="wishbox">
+			<c:choose>
+				<c:when test="${wishlist==false}">
+					<button type="button" id="wishbtn" class="btn btn-danger btn-lg">위시리스트추가</button>
+				</c:when>
+				<c:otherwise>
+					<button type="button" id="wishbtn" class="btn btn-outline-danger btn-lg">위시리스트제거</button>
+				</c:otherwise>
+			</c:choose>
+			<button type="button" id="goTicket" class="btn btn-outline-secondary btn-lg">티켓보기</button>
+
+			<input type="hidden" value="${service.cate_number }" id="cate_number"><br>
+			<input type="hidden" value="${service.accom_service_number }" id="service_number"><br>
+			<input type="hidden" value="${sessionScope.user_id }" id="user_id">
+		</div>
+	</div>
 </div>
 <script>
 
@@ -214,26 +389,13 @@
 		}
 	});
 	
-	////////////////이미지 미리보기 기능(magnific)///////////////////
+	$("#goTicket").on("click",function(){ 
+		var scrollPosition = $("#accom_content_wrapper").offset().top;
+		$("html").animate({
+			scrollTop: scrollPosition
+		}, 500);
+	});
 	
-/*	$('#accomWholeImage').magnificPopup({
-		delegate: 'a',
-		type: 'image',
-		tLoading: 'Loading image #%curr%...',
-		mainClass: 'mfp-img-mobile',
-		gallery: {
-			enabled: true,
-			navigateByImgClick: true,
-			preload: [0,1] // Will preload 0 - before current, and 1 after the current image
-		},
-		image: {
-			tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
-		},
-		zoom: {
-			enabled:true,
-			duration: 400
-		},
-	});			*/
 
 
 
@@ -390,6 +552,11 @@
 				var howLong=data.howLong;
 				var price=data.options[i].accom_price;
 				var totPrice=price*howLong;
+				var discount=data.options[i].discount;
+				if(discount!=0){
+					var discountPrice=data.options[i].discountPrice;
+					var dTotPrice=discountPrice*howLong;
+				}
 				var cateNumber=document.getElementById("catNum").value;
 				var serviceName=document.getElementById("serviceName").value;
 				
@@ -425,6 +592,16 @@
 						'</div>'+
 						'</div>';
 				}
+				if(discount!=0){
+					var isDiscount=
+						'<span style="font:bold;text-decoration: line-through;color:red;font-size:0.9em;">'+howLong+'박 총'+totPrice+'원</span><br>'+
+						'<span style="font:bold;">'+howLong+'박 총'+discountPrice+'원</span>'+
+						'<p style="font-size: 0.7em;">1인당 '+parseInt(dTotPrice/count)+'원</p>';
+				}else{
+					var isDiscount=
+						'<span style="font:bold;">'+howLong+'박 총'+totPrice+'원</span>'+
+						'<p style="font-size: 0.7em;">1인당 '+parseInt(totPrice/count)+'원</p>';
+				}
 				
 				var content=
 					'<div class="tableformOpt">'+
@@ -434,8 +611,7 @@
 					'<div class="opt">'+
 					'<h4>'+data.options[i].accom_rooms_option+'</h4>'+
 					'<span>기준인원:'+data.options[i].accom_min_people+'/최대인원:'+data.options[i].accom_max_people+'</span><br>'+
-					'<span style="font:\'bold\'">'+howLong+'박 총'+totPrice+'원</span>'+
-					'<p style="font-size: 0.7em;">1인당 '+parseInt(totPrice/count)+'원</p>'+
+					isDiscount+
 					'</div>'+
 					endContent;
 					

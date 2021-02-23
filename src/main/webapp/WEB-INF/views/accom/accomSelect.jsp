@@ -51,14 +51,22 @@
 		margin-left:-75px;	
 		z-index: 200;
 	}
-	#accomWrap{width: 1000px; height: 1000px;}
+	#accomWrap{
+		width: 1000px;
+		margin: auto;
+		display : flex;
+		background-color: #FFCA6C;
+	}
 	.accomSelectSection{width:500px; height:200px;}
 	.accomSelectSection .accomSelectImage{display:inline-block; margin-right:10px;}
 	.accomSelectSection .accomSelectImage img{width: 150px; height: 150px;}
 	.accomSelectSection .accomSelectInfo{display:inline-block;}
 	
-	#accomOrderBox {
-		
+	#accomFilter {
+		width: 200px;
+		height: 100%;
+		background-color: #FFCA6C;
+		padding: 30px 0;
 	}
 	
 	
@@ -70,32 +78,8 @@
 
 
 
-
-<div style="width: 1000px; height: 60px; background-color: #E4F7BA;">
-
-<div style="display: inline-block; width: 300px; text-align: center;">
-	날짜: <input type="text" id="d1" readonly="readonly" size="10">~
-	<input type="text" id="d2" readonly="readonly" size="10">
-</div>
-<div style="display: inline-block;">
-	<div id="numCount" name="nCount" style="width: 50px; text-align: center;">
-	<span id="totCount" name="nCount">1명</span>
-	</div>
-	<div id="changeCount" name="nCount">
-		인원<br><br>
-		<div name="nCount">성인
-			<i class="fas fa-minus-circle fa-2x" name="nCount" id="minCount"
-			style="color: #B2EBF4;"></i>
-			<span id="adultNum" name="nCount">1명</span>
-			<i class="fas fa-plus-circle fa-2x" name="nCount" id="plusCount"
-			style="color: #B2EBF4;"></i>
-		</div>
-	</div>
-</div>
-<input type="button" value="검색" id="searchAccom">
-</div>
-<br>
 <div id="accomWrap">
+
 <div id="accomFilter" style="display: inline-block; width: 400px; float: left;">
 <div>
 종류<br>
@@ -142,6 +126,26 @@
 </div>
 
 <div id="accomResult" style="display: inline-block; width: 500px; float: left;">
+	<div style="display: inline-block; width: 300px; text-align: center;">
+	날짜: <input type="text" id="d1" readonly="readonly" size="10">~
+	<input type="text" id="d2" readonly="readonly" size="10">
+</div>
+<div style="display: inline-block;">
+	<div id="numCount" name="nCount" style="width: 50px; text-align: center;">
+	<span id="totCount" name="nCount">1명</span>
+	</div>
+	<div id="changeCount" name="nCount">
+		인원<br><br>
+		<div name="nCount">성인
+			<i class="fas fa-minus-circle fa-2x" name="nCount" id="minCount"
+			style="color: #B2EBF4;"></i>
+			<span id="adultNum" name="nCount">1명</span>
+			<i class="fas fa-plus-circle fa-2x" name="nCount" id="plusCount"
+			style="color: #B2EBF4;"></i>
+		</div>
+	</div>
+</div>
+<input type="button" value="검색" id="searchAccom">
 	<div id="accomOrderBox" style="text-align: center;">
 	<input type="hidden" id="classification">
 		<a href="javascript:orderChange(1);"<c:if test='${classification==1}'>style="color:gray;"</c:if>>추천순</a>

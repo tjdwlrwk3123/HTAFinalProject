@@ -130,4 +130,8 @@
 	<select id="accom_room_detail" parameterType="int" resultType="accomOption">
 		select * from accom_option where accom_option_number=#{accom_option_number}
 	</select>
+	<!-- 해당 숙소의 평점 -->
+	<select id="accom_star_point" parameterType="hashmap" resultType="int">
+		select nvl(avg(star_point),0) from review where cate_number=#{cate_number} and service_number=#{service_number}
+	</select>
 </mapper>

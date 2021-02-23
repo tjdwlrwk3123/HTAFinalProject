@@ -54,4 +54,8 @@ public class AccomService {
 	public List<Accom_serviceVo> accomDetailForId(String user_id){
 		return dao.accomDetailForId(user_id);
 	}
+	//¼÷¼Ò ÆòÁ¡»Ì¾Æ¿À±â
+	public int accomStarPoint(HashMap<String, Object> map) {
+		return dao.accomStarPoint(map);
+	}
 }

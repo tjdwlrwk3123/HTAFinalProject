@@ -34,6 +34,13 @@ public class AccomDetailController {
 		map.put("accomNum", accomNum);
 		map.put("count", count);
 		List<AccomOptionVo> optionVo=service.accomOption(map);
+		for(AccomOptionVo vo:optionVo) {
+			int price=vo.getAccom_price();
+			int discount=vo.getDiscount();
+			if(discount!=0) {
+				vo.setDiscountPrice(price-(price*discount/100));
+			}
+		}
 		
 		//결과로 보낼 해시맵
 		HashMap<String, Object> result=new HashMap<String, Object>();

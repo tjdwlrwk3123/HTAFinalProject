@@ -72,16 +72,27 @@ public class AccomGoController {
 		infoVo.setAccom_how(infoVo.getAccom_how().replaceAll("\\n","<br>"));
 		infoVo.setAccom_rule(infoVo.getAccom_rule().replaceAll("\\n", "<br>"));
 		infoVo.setAccom_chekinfo(infoVo.getAccom_chekinfo().replaceAll("\\n", "<br>"));
+		String conven[]=infoVo.getConven().split(",");
+		String facility[]=infoVo.getFacility().split(",");
+		System.out.println(conven.length);
+		System.out.println(facility.length);
 		model.addAttribute("info", infoVo);
 		model.addAttribute("service", serviceVo);
 		model.addAttribute("accomNum", accomNum);
 		model.addAttribute("startDate", startDate);
 		model.addAttribute("endDate", endDate);
 		model.addAttribute("count", count);
+		model.addAttribute("conven", conven);
+		model.addAttribute("facility", facility);
 		
 		//숙소 전체이미지 불러오기
 		List<ImageVo> wholeImage=service.accomWholeImage(accomNum);
 		model.addAttribute("wholeImage",wholeImage);
+		
+		//숙소의 평점 가져오기
+		int starPoint=service.accomStarPoint(map);
+		model.addAttribute("avgpoint", starPoint);
+		
 		return ".accom.accomDetail";
 	}
 }

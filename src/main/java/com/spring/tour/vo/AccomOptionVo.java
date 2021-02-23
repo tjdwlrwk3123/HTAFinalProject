@@ -10,6 +10,7 @@ public class AccomOptionVo {
 	private int accom_max_people;
 	private int accom_price;
 	private int discount;
+	private int discountPrice;
 	private List<ImageVo> room_image;
 	public AccomOptionVo() {}
 	public AccomOptionVo(int accom_option_number, int accom_service_number, String accom_rooms_option,
@@ -70,5 +71,11 @@ public class AccomOptionVo {
 	}
 	public void setDiscount(int discount) {
 		this.discount = discount;
+	}
+	public int getDiscountPrice() {
+		return discountPrice;
+	}
+	public void setDiscountPrice(int discountPrice) {
+		this.discountPrice = discountPrice;
 	}
 }

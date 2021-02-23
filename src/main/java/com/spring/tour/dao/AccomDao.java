@@ -56,4 +56,8 @@ public class AccomDao {
 	public List<Accom_serviceVo> accomDetailForId(String user_id){
 		return sqlSession.selectList(NAMESPACE+".accom_service_detail_forId", user_id);
 	}
+	//평점가져오기
+	public int accomStarPoint(HashMap<String, Object> map) {
+		return sqlSession.selectOne(NAMESPACE+".accom_star_point", map);
+	}
 }
