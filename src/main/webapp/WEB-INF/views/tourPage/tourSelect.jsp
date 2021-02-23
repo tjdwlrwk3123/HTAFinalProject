@@ -68,7 +68,7 @@ a:hover{
 
 #tour_contentbox {
 	width: 85%;
-	background-color: #D9E5FF;
+	background-color: #F3F3F3;
 	height:auto;
 	padding : 10px;
 }
@@ -78,7 +78,6 @@ a:hover{
 #tour_content .card:hover{
 	box-shadow: 1px 1px 2px 2px gray;
 }
-
 
 #tour_content div h5{
 	margin-top:15px;
@@ -176,10 +175,6 @@ h5{
 /* 	font-weight:800; */
 /* } */
 
-#slider-range-max{
-	width:100%;
-}
-
 #btn1{
 	width:45px;
 	height:38px;
@@ -195,7 +190,60 @@ h5{
 	border-radius: 0 25px 25px 0;
 	margin-right:25px;
 }
+.filterOption{
+	margin-left:15px;
+	margin-bottom:30px;
+}
 
+.filterOption p, input[text]{
+	margin-bottom: -20px;
+}
+#starFilter{
+	margin-top: 15px;
+}
+
+#starFilter label{
+	margin-left:10px;
+}
+
+#dateFilter{
+	margin-top:15px;
+}
+
+#dateFilter input{
+	margin-left:15px;
+	width:85%;
+	border-radius: 25px 25px 25px 25px;
+}
+#dateFilter span{
+	margin-left:15px;
+}
+#dateFilter label{
+	margin-left:10px;
+}
+
+#priceFilter{
+	margin-top:15px;
+	background-color: yellow;
+}
+#priceFilter input[type=text], label{
+	margin-left:15px;
+}
+
+#slider-range-max{
+	margin-left:15px;
+	width:85%;
+}
+#priceFilter label{
+	margin-left:15px;
+	font-weight: 600;
+	margin-bottom: 10px;
+}
+#priceFilter p{
+	margin-left:15px;
+	font-weight: 600;
+	margin-bottom: 10px;
+}
 </style>
 
 <div id="tourSelect_wrapper">
@@ -213,19 +261,25 @@ h5{
 			</ul>
 		</div>
 		<div id="filter">
-			<label for="clear">필터초기화 </label><img src='${cp }/resources/images/reset.svg' name='clear' id="clear" onclick="clearFilter()" style="width:30px;"><br>
-			<p>조회기간</p>
-			<input type="text" id="from" placeholder="시작일 지정" size="10" onchange="dateChange();"><br> <!-- 유효기간 + 티켓 갯수 남은애들 -->
-			<input type="checkbox" name="isDiscount" id="isDiscount" onclick="discountChange(this)"><label for="isDiscount">할인 상품만 보기</label><br>
-			<input type="radio" name="starPoint" id="starDefault" onclick="starChange(this.value)" value='0' checked="checked" >전체<br> <!-- 평균 별점 갯수 + 티켓개수 남은애들 -->
-			<input type="radio" name="starPoint" onclick="starChange(this.value)" value='4.5'>별5개 만<br>
-			<input type="radio" name="starPoint" onclick="starChange(this.value)" value='4'>별4개 이상<br>
-  			<p>
-				<label for="amount">MAX PRICE</label>
-				<input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
-			</p>
-			<div id="slider-range-max"></div>
-  			
+			<div>
+				<div style="background-color: peru; padding-left:15px; font-size:20px; font-weight:800">필터<button onclick="clearFilter()" style="float:right; font-size:17px; clear: float;">필터초기화</button></div>
+			</div>
+			<span><input type="checkbox" name="isDiscount" id="isDiscount" onclick="discountChange(this)" style="margin-left:15px; margin-top:20px;" ><label for="isDiscount" style="margin-left:10px;">할인 상품만 보기</label></span><br>
+			<div id="starFilter" style="margin-left:15px;">
+			<input type="radio" name="starPoint" id="starDefault" onclick="starChange(this.value)" value='0' checked="checked" ><label for="starDefault">별점 전체</label><br> <!-- 평균 별점 갯수 + 티켓개수 남은애들 -->
+			<input type="radio" name="starPoint" id="starFive" onclick="starChange(this.value)" value='4.5'><label for="starFive">별5개 만</label><br>
+			<input type="radio" name="starPoint" id="starFour" onclick="starChange(this.value)" value='4'><label for="starFour">별4개 이상</label><br>
+			</div>
+			<div id="dateFilter">
+				<span class="filterOption"><i class="far fa-calendar-alt"></i><label for="from">일정</label><br>
+				<input type="text" id="from" placeholder="시작일 지정" size="10" onchange="dateChange();" style="text-align: center;"></span>
+			</div>
+			<div id="priceFilter">
+				<label for="amount" >MAX PRICE</label><br>
+				<p id="amount"  style="border:0; color:black; font-weight:bold;"></p>
+<!-- 				<input type="text" id="amount" readonly style="border:0; color:black; font-weight:bold;"> -->
+				<div id="slider-range-max"></div>
+			</div>
 		</div>
 	</div>
 	<div id="tour_contentbox">
@@ -567,25 +621,25 @@ h5{
 			str+="</div>"; //1번째 div
 			$("#tour_content").append(str);
 		
-			console.log("max"+MAXPRICE);
-			
-			$( "#slider-range-max" ).slider({
-			      range: "max",
-			      min: 0,
-			      max: MAXPRICE,
-			      value: MAXPRICE,
-			      slide: function( event, ui ) {
-			        $( "#amount" ).val( ui.value+" 원" );
-			      }
-			    });
-			 $( "#amount" ).val( $( "#slider-range-max" ).slider( "value" ) +" 원");
-				
-			 
 			let minprice= data.minprice;
 			let maxprice= data.maxprice;
 			
-			console.log("min"+minprice);
-			console.log("max"+maxprice);
+			console.log("min? = "+minprice);
+			console.log("max? = "+maxprice);
+			
+			$( "#slider-range-max" ).slider({
+				range: "max",
+				min: 0,
+				max: MAXPRICE,
+				value: maxprice,
+				slide: function( event, ui ) {
+			    	$( "#amount" ).text( ui.value+" 원" );
+				}
+			});
+			console.log("max2 = "+MAXPRICE);
+			 $( "#amount" ).text( $( "#slider-range-max" ).slider( "value" ) +" 원");
+				
+			
 			
 			let targetPrice = maxprice; //검색 max값은 리스트 내의 최대값
 			if(data.targetPrice!=null || data.targetPrice!=0){ // 컨트롤러에서 받아온게 있으면
@@ -602,6 +656,8 @@ h5{
 			 $( "#amount" ).val( $( "#slider-range-max" ).slider(  "option", "max" ) +" 원");
 			 MAXPRICE= $("#slider-range-max").slider( "option", "max" );
 		});
+		console.log("max1 = "+MAXPRICE);
+	
 	}
 	
 	$("#from").datepicker({
