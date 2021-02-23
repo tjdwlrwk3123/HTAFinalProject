@@ -66,8 +66,8 @@ public class TourPageDao {
 		return sqlsession.selectOne(NAMESPACE+".tour_detail_isinwish",map);
 	}
 	//투어 옵션번호에 해당하는 정보
-	public TourOptionVo getTourOption(int optNum) {
-		return sqlsession.selectOne(NAMESPACE+".get_tourService", optNum);
+	public TourOptionVo getTourOption(HashMap<String, Object> map) {
+		return sqlsession.selectOne(NAMESPACE+".get_tourService", map);
 	}
 	public TourServiceVo getTourService(int serviceNum) {
 		return sqlsession.selectOne(NAMESPACE+".get_tour_detail", serviceNum);

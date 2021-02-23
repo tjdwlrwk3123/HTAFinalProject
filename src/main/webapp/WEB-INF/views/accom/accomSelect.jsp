@@ -410,6 +410,12 @@ var totcnt=1; //총 인원수
 						var cate_number=data.list[i].cate_number;
 						var minprice=data.list[i].minp;
 						var maxprice=data.list[i].maxp;
+						var image=data.image[i];
+						if(image==null){
+							var imageName="sorry.jpg";
+						}else{
+							var imageName=data.image[i].imgsavename;
+						}
 						console.log(accomName);
 						console.log(minprice);
 						var content="<a href='${cp}/accomDetail?accomNum="+
@@ -417,7 +423,7 @@ var totcnt=1; //총 인원수
 								endDate+"&count="+count+"&cate_number="+cate_number+"'>"+
 						"<section class='accomSelectSection'>"+
 							"<div class='accomSelectImage'>"+
-							"<img src='${cp}/resources/images/1.png'>"+
+							"<img src='${cp}/resources/upload/"+imageName+"'>"+
 							"</div>"+
 							"<div class='accomSelectInfo'>"+
 							"<h3>"+accomName+"</h3>"+
@@ -432,7 +438,7 @@ var totcnt=1; //총 인원수
 				}else{
 					var content=
 					"<section class='accomSelectSection'>"+
-						"<img src='${cp}/resources/images/3.png'>"+
+						"<img src='${cp}/resources/upload/sorry.jpg'>"+
 						"<h3>검색결과가 없습니다...</h3>"
 					"</section>";
 					$("#accom").append(content);
@@ -443,7 +449,7 @@ var totcnt=1; //총 인원수
 		    $("#accom").empty();
 		    var content=
 			"<section class='accomSelectSection'>"+
-				"<img src='${cp}/resources/images/3.png'>"+
+				"<img src='${cp}/resources/upload/sorry.jpg'>"+
 				"<h3>검색결과가 없습니다...</h3>"
 			"</section>";
 			$("#accom").append(content);

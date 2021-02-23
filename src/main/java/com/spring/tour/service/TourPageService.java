@@ -63,8 +63,8 @@ public class TourPageService {
 	}
 	
 	//투어 옵션번호,서비스번호에 따른 정보
-	public TourOptionVo getTourOption(int optNum) {
-		return dao.getTourOption(optNum);
+	public TourOptionVo getTourOption(HashMap<String, Object> map) {
+		return dao.getTourOption(map);
 	}
 	public TourServiceVo getTourService(int serviceNum) {
 		return dao.getTourService(serviceNum);

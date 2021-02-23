@@ -81,6 +81,9 @@ public class BookingDao {
 	public List<TourBookOptionVo> tourBookOption(int bookNumber){
 		return sqlSession.selectList(NAMESPACE+".tourBookDetail", bookNumber);
 	}
+	public int getServiceNumber(int bookNumber) {
+		return sqlSession.selectOne(NAMESPACE+".get_service_number", bookNumber);
+	}
 	
 	//개인 회원의 예약목록
 	public List<AccomBookVo> accomBuyList(String user_id){

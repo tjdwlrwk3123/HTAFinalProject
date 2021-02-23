@@ -46,7 +46,6 @@ public class BookingCheckController {
 		//테스트용 유저 생성
 		HttpServletRequest request=((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
 		HttpSession session = request.getSession();
-		session.setAttribute("user_id","ck");
 		
 		//유저의 아이디 가져오기
 		String user_id=(String)session.getAttribute("user_id");
@@ -97,7 +96,6 @@ public class BookingCheckController {
 		//테스트용 유저 생성
 		HttpServletRequest request=((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
 		HttpSession session = request.getSession();
-		session.setAttribute("user_id","ck");
 		
 		//유저의 아이디 가져오기
 		String user_id=(String)session.getAttribute("user_id");
@@ -140,7 +138,6 @@ public class BookingCheckController {
 		//테스트용 유저 생성
 		HttpServletRequest request=((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
 		HttpSession session = request.getSession();
-		session.setAttribute("user_id","ck");
 		
 		//유저의 아이디 가져오기
 		String user_id=(String)session.getAttribute("user_id");
@@ -192,7 +189,6 @@ public class BookingCheckController {
 		//테스트용 유저 생성
 		HttpServletRequest request=((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
 		HttpSession session = request.getSession();
-		session.setAttribute("user_id","ck");
 		
 		//유저의 아이디 가져오기
 		String user_id=(String)session.getAttribute("user_id");
@@ -234,7 +230,6 @@ public class BookingCheckController {
 		//테스트용 유저 생성
 		HttpServletRequest request=((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
 		HttpSession session = request.getSession();
-		session.setAttribute("user_id","ck");
 		
 		//유저의 아이디 가져오기
 		String user_id=(String)session.getAttribute("user_id");
@@ -312,18 +307,20 @@ public class BookingCheckController {
 	
 	@RequestMapping("/tourBookDetail")
 	@ResponseBody
-	public HashMap<String, Object> tourBookDetail(int bookNumber){
+	public HashMap<String, Object> tourBookDetail(int bookNumber,int serviceNum){
 		List<TourBookOptionVo> tbo=service.tourBookOption(bookNumber);
 		List<Integer> count=new ArrayList<Integer>();
 		List<TourOptionVo> detail=new ArrayList<TourOptionVo>();
 		String addr="";
+		HashMap<String, Object> map=new HashMap<String, Object>();
+		map.put("service_number", serviceNum);
 		for(TourBookOptionVo vo:tbo) {
-			int optNum=vo.getTour_option_index();
+			int indexNum=vo.getTour_option_index();
+			map.put("tour_option_index", indexNum);
 			int cnt=vo.getCnt();
 			count.add(cnt);
-			TourOptionVo optvo=tourService.getTourOption(optNum);
+			TourOptionVo optvo=tourService.getTourOption(map);
 			detail.add(optvo);
-			int serviceNum=optvo.getService_number();
 			TourServiceVo tsv=tourService.getTourService(serviceNum);
 			addr=tsv.getTour_addr();
 		}

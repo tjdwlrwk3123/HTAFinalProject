@@ -125,7 +125,7 @@
 						style="width: 100px; height: 100px;">
 					</div>
 					<div style="display: inline-block; width:320px;">
-						<h3><a href="${cp }/tourDetail?service_number=${vo.service_number}">${vo.service_name }</a></h3>
+						<h3><a href="${cp }/tourDetail?service_number=${vo.service_number}&cate_number=1">${vo.service_name }</a></h3>
 						<span>유효기간:</span><span>${vo.tour_startdate }~${vo.tour_enddate }</span>
 						<br>
 						<c:choose>
@@ -142,6 +142,7 @@
 						</c:if>
 					</div>
 					<div style="display:inline-block; position: relative; left:10px;">
+						<input type="hidden" value="${vo.service_number }">
 						<a href="#" class="openBookDetail">상세보기</a>
 						<input type="hidden" value="${vo.tour_book_number }">
 					</div>
@@ -220,7 +221,7 @@ function wrapWindowByMask(){
 
 }
 
-function wrapWindowByDetailMask(bookNumber){
+function wrapWindowByDetailMask(bookNumber,serviceNum){
 	 
     //화면의 높이와 너비를 구한다.
     var maskHeight = $(document).height();  
@@ -238,7 +239,7 @@ function wrapWindowByDetailMask(bookNumber){
     $.ajax({
 		url: '${cp}/tourBookDetail',
 		dataType: 'json',
-		data: {"bookNumber":bookNumber},
+		data: {"bookNumber":bookNumber,"serviceNum":serviceNum},
 		success: function(data) {
 			$(".detailPop").empty();
 			for(let i=0;i<data.detail.length;i++){
@@ -308,6 +309,7 @@ function getMap(){
 
 $(document).ready(function(){
 	var bookNumber=0;
+	var serviceNum=0;
 
     //검은 막 띄우기
     $(".openMask").click(function(e){
@@ -320,7 +322,8 @@ $(document).ready(function(){
     $(".openBookDetail").click(function(e){
         e.preventDefault();
         bookNumber=$(e.target).next().val();
-        wrapWindowByDetailMask(bookNumber);
+        serviceNum=$(e.target).prev().val();
+        wrapWindowByDetailMask(bookNumber,serviceNum);
     });
 
     //닫기 버튼을 눌렀을 때
@@ -328,12 +331,14 @@ $(document).ready(function(){
         //링크 기본동작은 작동하지 않도록 한다.
         e.preventDefault();
         bookNumber=0;
+        serviceNum=0;
         $("#tourmask, .cancelPopup").hide();  
     });
 
     //검은 막을 눌렀을 때
     $("#tourmask").click(function () {  
     	bookNumber=0;
+    	serviceNum=0;
         $(this).hide();
         $(".cancelPopup").hide();
         $(".detailPopup").hide();

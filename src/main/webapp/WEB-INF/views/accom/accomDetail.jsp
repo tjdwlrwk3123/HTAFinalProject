@@ -124,6 +124,10 @@
 	border-bottom:1px solid gray; 
 	background-color: white;
 	}
+	#accomDetail_wrapper #detail #info #infobox h3{
+	margin-bottom: 20px;
+	font-weight: 600;
+	}
 	#accomDetail_wrapper #detail #info #infobox #accominfo{
 	width:100%; 
 	position:relative;
@@ -131,6 +135,24 @@
 	border-bottom:1px solid gray;
 	background-color: white;
 	}
+	#accomDetail_wrapper #detail #info #infobox #facilityBox{
+	width:100%; 
+	position:relative;
+	padding:20px;
+	border-bottom:1px solid gray;
+	background-color: white;
+	}
+	#accomDetail_wrapper #detail #info #infobox #facilityBox div{width: 100%; display: flex;}
+	#accomDetail_wrapper #detail #info #infobox #facilityBox div div{justify-content: space-between;}
+	#accomDetail_wrapper #detail #info #infobox #convenBox{
+	width:100%; 
+	position:relative;
+	padding:20px;
+	border-bottom:1px solid gray;
+	background-color: white;
+	}
+	#accomDetail_wrapper #detail #info #infobox #convenBox div{width: 100%; display: flex;}
+	#accomDetail_wrapper #detail #info #infobox #convenBox div div{justify-content: space-between;}
 	#accomDetail_wrapper #detail #info #infobox #accomhow{
 	width:100%; 
 	position:relative;
@@ -153,15 +175,17 @@
 	background-color: white;
 	}
 	#accomDetail_wrapper #detail #info #infobox #mapbox{
-	width:500px; 
+	width:90%; 
 	height:330px; 
 	margin-top:20px; 
 	border:2px solid black; 
 	overflow: hidden;
 	margin-bottom: 20px;
+	margin-left: 5%;
+	text-align: center;
 	}
 	#accomDetail_wrapper #detail #info #infobox #mapbox #map{
-	width:490px;
+	width:100%;
 	height:300px; 
 	margin:auto;
 	}
@@ -210,7 +234,7 @@
 					</c:forEach>
 				</c:when>
 				<c:when test="${avgpoint>0}">
-					<c:set var="full" value="${avgpoint-(detail.avgpoint%1)}"/>
+					<c:set var="full" value="${avgpoint-(avgpoint%1)}"/>
 					<c:set var="decimal" value="${(avgpoint%1)*10}"/>
 					<c:choose>
 						<c:when test="${avgpoint==5}">
@@ -240,8 +264,7 @@
 					</c:choose>
 				</c:when>
 			</c:choose>
-			<span style="font-size:20px; font-weight:600;">평점 : <fmt:formatNumber value="${detail.avgpoint}" pattern="0.0" />&nbsp; (${fn:length(review)})
-			</span>
+			<span style="font-size:20px; font-weight:600;">평점 : <fmt:formatNumber value="${avgpoint}" pattern="0.0" /></span>
 		</div>
 	</div>
 	<!-- 메인 사진들 -->
@@ -270,7 +293,7 @@
 				</div>
 			</div>
 		</div>
-		<input type="button" value="재검색" id="reSearch">
+		<input type="button" value="재검색" id="reSearch" class="btn btn-primary">
 	</div>
 	<div id="option">
 	</div>
@@ -281,39 +304,138 @@
 			<!-- 기본정보 : 상품정보(제공사항), 주의사항, 이용방법, 위치안내, 취소환불 규정, 후기 -->			
 				<div id="infobox">
 					<div id="accominfo">
-						<h2>상품정보</h2>
+						<h3>상품정보</h3>
 						<pre>${info.accom_info_content }</pre>
 					</div>
 					<div id="accomhow">
-						<h2>이용안내</h2>
+						<h3>이용안내</h3>
 						<div>${info.accom_how }</div>
 					</div>
 					<div id="facilityBox">
-						<h2>편의시설</h2>
+						<h3>편의시설</h3>
 						<div style="text-align: center;">
 						<c:forEach var="fac" items="${facility}">
 							<c:choose>
 								<c:when test="${fac =='바베큐' }">
-									<div style="display: inline-block;">${fac }</div>
+									<div style="display: inline-block;">
+									<i class="fas fa-drumstick-bite"></i><br>
+									${fac }
+									</div>
 								</c:when>
 								<c:when test="${fac =='수영장' }">
-									<div style="display: inline-block;">${fac }</div>
+									<div style="display: inline-block;">
+									<i class="fas fa-swimming-pool"></i><br>
+									${fac }
+									</div>
 								</c:when>
 								<c:when test="${fac =='편의점' }">
-									<div style="display: inline-block;">${fac }</div>
+									<div style="display: inline-block;">
+									<i class="fas fa-store"></i><br>
+									${fac }
+									</div>
 								</c:when>
 								<c:when test="${fac =='탁구장' }">
-									<div style="display: inline-block;">${fac }</div>
+									<div style="display: inline-block;">
+									<i class="fas fa-table-tennis"></i><br>
+									${fac }
+									</div>
 								</c:when>
 								<c:when test="${fac =='연회장' }">
-									<div style="display: inline-block;">${fac }</div>
+									<div style="display: inline-block;">
+									<i class="fas fa-birthday-cake"></i><br>
+									${fac }
+									</div>
+								</c:when>
+								<c:when test="${fac =='유아시설' }">
+									<div style="display: inline-block;">
+									<i class="fas fa-baby-carriage"></i><br>
+									${fac }
+									</div>
+								</c:when>
+								<c:when test="${fac =='카페' }">
+									<div style="display: inline-block;">
+									<i class="fas fa-coffee"></i><br>
+									${fac }
+									</div>
+								</c:when>
+								<c:when test="${fac =='온천' }">
+									<div style="display: inline-block;">
+									<i class="fas fa-spa"></i><br>
+									${fac }
+									</div>
+								</c:when>
+								<c:when test="${fac =='골프장' }">
+									<div style="display: inline-block;">
+									<i class="fas fa-golf-ball"></i><br>
+									${fac }
+									</div>
+								</c:when>
+								<c:when test="${fac =='족구장' }">
+									<div style="display: inline-block;">
+									<i class="far fa-futbol"></i><br>
+									${fac }
+									</div>
 								</c:when>
 							</c:choose>
 						</c:forEach>
 						</div>
 					</div>
 					<div id="convenBox">
-						<h2>서비스</h2>
+						<h3>서비스</h3>
+						<div style="text-align: center;">
+						<c:forEach var="con" items="${conven}">
+							<c:choose>
+								<c:when test="${con =='조식' }">
+									<div style="display: inline-block;">
+									<i class="fas fa-bacon"></i><br>
+									${con }
+									</div>
+								</c:when>
+								<c:when test="${con =='픽업' }">
+									<div style="display: inline-block;">
+									<i class="fas fa-truck-pickup"></i><br>
+									${con }
+									</div>
+								</c:when>
+								<c:when test="${con =='무료주차' }">
+									<div style="display: inline-block;">
+									<i class="fas fa-parking"></i><br>
+									${con }
+									</div>
+								</c:when>
+								<c:when test="${con =='금연' }">
+									<div style="display: inline-block;">
+									<i class="fas fa-smoking-ban"></i><br>
+									${con }
+									</div>
+								</c:when>
+								<c:when test="${con =='보드게임' }">
+									<div style="display: inline-block;">
+									<i class="fas fa-chess-board"></i><br>
+									${con }
+									</div>
+								</c:when>
+								<c:when test="${con =='영화관람' }">
+									<div style="display: inline-block;">
+									<i class="fas fa-film"></i><br>
+									${con }
+									</div>
+								</c:when>
+								<c:when test="${con =='wifi' }">
+									<div style="display: inline-block;">
+									<i class="fas fa-wifi"></i><br>
+									${con }
+									</div>
+								</c:when>
+								<c:when test="${con =='반려동물동반' }">
+									<div style="display: inline-block;">
+									<i class="fas fa-paw"></i><br>
+									${con }
+									</div>
+								</c:when>
+							</c:choose>
+						</c:forEach>
+						</div>
 					</div>
 					<c:if test="${!empty service.accom_addr }">
 						<div id="mapbox">
@@ -322,19 +444,16 @@
 							<span style="margin-bottom:0px;">${service.accom_addr }</span>
 						</div>
 					</c:if>
+					<c:if test="${!empty info.accom_rule }">
+						<div id="rulebox">
+							<h3>취소 및 환불 규정</h3>
+							<span>${info.accom_rule }</span>
+							<br>
+						</div>
+					</c:if>
 				</div>
-			<c:if test="${!empty info.accom_rule }">
-				<div id="rulebox">
-					<h2>취소 및 환불 규정</h2>
-					<span>${info.accom_rule }</span>
-					<br>
-				</div>
-			</c:if>
+			
 			<div id="reviewbox">
-				<div id="starbox">
-					<span style="font-size:20px; font-weight:600;">평점 : 
-					</span>
-				</div>
 				<c:if test="">
 					<span>후기 </span><br>
 					<c:forEach var="r" items="">
@@ -569,6 +688,12 @@
 				imgdiv+='</div>';
 				//예약 가능불가능 확인
 				if(data.using[i]=='예약가능'){
+					if(discount!=0){
+						var pricehd='<input type="hidden" name="optionPrice" value="'+dTotPrice+'">'+
+						'<input type="hidden" name="discount" value="'+discount+'">';
+					}else{
+						var pricehd='<input type="hidden" name="optionPrice" value="'+totPrice+'">';
+					}
 					var endContent=
 						'<div style="float:right; margin-top:130px; margin-right:20px;">'+
 						'<form action="${cp}/payment" method="post">'+
@@ -580,8 +705,8 @@
 						'<input type="hidden" name="option_index" value="'+optNum+'">'+
 						'<input type="hidden" name="service_option" value="'+service_option+'">'+
 						'<input type="hidden" name="count" value="'+count+'">'+
-						'<input type="hidden" name="optionPrice" value="'+totPrice+'">'+
-						'<input type="submit" value="예약">'+
+						pricehd+
+						'<input type="submit" class="btn btn-outline-primary" value="예약">'+
 						'</form>'+
 						'</div>'+
 						'</div>';
