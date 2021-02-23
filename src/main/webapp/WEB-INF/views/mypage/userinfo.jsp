@@ -26,6 +26,10 @@
 			<td colspan="6">${vo.user_email }</td>
 		</tr>
 		<tr>
+			<td align="left">포인트 : </td>
+			<td colspan="6">${vo.user_point }</td>
+		</tr>
+		<tr>
 			<td colspan="7"><button type="button" onclick="location.href='${cp}/changeuserinfopage'">정보변경</button></td>
 		</tr>
 	</table>
