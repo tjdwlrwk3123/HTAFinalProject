@@ -16,32 +16,65 @@ import com.spring.tour.vo.User_InfoVo;
 public class MyPageController {
 	@Autowired
 	private MyPageService service;
-	
-	@GetMapping("/changeuserinfo")
+
+	@GetMapping("/userinfopage")
+	public String userinfo(HttpSession session, Model model) {
+		try {
+			System.out.println(session);
+			String user_id=(String)session.getAttribute("user_id");
+			System.out.println(session.getAttribute("user_id"));
+			if(user_id.equals("")||user_id==null) {
+				return ".userjoin.userlogin";
+			}else {
+				model.addAttribute("vo",service.getinfo(user_id));
+				return ".mypage.userinfo";
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			return ".userjoin.userlogin";
+		}
+	}
+	@GetMapping("/changeuserinfopage")
 	public String checkpwd(HttpSession session) {
 		try {
 			System.out.println(session);
 			String user_id=(String)session.getAttribute("user_id");
 			System.out.println(session.getAttribute("user_id"));
 			if(user_id.equals("")||user_id==null) {
-				return ".login";
+				return ".userjoin.userlogin";
 			}else {
 				return ".mypage.checkpwd";
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
-			return ".login";
+			return ".userjoin.userlogin";
 		}
 	}
-	@PostMapping("/changeuserinfo")
-	public String changeuserinfo(String pwd, Model model,HttpSession session) {
+	@PostMapping("/changeuserinfopage")
+	public String changeuserinfopage(String pwd, Model model,HttpSession session) {
 		String user_id=(String)session.getAttribute("user_id");
 		User_InfoVo vo = service.getinfo(user_id);
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		if(encoder.matches(pwd, vo.getUser_pass())) {
+			model.addAttribute("vo",vo);
+			System.out.println(vo.toString());
 			return ".mypage.changeuserinfo";
 		}else {
 			return ".mypage.checkpwd";
+		}
+	}
+	@PostMapping("/changeuserinfo")
+	public String changeuserinfo(User_InfoVo vo, Model model,HttpSession session) {
+		try {
+		String user_id=(String)session.getAttribute("user_id");
+		vo.setUser_id(user_id);
+		model.addAttribute("vo",vo);
+		System.out.println(vo.toString());
+		service.updateuserinfo(vo);
+		return "redirect:/userinfopage";
+		}catch(Exception e) {
+			e.printStackTrace();
+			return ".mypage.changeuserinfo";
 		}
 	}
 }

@@ -39,7 +39,6 @@ public class ServiceController {
 	public String tourmain(HttpSession session,Model model) {
 		try {
 			System.out.println(session);
-			session.setAttribute("user_id", "test");
 			String user_id=(String)session.getAttribute("user_id");
 			System.out.println(session.getAttribute("user_id"));
 			if(user_id.equals("")||user_id==null) {
@@ -273,7 +272,6 @@ public class ServiceController {
 	public String accommain(HttpSession session,Model model) {
 		try {
 			System.out.println(session);
-			session.setAttribute("user_id", "test");
 			String user_id=(String)session.getAttribute("user_id");
 			System.out.println(session.getAttribute("user_id"));
 			if(user_id.equals("")||user_id==null) {

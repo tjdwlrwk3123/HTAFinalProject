@@ -13,4 +13,7 @@ public class MyPageDao {
 	public User_InfoVo getinfo(String user_id) {
 		return sqlSession.selectOne(NAMESPACE+".getinfo",user_id);
 	}
+	public int updateuserinfo(User_InfoVo vo) {
+		return sqlSession.update(NAMESPACE+".updateuserinfo",vo);
+	}
 }

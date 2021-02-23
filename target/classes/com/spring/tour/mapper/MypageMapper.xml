@@ -8,5 +8,8 @@
  	<select id="getinfo" parameterType="string" resultType="com.spring.tour.vo.User_InfoVo">
  		select * from user_info where user_id=#{user_id}
  	</select>
+ 	<update id="updateuserinfo" parameterType="com.spring.tour.vo.User_InfoVo">
+ 		update user_info set user_name=#{user_name}, user_email=#{user_email}, user_addr=#{user_addr}, user_phone=#{user_phone} where user_id=#{user_id}
+ 	</update>
 	
 </mapper>
