@@ -13,9 +13,9 @@
 	</tr>
 	<c:forEach var="vo" items="${list }">
 		<tr>
-			<td>${vo.num }</td>
-			<td>${vo.writer }</td>
-			<td><a href="${cp }/select?num=${vo.num }">${vo.title }</a></td>
+			<td>${vo.coupon_number }</td>
+			<td>${vo.expire_date }</td>
+			<td>${vo.coupon_name }</td>
 		</tr>
 	</c:forEach>
 </table>
