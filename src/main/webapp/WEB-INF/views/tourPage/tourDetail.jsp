@@ -659,7 +659,7 @@
 		var span = btn.previousSibling;
 		var cnt = parseInt(span.textContent); //몇개인지 찾고
 		var discount= document.getElementsByName("discount")[indexnum];
-		var option = document.getElementsByName("tour_option")[indexnum];
+		var option = document.getElementsByName("service_option")[indexnum];
 		var price= document.getElementsByName("tour_price")[indexnum];
 		
 		
