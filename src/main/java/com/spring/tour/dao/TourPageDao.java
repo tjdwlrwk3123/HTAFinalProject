@@ -52,6 +52,10 @@ public class TourPageDao {
 	//투어 리뷰 정보 리스트(cate_number, service_number)
 	public List<ReviewVo> tourReviewList(HashMap<String, Object> map){
 		return sqlsession.selectList(NAMESPACE+".tour_review_list",map);
+	}
+	//투어 리뷰 이미지
+	public String tourReviewImage(int general_number){
+		return sqlsession.selectOne(NAMESPACE+".tour_review_image",general_number);
 	}	
 	//투어 실황 사진들 리스트
 	public List<ImageVo> tourDetailImage(int service_number){

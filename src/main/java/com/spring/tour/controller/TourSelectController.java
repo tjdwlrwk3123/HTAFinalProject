@@ -81,9 +81,6 @@ public class TourSelectController {
 				minprice=vo.getDcprice();
 			}
 		}
-		System.out.println("min"+minprice);
-		System.out.println("max"+maxprice);
-		
 		
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		result.put("startDate",startDate);

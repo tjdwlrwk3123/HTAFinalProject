@@ -8,6 +8,7 @@ public class TourDetailVo {
 	private String tour_addr;
 	private String tour_name;
 	private Date tour_expire;
+	private String tour_content;
 	private String tour_how;
 	private String tour_rule;
 	private Double avgpoint;
@@ -18,13 +19,14 @@ public class TourDetailVo {
 	}
 
 	public TourDetailVo(int cate_number, int service_number, String tour_addr, String tour_name, Date tour_expire,
-			String tour_how, String tour_rule, Double avgpoint) {
+			String tour_content, String tour_how, String tour_rule, Double avgpoint) {
 		super();
 		this.cate_number = cate_number;
 		this.service_number = service_number;
 		this.tour_addr = tour_addr;
 		this.tour_name = tour_name;
 		this.tour_expire = tour_expire;
+		this.tour_content = tour_content;
 		this.tour_how = tour_how;
 		this.tour_rule = tour_rule;
 		this.avgpoint = avgpoint;
@@ -48,6 +50,10 @@ public class TourDetailVo {
 
 	public Date getTour_expire() {
 		return tour_expire;
+	}
+
+	public String getTour_content() {
+		return tour_content;
 	}
 
 	public String getTour_how() {
@@ -82,6 +88,10 @@ public class TourDetailVo {
 		this.tour_expire = tour_expire;
 	}
 
+	public void setTour_content(String tour_content) {
+		this.tour_content = tour_content;
+	}
+
 	public void setTour_how(String tour_how) {
 		this.tour_how = tour_how;
 	}
@@ -97,9 +107,8 @@ public class TourDetailVo {
 	@Override
 	public String toString() {
 		return "TourDetailVo [cate_number=" + cate_number + ", service_number=" + service_number + ", tour_addr="
-				+ tour_addr + ", tour_name=" + tour_name + ", tour_expire=" + tour_expire + ", tour_how=" + tour_how
-				+ ", tour_rule=" + tour_rule + ", avgpoint=" + avgpoint + "]";
+				+ tour_addr + ", tour_name=" + tour_name + ", tour_expire=" + tour_expire + ", tour_content="
+				+ tour_content + ", tour_how=" + tour_how + ", tour_rule=" + tour_rule + ", avgpoint=" + avgpoint + "]";
 	}
-	
 
 }

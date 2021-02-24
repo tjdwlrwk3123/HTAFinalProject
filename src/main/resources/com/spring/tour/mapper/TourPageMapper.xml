@@ -113,9 +113,9 @@ select i.cate_number,i.service_number, tour_type, tour_name, avgpoint, rcnt, img
  	
  	<!-- ///////////////////////////tourDetail 투어 상세페이지 데이터 ///////////////////////////-->
  	<select id="detaillist" parameterType="hashmap" resultType="tourdetail">
-		select cate_number, e.service_number, tour_addr, tour_name, tour_expire, tour_how, tour_rule, nvl(avgpoint,0) avgpoint from 
+		select cate_number, e.service_number, tour_addr, tour_name, tour_expire, tour_content, tour_how, tour_rule, nvl(avgpoint,0) avgpoint from 
 		(
-		    select  cate_number, c.service_number,  tour_addr, tour_name, tour_expire, tour_how, tour_rule from 
+		    select  cate_number, c.service_number,  tour_addr, tour_name, tour_expire, tour_content, tour_how, tour_rule from 
 		    (
 		        select cate_number,a.service_number,  tour_addr, tour_name from 
 		        (
@@ -124,7 +124,7 @@ select i.cate_number,i.service_number, tour_type, tour_name, avgpoint, rcnt, img
 		                (select cate_number,tour_addr, tour_name, service_number from tour_service where cate_number=#{cate_number} and service_number = #{service_number})b
 		        on a.service_number=b.service_number
 		    )c left join
-		        (select service_number, tour_expire, tour_how, tour_rule from tour_info where service_number =#{service_number})d
+		        (select service_number, tour_expire, tour_content, tour_how, tour_rule from tour_info where service_number =#{service_number})d
 		    on c.service_number = d.service_number
 		)e left join 
 			(select service_number, avg(star_point)avgpoint from review where service_number =#{service_number} and cate_number = #{cate_number} group by service_number
@@ -155,6 +155,10 @@ select i.cate_number,i.service_number, tour_type, tour_name, avgpoint, rcnt, img
 	<!-- 리뷰 찾아오기 -->
  	<select id="tour_review_list" parameterType="hashmap" resultType="review">
  		select * from review where cate_number=#{cate_number} and service_number= #{service_number} order by review_date desc
+ 	</select>
+ 	<!-- 리뷰 이미지 저장이름 가져오기 -->
+ 	<select id="tour_review_image" parameterType="int" resultType="string">
+ 		select imgsavename from (select rownum, img_num, imgsavename from image where cate_number=11 and general_number= #{general_number} order by img_num) where rownum=1
  	</select>
  	
  	<!-- //////////기홍 쿼리 추가///////// -->
