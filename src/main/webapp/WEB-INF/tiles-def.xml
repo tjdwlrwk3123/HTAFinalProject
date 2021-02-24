@@ -8,6 +8,24 @@
 		<put-attribute name="content" value = "/WEB-INF/views/home.jsp" />
 		<put-attribute name="footer" value = "/WEB-INF/views/footer.jsp" />
 	</definition>
+	
+	<!-- 관리자 페이지용  -->
+	<definition name=".adminpage" template ="/WEB-INF/views/admin/DashEditing/blank.jsp">
+		<put-attribute name="content" value = "/WEB-INF/views/admin/DashEditing/index.jsp"/>
+	</definition>
+	
+	 <definition name = ".*.*.*.admin" template = "/WEB-INF/views/admin/DashEditing/blank.jsp" extends=".adminpage">
+		<put-attribute name="content" value = "/WEB-INF/views/admin/DashEditing/{1}/{2}/{3}.jsp" />
+	</definition>	
+	
+	<definition name = ".*.*.admin" template = "/WEB-INF/views/admin/DashEditing/blank.jsp" extends=".adminpage">
+		<put-attribute name="content" value = "/WEB-INF/views/admin/DashEditing/{1}/{2}.jsp" />
+	</definition>
+	 
+	<definition name = ".*.admin" template = "/WEB-INF/views/admin/DashEditing/blank.jsp" extends=".adminpage">
+		<put-attribute name="content" value = "/WEB-INF/views/admin/DashEditing/{1}.jsp" />
+	</definition>	
+	<!--  -->
 	 
 	 <definition name = ".*.*.*" template = "/WEB-INF/views/layout.jsp" extends=".home">
 		<put-attribute name="content" value = "/WEB-INF/views/{1}/{2}/{3}.jsp" />
@@ -20,10 +38,9 @@
 	 
 	<definition name = ".*" template = "/WEB-INF/views/layout.jsp" extends=".home">
 		<put-attribute name="content" value = "/WEB-INF/views/{1}.jsp" />
-	</definition>
+	</definition>	
 	
-	
-	
+
 </tiles-definitions>
 
 
