@@ -106,6 +106,12 @@
 	margin:0;
 	font-weight: 700;
 }
+
+input:focus, textarea:focus, select:focus, button:focus{
+    outline: none;
+}
+
+
 </style>    
 <div>
 	<h2>푸터</h2>

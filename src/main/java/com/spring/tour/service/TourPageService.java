@@ -48,6 +48,10 @@ public class TourPageService {
 	public List<ReviewVo> tourReviewList(HashMap<String, Object> map){
 		return dao.tourReviewList(map);
 	}
+	//투어이미지
+	public String tourReviewImage(int general_number){
+		return dao.tourReviewImage(general_number);
+	}
 	
 	//투어 실황 사진들 리스트
 	public List<ImageVo> tourDetailImage(int service_number){

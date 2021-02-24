@@ -102,7 +102,7 @@
 		vertical-align: middle;
 	}
 	table td:nth-child(1) {
-		width: 55%;
+		width: 50%;
 	}
 	.optionTable td:nth-child(2){
 		width: 15%; text-align: center; 
@@ -111,7 +111,7 @@
 		width: 20%; text-align: center; 
 	}
 	.optionTable td:nth-child(4){
-		width: 10%; text-align: center;
+		width: 15%; text-align: center;
 	}
 	#detail{
 		width:100%; 
@@ -146,6 +146,13 @@
 		width:100%;
 		position:relative; 
 		border-bottom:1px solid gray; 
+		background-color: white;
+	}
+	#contentbox{
+		width:100%; 
+		position:relative;
+		padding:20px;
+		border-bottom:1px solid gray;
 		background-color: white;
 	}
 	#infobox{
@@ -208,6 +215,11 @@
 	}
 	.row{
 		box-shadow: 3px 3px 5px 5px gray;
+	}
+	.tourReviewImg{
+		margin-top:5px;
+		width:90px;
+		height:90px;
 	}
 </style>
 
@@ -328,6 +340,7 @@
 									<fmt:formatNumber value="${o.tour_price-o.tour_price/100*o.discount}" pattern="###,###,###원/명" /> 
 								</td>
 								<td><!-- 버튼과 갯수 -->
+									<input type="hidden" value="${o.tour_amount}" name="ticket_amount">
 									<input type="hidden" value="0" name="count"><input type="hidden" value="${o.tour_option}" name="service_option"><input type="hidden" name="tour_price" value="${o.tour_price}">
 									<input type="hidden" value="${o.tour_option_index}" name="option_index"><span style="color:red; font-weight:700;">매진</span>
 								</td>
@@ -357,6 +370,7 @@
 									</c:choose>
 								</td>
 								<td ><!-- 버튼과 갯수 -->
+									<input type="hidden" value="${o.tour_amount}" name="ticket_amount">
 									<input type="hidden" value="0" name="count" oninput="sync(this)"><input type="hidden" value="${o.tour_option}" name="service_option"><input type="hidden" name="tour_price" value="${o.tour_price}">
 									<input type="hidden" value="${o.tour_option_index}" name="option_index"><span class="sign" onclick="minus(this)"><i class="fas fa-minus"></i></span><span class="cnt">0</span><span class="sign" onclick="plus(this)"><i class="fas fa-plus"></i></span>
 								</td>
@@ -384,7 +398,12 @@
 				</c:forEach>
 			</div>
 			<div id="info">
-				<!-- 기본정보 : 상품정보(제공사항), 주의사항, 이용방법, 위치안내, 취소환불 규정, 후기 -->			
+				<!-- 기본정보 : 상품정보(제공사항), 주의사항, 이용방법, 위치안내, 취소환불 규정, 후기 -->
+				<c:if test="${!empty detail.tour_content}">
+					<div id="contentbox">
+						${detail.tour_content}
+					</div>
+				</c:if>			
 				<c:if test="${!empty detail.tour_how}">
 					<div id="infobox">
 						<h4>상품정보</h4>
@@ -477,7 +496,7 @@
 									"</div>"+
 								"</div>"+
 								"<div class='col-md-2' style='text-align: center;'>"+
-									"<img src='${cp}/resources/images/"+data.reviewlist[i].review_image+"' style='width:100%; height:100px;'>"+
+									"<img src='${cp}/resources/upload/"+data.reviewlist[i].review_image+"' class='tourReviewImg' onerror='this.style.display=\"none\";'>"+
 								"</div>"+
 							"</div>"+
 						"</div>";
@@ -505,7 +524,7 @@
 									"</div>"+
 								"</div>"+
 								"<div class='col-md-2' style='text-align: center;'>"+
-									"<img src='${cp}/resources/images/"+data.reviewlist[i].review_image+"' style='width:100%; height:100px;'>"+
+									"<img src='${cp}/resources/upload/"+data.reviewlist[i].review_image+"' class='tourReviewImg' onerror='this.style.display=\"none\";' >"+
 								"</div>"+
 							"</div>"+
 						"</div>";
@@ -516,17 +535,14 @@
 	});
 	
 	function moreReview(){
-		console.log("11");
 		$.getJSON("${cp}/getReviewList", 
 				{"cate_number":$("#cate_number").val(),"service_number":$("#service_number").val()}, function(data) {
 			var str="";
 			for(let i=3; i<data.reviewlist.length; i++){
 				var stars ="";
 				for(let f=0; f<data.reviewlist[i].star_point; f++){
-					console.log(f);
 					stars+="<img src='${cp }/resources/images/fullStar.svg' class='reviewStar'>";
 				}
-				console.log(data.reviewlist[i].star_point);
 				for(let e=0; e<5-data.reviewlist[i].star_point; e++){
 					stars+="<img src='${cp }/resources/images/emptyStar.svg' class='reviewStar'>";
 				}
@@ -539,15 +555,14 @@
 								"</div>"+
 							"</div>"+
 							"<div class='col-md-2' style='text-align: center;'>"+
-								"<img src='${cp}/resources/images/"+data.reviewlist[i].review_image+"' style='width:100%; height:100px;'>"+
+								"<img src='${cp}/resources/images/"+data.reviewlist[i].review_image+"' class='tourReviewImg' onerror='this.style.display=\"none\";'>"+
 							"</div>"+
 						"</div>"+
 					"</div>";
 			}
-			console.log(str);
 			$("#moreBtn").hide();
 			$("#reviewbox").append(str);
-			$(".card").fadeIn(2000);
+			$(".card").fadeIn(1200);
 		});
 	}
 	
@@ -594,12 +609,15 @@
 
 	
 	var totalprice = 0;
+	var clickNum=0;
 	
 	function minus(e){
 		var count = e.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling;
 		if(parseInt(count.value)==0){
 			return;
 		}
+		clickNum--;
+
 		var btn = e;
 		var span = btn.nextSibling;
 		var cnt = parseInt(span.textContent);
@@ -617,22 +635,29 @@
 		
 		var basket= document.getElementById("basket");
 		if(totalprice==0){
-			basket.innerHTML = "";  
+			$("#basket").slideUp(500, function() {
+			});
 		}else{
-			basket.innerHTML = "<h4 style='text-align:right; margin-top:15px; margin-right:20px;'>TOTAL : "+finalprice+"원</h4>"+
-							"<button type='button' id='payall' class='btn btn-outline-primary' style='margin-bottom:35px;' onclick='pay()'>결제하기</button>";
+			basket.innerHTML = "<div id='finalPriceWrapper'>"+ 
+							"<h4 style='text-align:right; margin-top:15px; margin-right:20px;'>TOTAL : "+finalprice+"원</h4>"+
+							"<button type='button' id='payall' class='btn btn-outline-primary' style='margin-bottom:35px;' onclick='pay()'>결제하기</button></div>";
 		}
 	}
 	function plus(e){
 		var count = e.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling.previousSibling;
-		if(parseInt(count.value)>=20){
+		var indexnum = parseInt(e.previousSibling.previousSibling.previousSibling.value)-1;
+		var amount = document.getElementsByName("ticket_amount")[indexnum].value;
+		
+		console.log("티켓수 "+amount);
+		
+		
+		if(parseInt(count.value)>=20 || parseInt(count.value)>=amount){
 			return;
 		}
 		var btn = e;
 		var span = btn.previousSibling;
 		var cnt = parseInt(span.textContent); //몇개인지 찾고
 		
-		var indexnum = parseInt(e.previousSibling.previousSibling.previousSibling.value)-1;
 		var option = document.getElementsByName("tour_option")[indexnum];
 		var price= document.getElementsByName("tour_price")[indexnum];
 		
@@ -646,8 +671,24 @@
 		var finalprice= totalprice.toLocaleString();
 		
 		var basket= document.getElementById("basket");
-		basket.innerHTML = "<h4 style='text-align:right; margin-top:15px; margin-right:20px;'>TOTAL : "+finalprice+"원</h4>"+
-							"<button type='button' id='payall' class='btn btn-outline-primary' style='margin-bottom:35px;' onclick='pay()'>결제하기</button>";
+		
+		if(clickNum++==0){
+			$("#basket").hide();
+			basket.innerHTML ="<div id='finalPriceWrapper'>"+ 
+								"<h4 style='text-align:right; margin-top:15px; margin-right:20px;'>TOTAL : "+finalprice+"원</h4>"+
+								"<button type='button' id='payall' class='btn btn-outline-primary' style='margin-bottom:35px;' onclick='pay()'>결제하기</button></div>";
+			$("#basket").slideDown(500, function() {
+			});
+		}else{
+			basket.innerHTML ="<div id='finalPriceWrapper'>"+ 
+								"<h4 style='text-align:right; margin-top:15px; margin-right:20px;'>TOTAL : "+finalprice+"원</h4>"+
+								"<button type='button' id='payall' class='btn btn-outline-primary' style='margin-bottom:35px;' onclick='pay()'>결제하기</button></div>";
+		}
+	}
+	
+	//이미지가 없으면 안보여짐
+	function errorImg(a){
+		a.style.display='none';
 	}
 	
 	

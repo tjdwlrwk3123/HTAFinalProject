@@ -20,7 +20,6 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-
 <style>
 
 *{
@@ -35,7 +34,7 @@
 	width: 1000px;
 	margin: auto;
 	display : flex;
-	background-color: #FFCA6C;
+	background-color: white;
 }
 
 a{
@@ -52,7 +51,7 @@ a:hover{
 #tour_filterbox {
 	width: 200px;
 	height: 100%;
-	background-color: #FFCA6C;
+	background-color: white;
 	padding: 30px 0;
 }
 #tour_filterbox h3{
@@ -62,13 +61,11 @@ a:hover{
 
 #tour_filterbox ul li{
 	padding: 20px;
-	border-top: 0.5px solid yellow;
-	border-bottom: 0.5px solid yellow;
 }
 
 #tour_contentbox {
 	width: 85%;
-	background-color: #F3F3F3;
+	background-color: white;
 	height:auto;
 	padding : 10px;
 }
@@ -198,6 +195,27 @@ h5{
 .filterOption p, input[text]{
 	margin-bottom: -20px;
 }
+#filterTitle{
+	padding-left:15px;
+	font-size:20px;
+	font-weight:800;
+}
+#clearFilterBtn{
+	margin-left: 5px;
+	border-radius: 50%;
+	border:0px;
+	
+	background-color:transparent;
+	vertical-align: 5px;
+}
+#resetBtn{
+	width:28px;
+	margin:5px;
+
+}
+#isDiscount{
+	margin-top:30px;
+}
 #starFilter{
 	margin-top: 15px;
 }
@@ -223,17 +241,9 @@ h5{
 }
 
 #priceFilter{
-	margin-top:15px;
-	background-color: yellow;
-}
-#priceFilter input[type=text], label{
-	margin-left:15px;
+	margin-top:20px;
 }
 
-#slider-range-max{
-	margin-left:15px;
-	width:85%;
-}
 #priceFilter label{
 	margin-left:15px;
 	font-weight: 600;
@@ -242,13 +252,21 @@ h5{
 #priceFilter p{
 	margin-left:15px;
 	font-weight: 600;
-	margin-bottom: 10px;
+	font-size:15px;
+	margin-top:0px;
 }
+
+#slider-range-max{
+	margin-left:15px;
+	width:85%;
+}
+
 
 .tourSelectIcon{
 	width:25px;
 	margin-right:10px;
 } 
+
 
 </style>
 
@@ -259,16 +277,16 @@ h5{
 			<input type="hidden" id="user_id" value="${sessionScope.user_id}">
 			<input type="hidden" id="tourType" value="${tourType}">
 			<ul>
-				<li><a href="javascript:cateChange(0);" >전체</a></li>
+				<li><a href="javascript:cateChange(0);" ><img class="tourSelectIcon" alt="ticket" src="${cp}/resources/images/infiniteIcon.png" />전체</a></li>
 				<li><a href="javascript:cateChange(1);" ><img class="tourSelectIcon" alt="ticket" src="${cp}/resources/images/ticketicon.svg" />티켓/패스</a></li>
 				<li><a href="javascript:cateChange(2);" ><img class="tourSelectIcon" alt="themepark" src="${cp}/resources/images/themeparkIcon.svg" />테마파크</a></li>
 				<li><a href="javascript:cateChange(3);" ><img class="tourSelectIcon" alt="hobby" src="${cp}/resources/images/hobbyicon.png" />취미/클래스</a></li>
-				<li><a href="javascript:cateChange(4);" ><img class="tourSelectIcon" alt="restaurant" src="${cp}/resources/images/dishIcon.svg" />맛집</a></li>
+				<li><a href="javascript:cateChange(4);" ><img class="tourSelectIcon" alt="restaurant" src="${cp}/resources/images/fork.png" />맛집</a></li>
 			</ul>
 		</div>
 		<div id="filter">
 			<div>
-				<div style="background-color: peru; padding-left:15px; font-size:20px; font-weight:800">필터<button onclick="clearFilter()" style="float:right; font-size:17px; clear: float;">필터초기화</button></div>
+				<div id="filterTitle">필터설정<button id="clearFilterBtn" onclick="clearFilter()"><img src="${cp}/resources/images/reset.svg"  id="resetBtn" alt="reset" /></button></div>
 			</div>
 			<span><input type="checkbox" name="isDiscount" id="isDiscount" onclick="discountChange(this)" style="margin-left:15px; margin-top:20px;" ><label for="isDiscount" style="margin-left:10px;">할인 상품만 보기</label></span><br>
 			<div id="starFilter" style="margin-left:15px;">
@@ -283,7 +301,6 @@ h5{
 			<div id="priceFilter">
 				<label for="amount" >MAX PRICE</label><br>
 				<p id="amount"  style="border:0; color:black; font-weight:bold;"></p>
-<!-- 				<input type="text" id="amount" readonly style="border:0; color:black; font-weight:bold;"> -->
 				<div id="slider-range-max"></div>
 			</div>
 		</div>
@@ -310,7 +327,7 @@ h5{
 
 <script>
 	var MAXPRICE=0;
-	
+	var isSeleted = false;
 	$(function(){
 		var loading = $('<div id="loading" class="loading"></div><img id="loading_img" alt="loading" src="${cp}/resources/gimgs/viewLoading.gif" />').appendTo(document.body).hide();
 		$(window)	
@@ -325,18 +342,19 @@ h5{
 		$(".classification:eq(0)").css({"font-weight":800, "font-size":'17px'});
 		
 		
-		$("li a").hover(function(){
+		$("li a, .classification").hover(function(){
+			if($(this).css("font-weight")==800){
+				isSeleted= true;
+				return;
+			}
 			$(this).css("font-weight",800);	
 		},function(){
+			if(isSeleted){
+				isSeleted=false;
+				return;
+			}
 			$(this).css("font-weight",400);	
 		});
-		
-		$(".classification").hover(function(){
-			$(this).css("font-weight",800);	
-		},function(){
-			$(this).css("font-weight",400);	
-		});
-		
 		
 		$("#from").datepicker('setDate','today');
 		var startDate=$("#from").val();
@@ -346,14 +364,54 @@ h5{
 				"tourType" : tourType
 		}
 		
+		$( "#slider-range-max" ).slider({
+			min:0,
+			value:0,
+			max:100000,
+			step:1000,
+			slide: function( event, ui ) {
+				rangeApply(ui.value);
+		    	$( "#amount" ).text( ui.value+" 원" );
+			}
+		});
 
 		console.log("tourtype: "+tourType);
 		initialPage(param);
 		
 		console.log("MAX"+MAXPRICE);
 		
+		
 	});
+	
+	
+	function rangeApply(v){
+		var startDate=$("#from").val();
+		var tourType="0";
+		if(document.getElementById("tourType").value!=null){
+			tourType= document.getElementById("tourType").value;
+		}
+		var classification="0";
+		if(document.getElementById("classification").value!=null){
+			classification= document.getElementById("classification").value;
+		}
+		var targetPoint = $("input:radio[name=starPoint]:checked").val();
+		var targetPrice = $("price_range").val();
+		var keyword = $("#keyword").val();
+		var isDiscount= $("#isDiscount").prop("checked");
+		var param={
+				"startDate" : startDate,
+				"tourType": tourType,
+				"classification": classification,
+				"targetPoint": targetPoint,
+				"targetPrice": v,
+				"keyword": keyword,
+				"isDiscount" : isDiscount,
+		}
+		initialPage(param);
+	}
+	
 	function search(){
+		MAXPRICE=0;
 		var keyword = $("#keyword").val();
 		var startDate=$("#from").val();
 		var isDiscount= $("#isDiscount").prop("checked");
@@ -362,8 +420,9 @@ h5{
 				"keyword" : keyword,
 				"isDiscount" : isDiscount
 		}
-		initialPage(param);		
+		initialPage(param);
 	}
+	
 	document.getElementById("keyword").addEventListener("keyup", function(e) {
 		if(e.keyCode==13){
 			search();
@@ -386,15 +445,19 @@ h5{
 				"tourType":tourType
 		}
 		$("#starDefault").prop("checked","checked");
+		$( "#slider-range-max" ).slider("value",MAXPRICE);
+		$( "#amount" ).text(MAXPRICE+" 원");
 	}
 
 	
 	function dateChange(){
+		MAXPRICE=0;
 		var startDate=$("#from").val();
 		var tourType="0";
 		if(document.getElementById("tourType").value!=null){
 			tourType= document.getElementById("tourType").value;
 		}
+		var classification="0";
 		if(document.getElementById("classification").value!=null){
 			classification= document.getElementById("classification").value;
 		}
@@ -416,7 +479,7 @@ h5{
 	
 	
 	function cateChange(tourType){ // 필터 항상 초기화 
-		console.log(tourType);
+		MAXPRICE=0;
 		$("li a").css({"font-weight":400, "font-size":'16px'});
 		$("li:eq("+tourType+") a").css({"font-weight":800, "font-size":'18px'});
 		var startDate=$("#from").val();
@@ -454,6 +517,7 @@ h5{
 	}
 	
 	function discountChange(isdc){ // 정렬 순서 변할때 
+		MAXPRICE=0;
 		console.log(isdc.checked);
 		var isDiscount =  $(this).prop("checked");		
 		var startDate=$("#from").val();
@@ -482,6 +546,7 @@ h5{
 	}
 	
 	function starChange(val){ // 별점 선택 기준 변할때 
+		MAXPRICE=0;
 		var startDate=$("#from").val();
 		var tourType="0";
 		if(document.getElementById("tourType").value!=null){
@@ -506,34 +571,6 @@ h5{
 		initialPage(param);
 	}
 	
-	function rangeChange(val){//레인지 변할때 
-		$("#price_range").val(val);
-		$("#showRange").html($("#price_range").prop("min")+"원  ~ "+ $("#price_range").val()+"원");
-		var startDate=$("#from").val();
-		var tourType="0";
-		
-		if(document.getElementById("tourType").value!=null){
-			tourType= document.getElementById("tourType").value;
-		}
-		var classification="0";
-		if(document.getElementById("classification").value!=null){
-			classification= document.getElementById("classification").value;
-		}
-		var targetPoint = $("input:radio[name=starPoint]:checked").val();
-		var keyword = $("#keyword").val();
-		var isDiscount= $("#isDiscount").prop("checked");
-		var param={
-				"startDate" : startDate,
-				"tourType": tourType,
-				"classification": classification,
-				"targetPoint": targetPoint,
-				"targetPrice": val,
-				"keyword": keyword,
-				"isDiscount" : isDiscount
-		}
-		initialPage(param);
-		
-	}
 	
 	function initialPage(param){
 		$.getJSON('${cp}/tourSelectList', param, function(data){
@@ -630,40 +667,16 @@ h5{
 			let minprice= data.minprice;
 			let maxprice= data.maxprice;
 			
-			console.log("min? = "+minprice);
-			console.log("max? = "+maxprice);
+			console.log("max1? = "+maxprice);
 			
-			$( "#slider-range-max" ).slider({
-				range: "max",
-				min: 0,
-				max: MAXPRICE,
-				value: maxprice,
-				slide: function( event, ui ) {
-			    	$( "#amount" ).text( ui.value+" 원" );
-				}
-			});
-			console.log("max2 = "+MAXPRICE);
-			 $( "#amount" ).text( $( "#slider-range-max" ).slider( "value" ) +" 원");
-				
-			
-			
-			let targetPrice = maxprice; //검색 max값은 리스트 내의 최대값
-			if(data.targetPrice!=null || data.targetPrice!=0){ // 컨트롤러에서 받아온게 있으면
-				targetPrice=data.targetPrice; // 현재 목표가격(max)는 받아온가격
+			if(MAXPRICE==0){
+				MAXPRICE = (Math.ceil(maxprice/1000))*1000;
+				$("#slider-range-max").slider("value", MAXPRICE );
+				$( "#amount" ).text( $( "#slider-range-max" ).slider( "value" ) +" 원");
 			}
-			console.log("tp"+targetPrice);
-			if(MAXPRICE!=0){ //미리 받아놓은 MAXPRICE 값이 있다면
-				$("#slider-range-max").slider( "option", "max", MAXPRICE );
-				$("#slider-range-max").slider( "option", "value", targetPrice );
-			}else{ // MAXPRICE가 0이면 이번에 받아온 최고가를 넣어준다.
-				$("#slider-range-max").slider( "option", "max", maxprice );
-				$("#slider-range-max").slider( "option", "value", targetPrice );
-			}
-			 $( "#amount" ).val( $( "#slider-range-max" ).slider(  "option", "max" ) +" 원");
-			 MAXPRICE= $("#slider-range-max").slider( "option", "max" );
+			console.log("rounded"+MAXPRICE);
+			$("#slider-range-max").slider("option","max", MAXPRICE );
 		});
-		console.log("max1 = "+MAXPRICE);
-	
 	}
 	
 	$("#from").datepicker({
