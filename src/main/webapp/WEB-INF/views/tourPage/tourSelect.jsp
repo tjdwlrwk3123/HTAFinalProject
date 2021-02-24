@@ -244,6 +244,12 @@ h5{
 	font-weight: 600;
 	margin-bottom: 10px;
 }
+
+.tourSelectIcon{
+	width:25px;
+	margin-right:10px;
+} 
+
 </style>
 
 <div id="tourSelect_wrapper">
@@ -254,10 +260,10 @@ h5{
 			<input type="hidden" id="tourType" value="${tourType}">
 			<ul>
 				<li><a href="javascript:cateChange(0);" >전체</a></li>
-				<li><a href="javascript:cateChange(1);" >티켓/패스</a></li>
-				<li><a href="javascript:cateChange(2);" >테마파크</a></li>
-				<li><a href="javascript:cateChange(3);" >취미/클래스</a></li>
-				<li><a href="javascript:cateChange(4);" >맛집</a></li>
+				<li><a href="javascript:cateChange(1);" ><img class="tourSelectIcon" alt="ticket" src="${cp}/resources/images/ticketicon.svg" />티켓/패스</a></li>
+				<li><a href="javascript:cateChange(2);" ><img class="tourSelectIcon" alt="themepark" src="${cp}/resources/images/themeparkIcon.svg" />테마파크</a></li>
+				<li><a href="javascript:cateChange(3);" ><img class="tourSelectIcon" alt="hobby" src="${cp}/resources/images/hobbyicon.png" />취미/클래스</a></li>
+				<li><a href="javascript:cateChange(4);" ><img class="tourSelectIcon" alt="restaurant" src="${cp}/resources/images/dishIcon.svg" />맛집</a></li>
 			</ul>
 		</div>
 		<div id="filter">

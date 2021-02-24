@@ -54,8 +54,6 @@ public class PayController {
 					HttpServletRequest req
 			) {
 		
-		System.out.println("user_id 페이 컨트롤러 : "+user_id);
-		System.out.println("세션아이디:"+(String)req.getSession().getAttribute("user_id"));
 		PaymentVo vo;
 		if(!user_id.equals("none")) {
 			if(req.getSession().getAttribute("user_id")!=null) {
@@ -66,7 +64,6 @@ public class PayController {
 		}else {
 			vo = service.getUserInfo((String)req.getSession().getAttribute("user_id"));
 		}
-		System.out.println("포인트"+vo.getUser_point());
 		model.addAttribute("pvo", vo);
 		
 		model.addAttribute("service_name",service_name);
@@ -95,31 +92,6 @@ public class PayController {
 		if(discount!=null) {
 			model.addAttribute("discount", Integer.parseInt(discount));
 		}
-		
-//		 private int tour_option_number;
-//		 private int service_number;
-//		 private int tour_price;
-//		 private int tour_option_index;
-//		 private String tour_option;
-//		 private int tour_amount; 
-//		 private int discount;
-		
-//		System.out.println("service_name"+service_name);
-//		System.out.println("cate_number"+cate_number);
-//		System.out.println("service_number"+service_number);
-//		System.out.println("user_id"+user_id);
-//		for(int i : indexNum ) {
-//			System.out.println("indexNum :"+i);
-//		}
-//		for(String i : optionName ) {
-//			System.out.println("optionName :"+i);
-//		}
-//		for(int i : optionCnts ) {
-//			System.out.println("optionCnts :"+i);
-//		}
-//		for(int i : optionPrice ) {
-//			System.out.println("optionPrice :"+i);
-//		}
 		return ".pay.payment";
 	}
 	
@@ -157,39 +129,8 @@ public class PayController {
 						@RequestParam(value="agreecheck") List<String> agreecheckList,
 						HttpServletRequest req) {
 		
-		//옵션 인덱스 + 인덱스별 갯수
-//		System.out.println("user_id"+user_id);
-//		System.out.println("cate_number"+cate_number);
-//		System.out.println("service_number"+service_number);
-//		System.out.println("service_name"+service_name);
-//		System.out.println("startDate"+startDate);
-//		System.out.println("endDate"+endDate);
-//		System.out.println("bookerName"+bookerName);
-//		System.out.println("bookerPhone"+bookerPhone);
-//		System.out.println("visitorName"+visitorName);
-//		System.out.println("visitorPhone"+visitorPhone);
-//		System.out.println("visitorEmail"+visitorEmail);
-//		System.out.println("couponUsing"+couponUsing);
-//		System.out.println("pointUsing"+pointUsing);
-//		System.out.println("thePrice"+thePrice);
-//		System.out.println("waytopay"+waytopay);
-//		for(int oi : eachOptionIndex){
-//			System.out.println("eachOptionIndex"+ oi); 
-//		}
-//		for(int oc : eachOptionCount){
-//			System.out.println("eachOptionCount"+oc);
-//		}
-//		for(String s : agreecheckList){
-//			System.out.println("agreecheckList"+s); // no3은 광고성 수신 동의
-//		}
-//		for(int i=0; i<eachOptionIndex.size(); i++) {
-//			System.out.println("tour_option_index :" + eachOptionIndex.get(i));
-//			System.out.println("cnt : "+ eachOptionCount.get(i));
-//		}
-		
 		user_id=(String)req.getSession().getAttribute("user_id");
 		
-		System.out.println("pointUsing : "+pointUsing);
 		if(cate_number ==1) {
 			try {
 			//여기엔 투어book 저장 코드
