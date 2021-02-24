@@ -21,6 +21,8 @@
 <a href='${cp }/adminchat'>관리자 채팅 페이지</a>
 <a href='${cp }/AdminMail'>관리자 메일 테스트</a>
 <a href='${cp }/adminPage'>관리자 페이지로 가는가?</a>
+<a href='${cp }/tourmain'>투어서비스</a>
+<a href='${cp }/userinfopage'>마이페이지</a>
 <c:choose>
 	<c:when test="${empty sessionScope.user_id }">
 		<a href='${cp }/userlogin'>로그인 테스트페이지</a>
