@@ -18,8 +18,7 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=def622213948a607b8b4062c406ef1e5&libraries=services"></script>
 
-<!-- 이미지 슬라이드 -->
-
+<!-- 이미지 슬라이드 --> 
 <!-- jQuery 1.8 or later, 33 KB -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
@@ -35,6 +34,13 @@
 		margin:auto;
 		display: flex;
 		background-color:white;
+/* 		드래그 막기 */
+		-ms-user-select: none;
+		-moz-user-select: -moz-none;
+		-webkit-user-select: none; 
+		-khtml-user-select: none; 
+		user-select:none;
+
 	}
 	#title{
 		width:100%; 
@@ -95,13 +101,13 @@
 		padding-bottom:15px;
 	}
 	
-	table{
+	#optionTable{
 		width:100%;
 		border-collapse: separate;
 		border-spacing:10px;
 		vertical-align: middle;
 	}
-	table td:nth-child(1) {
+	.optionTable td:nth-child(1) {
 		width: 50%;
 	}
 	.optionTable td:nth-child(2){
@@ -341,6 +347,7 @@
 								</td>
 								<td><!-- 버튼과 갯수 -->
 									<input type="hidden" value="${o.tour_amount}" name="ticket_amount">
+									<input type="hidden" value="${o.discount}" name="discount">
 									<input type="hidden" value="0" name="count"><input type="hidden" value="${o.tour_option}" name="service_option"><input type="hidden" name="tour_price" value="${o.tour_price}">
 									<input type="hidden" value="${o.tour_option_index}" name="option_index"><span style="color:red; font-weight:700;">매진</span>
 								</td>
@@ -371,6 +378,7 @@
 								</td>
 								<td ><!-- 버튼과 갯수 -->
 									<input type="hidden" value="${o.tour_amount}" name="ticket_amount">
+									<input type="hidden" value="${o.discount}" name="discount">
 									<input type="hidden" value="0" name="count" oninput="sync(this)"><input type="hidden" value="${o.tour_option}" name="service_option"><input type="hidden" name="tour_price" value="${o.tour_price}">
 									<input type="hidden" value="${o.tour_option_index}" name="option_index"><span class="sign" onclick="minus(this)"><i class="fas fa-minus"></i></span><span class="cnt">0</span><span class="sign" onclick="plus(this)"><i class="fas fa-plus"></i></span>
 								</td>
@@ -479,14 +487,11 @@
 				for(let i=0; i<3; i++){
 					var stars ="";
 					for(let f=0; f<data.reviewlist[i].star_point; f++){
-						console.log(f);
 						stars+="<img src='${cp }/resources/images/fullStar.svg' class='reviewStar'>";
 					}
-					console.log(data.reviewlist[i].star_point);
 					for(let e=0; e<5-data.reviewlist[i].star_point; e++){
 						stars+="<img src='${cp }/resources/images/emptyStar.svg' class='reviewStar'>";
 					}
-					console.log("stars"+stars);
 					str+="<div class='card mb-3' style='max-width: 1000px;'>"+
 							"<div class='row g-0'>"+
 								"<div class='col-md-10'>"+
@@ -508,10 +513,8 @@
 				for(let i in data.reviewlist){
 					var stars ="";
 					for(let f=0; f<data.reviewlist[i].star_point; f++){
-						console.log(f);
 						stars+="<img src='${cp }/resources/images/fullStar.svg' class='reviewStar'>";
 					}
-					console.log(data.reviewlist[i].star_point);
 					for(let e=0; e<5-data.reviewlist[i].star_point; e++){
 						stars+="<img src='${cp }/resources/images/emptyStar.svg' class='reviewStar'>";
 					}
@@ -577,11 +580,11 @@
 	});
 
 	$("#wishbtn").click(function(){
-		console.log($("#wishbtn").text());
 		if($("#wishbtn").text()=="위시리스트추가"){
 			$.getJSON("${cp}/wishInsert", {"cate_number":$("#cate_number").val(),"service_number":$("#service_number").val()},
 				function(data) {
 				let result = data.code;
+				console.log(data.code);
 				if(result=='insert_success'){
 					$("#wishbtn").text("위시리스트제거");
 					$("#wishbtn").prop("class","");
@@ -622,11 +625,12 @@
 		var span = btn.nextSibling;
 		var cnt = parseInt(span.textContent);
 		var indexnum = parseInt(btn.previousSibling.value)-1;
-		var option = document.getElementsByName("tour_option")[indexnum];
-		var price= document.getElementsByName("tour_price")[indexnum];
+		var option = document.getElementsByName("service_name")[indexnum];
+		var price= document.getElementsByName("optionPrice")[indexnum];
+		var discount= document.getElementsByName("discount")[indexnum];
 		cnt--;
 		span.innerHTML=cnt;
-		totalprice-=parseInt(price.value);
+		totalprice-=parseInt(price.value-(price.value/100*discount.value));
 		
 		count.value = parseInt(count.value)-1;
 		
@@ -648,25 +652,29 @@
 		var indexnum = parseInt(e.previousSibling.previousSibling.previousSibling.value)-1;
 		var amount = document.getElementsByName("ticket_amount")[indexnum].value;
 		
-		console.log("티켓수 "+amount);
-		
-		
 		if(parseInt(count.value)>=20 || parseInt(count.value)>=amount){
 			return;
 		}
 		var btn = e;
 		var span = btn.previousSibling;
 		var cnt = parseInt(span.textContent); //몇개인지 찾고
-		
+		var discount= document.getElementsByName("discount")[indexnum];
 		var option = document.getElementsByName("tour_option")[indexnum];
 		var price= document.getElementsByName("tour_price")[indexnum];
+		
+		
+		
+		console.log("cnt "+cnt);
+		console.log("dc "+discount.value);
+		console.log("op "+option.value);
+		console.log("pri "+price.value);
 		
 		
 		count.value = parseInt(count.value)+1;
 		
 		cnt++;
 		span.innerHTML=cnt;
-		totalprice+=parseInt(price.value);
+		totalprice+=parseInt(price.value-(price.value/100*discount.value));
 		
 		var finalprice= totalprice.toLocaleString();
 		

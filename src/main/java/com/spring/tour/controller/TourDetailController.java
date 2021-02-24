@@ -88,13 +88,10 @@ public class TourDetailController {
 		HashMap<String, Object> resultMap = new HashMap<>();
 		List<ReviewVo> reviewList = service.tourReviewList(paramMap);
 		for(ReviewVo vo : reviewList) {
-			System.out.println(vo);
 			try {
 				String reImg = service.tourReviewImage(vo.getReview_number());
 				vo.setReview_image(reImg);
-				System.out.println("리뷰이미지이름 : "+reImg);
 			}catch(NullPointerException ne) {
-				System.out.println("뭔가 안되고 있음");
 				continue;
 			}
 		}

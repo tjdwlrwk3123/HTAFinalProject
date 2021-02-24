@@ -35,6 +35,12 @@
 	margin: auto;
 	display : flex;
 	background-color: white;
+/* 	드래그방지 */
+	-ms-user-select: none;
+	-moz-user-select: -moz-none;
+	-webkit-user-select: none; 
+	-khtml-user-select: none; 
+	user-select:none;
 }
 
 a{
@@ -702,6 +708,7 @@ h5{
 		event.stopPropagation(); //이벤트 중복일때 후순위 이벤트는 일어나지 않도록 막는 메소드
 		var cate_number= img.parentNode.parentNode.firstChild
 		var service_number= cate_number.nextSibling;
+		
 		
 		if(img.alt=='heart'){
 			$.getJSON("${cp}/wishDelete", {"cate_number":cate_number.value,"service_number":service_number.value },

@@ -71,16 +71,13 @@ public class PayController {
 		model.addAttribute("service_number",service_number);
 		if(startDate!=null) {
 			model.addAttribute("startDate",startDate);
-//			System.out.println("startDate"+startDate);
 		}
 		if(endDate!=null) {
 			model.addAttribute("endDate",endDate);
-//			System.out.println("endDate"+endDate);
 		}
 		
 		model.addAttribute("user_id",user_id);
 		model.addAttribute("indexNum",indexNum);
-		
 		
 		List<TourOptionVo> tdList = tpService.tourOptionList(service_number);
 		
