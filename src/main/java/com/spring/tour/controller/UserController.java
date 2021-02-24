@@ -146,15 +146,4 @@ public class UserController {
 		map.put("user_id", userid);
 		return map;
 	}
-	
-	@RequestMapping(value="/adminSend")
-	public String adminSendMail(String user_id,String textarea) throws Exception{
-		service.adminEmailSend(user_id, textarea);
-		return ".admin.adminlayout";
-	}
-	
-	@RequestMapping(value="/AdminMail")
-	public String adminMail() {
-		return ".admin.service.MailSend";
-	}
 }
