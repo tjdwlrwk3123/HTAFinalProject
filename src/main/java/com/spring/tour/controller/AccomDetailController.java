@@ -10,11 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.tour.service.AccomService;
 import com.spring.tour.vo.AccomOptionVo;
 import com.spring.tour.vo.ImageVo;
+import com.spring.tour.vo.ReviewVo;
 
 @RestController
 public class AccomDetailController {
@@ -78,5 +80,29 @@ public class AccomDetailController {
 		
 		
 		return result;
+	}
+	
+	//¸®ºä¸®½ºÆ® »Ì±â
+	@RequestMapping(value = "/getAccomReviewList",produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	@ResponseBody
+	public HashMap<String, Object> getReview(int cate_number, int service_number){
+		HashMap<String, Object> paramMap = new HashMap<>();
+		paramMap.put("cate_number", cate_number);
+		paramMap.put("service_number",service_number);
+		
+		List<ReviewVo> reviewlist=service.accomReviewList(service_number);
+		for(ReviewVo vo:reviewlist) {
+			int generalNum=vo.getReview_number();
+			try {
+			ImageVo img=service.accomReviewImg(generalNum);
+			vo.setReview_image(img.getImgsavename());
+			}catch(NullPointerException ne) {
+				continue;
+			}
+		}
+		
+		HashMap<String, Object> resultMap = new HashMap<>();
+		resultMap.put("reviewlist",reviewlist);
+		return resultMap;
 	}
 }

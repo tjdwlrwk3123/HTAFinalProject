@@ -215,6 +215,21 @@
  		-webkit-user-select: none; 
  		-khtml-user-select: none;
 	}
+	.reviewStar{
+		width:20px;
+		vertical-align: -15%;
+	}
+	.card{
+		border:none;
+	}
+	.row{
+		box-shadow: 3px 3px 5px 5px gray;
+	}
+	.accomReviewImage{
+		width: 90px;
+		height: 90px;
+		margin-top: 5px;
+	}
 </style>
 
 
@@ -299,6 +314,7 @@
 	</div>
 	<input type="hidden" value="${service.cate_number }" id="catNum">
 	<input type="hidden" value="${service.accom_name }" id="serviceName">
+	<input type="hidden" value="${service.accom_service_number }" id="serviceNum">
 	<div id="detail" >
 		<div id="info">
 			<!-- 기본정보 : 상품정보(제공사항), 주의사항, 이용방법, 위치안내, 취소환불 규정, 후기 -->			
@@ -452,14 +468,7 @@
 						</div>
 					</c:if>
 				</div>
-			
 			<div id="reviewbox">
-				<c:if test="">
-					<span>후기 </span><br>
-					<c:forEach var="r" items="">
-						<span> </span><br>
-					</c:forEach>
-				</c:if>
 			</div>
 		</div>
 	</div>
@@ -483,14 +492,113 @@
 	</div>
 </div>
 <script>
-
+	$(document).ready(function(){
+		$.getJSON("${cp}/getAccomReviewList", 
+				{"cate_number":$("#catNum").val(),"service_number":$("#serviceNum").val()}, function(data) {
+			var str="";
+			str= "<h4>후기 ("+data.reviewlist.length+")</h4>"
+			if(data.reviewlist.length>3){
+				for(let i=0; i<3; i++){
+					var stars ="";
+					for(let f=0; f<data.reviewlist[i].star_point; f++){
+						console.log(f);
+						stars+="<img src='${cp }/resources/images/fullStar.svg' class='reviewStar'>";
+					}
+					console.log(data.reviewlist[i].star_point);
+					for(let e=0; e<5-data.reviewlist[i].star_point; e++){
+						stars+="<img src='${cp }/resources/images/emptyStar.svg' class='reviewStar'>";
+					}
+					console.log("stars"+stars);
+					str+="<div class='card mb-3' style='max-width: 1000px;'>"+
+							"<div class='row g-0'>"+
+								"<div class='col-md-10'>"+
+									"<div class='card-body' >"+
+										"<h5 class='card-title'>"+stars+"  "+data.reviewlist[i].user_id+"<small class='col-md-1'>"+data.reviewlist[i].review_date+"</small></h5>"+
+										"<p class='card-text'>"+data.reviewlist[i].review_content+"</p>"+
+									"</div>"+
+								"</div>"+
+								"<div class='col-md-2' style='text-align: center;'>"+
+									"<img src='${cp}/resources/images/"+data.reviewlist[i].review_image+"' style='width:100%; height:100px;' onerror='this.style.display=\"none\";' class='accomReviewImage'>"+
+								"</div>"+
+							"</div>"+
+						"</div>";
+				}
+				str+="<div style='text-align: center;'>"+
+						"<button type='button' class='btn btn-outline-primary' id='moreBtn' onclick='moreReview()'>리뷰더보기</button>"+
+					"</div>";
+			}else{
+				for(let i in data.reviewlist){
+					var stars ="";
+					for(let f=0; f<data.reviewlist[i].star_point; f++){
+						console.log(f);
+						stars+="<img src='${cp }/resources/images/fullStar.svg' class='reviewStar'>";
+					}
+					console.log(data.reviewlist[i].star_point);
+					for(let e=0; e<5-data.reviewlist[i].star_point; e++){
+						stars+="<img src='${cp }/resources/images/emptyStar.svg' class='reviewStar'>";
+					}
+					str+="<div class='card mb-3' style='max-width: 1000px;'>"+
+							"<div class='row g-0'>"+
+								"<div class='col-md-10' >"+
+									"<div class='card-body'>"+
+										"<h5 class='card-title'>"+stars+"  "+data.reviewlist[i].user_id+"<small class='col-md-1'>"+data.reviewlist[i].review_date+"</small></h5>"+
+										"<p class='card-text'>"+data.reviewlist[i].review_content+"</p>"+
+									"</div>"+
+								"</div>"+
+								"<div class='col-md-2' style='text-align: center;'>"+
+									"<img src='${cp}/resources/images/"+data.reviewlist[i].review_image+"' style='width:100%; height:100px;' onerror='this.style.display=\"none\";'>"+
+								"</div>"+
+							"</div>"+
+						"</div>";
+				}
+			}
+			$("#reviewbox").append(str);
+		});
+	});
+	
+	function moreReview(){
+		console.log("11");
+		$.getJSON("${cp}/getAccomReviewList", 
+				{"cate_number":$("#catNum").val(),"service_number":$("#serviceNum").val()}, function(data) {
+			var str="";
+			for(let i=3; i<data.reviewlist.length; i++){
+				var stars ="";
+				for(let f=0; f<data.reviewlist[i].star_point; f++){
+					console.log(f);
+					stars+="<img src='${cp }/resources/images/fullStar.svg' class='reviewStar'>";
+				}
+				console.log(data.reviewlist[i].star_point);
+				for(let e=0; e<5-data.reviewlist[i].star_point; e++){
+					stars+="<img src='${cp }/resources/images/emptyStar.svg' class='reviewStar'>";
+				}
+						str+="<div class='card mb-3' style='max-width: 1000px; display:none;'>"+
+						"<div class='row g-0' >"+
+							"<div class='col-md-10'>"+
+								"<div class='card-body'>"+
+									"<h5 class='card-title'>"+stars+"  "+data.reviewlist[i].user_id+"<small class='col-md-1'>"+data.reviewlist[i].review_date+"</small></h5>"+
+									"<p class='card-text'>"+data.reviewlist[i].review_content+"</p>"+
+								"</div>"+
+							"</div>"+
+							"<div class='col-md-2' style='text-align: center;'>"+
+								"<img src='${cp}/resources/images/"+data.reviewlist[i].review_image+"' style='width:100%; height:100px;' onerror='this.style.display=\"none\";'>"+
+							"</div>"+
+						"</div>"+
+					"</div>";
+			}
+			console.log(str);
+			$("#moreBtn").hide();
+			$("#reviewbox").append(str);
+			$(".card").fadeIn(500);
+		});
+	}
+	
 	$("#wishbtn").click(function(){
-		if($("#wishbtn").val()=="위시리스트추가"){
+		if($("#wishbtn").text()=="위시리스트추가"){
 			$.getJSON("${cp}/wishInsert", {"cate_number":$("#cate_number").val(),"service_number":$("#service_number").val(),"user_id":$("#user_id").val() },
 				function(data) {
 				let result = data.code;
 				if(result=='insert_success'){
-					$("#wishbtn").val("위시리스트제거");
+					$("#wishbtn").text("위시리스트제거");
 				}else if(result=='insert_fail'){
 					alert("insert ERROR");
 				}
@@ -500,7 +608,7 @@
 				function(data) {
 					let result = data.code;
 					if(result=='delete_success'){
-						$("#wishbtn").val("위시리스트추가");
+						$("#wishbtn").text("위시리스트추가");
 					}else if(result=='delete_fail'){
 						alert("delete ERROR");
 					}

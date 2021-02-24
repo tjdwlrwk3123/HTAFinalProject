@@ -1,8 +1,6 @@
 package com.spring.tour.controller;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -74,8 +72,6 @@ public class AccomGoController {
 		infoVo.setAccom_chekinfo(infoVo.getAccom_chekinfo().replaceAll("\\n", "<br>"));
 		String conven[]=infoVo.getConven().split(",");
 		String facility[]=infoVo.getFacility().split(",");
-		System.out.println(conven.length);
-		System.out.println(facility.length);
 		model.addAttribute("info", infoVo);
 		model.addAttribute("service", serviceVo);
 		model.addAttribute("accomNum", accomNum);

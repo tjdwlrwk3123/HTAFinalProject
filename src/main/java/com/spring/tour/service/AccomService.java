@@ -12,6 +12,7 @@ import com.spring.tour.vo.AccomOptionVo;
 import com.spring.tour.vo.AccomServiceReviewJoinVo;
 import com.spring.tour.vo.Accom_serviceVo;
 import com.spring.tour.vo.ImageVo;
+import com.spring.tour.vo.ReviewVo;
 
 @Service
 public class AccomService {
@@ -57,5 +58,13 @@ public class AccomService {
 	//¼÷¼Ò ÆòÁ¡»Ì¾Æ¿À±â
 	public int accomStarPoint(HashMap<String, Object> map) {
 		return dao.accomStarPoint(map);
+	}
+	//¼÷¼Ò ¸®ºä¸®½ºÆ® »Ì¾Æ¿À±â
+	public List<ReviewVo> accomReviewList(int serviceNum){
+		return dao.accomReviewList(serviceNum);
+	}
+	//¼÷¼Ò ¸®ºä ´ëÇ¥»çÁø ÇÑÀå »Ì¾Æ¿À±â
+	public ImageVo accomReviewImg(int generalNum) {
+		return dao.accomReviewImg(generalNum);
 	}
 }

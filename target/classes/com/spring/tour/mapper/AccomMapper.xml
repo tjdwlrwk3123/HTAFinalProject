@@ -9,7 +9,7 @@
 		from(
 		select accom_service_number,accom_service.cate_number,accom_name,nvl(avg(star_point),0) avgpoint,count(review_number) rcnt 
 		from accom_service left join review
-		on accom_service_number=service_number
+		on accom_service_number=service_number and accom_service.cate_number=review.cate_number
 		group by accom_service_number,accom_service.cate_number,accom_name
 		having
 		accom_service_number in(
@@ -91,7 +91,6 @@
 	<select id="accom_service_detail_forId" parameterType="string" resultType="accomService">
 		select * from accom_service where user_accom_boss_name=#{user_id}
 	</select> 
-	<!-- 리뷰쿼리 만들어놓기 -->
 	
 	<select id="accom_option_detail" parameterType="hashmap" resultType="accomOption">
 		select * from accom_option where accom_service_number=#{accomNum} 
@@ -133,5 +132,14 @@
 	<!-- 해당 숙소의 평점 -->
 	<select id="accom_star_point" parameterType="hashmap" resultType="int">
 		select nvl(avg(star_point),0) from review where cate_number=#{cate_number} and service_number=#{service_number}
+	</select>
+	<!-- 해당 숙소의 리뷰리스트 -->
+	<select id="accom_review_list" parameterType="int" resultType="review">
+		select * from review where cate_number in(2,3,4,5) and service_number=#{service_number}
+	</select>
+	<!-- 숙소리뷰에 대한 대표사진 한장 -->
+	<select id="accom_review_img" parameterType="int" resultType="image">
+		select * from image where img_num=
+		(select min(img_num) from image where cate_number=55 and general_number=#{general_number})
 	</select>
 </mapper>

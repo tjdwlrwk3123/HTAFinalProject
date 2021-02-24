@@ -12,6 +12,7 @@ import com.spring.tour.vo.AccomOptionVo;
 import com.spring.tour.vo.AccomServiceReviewJoinVo;
 import com.spring.tour.vo.Accom_serviceVo;
 import com.spring.tour.vo.ImageVo;
+import com.spring.tour.vo.ReviewVo;
 
 @Repository
 public class AccomDao {
@@ -59,5 +60,13 @@ public class AccomDao {
 	//평점가져오기
 	public int accomStarPoint(HashMap<String, Object> map) {
 		return sqlSession.selectOne(NAMESPACE+".accom_star_point", map);
+	}
+	//숙소리뷰 가져오기
+	public List<ReviewVo> accomReviewList(int serviceNum){
+		return sqlSession.selectList(NAMESPACE+".accom_review_list", serviceNum);
+	}
+	//숙소 리뷰의 대표사진 가져오기
+	public ImageVo accomReviewImg(int generalNum) {
+		return sqlSession.selectOne(NAMESPACE+".accom_review_img", generalNum);
 	}
 }
