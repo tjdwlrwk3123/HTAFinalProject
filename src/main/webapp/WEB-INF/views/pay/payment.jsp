@@ -195,7 +195,7 @@
 				<p>예약자 연락처</p>
 				<input type="tel" id="bookerPhone" name="bookerPhone" placeholder="010-9999-9999" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" required>
 			</div>
-<%-- 			<c:if test="${cate_number==2}"><!-- 숙박 상품일 경우 --> --%>
+			<c:if test="${cate_number==2}"><!-- 숙박 상품일 경우 -->
 				<div id="accomInfo" class="box">
 					<input type="checkbox" id="isSame" name="isSame"><label for="isSame">위 정보와 동일</label><br>
 					<p>이용자 성명</p>
@@ -205,7 +205,7 @@
 					<p>이용자 이메일</p>
 					<input type="email" name="visitorEmail" id="visitorEmail" placeholder="example@me.com" required="required"><br>
 				</div>
-<%-- 			</c:if>  --%>
+			</c:if> 
 		</div>
 		<div id="rightwing">
 			<div id="priceInfo" class="box">

@@ -41,18 +41,14 @@
 	-webkit-user-select: none; 
 	-khtml-user-select: none; 
 	user-select:none;
+	-webkit-user-drag: none;
 }
 
 a{
-	color:black;
-	font-weight:500;
-}
-
-a:hover{
 	text-decoration:none;
 	color:black;
-	font-weight:800;
 }
+
 
 #tour_filterbox {
 	width: 200px;
@@ -333,7 +329,7 @@ h5{
 
 <script>
 	var MAXPRICE=0;
-	var isSeleted = false;
+	var isSelected = false;
 	$(function(){
 		var loading = $('<div id="loading" class="loading"></div><img id="loading_img" alt="loading" src="${cp}/resources/gimgs/viewLoading.gif" />').appendTo(document.body).hide();
 		$(window)	
@@ -344,19 +340,21 @@ h5{
 		loading.hide();
 		});
 		
+		//카테고리 0번 , 보여질 순서 0추천순
 		$("li:eq(0) a").css({"font-weight":800, "font-size":'18px'});
 		$(".classification:eq(0)").css({"font-weight":800, "font-size":'17px'});
 		
-		
 		$("li a, .classification").hover(function(){
+			$(this).css({"text-decoration":'none','color':'black'});
+			
 			if($(this).css("font-weight")==800){
-				isSeleted= true;
+				isSelected= true;
 				return;
 			}
 			$(this).css("font-weight",800);	
 		},function(){
-			if(isSeleted){
-				isSeleted=false;
+			if(isSelected){
+				isSelected=false;
 				return;
 			}
 			$(this).css("font-weight",400);	
@@ -386,9 +384,9 @@ h5{
 		
 		console.log("MAX"+MAXPRICE);
 		
-		
+		$('img').on('dragstart', false);
 	});
-	
+
 	
 	function rangeApply(v){
 		var startDate=$("#from").val();
