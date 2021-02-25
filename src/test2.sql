@@ -31,6 +31,12 @@ DROP TABLE tour_book_option CASCADE CONSTRAINTS;
 /* Drop Sequences */
 
 DROP SEQUENCE WISH_SEQ;
+DROP SEQUENCE service_question_seq;
+Drop SEQUENCE service_answer_seq;
+Drop sequence customercenter_answer_seq
+drop SEQUENCE customercenter_seq;
+DROP SEQUENCE review_number_seq;
+Drop SEQUENCE review_answer_seq;
 
 
 
