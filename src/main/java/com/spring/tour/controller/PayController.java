@@ -44,30 +44,21 @@ public class PayController {
 					@RequestParam(value="serviceNumber") int service_number,
 					@RequestParam(value="startDate", required = false) String startDate,
 					@RequestParam(value="endDate", required = false) String endDate,
-					@RequestParam(value="userId", defaultValue = "none") String user_id,
 					@RequestParam(value="option_index") List<Integer> indexNum,
 					@RequestParam(value="service_option") List<String> optionName,
 					@RequestParam(value="count", defaultValue = "0") List<Integer> optionCnts,
 					@RequestParam(value="optionPrice") List<Integer> optionPrice,
-					@RequestParam(value="discount",required = false) String discount,
+					@RequestParam(value="discount",defaultValue = "0") int discount,
 					Model model,
 					HttpServletRequest req
 			) {
 		
-		PaymentVo vo;
-		if(!user_id.equals("none")) {
-			if(req.getSession().getAttribute("user_id")!=null) {
-				vo = service.getUserInfo((String)req.getSession().getAttribute("user_id"));
-			}else {
-				vo = service.getUserInfo(user_id);
-			}
-		}else {
-			vo = service.getUserInfo((String)req.getSession().getAttribute("user_id"));
-		}
+		PaymentVo vo = service.getUserInfo((String)req.getSession().getAttribute("user_id"));
 		model.addAttribute("pvo", vo);
 		
 		model.addAttribute("service_name",service_name);
 		model.addAttribute("cate_number",cate_number);
+		System.out.println("Ä«Å×³Ñ : "+cate_number);
 		model.addAttribute("service_number",service_number);
 		if(startDate!=null) {
 			model.addAttribute("startDate",startDate);
@@ -76,7 +67,7 @@ public class PayController {
 			model.addAttribute("endDate",endDate);
 		}
 		
-		model.addAttribute("user_id",user_id);
+		model.addAttribute("user_id", req.getSession().getAttribute("user_id"));
 		model.addAttribute("indexNum",indexNum);
 		
 		List<TourOptionVo> tdList = tpService.tourOptionList(service_number);
@@ -86,9 +77,8 @@ public class PayController {
 		model.addAttribute("optionCnts",optionCnts);
 		model.addAttribute("optionPrice",optionPrice);
 		
-		if(discount!=null) {
-			model.addAttribute("discount", Integer.parseInt(discount));
-		}
+		model.addAttribute("discount", discount);
+		
 		return ".pay.payment";
 	}
 	
@@ -106,10 +96,9 @@ public class PayController {
 	 * 
 	 */
 	@RequestMapping(value = "/payit")
-	public String payit(@RequestParam(value="user_id",required = false) String user_id,
-						@RequestParam(value="cate_number") int cate_number,
-						@RequestParam(value="service_number") int service_number,
-						@RequestParam(value="service_name") String service_name,
+	public String payit(@RequestParam(value="cateNumber") int cate_number,
+						@RequestParam(value="serviceNumber") int service_number,
+						@RequestParam(value="serviceName") String service_name,
 						@RequestParam(value="bookerName") String bookerName,
 						@RequestParam(value="bookerPhone") String bookerPhone,
 						@RequestParam(value="startDate", required = false) String startDate,
@@ -126,7 +115,7 @@ public class PayController {
 						@RequestParam(value="agreecheck") List<String> agreecheckList,
 						HttpServletRequest req) {
 		
-		user_id=(String)req.getSession().getAttribute("user_id");
+		String user_id=(String)req.getSession().getAttribute("user_id");
 		
 		if(cate_number ==1) {
 			try {

@@ -271,6 +271,17 @@
 	true or false
  -->
 
+<!-- 					@RequestParam(value="serviceName")  -->
+<!-- 					@RequestParam(value="cateNumber")  -->
+<!-- 					@RequestParam(value="serviceNumber")  -->
+<!-- 					@RequestParam(value="startDate", required = false -->
+<!-- 					@RequestParam(value="endDate", required = false)  -->
+<!-- 					@RequestParam(value="option_index") -->
+<!-- 					@RequestParam(value="service_option")  -->
+<!-- 					@RequestParam(value="count", defaultValue = "0")  -->
+<!-- 					@RequestParam(value="optionPrice") -->
+<!-- 					@RequestParam(value="discount",required = false) -->
+
 
 <div id="tourDetail_wrapper" >
 	<div id="content_wrapper">
@@ -469,7 +480,7 @@
 				</c:otherwise>
 			</c:choose>
 			<button type="button" id="goTicket" class="btn btn-outline-secondary btn-lg">티켓보기</button>
-			
+			<!-- 리뷰 불러오기 위함 -->
 			<input type="hidden" value="${detail.cate_number }" id="cate_number"><br>
 			<input type="hidden" value="${detail.service_number }" id="service_number"><br>
 			<input type="hidden" value="${sessionScope.user_id }" id="user_id">
@@ -625,8 +636,7 @@
 		var span = btn.nextSibling;
 		var cnt = parseInt(span.textContent);
 		var indexnum = parseInt(btn.previousSibling.value)-1;
-		var option = document.getElementsByName("service_name")[indexnum];
-		var price= document.getElementsByName("optionPrice")[indexnum];
+		var price= document.getElementsByName("tour_price")[indexnum];
 		var discount= document.getElementsByName("discount")[indexnum];
 		cnt--;
 		span.innerHTML=cnt;
@@ -658,15 +668,13 @@
 		var btn = e;
 		var span = btn.previousSibling;
 		var cnt = parseInt(span.textContent); //몇개인지 찾고
-		var discount= document.getElementsByName("discount")[indexnum];
-		var option = document.getElementsByName("service_option")[indexnum];
-		var price= document.getElementsByName("tour_price")[indexnum];
+		var discount= document.getElementsByName("discount")[indexnum]; //할인 있는지 확인
+		var price= document.getElementsByName("tour_price")[indexnum]; // 가격에 반영
 		
 		
 		
 		console.log("cnt "+cnt);
 		console.log("dc "+discount.value);
-		console.log("op "+option.value);
 		console.log("pri "+price.value);
 		
 		
@@ -702,6 +710,21 @@
 	
 	//결제페이지로 이동
 	function pay(){
+// 		console.log("serviceName : "+document.getElementsByName("serviceName")[0].value);
+// 		console.log("cateNumber : "+document.getElementsByName("cateNumber")[0].value);
+// 		console.log("service_number : "+document.getElementsByName("serviceNumber")[0].value);
+// 		console.log("endDate : "+document.getElementsByName("endDate")[0].value);
+
+// 		for(var i=0; i<3; i++){
+			
+// 			console.log("ticket_amount : "+document.getElementsByName("ticket_amount")[i].value());
+// 			console.log("discount : "+document.getElementsByName("discount")[i].value());
+// 			console.log("count : "+document.getElementsByName("count")[i].value());
+// 			console.log("option_index : "+document.getElementsByName("option_index")[i].value());
+// 			console.log("service_option : "+document.getElementsByName("service_option")[i].value());
+// 			console.log("tour_price : "+document.getElementsByName("tour_price")[i].value());
+// 		}
+		
 		document.getElementById("optionInfo").submit();
 	}
 
