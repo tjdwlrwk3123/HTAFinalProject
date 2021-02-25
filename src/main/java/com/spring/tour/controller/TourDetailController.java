@@ -22,7 +22,7 @@ import com.spring.tour.vo.WishlistVo;
 @Controller
 public class TourDetailController {
 	@Autowired
-	private TourPageService service;
+	private TourPageService service; 
 
 	
 	// 아이디 정보랑, cate_number, service_number 넘겨받기

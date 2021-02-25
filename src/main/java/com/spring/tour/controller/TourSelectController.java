@@ -22,7 +22,7 @@ import com.spring.tour.vo.WishlistVo;
 @Controller
 public class TourSelectController { 
 
-	@Autowired	
+	@Autowired	 
 	private TourPageService service;
 	
 	@RequestMapping(value = "/tourSelect")
