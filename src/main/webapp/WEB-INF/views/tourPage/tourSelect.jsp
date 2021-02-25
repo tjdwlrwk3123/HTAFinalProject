@@ -20,6 +20,9 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet">
+
 <style>
 
 *{
@@ -28,6 +31,7 @@
 	box-sizing: border-box;
 	text-decoration: none;
 	list-style: none;
+	font-family: 'Gamja Flower', cursive;
 	
 }
 #tourSelect_wrapper {
@@ -71,24 +75,26 @@
 
 #tour_filterbox ul li{
 	padding: 20px;
-	border:2px solid black;
 }
 
 #tourTypeSelectBox ul li:not(i){
 	text-decoration:none;
 	color:white;
 }
-#tourTypeSelectBox ul li i{
+#tourTypeSelectBox i{
 	width:30px;
 	margin-right:10px;
 	color:#829CE8;
 }
-#tourTypeSelectBox ul li a:hover{
-	#tourTypeSelectBox ul li i{
-		color:white;
-	}
+#tourTypeSelectBox ul li a:hover i{
+	color:white;
 }
-
+#tourTypeSelectBox ul li a:hover a{
+	color:white;
+}
+ #tourTypeSelectBox ul li a{ 
+	color:white; 
+ } 
 
 #tour_contentbox {
 	width: 85%;
@@ -195,16 +201,15 @@ h5{
 	font-weight: 800;
 }
 
-/* .classification:hover{ */
-/* 	font-weight:800; */
-/* } */
+.classification:hover{
+	font-weight:800; 
+} 
 
 #btn1{
 	width:45px;
 	height:38px;
 	background-color:#4B70DD;
 }
-
 #searchInput, #btn1{
 	margin-top:8px;
 }
@@ -219,7 +224,6 @@ h5{
 	margin-left:15px;
 	margin-bottom:30px;
 }
-
 .filterOption p, input[text]{
 	margin-bottom: -20px;
 }
@@ -232,14 +236,14 @@ h5{
 	margin-left: 5px;
 	border-radius: 50%;
 	border:0px;
-	
 	background-color:transparent;
 	vertical-align: 5px;
 }
-#resetBtn{
+#resetBTN{
+	color:white;
 	width:28px;
 	margin:5px;
-
+	vertical-align: -17%;
 }
 #isDiscount{
 	margin-top:30px;
@@ -289,7 +293,9 @@ h5{
 	width:85%;
 }
 
-
+<%
+	session.setAttribute("user_id", "kaka");
+%>
 
 
 </style>
@@ -310,7 +316,7 @@ h5{
 		</div>
 		<div id="filter">
 			<div>
-				<div id="filterTitle">필터설정<button id="clearFilterBtn" onclick="clearFilter()"><img src="${cp}/resources/images/reset.svg"  id="resetBtn" alt="reset" /></button></div>
+				<div id="filterTitle">필터설정<button id="clearFilterBtn" onclick="clearFilter()"><i class="fas fa-undo-alt fa-la" id="resetBTN"></i></button></div>
 			</div>
 			<span><input type="checkbox" name="isDiscount" id="isDiscount" onclick="discountChange(this)" style="margin-left:15px; margin-top:20px;" ><label for="isDiscount" style="margin-left:10px;">할인 상품만 보기</label></span><br>
 			<div id="starFilter" style="margin-left:15px;">
@@ -351,11 +357,7 @@ h5{
 
 <script>
 	
-	$("li").hover(function(){
-		$(this).filter(':first-child').filter(':first-child').
-	},function(){
-		console.log("hoverOut");
-	});
+
 
 	var MAXPRICE=0;
 	var isSelected = false;
@@ -370,20 +372,27 @@ h5{
 		.ajaxStop(function(){
 			loading.hide();
 		});
-		
+				
 		//카테고리 0번 , 보여질 순서 0추천순
 		$("li:eq(0) a").css({"font-weight":800, "font-size":'18px'});
 		$(".classification:eq(0)").css({"font-weight":800, "font-size":'17px'});
 		
-		$("li a, .classification").hover(function(){
+		$("li a").hover(function(){
 			$(this).css({"text-decoration":'none','color':'white'});
 			$(this).css("font-weight",800);	
 		},function(){
 			$(this).css("font-weight",400);	
 			$("li:eq("+tourType+") a").css({"font-weight":800, "font-size":'18px'});
+		}); 
+		$(".classification").hover(function(){
+			$(this).css({"text-decoration":'none'});
+			$(this).css("font-weight",800);	
+		},function(){
+			$(this).css("font-weight",400);	
 			$(".classification:eq(" + classification + ")").css({"font-weight":800, "font-size":'17px'});
 		});
 
+				
 		
 		$("#from").datepicker('setDate','today');
 		var startDate=$("#from").val();
