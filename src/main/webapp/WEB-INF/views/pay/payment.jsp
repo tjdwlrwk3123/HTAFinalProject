@@ -144,7 +144,7 @@
 </style>
 
 <div id="pay_wrapper">
-	<form action="${cp}/payit" method="post" id="paymentInfo">
+	<form action="${cp}/payit" method="post" id="paymentInfo" onsubmit="return pay();">
 	<div id="paybox">
 		<div id="leftwing">
 			<div id="itemInfo" class="box">
@@ -195,7 +195,7 @@
 				<p>예약자 연락처</p>
 				<input type="tel" id="bookerPhone" name="bookerPhone" placeholder="010-9999-9999" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" required>
 			</div>
-			<c:if test="${cate_number==2}"><!-- 숙박 상품일 경우 -->
+			<c:if test="${cate_number!=1}"><!-- 숙박 상품일 경우 -->
 				<div id="accomInfo" class="box">
 					<input type="checkbox" id="isSame" name="isSame"><label for="isSame">위 정보와 동일</label><br>
 					<p>이용자 성명</p>
@@ -243,9 +243,9 @@
 				<c:if test="${!empty user_id}">
 					<input type="hidden" name="user_id" value="${user_id}">
 				</c:if>
-				<input type="hidden" name="cate_number" value="${cate_number}">
-				<input type="hidden" name="service_name" value="${service_name}">
-				<input type="hidden" name="service_number" value="${service_number}">
+				<input type="hidden" name="cateNumber" value="${cate_number}">
+				<input type="hidden" name="serviceName" value="${service_name}">
+				<input type="hidden" name="serviceNumber" value="${service_number}">
 				<c:if test="${!empty startDate }">
 					<input type="hidden" name="startDate" value="${startDate}">
 				</c:if>
@@ -270,7 +270,7 @@
 				<input type="checkbox" name="agreecheck" id="no2" value="no2" required="required"><label for="no2">개인정보 제공 동의(필수)</label><br>
 				<input type="checkbox" name="agreecheck" id="no3" value="no3"><label for="no3">특가 및 할인 안내 동의(선택)</label><br>
 			</div>
-			<div style="text-align: center;"><button type="button" class="btn" onclick="pay()">결제하기</button></div>
+			<div style="text-align: center;"><button type="submit" class="btn">결제하기</button></div>
 		</div>
 	</div>
 	</form>
@@ -313,7 +313,7 @@
 	    }
 	}
 	function pay(){
-		if(doubleSubmitCheck()) return;
+		if(doubleSubmitCheck()) return false;
 		document.getElementById("paymentInfo").submit();
 	}
 
