@@ -243,7 +243,7 @@ public class BookingCheckController {
 		//각각의 숙소에 해당하는 정보들 뽑아오기
 		List<List<ImageVo>> image=new ArrayList<List<ImageVo>>();
 		List<AccomOptionVo> detail=new ArrayList<AccomOptionVo>();
-		List<Accom_serviceVo> service=new ArrayList<Accom_serviceVo>();
+		List<Accom_serviceVo> serviceA=new ArrayList<Accom_serviceVo>();
 		for(AccomBookVo vo:accomCancelList) {
 			int optNum=vo.getAccom_option_number();
 			List<ImageVo> roomImage=accomService.accomRoomImage(optNum);
@@ -253,25 +253,24 @@ public class BookingCheckController {
 			//카테고리넘버 뽑아오기
 			int accomNum=roomDetail.getAccom_service_number();
 			Accom_serviceVo as=accomService.accomService(accomNum);
-			service.add(as);
+			serviceA.add(as);
 		}
 		
 		//투어 정보들 뽑아오기
-		List<TourOptionVo> option=new ArrayList<TourOptionVo>();
 		List<List<ImageVo>> timage=new ArrayList<List<ImageVo>>();
+		
 		for(TourBookVo vo:tourCancelList) {
 			int service_number=vo.getService_number();
+			
 			List<ImageVo> tourimg=tourService.tourDetailImage(service_number);
 			timage.add(tourimg);
 		}
-		
 		model.addAttribute("accomCancelList", accomCancelList);
 		model.addAttribute("tourCancelList", tourCancelList);
 		model.addAttribute("aimage", image);
 		model.addAttribute("timage", timage);
 		model.addAttribute("detail", detail);
-		model.addAttribute("opiton", option);
-		model.addAttribute("service", service);
+		model.addAttribute("service", serviceA);
 		
 		return ".booking.cancelTrip";
 	}

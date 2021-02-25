@@ -44,7 +44,6 @@ public class AccomGoController {
 		//테스트용 세션에 아이디 담기
 		HttpServletRequest request=((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
 		HttpSession session = request.getSession();
-		session.setAttribute("user_id","ck");
 		
 		//위시리스트 담겨있는지 확인여부
 		HashMap<String, Object> map=new HashMap<String, Object>();

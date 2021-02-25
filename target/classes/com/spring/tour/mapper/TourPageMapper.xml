@@ -162,7 +162,7 @@ select i.cate_number,i.service_number, tour_type, tour_name, avgpoint, rcnt, img
  	</select>
  	
  	<!-- //////////기홍 쿼리 추가///////// -->
- 	<select id="get_tourService" parameterType="int" resultType="touroption">
+ 	<select id="get_tourService" parameterType="hashmap" resultType="touroption">
  		select * from tour_option where tour_option_index=#{tour_option_index} and service_number=#{service_number}
  	</select>
  	<select id="get_tour_detail" parameterType="int" resultType="tourservice">

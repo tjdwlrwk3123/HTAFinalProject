@@ -107,7 +107,7 @@
 		select NVL(count(*),0) cnt from tour_book where user_id=#{user_id}
 		and not payment_condition='결제취소'
 		<![CDATA[
-		and tour_enddate>=sysdate
+		and (tour_enddate>=sysdate or tour_enddate is null)
 		]]>
 	</select>
 	<!-- 지난tour리스트 -->

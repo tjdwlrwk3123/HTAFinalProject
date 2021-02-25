@@ -6,17 +6,26 @@
 <!-- <script src="https://kit.fontawesome.com/b99e675b6e.js"></script> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4b7621e8665f6a2b7f8fcf343ba118b6&libraries=services"></script>
+
+<!-- 구글폰트 -->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Stylish&display=swap" rel="stylesheet">
+
 <style type="text/css">
+	*{
+		font-family: 'Stylish', sans-serif;
+	}
 	.tourBookingWrapper{
 		display: flex;
 		position: relative;
+		height: 1000px;
+		background-color: #F3F3F3;
 	}
 	
 	.tourBookingWrapper .bookingSidebar{
-		position: fixed;
-		width: 200px;
-		height: 650px;
-		background: #4b4276;
+		width: 250px;
+		height: 940px;
+		background: #FFCA6C;
 		padding: 30px 0;
 	}
 	.tourBookingWrapper .bookingSidebar h2{
@@ -32,8 +41,9 @@
 		padding-left:10px;
 	}
 	.tourBookingWrapper .bookingSidebar ul li a{
-		color: #bdb8d7;
+		color: #5853EB;
 		display: block;
+		text-decoration: none;
 	}
 	.tourBookingWrapper .bookingSidebar ul li a .fas{
 		width: 25px;
@@ -42,18 +52,18 @@
 		width: 25px;
 	}
 	.tourBookingWrapper .bookingSidebar ul li:hover{
-		background: #594f8d;
+		background: #FFE08C;
 	}
 	.tourBookingWrapper .bookingSidebar ul li:hover a{
-		color:#fff;
+		color:black;
 	}
 	.tourBookingWrapper .tourBookingMain{
 		width: 100%;
-		margin-left: 200px;
-		height: 710px;
+		height: 1000px;
+		background-color: #F3F3F3;
 	}
 	.tourBookingWrapper .tourBookingMain #tourListWrap{
-		height: 600px;
+		height: 900px;
 	}
 	.tourBookingWrapper .tourBookingMain #tourListWrap .tourBookList{
 		border-bottom: 1px solid rgba(0,0,0,0.05);
@@ -61,9 +71,24 @@
 		margin-left: 50px;
 		margin-top: 15px;
 	}
+	.tourBookList div img{
+		width: 145px;
+		height: 145px;
+	}
+	.tourBookList a{
+		text-decoration: none;
+		color: black;
+	}
+	.tourBookList a:hover{
+		font-weight: 800;
+	}
 	.tourBookingWrapper .tourBookingMain .tourPaging{
 		text-align: center;
 		
+	}
+	.tourPaging i{
+		color:#C98AFF;
+		margin-right: 5px;
 	}
 	
 	#tourmask {  
@@ -81,21 +106,49 @@
     left:65%;
     top:200px;
     margin-left: -500px;
-    width:500px;
-    height:400px;
+    width:600px;
+    height:500px;
     background-color:#FFF;
     z-index:10000;   
  	}
+ 	.cancelPopup a{
+ 		text-decoration: none;
+		color: black;
+		border: 1px solid black;
+		border-radius:5px;
+		display:block;
+		width: 50px;
+		height: 30px;
+		padding-top: 15px;
+ 	}
+ 	.cancelPopup a:hover{
+		transition-duration:500ms;
+		font-weight: 800;
+		border: 1px solid black;
+		background-color: red;
+		color: white;
+		
+	}
  	.detailPopup{
     display: none;
     position:absolute;
     left:65%;
     top:200px;
-    margin-left: -500px;
     width:500px;
-    height:400px;
+    margin-left: -500px;
     background-color:#FFF;
     z-index:10000;   
+ 	}
+ 	#gMap{
+ 		border: 1px solid skyblue;
+ 		background-color: rgba(0,0,0,0); 
+ 		color: skyblue; 
+ 		padding: 5px;
+ 		border-radius: 5px;
+ 	}
+ 	#gMap:hover{
+ 		color:white; 
+ 		background-color: skyblue;
  	}
  	
 </style>
@@ -106,25 +159,19 @@
 		<ul>
 			<li><a href="${cp }/accomBookingCheck"><i class="fas fa-hotel"></i>숙소</a></li>
 			<li><a href="${cp }/tourBookingCheck"><i class="fas fa-ticket-alt"></i>투어/티켓</a></li>
-			<li>
-				<a><i class="far fa-lightbulb"></i>지난여행/후기</a>
-				<ul>
-					<li><a href="${cp }/accompastTrip">숙박</a></li>
-				</ul>
-			</li>
+			<li><a href="${cp }/accompastTrip"><i class="far fa-lightbulb"></i>지난여행/후기</a></li>
 			<li><a href="${cp }/cancelTrip"><i class="fas fa-plane-slash"></i>취소목록</a></li>
 		</ul>
 	</div>
 	<div class="tourBookingMain">
 		<div id="tourListWrap">
-			<h2 style="text-align: center;">투어 예약내역</h2>
+			<h2 style="text-align: center; height:30px; margin-bottom: 50px;">투어 예약내역</h2>
 			<c:forEach var="vo" items="${bookingList }" varStatus="status">
 				<div class="tourBookList">
 					<div style="display: inline-block;">
-						<img src="${cp}/resources/gimgs/${image[status.index][0].imgsavename}" 
-						style="width: 100px; height: 100px;">
+						<img src="${cp}/resources/upload/${image[status.index][0].imgsavename}">
 					</div>
-					<div style="display: inline-block; width:320px;">
+					<div style="display: inline-block; width:320px; position: relative; bottom: 30px;">
 						<h3><a href="${cp }/tourDetail?service_number=${vo.service_number}&cate_number=1">${vo.service_name }</a></h3>
 						<span>유효기간:</span><span>${vo.tour_startdate }~${vo.tour_enddate }</span>
 						<br>
@@ -141,10 +188,15 @@
 						<span style="font-size: 0.5em;">(포인트 사용금액:</span><span style="font-size: 0.5em;">${vo.point_useamount }원)</span><br>
 						</c:if>
 					</div>
+					<div style="display:inline-block; position: relative; right: 15px;">
 					<div style="display:inline-block; position: relative; left:10px;">
 						<input type="hidden" value="${vo.service_number }">
 						<a href="#" class="openBookDetail">상세보기</a>
 						<input type="hidden" value="${vo.tour_book_number }">
+						<input type="hidden" value="${vo.tour_startdate }">
+						<input type="hidden" value="${vo.tour_enddate }">
+						<input type="hidden" value="${vo.bookername }">
+						<input type="hidden" value="${vo.bookerphone }">
 					</div>
 					<div style="display:inline-block; position: relative; left:40px;">
 						<a href="#" class="openMask">결제취소</a>
@@ -153,6 +205,7 @@
 					<div style="display:inline-block; position: relative; left:70px;">
 						<span>리뷰쓰기</span>
 					</div>
+					</div>
 				</div>
 			</c:forEach>
 		</div>
@@ -160,10 +213,10 @@
 			<c:forEach var="i" begin="${pu.startPageNum }" end="${pu.endPageNum }">
 				<c:choose>
 					<c:when test="${i==pu.pageNum }">
-						<a href="${cp }/tourBookingCheck?pageNum=${i}"><span style='color:blue'>[${i }]</span></a>
+						<a href="${cp }/tourBookingCheck?pageNum=${i}"><i class="fas fa-circle fa-la"></i></a>
 					</c:when>
 					<c:otherwise>
-						<a href="${cp }/tourBookingCheck?pageNum=${i}"><span style='color:gray'>[${i }]</span></a>
+						<a href="${cp }/tourBookingCheck?pageNum=${i}"><i class="fas fa-circle fa-sm"></i></a>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
@@ -176,13 +229,14 @@
 
 <div class="detailPopup">
 <div class="detailPop"></div>
-<input type="button" onclick="getMap()" value="지도보기" style="margin-left: 220px;">
 <div id="map" style="width:350px; height:200px; margin:auto;">
 </div>
+<input type="button" onclick="getMap()" value="지도보기" style="margin-left: 220px;" id="gMap">
+
 </div>
 
 <div class="cancelPopup">
-    <p style="width:500px;height:300px;text-align:center;vertical-align:middle;">
+    <p style="width:600px;height:300px;text-align:center;vertical-align:middle;">
     	<span style="font-weight:bold; color: red;">규정에 따라 취소 수수료가 발생할 수 있습니다.</span><br><br><br>
     	유효기간이 없는 티켓인 경우<br>
     	- 구입 후 7일 이내 : 취소 수수료 무료<br>
@@ -221,7 +275,7 @@ function wrapWindowByMask(){
 
 }
 
-function wrapWindowByDetailMask(bookNumber,serviceNum){
+function wrapWindowByDetailMask(bookNumber,serviceNum,startdate,enddate,bookerName,bookerPhone){
 	 
     //화면의 높이와 너비를 구한다.
     var maskHeight = $(document).height();  
@@ -247,20 +301,29 @@ function wrapWindowByDetailMask(bookNumber,serviceNum){
 				var count=data.count[i];
 				var price=data.detail[i].tour_price;
 				var addr=data.addr;
+				if(enddate==''){
+					var expire='<span>유효기간:'+startdate+'~</span><br>';
+				}else{
+					var expire='<span>유효기간:'+startdate+'~'+enddate+'</span><br>';
+				}
 				
 				var content='<div style="margin:20px;">'+
 				'<div style="display:inline-block">'+
 				'<span style="font-size:1.3em;">'+optName+'/</span>'+
 				'<span>'+count+'장</span><br>'+
 				'</div>'+
-				'<div style="display:inline-block; float:right;">'+
-				'<span>기본 가격: '+price+'원</span>'+
-				'</div>'+
 				'</div>';
 				
 				$(".detailPop").append(content);
 			}
-			$(".detailPop").append('<input type="hidden" value="'+addr+'" id="addr">');
+			var endcontent=
+				'<div style="text-align:center"'+
+				'<input type="hidden" value="'+addr+'" id="addr">'+
+				expire+
+				'<span>예약자:'+bookerName+'</span><br>'+
+				'<span>예약자 연락처:'+bookerPhone+'</span><br>'+
+				'</div>';
+			$(".detailPop").append(endcontent);
 		}
 	});
     
@@ -323,7 +386,15 @@ $(document).ready(function(){
         e.preventDefault();
         bookNumber=$(e.target).next().val();
         serviceNum=$(e.target).prev().val();
-        wrapWindowByDetailMask(bookNumber,serviceNum);
+        var startdate=$(e.target).next().next().val();
+        var enddate=$(e.target).next().next().next().val();
+        var bookerName=$(e.target).next().next().next().next().val();
+        var bookerPhone=$(e.target).next().next().next().next().next().val();
+        console.log(startdate);
+        console.log(enddate);
+        console.log(bookerName);
+        console.log(bookerPhone);
+        wrapWindowByDetailMask(bookNumber,serviceNum,startdate,enddate,bookerName,bookerPhone);
     });
 
     //닫기 버튼을 눌렀을 때

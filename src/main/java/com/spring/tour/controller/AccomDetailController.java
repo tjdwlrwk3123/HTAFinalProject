@@ -95,7 +95,7 @@ public class AccomDetailController {
 			int generalNum=vo.getReview_number();
 			try {
 			ImageVo img=service.accomReviewImg(generalNum);
-			vo.setReview_image(img.getImgsavename());
+			vo.setImage(img.getImgsavename());
 			}catch(NullPointerException ne) {
 				continue;
 			}

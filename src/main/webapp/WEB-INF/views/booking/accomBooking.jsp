@@ -4,19 +4,29 @@
 <!DOCTYPE html>
 <meta charset="UTF-8">
 <!-- <script src="https://kit.fontawesome.com/b99e675b6e.js"></script> -->
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4b7621e8665f6a2b7f8fcf343ba118b6&libraries=services"></script>
+
+<!-- 구글폰트 -->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Stylish&display=swap" rel="stylesheet">
+
 <style type="text/css">
+	*{
+		font-family: 'Stylish', sans-serif;
+	}
 	.accomBookingWrapper{
 		display: flex;
 		position: relative;
+		height: 1000px;
+		background-color: #F3F3F3;
 	}
 	
 	.accomBookingWrapper .bookingSidebar{
-		position: fixed;
-		width: 200px;
-		height: 650px;
-		background: #4b4276;
+		width: 250px;
+		height: 940px;
+		background: #FFCA6C;
 		padding: 30px 0;
 	}
 	.accomBookingWrapper .bookingSidebar h2{
@@ -32,8 +42,9 @@
 		padding-left:10px;
 	}
 	.accomBookingWrapper .bookingSidebar ul li a{
-		color: #bdb8d7;
+		color: #5853EB;
 		display: block;
+		text-decoration: none;
 	}
 	.accomBookingWrapper .bookingSidebar ul li a .fas{
 		width: 25px;
@@ -42,18 +53,18 @@
 		width: 25px;
 	}
 	.accomBookingWrapper .bookingSidebar ul li:hover{
-		background: #594f8d;
+		background: #FFE08C;
 	}
 	.accomBookingWrapper .bookingSidebar ul li:hover a{
-		color:#fff;
+		color:black;
 	}
 	.accomBookingWrapper .accomBookingMain{
 		width: 100%;
-		margin-left: 200px;
-		height: 710px;
+		height: 1000px;
+		background-color: #F3F3F3;
 	}
 	.accomBookingWrapper .accomBookingMain #accomListWrap{
-		height: 600px;
+		height: 900px;
 	}
 	.accomBookingWrapper .accomBookingMain #accomListWrap .accomBookList{
 		border-bottom: 1px solid rgba(0,0,0,0.05);
@@ -61,11 +72,42 @@
 		margin-left: 50px;
 		margin-top: 15px;
 	}
-	.accomBookingWrapper .accomBookingMain .accomPaging{
-		text-align: center;
+	.accomBookList div img{
+		width: 145px;
+		height: 145px;
+	}
+	.accomBookList a{
+		text-decoration: none;
+		color: black;
+	}
+	.accomBookList a:hover{
+		font-weight: 800;
+	}
+	.cancelPopup a{
+		text-decoration: none;
+		color: black;
+		border: 1px solid black;
+		border-radius:5px;
+		display:block;
+		width: 50px;
+		height: 30px;
+		padding-top: 15px;
+	}
+	.cancelPopup a:hover{
+		transition-duration:500ms;
+		font-weight: 800;
+		border: 1px solid black;
+		background-color: red;
+		color: white;
 		
 	}
-	
+	.accomBookingWrapper .accomBookingMain .accomPaging{
+		text-align: center;
+	}
+	.accomPaging i{
+		color:#C98AFF;
+		margin-right: 5px;
+	}
 	#accommask {  
     position:absolute;  
     z-index:9000;  
@@ -81,8 +123,8 @@
     left:65%;
     top:200px;
     margin-left: -500px;
-    width:500px;
-    height:400px;
+    width:600px;
+    height:500px;
     background-color:#FFF;
     z-index:10000;   
  	}
@@ -93,9 +135,19 @@
     top:200px;
     margin-left: -500px;
     width:500px;
-    height:400px;
     background-color:#FFF;
     z-index:10000;   
+ 	}
+ 	#gMap{
+ 		border: 1px solid skyblue;
+ 		background-color: rgba(0,0,0,0); 
+ 		color: skyblue; 
+ 		padding: 5px;
+ 		border-radius: 5px;
+ 	}
+ 	#gMap:hover{
+ 		color:white; 
+ 		background-color: skyblue;
  	}
 
 </style>
@@ -106,28 +158,24 @@
 		<ul>
 			<li><a href="${cp }/accomBookingCheck"><i class="fas fa-hotel"></i>숙소</a></li>
 			<li><a href="${cp }/tourBookingCheck"><i class="fas fa-ticket-alt"></i>투어/티켓</a></li>
-			<li>
-				<a><i class="far fa-lightbulb"></i>지난여행/후기</a>
-				<ul>
-					<li><a href="${cp }/accompastTrip">숙박</a></li>
-				</ul>
-			</li>
+			<li><a href="${cp }/accompastTrip"><i class="far fa-lightbulb"></i>지난여행/후기</a></li>
 			<li><a href="${cp }/cancelTrip"><i class="fas fa-plane-slash"></i>취소목록</a></li>
 		</ul>
 	</div>
 	<div class="accomBookingMain">
 		<div id="accomListWrap">
-			<h2 style="text-align: center; height: 50px;">숙소 예약내역</h2>
+			<h2 style="text-align: center; height: 30px; margin-bottom: 50px;">숙소 예약내역</h2>
 			<c:forEach var="vo" items="${bookingList }" varStatus="status">
 				<div class="accomBookList">
 					<div style="display: inline-block;">
-						<img src="${cp}/resources/gimgs/${image[status.index][0].imgsavename}" 
-						style="width: 100px; height: 100px;">
+						<img src="${cp}/resources/upload/${image[status.index][0].imgsavename}">
 					</div>
-					<div style="display: inline-block; width:320px;">
-						<h3><a href="${cp }/accomDetail?accomNum=${detail[status.index].accom_service_number}
+					<div style="display: inline-block; width:320px; position: relative; bottom: 30px;">
+						<div>
+						<h3 style="display: inline-block;"><a href="${cp }/accomDetail?accomNum=${detail[status.index].accom_service_number}
 						&cate_number=${service[status.index].cate_number}">${vo.service_name }</a></h3>
-						<span>${detail[status.index].accom_rooms_option }</span><br>
+						<span>(${detail[status.index].accom_rooms_option })</span>
+						</div>
 						<span>예약날짜:</span><span>${vo.accom_startdate }~${vo.accom_enddate }</span>
 						<br>
 						<c:choose>
@@ -147,6 +195,8 @@
 						<a href="#" class="openBookDetail">상세보기</a>
 						<input type="hidden" value="${vo.accom_book_number }">
 						<input type="hidden" value="${vo.accom_option_number }">
+						<input type="hidden" value="${vo.accom_startdate }">
+						<input type="hidden" value="${vo.accom_enddate }">
 					</div>
 					<div style="display:inline-block; position: relative; left:40px;">
 						<a href="#" class="openMask">예약취소</a>
@@ -159,10 +209,10 @@
 			<c:forEach var="i" begin="${pu.startPageNum }" end="${pu.endPageNum }">
 				<c:choose>
 					<c:when test="${i==pu.pageNum }">
-						<a href="${cp }/accomBookingCheck?pageNum=${i}"><span style='color:blue'>[${i }]</span></a>
+						<a href="${cp }/accomBookingCheck?pageNum=${i}"><i class="fas fa-circle fa-la"></i></a>
 					</c:when>
 					<c:otherwise>
-						<a href="${cp }/accomBookingCheck?pageNum=${i}"><span style='color:gray'>[${i }]</span></a>
+						<a href="${cp }/accomBookingCheck?pageNum=${i}"><i class="fas fa-circle"></i></a>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
@@ -175,12 +225,12 @@
 
 <div class="detailPopup">
 <div class="detailPop"></div>
-<input type="button" onclick="getMap()" value="지도보기" style="margin-left: 220px;">
 <div id="map" style="width:350px; height:200px; margin:auto;">
 </div>
+<input type="button" onclick="getMap()" value="지도보기" style="margin-left: 220px;" id="gMap">
 </div>
 <div class="cancelPopup">
-    <p style="width:500px;height:300px;text-align:center;vertical-align:middle;">
+    <p style="width:600px;height:300px;text-align:center;vertical-align:middle;">
     	<span style="font-weight:bold; color: red;">규정에 따라 취소 수수료가 발생할 수 있습니다.</span><br><br><br>
     	- 체크인 6일 전 : 취소 수수료 없음<br>
     	- 체크인 5일 전 : 취소 수수료 10%<br>
@@ -193,8 +243,8 @@
     </p>
     <p style="text-align:center;">취소하시겠습니까?</p>
     <div style="text-align:center;">
-    <p style="background:#ffffff; padding:20px; display: inline-block;"><a href="#" class="cancelApply">예</a></p>
-    <p style="background:#ffffff; padding:20px; display: inline-block;"><a href="#" class="close">닫기</a></p>
+    <p style="background:#ffffff; padding:20px; display: inline-block;"><a href="#" name="cancelApply">예</a></p>
+    <p style="background:#ffffff; padding:20px; display: inline-block;"><a href="#" name="close">닫기</a></p>
     </div>
 </div>
 
@@ -219,7 +269,7 @@ function wrapWindowByMask(){
 
 }
 
-function wrapWindowByDetailMask(bookNumber){
+function wrapWindowByDetailMask(bookNumber,optNum,startDate,endDate){
 	 
     //화면의 높이와 너비를 구한다.
     var maskHeight = $(document).height();  
@@ -246,20 +296,22 @@ function wrapWindowByDetailMask(bookNumber){
 			var roomOption=data.detail.accom_rooms_option;
 			var price=data.detail.accom_price;
 			var addr=data.service.accom_addr;
+			var accomName=data.service.accom_name;
+			var accomMin=data.detail.accom_min_people;
+			var accomMax=data.detail.accom_max_people;
 			
 			var content='<div style="margin:20px;">'+
-			'<div>'+
-			'<p style="font-size:1.5em; text-align:center;">'+roomOption+'</p>'+
-			'<br>'+
+			'<div style="text-align:center;">'+
+			'<h3 style="display:inline-block; margin-left:20px;">'+accomName+'</h3>'+
+			'<span>('+roomOption+')</span>'+
 			'</div>'+
 			'<div>'+
 			'<div style="display:inline-block;">'+
 			'<span>방문자 이름: '+visitorName+'</span><br>'+
 			'<span>방문자 이메일: '+visitorEmail+'</span><br>'+
 			'<span>방문자 전화번호: '+visitorPhone+'</span><br>'+
-			'</div>'+
-			'<div style="display:inline-block; float:right;">'+
-			'<span>기본 가격: '+price+'원</span>'+
+			'<span>예약날짜: '+startDate+'~'+endDate+'</span><br>'+
+			'<span>기준인원: '+accomMin+'명 / 최대인원'+accomMax+'명</span><br>'+
 			'</div>'+
 			'<input type="hidden" value="'+addr+'" id="addr">'+
 			'</div>'+
@@ -326,13 +378,15 @@ $(document).ready(function(){
     $(".openBookDetail").click(function(e){
         e.preventDefault();
         bookNumber=$(e.target).next().val();
-        optNum=$(e.target).next().next().val();
-        wrapWindowByDetailMask(bookNumber,optNum);
+        var optNum=$(e.target).next().next().val();
+        var startDate=$(e.target).next().next().next().val();
+        var endDate=$(e.target).next().next().next().next().val();
+        wrapWindowByDetailMask(bookNumber,optNum,startDate,endDate);
         
     });
 
     //닫기 버튼을 눌렀을 때
-    $(".cancelPopup .close").click(function (e) {  
+    $(".cancelPopup a[name=close]").click(function (e) {  
         //링크 기본동작은 작동하지 않도록 한다.
         e.preventDefault();
         bookNumber=0;
@@ -347,7 +401,7 @@ $(document).ready(function(){
         $(".detailPopup").hide();
     });
     
-    $(".cancelPopup .cancelApply").click(function (e) {  
+    $(".cancelPopup a[name=cancelApply]").click(function (e) {  
         //링크 기본동작은 작동하지 않도록 한다.
         e.preventDefault();
         location.href="/tour/accomCancel?bookNumber="+bookNumber;

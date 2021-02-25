@@ -6,17 +6,25 @@
 <!-- <script src="https://kit.fontawesome.com/b99e675b6e.js"></script> -->
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4b7621e8665f6a2b7f8fcf343ba118b6&libraries=services"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
+
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Stylish&display=swap" rel="stylesheet">
+
 <style type="text/css">
+	*{
+		font-family: 'Stylish', sans-serif;
+	}
 	.accompastTripWrapper{
 		display: flex;
 		position: relative;
+		height: 1000px;
+		background-color: #F3F3F3;
 	}
 	
 	.accompastTripWrapper .bookingSidebar{
-		position: fixed;
-		width: 200px;
-		height: 650px;
-		background: #4b4276;
+		width: 250px;
+		height: 940px;
+		background: #FFCA6C;
 		padding: 30px 0;
 	}
 	.accompastTripWrapper .bookingSidebar h2{
@@ -32,8 +40,9 @@
 		padding-left:10px;
 	}
 	.accompastTripWrapper .bookingSidebar ul li a{
-		color: #bdb8d7;
+		color: #5853EB;
 		display: block;
+		text-decoration: none;
 	}
 	.accompastTripWrapper .bookingSidebar ul li a .fas{
 		width: 25px;
@@ -42,27 +51,41 @@
 		width: 25px;
 	}
 	.accompastTripWrapper .bookingSidebar ul li:hover{
-		background: #594f8d;
+		background: #FFE08C;
 	}
 	.accompastTripWrapper .bookingSidebar ul li:hover a{
-		color:#fff;
+		color:black;
 	}
 	.accompastTripWrapper .accompastTripMain{
 		width: 100%;
-		margin-left: 200px;
-		height: 710px;
+		height: 1000px;
+		background-color: #F3F3F3;
 	}
 	.accompastTripWrapper .accompastTripMain #accompastTripWrap{
-		height: 600px;
+		height: 900px;
 	}
 	.accompastTripWrapper .accompastTripMain #accompastTripWrap .accompastTripList{
 		border-bottom: 1px solid rgba(0,0,0,0.05);
 		border-top: 1px solid rgba(225,225,225,0.05);
 		margin-left: 50px;
-		margin-top: 15px;
+	}
+	.accompastTripList div img{
+		width: 145px;
+		height: 145px;
+	}
+	.accompastTripList a{
+		text-decoration: none;
+		color: black;
+	}
+	.accompastTripList a:hover{
+		font-weight: 800;
 	}
 	.accompastTripWrapper .accompastTripMain .accompastTripPaging{
 		text-align: center;	
+	}
+	.accompastTripPaging i{
+		color:#C98AFF;
+		margin-right: 5px;
 	}
 	#pastmask {  
     position:absolute;  
@@ -79,9 +102,19 @@
     top:200px;
     margin-left: -500px;
     width:500px;
-    height:400px;
     background-color:#FFF;
     z-index:10000;   
+ 	}
+ 	#gMap{
+ 		border: 1px solid skyblue;
+ 		background-color: rgba(0,0,0,0); 
+ 		color: skyblue; 
+ 		padding: 5px;
+ 		border-radius: 5px;
+ 	}
+ 	#gMap:hover{
+ 		color:white; 
+ 		background-color: skyblue;
  	}
 </style>
 
@@ -91,28 +124,25 @@
 		<ul>
 			<li><a href="${cp }/accomBookingCheck"><i class="fas fa-hotel"></i>숙소</a></li>
 			<li><a href="${cp }/tourBookingCheck"><i class="fas fa-ticket-alt"></i>투어/티켓</a></li>
-			<li>
-				<a><i class="far fa-lightbulb"></i>지난여행/후기</a>
-				<ul>
-					<li><a href="${cp }/accompastTrip">숙박</a></li>
-				</ul>
-			</li>
+			<li><a href="${cp }/accompastTrip"><i class="far fa-lightbulb"></i>지난여행/후기</a></li>
 			<li><a href="${cp }/cancelTrip"><i class="fas fa-plane-slash"></i>취소목록</a></li>
 		</ul>
 	</div>
 	<div class="accompastTripMain">
 		<div id="accompastTripWrap">
-			<h2 style="text-align: center; height: 30px;">지난여행/후기</h2>
+			<h2 style="text-align: center; height: 30px; margin-bottom: 50px;">지난여행/후기</h2>
 			<c:forEach var="vo" items="${bookingList }" varStatus="status">
 				<div class="accompastTripList">
 					<div style="display: inline-block;">
-						<img src="${cp}/resources/gimgs/${image[status.index][0].imgsavename}" 
-						style="width: 100px; height: 100px;">
+						<img src="${cp}/resources/upload/${image[status.index][0].imgsavename}" 
+						onselect="return false" ondragstart="return false">
 					</div>
-					<div style="display: inline-block; width:320px;">
-						<h3><a href="${cp }/accomDetail?accomNum=${detail[status.index].accom_service_number}
+					<div style="display: inline-block; width:320px; position: relative; bottom: 30px;">
+						<div>
+						<h3 style="display: inline-block;"><a href="${cp }/accomDetail?accomNum=${detail[status.index].accom_service_number}
 						&cate_number=${service[status.index].cate_number}">${vo.service_name }</a></h3>
-						<span>${detail[status.index].accom_rooms_option }</span><br>
+						<span>(${detail[status.index].accom_rooms_option })</span>
+						</div>
 						<span>여행날짜:</span><span>${vo.accom_startdate }~${vo.accom_enddate }</span>
 						<br>
 						<c:choose>
@@ -132,6 +162,8 @@
 						<a href="#" class="openBookDetail">상세보기</a>
 						<input type="hidden" value="${vo.accom_book_number }">
 						<input type="hidden" value="${vo.accom_option_number }">
+						<input type="hidden" value="${vo.accom_startdate }">
+						<input type="hidden" value="${vo.accom_enddate }">
 					</div>
 					<div style="display:inline-block; position: relative; left: 70px;">
 						<a href="">리뷰쓰기</a>
@@ -143,10 +175,10 @@
 			<c:forEach var="i" begin="${pu.startPageNum }" end="${pu.endPageNum }">
 				<c:choose>
 					<c:when test="${i==pu.pageNum }">
-						<a href="${cp }/accompastTrip?pageNum=${i}"><span style='color:blue'>[${i }]</span></a>
+						<a href="${cp }/accompastTrip?pageNum=${i}"><i class="fas fa-circle fa-la"></i></a>
 					</c:when>
 					<c:otherwise>
-						<a href="${cp }/accompastTrip?pageNum=${i}"><span style='color:gray'>[${i }]</span></a>
+						<a href="${cp }/accompastTrip?pageNum=${i}"><i class="fas fa-circle"></i></a>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
@@ -159,13 +191,13 @@
 
 <div class="detailPopup">
 <div class="detailPop"></div>
-<input type="button" onclick="getMap()" value="지도보기" style="margin-left: 220px;">
 <div id="map" style="width:350px; height:200px; margin:auto;">
 </div>
+<input type="button" onclick="getMap()" value="지도보기" style="margin-left: 220px;" id="gMap">
 </div>
 
 <script>
-function wrapWindowByDetailMask(bookNumber){
+function wrapWindowByDetailMask(bookNumber,optNum,startDate,endDate){
 	 
     //화면의 높이와 너비를 구한다.
     var maskHeight = $(document).height();  
@@ -192,6 +224,8 @@ function wrapWindowByDetailMask(bookNumber){
 			var roomOption=data.detail.accom_rooms_option;
 			var price=data.detail.accom_price;
 			var addr=data.service.accom_addr;
+			var accomMin=data.detail.accom_min_people;
+			var accomMax=data.detail.accom_max_people;
 			
 			var content='<div style="margin:20px;">'+
 			'<div>'+
@@ -203,9 +237,10 @@ function wrapWindowByDetailMask(bookNumber){
 			'<span>방문자 이름: '+visitorName+'</span><br>'+
 			'<span>방문자 이메일: '+visitorEmail+'</span><br>'+
 			'<span>방문자 전화번호: '+visitorPhone+'</span><br>'+
+			'<span>여행날짜: '+startDate+'~'+endDate+'</span><br>'+
+			'<span>기준인원: '+accomMin+'명 / 최대인원'+accomMax+'명</span><br>'+
 			'</div>'+
 			'<div style="display:inline-block; float:right;">'+
-			'<span>기본 가격: '+price+'원</span>'+
 			'</div>'+
 			'<input type="hidden" value="'+addr+'" id="addr">'+
 			'</div>'+
@@ -273,7 +308,9 @@ $(document).ready(function(){
         e.preventDefault();
         bookNumber=$(e.target).next().val();
         optNum=$(e.target).next().next().val();
-        wrapWindowByDetailMask(bookNumber,optNum);
+        var startDate=$(e.target).next().next().next().val();
+        var endDate=$(e.target).next().next().next().next().val();
+        wrapWindowByDetailMask(bookNumber,optNum,startDate,endDate);
         
     });
 
