@@ -19,7 +19,7 @@ import com.spring.tour.vo.TourOptionVo;
 import com.spring.tour.vo.WishlistVo;
 
 
-@Controller
+@Controller 
 public class TourDetailController {
 	@Autowired
 	private TourPageService service; 
