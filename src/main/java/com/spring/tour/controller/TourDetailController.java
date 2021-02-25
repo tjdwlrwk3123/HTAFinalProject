@@ -90,7 +90,7 @@ public class TourDetailController {
 		for(ReviewVo vo : reviewList) {
 			try {
 				String reImg = service.tourReviewImage(vo.getReview_number());
-				vo.setReview_image(reImg);
+				vo.setImage(reImg);
 			}catch(NullPointerException ne) {
 				continue;
 			}
