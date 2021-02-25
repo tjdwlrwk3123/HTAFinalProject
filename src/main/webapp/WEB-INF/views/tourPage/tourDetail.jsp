@@ -267,7 +267,7 @@
 	private int general_number;
 	private int cate_number
 	
-	${wishlist} 검색한 회원의 위시리스트에 있는가
+	${wishlist} 검색한 회원의 위시리스트에 있는가 
 	true or false
  -->
 

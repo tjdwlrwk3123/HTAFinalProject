@@ -44,26 +44,51 @@
 	-webkit-user-drag: none;
 }
 
-a{
-	text-decoration:none;
-	color:black;
-}
-
-
 #tour_filterbox {
 	width: 200px;
-	height: 100%;
-	background-color: white;
-	padding: 30px 0;
+	padding: 20px 0;
+	background-color:#4B70DD;	
+	color:white;
 }
-#tour_filterbox h3{
+#tour_filterbox h3:not(i){
+	left:10px;
+	padding-top: 10px;
+	font-size:15px;
 	text-align:center;
-	margin-bottom:20px;	
+	margin-bottom:20px;
+	font-weight:600;
+}
+#tour_filterbox h3 i{
+	margin-right:10px;
+	font-size:30px;
+	transform: rotate(-20deg);
+	-ms-transform: rotate(-20deg);
+	-moz-transform: rotate(-20deg);
+	-webkit-transform: rotate(-20deg);
+	-o-transform: rotate(-20deg);
+	margin-bottom:-10px;
 }
 
 #tour_filterbox ul li{
 	padding: 20px;
+	border:2px solid black;
 }
+
+#tourTypeSelectBox ul li:not(i){
+	text-decoration:none;
+	color:white;
+}
+#tourTypeSelectBox ul li i{
+	width:30px;
+	margin-right:10px;
+	color:#829CE8;
+}
+#tourTypeSelectBox ul li a:hover{
+	#tourTypeSelectBox ul li i{
+		color:white;
+	}
+}
+
 
 #tour_contentbox {
 	width: 85%;
@@ -132,7 +157,7 @@ h5{
 	width:222px;
 	height:170px;
 }
-.heartbox{
+.tourSelectHeartBox{
 		position: absolute;
 		bottom:0;
 		padding-right:3px;
@@ -140,7 +165,7 @@ h5{
 	 	width: 100%;
 	 	text-align: right;
 }
-.heartbox i{
+.tourSelectHeartBox i{
 	right:3px;
 	bottom:3px;
 }
@@ -177,6 +202,7 @@ h5{
 #btn1{
 	width:45px;
 	height:38px;
+	background-color:#4B70DD;
 }
 
 #searchInput, #btn1{
@@ -264,26 +290,22 @@ h5{
 }
 
 
-.tourSelectIcon{
-	width:25px;
-	margin-right:10px;
-} 
 
 
 </style>
 
 <div id="tourSelect_wrapper">
 	<div id="tour_filterbox">
-		<h3>카테고리</h3>
-		<div id="type">
+		<h3><i class="fas fa-laugh-wink"></i>CONNECTRIP</h3>
+		<div id="tourTypeSelectBox">
 			<input type="hidden" id="user_id" value="${sessionScope.user_id}">
 			<input type="hidden" id="tourType" value="${tourType}">
 			<ul>
-				<li><a href="javascript:cateChange(0);" ><img class="tourSelectIcon" alt="ticket" src="${cp}/resources/images/infiniteIcon.png" />전체</a></li>
-				<li><a href="javascript:cateChange(1);" ><img class="tourSelectIcon" alt="ticket" src="${cp}/resources/images/ticketicon.svg" />티켓/패스</a></li>
-				<li><a href="javascript:cateChange(2);" ><img class="tourSelectIcon" alt="themepark" src="${cp}/resources/images/themeparkIcon.svg" />테마파크</a></li>
-				<li><a href="javascript:cateChange(3);" ><img class="tourSelectIcon" alt="hobby" src="${cp}/resources/images/hobbyicon.png" />취미/클래스</a></li>
-				<li><a href="javascript:cateChange(4);" ><img class="tourSelectIcon" alt="restaurant" src="${cp}/resources/images/fork.png" />맛집</a></li>
+				<li><a href="javascript:cateChange(0);" ><i class="fas fa-globe fa-lg" id="globeIMG"></i>전체</a></li>
+				<li><a href="javascript:cateChange(1);" ><i class="fas fa-ticket-alt fa-lg" id="ticketIMG"></i>티켓/패스</a></li>
+				<li><a href="javascript:cateChange(2);" ><i class="fab fa-fort-awesome-alt fa-lg" id="themeparkIMG"></i>테마파크</a></li>
+				<li><a href="javascript:cateChange(3);" ><i class="fas fa-palette fa-lg" id="paletteIMG"></i>취미/클래스</a></li>
+				<li><a href="javascript:cateChange(4);" ><i class="fas fa-utensils fa-lg" id="forkIMG"></i>맛집</a></li>
 			</ul>
 		</div>
 		<div id="filter">
@@ -302,7 +324,7 @@ h5{
 			</div>
 			<div id="priceFilter">
 				<label for="amount" >MAX PRICE</label><br>
-				<p id="amount"  style="border:0; color:black; font-weight:bold;"></p>
+				<p id="amount"  style="border:0; font-weight:bold;"></p>
 				<div id="slider-range-max"></div>
 			</div>
 		</div>
@@ -328,16 +350,25 @@ h5{
 	</div>
 
 <script>
+	
+	$("li").hover(function(){
+		$(this).filter(':first-child').filter(':first-child').
+	},function(){
+		console.log("hoverOut");
+	});
+
 	var MAXPRICE=0;
 	var isSelected = false;
+	var tourType = 0;
+	var classification =0;
 	$(function(){
 		var loading = $('<div id="loading" class="loading"></div><img id="loading_img" alt="loading" src="${cp}/resources/gimgs/viewLoading.gif" />').appendTo(document.body).hide();
 		$(window)	
 		.ajaxStart(function(){
-		loading.show();
+			loading.show();
 		})
 		.ajaxStop(function(){
-		loading.hide();
+			loading.hide();
 		});
 		
 		//카테고리 0번 , 보여질 순서 0추천순
@@ -345,24 +376,18 @@ h5{
 		$(".classification:eq(0)").css({"font-weight":800, "font-size":'17px'});
 		
 		$("li a, .classification").hover(function(){
-			$(this).css({"text-decoration":'none','color':'black'});
-			
-			if($(this).css("font-weight")==800){
-				isSelected= true;
-				return;
-			}
+			$(this).css({"text-decoration":'none','color':'white'});
 			$(this).css("font-weight",800);	
 		},function(){
-			if(isSelected){
-				isSelected=false;
-				return;
-			}
 			$(this).css("font-weight",400);	
+			$("li:eq("+tourType+") a").css({"font-weight":800, "font-size":'18px'});
+			$(".classification:eq(" + classification + ")").css({"font-weight":800, "font-size":'17px'});
 		});
+
 		
 		$("#from").datepicker('setDate','today');
 		var startDate=$("#from").val();
-		var tourType=$("#tourType").val();
+		tourType=$("#tourType").val();
 		var param={
 				"startDate" : startDate,
 				"tourType" : tourType
@@ -372,7 +397,7 @@ h5{
 			min:0,
 			value:0,
 			max:100000,
-			step:1000,
+			step:10000,
 			slide: function( event, ui ) {
 				rangeApply(ui.value);
 		    	$( "#amount" ).text( ui.value+" 원" );
@@ -390,11 +415,11 @@ h5{
 	
 	function rangeApply(v){
 		var startDate=$("#from").val();
-		var tourType="0";
+		tourType="0";
 		if(document.getElementById("tourType").value!=null){
 			tourType= document.getElementById("tourType").value;
 		}
-		var classification="0";
+		classification="0";
 		if(document.getElementById("classification").value!=null){
 			classification= document.getElementById("classification").value;
 		}
@@ -437,7 +462,7 @@ h5{
 	function clearFilter(){
 		$("#from").datepicker('setDate','today');
 		var startDate=$("#from").val();
-		var tourType="0";
+		tourType="0";
 		$("#isDiscount").prop("checked",false);
 		if(document.getElementById("tourType").value!=null){
 			tourType= document.getElementById("tourType").value;
@@ -457,11 +482,11 @@ h5{
 	function dateChange(){
 		MAXPRICE=0;
 		var startDate=$("#from").val();
-		var tourType="0";
+		tourType="0";
 		if(document.getElementById("tourType").value!=null){
 			tourType= document.getElementById("tourType").value;
 		}
-		var classification="0";
+		classification="0";
 		if(document.getElementById("classification").value!=null){
 			classification= document.getElementById("classification").value;
 		}
@@ -482,8 +507,9 @@ h5{
 	}
 	
 	
-	function cateChange(tourType){ // 필터 항상 초기화 
+	function cateChange(t){ // 필터 항상 초기화 
 		MAXPRICE=0;
+		tourType = t;
 		$("li a").css({"font-weight":400, "font-size":'16px'});
 		$("li:eq("+tourType+") a").css({"font-weight":800, "font-size":'18px'});
 		var startDate=$("#from").val();
@@ -499,8 +525,9 @@ h5{
 	function orderChange(cnum){ // 정렬 순서 변할때 
 		$(".classification").css({"font-weight":400, "font-size":'16px'});
 		$(".classification:eq("+(cnum-1)+")").css({"font-weight":800, "font-size":'17px'});
+		classification=cnum-1;
 		var startDate=$("#from").val();
-		var tourType="0";
+		tourType="0";
 		if(document.getElementById("tourType").value!=null){
 			tourType= document.getElementById("tourType").value;
 		}
@@ -525,11 +552,12 @@ h5{
 		console.log(isdc.checked);
 		var isDiscount =  $(this).prop("checked");		
 		var startDate=$("#from").val();
-		var tourType="0";
+		tourType="0";
 		if(document.getElementById("tourType").value!=null){
 			tourType= document.getElementById("tourType").value;
 		}
-		var classification="0";
+		
+		classification="0";
 		if(document.getElementById("classification").value!=null){
 			classification= document.getElementById("classification").value;
 		}
@@ -552,11 +580,11 @@ h5{
 	function starChange(val){ // 별점 선택 기준 변할때 
 		MAXPRICE=0;
 		var startDate=$("#from").val();
-		var tourType="0";
+		tourType="0";
 		if(document.getElementById("tourType").value!=null){
 			tourType= document.getElementById("tourType").value;
 		}
-		var classification="0";
+		classification="0";
 		if(document.getElementById("classification").value!=null){
 			classification= document.getElementById("classification").value;
 		}
@@ -658,9 +686,9 @@ h5{
 				}			   	 
 			   	 		str+="</div>";//4번째 div
 			   	if(user_id!=null){
-					  	 	str +="<div class='heartbox'><img src='${cp }/resources/images/Heart.svg' class='heartImg' onclick='wish(this)' alt='heart'></div>";
+					  	 	str +="<div class='tourSelectHeartBox'><img src='${cp }/resources/images/Heart.svg' class='heartImg' onclick='wish(this)' alt='heart'></div>";
 			   	}else{
-					  	 	str +="<div class='heartbox'><img src='${cp }/resources/images/emptyHRT.svg' class='heartImg' onclick='wish(this)' alt='emptyheart'></div>";
+					  	 	str +="<div class='tourSelectHeartBox'><img src='${cp }/resources/images/emptyHRT.svg' class='heartImg' onclick='wish(this)' alt='emptyheart'></div>";
 			   	}
 				 str+="</div>"+  //3번째 div
 				  "</div>";  //두번째 div
@@ -674,7 +702,7 @@ h5{
 			console.log("max1? = "+maxprice);
 			
 			if(MAXPRICE==0){
-				MAXPRICE = (Math.ceil(maxprice/1000))*1000;
+				MAXPRICE = (Math.ceil(maxprice/10000))*10000;
 				$("#slider-range-max").slider("value", MAXPRICE );
 				$( "#amount" ).text( $( "#slider-range-max" ).slider( "value" ) +" 원");
 			}
