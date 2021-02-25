@@ -45,7 +45,7 @@
 </c:choose>
 
 <%
-	//session.setAttribute("user_id", "kaka");
-%>
+	//session.setAttribute("user_id", "kaka"); 
+%> 
 </body>
 </html>
