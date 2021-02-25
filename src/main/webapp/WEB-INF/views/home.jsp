@@ -23,6 +23,16 @@
 <a href='${cp }/adminPage'>관리자 페이지로 가는가?</a>
 <a href='${cp }/tourmain'>투어서비스</a>
 <a href='${cp }/userinfopage'>마이페이지</a>
+<a href='${cp }/customercenter/insert'>고객문의등록</a>
+<a href='${cp }/customercenter/list'>고객문의리스트</a>
+<a href='${cp }/customercenter_answer/insert'>고객답변등록</a>
+<a href='${cp }/customercenter_answer/list'>고객답변리스트</a>
+<a href='${cp }/service_question/insert'>서비스문의등록</a>
+<a href='${cp }/service_question/list'>서비스문의리스트</a>
+<a href='${cp }/service_answer/insert'>서비스답변등록</a>
+<a href='${cp }/service_answer/list'>서비스답변리스트</a>
+<a href='${cp }/review/insert'>리뷰등록</a>
+<a href='${cp }/review/list'>리뷰보기</a>
 <c:choose>
 	<c:when test="${empty sessionScope.user_id }">
 		<a href='${cp }/userlogin'>로그인 테스트페이지</a>

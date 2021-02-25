@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.spring.tour.mapper.Service_answerMapper">
+  <sql id="search">
+		<if test="field!=null and field!=''">
+			and ${field} like '%'|| #{keyword} ||'%'
+		</if>
+	</sql>
+  
+  <select id="count" resultType="int" parameterType="hashmap">
+		select NVL(count(*),0) cnt from service_answer
+		<if test="field!=null and field!=''">
+			where ${field} like '%'|| #{keyword} ||'%'
+		</if>
+	</select>
+  
+  <insert id="insert" parameterType="service_answer">
+		insert into service_answer
+		values(service_answer_seq.nextval,#{service_question_number},#{service_answer_content},sysdate,#{user_id},#{service_answer_title})
+	</insert>
+	
+	<delete id="delete" parameterType="int">
+		delete from service_answer
+		where service_answer_number=#{service_answer_number}
+	</delete>
+	
+		<select id="list" resultType="service_answer" parameterType="hashmap"> 
+		select * 
+		from (
+				select rownum as rn, A.* 
+				from (select ca.* from 
+				service_question c, service_answer ca 
+				where c.service_question_number=ca.service_question_number
+				<include refid="search"/> 
+				order by service_answer_number desc
+				) A 
+			) where rn between #{startRow} and #{endRow}
+			</select>
+		
+		<select id="select" resultType="service_answer" parameterType="int">
+		select * from service_answer where service_answer_number=#{service_answer_number}
+	</select>	
+  
+  	<update id="update" parameterType="service_answer">
+		update service_answer set service_answer_title=#{service_answer_title}, service_answer_content=#{service_answer_content}
+		where service_answer_number=#{service_answer_number} 
+		</update>
+		
+		<select id="next" parameterType="int" resultType="service_answer">
+		select * from
+		(
+			select * from service_answer where service_answer_number>#{service_answer_number} order by service_answer_number asc
+		)
+		where rownum=1
+	</select>
+	
+	<select id="prev" parameterType="int" resultType="service_answer">
+	<![CDATA[
+		select * from
+		(
+			select * from service_answer where service_answer_number<#{service_answer_number} order by service_answer_number desc
+		)
+		where rownum=1
+		]]>
+	</select> 
+  
+
+  
+  </mapper>
+  

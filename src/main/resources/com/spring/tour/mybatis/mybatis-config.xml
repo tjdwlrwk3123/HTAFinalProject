@@ -32,6 +32,10 @@
   	<typeAlias type="com.spring.tour.vo.PaymentVo" alias="payment"/>
   	<typeAlias type="com.spring.tour.vo.CouponInfoVo" alias="couponInfo"/>
   	<typeAlias type="com.spring.tour.vo.CouponVo" alias="couponVo"/>
+  	<typeAlias type="com.spring.tour.vo.CustomercenterVo" alias="customercenter"/>
+  	<typeAlias type="com.spring.tour.vo.Customercenter_answerVo" alias="customercenter_answer"/>
+  	<typeAlias type="com.spring.tour.vo.Service_questionVo" alias="service_question"/>
+  	<typeAlias type="com.spring.tour.vo.Service_answerVo" alias="service_answer"/>
   	<typeAlias type="com.spring.tour.vo.ReviewVo" alias="review"/>
   </typeAliases>
   <!-- 읽어올 Mapper파일 설정 -->
@@ -50,5 +54,13 @@
 			<mapper resource="com/spring/tour/mapper/TourPageMapper.xml"/>
 			<mapper resource="com/spring/tour/mapper/ChatMapper.xml"/>
 			<mapper resource="com/spring/tour/mapper/PayMapper.xml"/>
+			
+			<mapper resource="com/spring/tour/mapper/CustomercenterMapper.xml"/>
+			<mapper resource="com/spring/tour/mapper/Customercenter_answerMapper.xml"/>
+			<mapper resource="com/spring/tour/mapper/Service_questionMapper.xml"/>
+			<mapper resource="com/spring/tour/mapper/Service_answerMapper.xml"/>
+			<mapper resource="com/spring/tour/mapper/ReviewMapper.xml"/>
+			
+			
 	</mappers>
 </configuration>

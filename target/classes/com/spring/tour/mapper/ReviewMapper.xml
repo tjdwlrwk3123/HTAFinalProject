@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="com.spring.tour.mapper.ReviewMapper">
+    
+    <sql id="search">
+		<if test="field!=null and field!=''">
+			and ${field} like '%'|| #{keyword} ||'%'
+		</if>
+	</sql>
+    
+    <insert id="insert" parameterType="review">
+		insert into review
+		values(review_number_seq.nextval,#{user_id},#{service_number},#{star_point},#{review_content},#{cate_number},sysdate,#{review_title})
+	</insert>
+    
+    <delete id="delete" parameterType="int">
+		delete from review
+		where review_number=#{review_number}
+	</delete>
+    
+    <select id="count" resultType="int" parameterType="hashmap">
+		select NVL(count(*),0) cnt from review
+		<if test="field!=null and field!=''">
+			where ${field} like '%'|| #{keyword} ||'%'
+		</if>
+	</select>
+	
+	<select id="list" resultType="review" parameterType="hashmap"> 
+	select *
+	from (
+			select rownum as rn, a.*
+			from (
+				select r.* from 
+				review r JOIN user_info u 
+				on r.user_id=u.user_id JOIN category g
+				on g.cate_number=r.cate_number JOIN
+				tour_service ts on r.service_number=ts.service_number JOIN
+				accom_service a on a.accom_service_number=r.service_number
+				<include refid="search"/> 
+				ORDER BY review_number
+				)a
+		)where rn between #{startRow} and #{endRow}
+	</select>
+	
+	<select id="select" resultType="review" parameterType="int">
+	select * from review where review_number=#{review_number}
+	</select>
+	
+	<update id="update" parameterType="review">
+		update review set review_title=#{review_title}, review_content=#{review_content}
+		where review_number=#{review_number} 
+	</update>
+    
+    <select id="next" parameterType="int" resultType="review">
+		select * from
+		(
+			select * from review where review_number>#{review_number} order by review_number asc
+		)
+		where rownum=1
+	</select>
+    
+    <select id="prev" parameterType="int" resultType="review">
+	<![CDATA[
+		select * from
+		(
+			select * from review where review_number<#{review_number} order by review_number desc
+		)
+		where rownum=1
+		]]>
+	</select> 
+    
+    </mapper>

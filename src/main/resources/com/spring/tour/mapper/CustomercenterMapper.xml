@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.tour.mapper.CustomercenterMapper">
+<sql id="search">
+		<if test="field!=null and field!=''">
+			and ${field} like '%'|| #{keyword} ||'%'
+		</if>
+	</sql>
+
+	<insert id="insert" parameterType="customercenter">
+		insert into customercenter
+		values(customercenter_seq.nextval,#{user_id},#{question_title},#{question_content},sysdate)
+	</insert>
+
+	<delete id="delete" parameterType="int">
+		delete from customercenter
+		where question_number=#{question_number}
+	</delete>
+
+	<select id="count" resultType="int" parameterType="hashmap">
+		select NVL(count(*),0) cnt from customercenter
+		<if test="field!=null and field!=''">
+			where ${field} like '%'|| #{keyword} ||'%'
+		</if>
+	</select>
+		<!-- 리절트맵 customercenter? -->
+		<!-- select * from (select rownum as rn, A.* from( select c.* from customercenter 
+			c, user_info u where c.user_id=u.user_id order by question_number desc) A 
+			) where rn between 1 and 10; 실행되는쿼리문 
+		-->
+	<select id="list" resultType="customercenter" parameterType="hashmap"> 
+		select * 
+		from (
+				select rownum as rn, A.* 
+				from (select c.* from 
+				customercenter c, user_info u 
+				where c.user_id=u.user_id
+				<include refid="search"/> 
+				order by question_number desc
+				) A 
+			) where rn between #{startRow} and #{endRow}
+			</select>
+			
+	<select id="select" resultType="customercenter" parameterType="int">
+		select * from customercenter where question_number=#{question_number}
+	</select>
+	
+	<update id="update" parameterType="customercenter">
+		update customercenter set question_title=#{question_title}, question_content=#{question_content}
+		where question_number=#{question_number} 
+	</update>
+	
+	<select id="next" parameterType="int" resultType="customercenter">
+		select * from
+		(
+			select * from customercenter where question_number>#{question_number} order by question_number asc
+		)
+		where rownum=1
+	</select>
+	
+	<select id="prev" parameterType="int" resultType="customercenter">
+	<![CDATA[
+		select * from
+		(
+			select * from customercenter where question_number<#{question_number} order by question_number desc
+		)
+		where rownum=1
+		]]>
+	</select> 
+	
+</mapper>

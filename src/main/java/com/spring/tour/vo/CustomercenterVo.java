@@ -5,6 +5,7 @@ import java.sql.Date;
 public class CustomercenterVo {
 	private int question_number;
 	private String user_id;
+	private String question_title;
 	private String question_content;
 	private Date question_date;
 	public int getQuestion_number() {
@@ -18,6 +19,12 @@ public class CustomercenterVo {
 	}
 	public void setUser_id(String user_id) {
 		this.user_id = user_id;
+	}
+	public String getQuestion_title() {
+		return question_title;
+	}
+	public void setQuestion_title(String question_title) {
+		this.question_title = question_title;
 	}
 	public String getQuestion_content() {
 		return question_content;
@@ -33,13 +40,15 @@ public class CustomercenterVo {
 	}
 	@Override
 	public String toString() {
-		return "CustomercenterVo [question_number=" + question_number + ", user_id=" + user_id + ", question_content="
-				+ question_content + ", question_date=" + question_date + "]";
+		return "CustomercenterVo [question_number=" + question_number + ", user_id=" + user_id + ", question_title="
+				+ question_title + ", question_content=" + question_content + ", question_date=" + question_date + "]";
 	}
-	public CustomercenterVo(int question_number, String user_id, String question_content, Date question_date) {
+	public CustomercenterVo(int question_number, String user_id, String question_title, String question_content,
+			Date question_date) {
 		super();
 		this.question_number = question_number;
 		this.user_id = user_id;
+		this.question_title = question_title;
 		this.question_content = question_content;
 		this.question_date = question_date;
 	}
