@@ -142,7 +142,7 @@
 #tour_select_loading_img{
 	position:absolute; 
 	top:50%;
-	left:60%;
+	left:50%;
 	height:100px;
 	margin-top:-75px;
 	margin-left:-75px;	
