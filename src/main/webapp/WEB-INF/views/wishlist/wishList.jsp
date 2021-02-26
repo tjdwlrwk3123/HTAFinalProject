@@ -19,6 +19,14 @@
 	#wishlist_wrapper{
 		width: 1000px; 
 		margin:auto;
+		background-color:white;
+		/* 	드래그방지 */
+		-ms-user-select: none;
+		-moz-user-select: -moz-none;
+		-webkit-user-select: none; 
+		-khtml-user-select: none; 
+		user-select:none;
+		-webkit-user-drag: none;
 	}
 	
 	#wishlist_wrapper h1{
@@ -44,11 +52,9 @@
 		width:222px;
 		height:170px;
 	}
-	.card {
-		
-	}
+
 	#cardbox .card:hover{
-		border: 2px dashed black;
+		box-shadow: 1px 1px 2px 2px gray;
 	}	
 	.heartbox{
 		position: absolute;
@@ -94,11 +100,11 @@
 		background-color: white;
 		z-index: 199;
 	}
-	#loading_img{
+	#wish_loading_img{
 		position:absolute; 
 		top:50%;
 		left:50%;
-		height:35px;
+		width:200px;
 		margin-top:-75px;
 		margin-left:-75px;	
 		z-index: 200;
@@ -118,7 +124,7 @@
 
 
 	$(document).ready(function(){
-		var loading = $('<div id="loading" class="loading"></div><img id="loading_img" alt="loading" src="${cp}/resources/images/viewLoading.gif" />').appendTo(document.body).hide();
+		var loading = $('<div id="loading" class="loading"></div><img id="wish_loading_img" alt="loading" src="${cp}/resources/images/Spinner.gif"/>').appendTo(document.body).hide();
 		$(window)	
 		.ajaxStart(function(){
 		loading.show();
