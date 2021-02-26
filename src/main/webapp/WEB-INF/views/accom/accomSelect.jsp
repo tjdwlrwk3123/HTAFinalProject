@@ -61,7 +61,6 @@
 		width:700px; 
 		height:200px;
 		border: 1px solid #D5D5D5;
-		margin-bottom: 5px;
 		display: flex;
 	}
 	.accomSelectSection:hover{
@@ -104,7 +103,7 @@
 	#accomFilter {
 		width: 250px;
 		height: 100%;
-		background-color: #FFCA6C;
+		background-color: #4B70DD;
 		padding: 30px 0;
 	}
 	#accomResult{
@@ -126,10 +125,14 @@
 		 clip:rect(0,0,0,0); 
 		 border: 0;
 	}
+	#accomKind h3{
+		color: white;
+	}
 	#accomKind div{
 		padding: 20px;
-		border-top: 0.5px solid yellow;
-		border-bottom: 0.5px solid yellow;
+		border-top: 0.5px solid #79ABFF;
+		border-bottom: 0.5px solid #79ABFF;
+		color: white;
 	}
 	#accomFilter h3{
 		text-align:center;
@@ -137,19 +140,22 @@
 	}
 	#accomKind label:hover{
 	text-decoration:none;
-	color:black;
+	color:white;
 	font-weight:800;
 	}
 	#accomFacility{
-		border-bottom: 0.5px solid yellow;
+		border-bottom: 0.5px solid #79ABFF;
 		padding-bottom: 20px;
+		color: white;
 	}
 	#accomFacility input[type='checkbox']{
 		margin-bottom: 10px;
 	}
 	#accomConven{
-		border-bottom: 0.5px solid yellow;
+		border-bottom: 0.5px solid #79ABFF;
 		padding-bottom: 20px;
+		margin-top: 12px;
+		color: white;
 	}
 	#accomConven input[type='checkbox']{
 		margin-bottom: 10px;

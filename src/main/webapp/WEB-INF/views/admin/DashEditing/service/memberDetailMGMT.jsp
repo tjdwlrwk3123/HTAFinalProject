@@ -1,18 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
-<head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
 <style>
-	#memberDetailMenu ul{
-		text-align: center;
-	}
-	#memberDetailMenu ul li{
-		display: inline-block;
-		margin-right: 50px;
-		border: 1px solid black;
+	#memberDetailApp{
+		margin-top: 50px;
 	}
 	#memberDetailApp div table{
 		width: 100%;
@@ -32,83 +24,101 @@
 		background-color: #e3f2fd;
 		font-size: 0.9em;
 	}
+	.panel-heading div{
+		border: 1px solid skyblue;
+		width: 500px;
+		margin-bottom: 1px;
+		border-radius: 5px;
+		padding-top: 10px;
+	}
+	.panel-heading div:hover{
+		transition-duration:500ms;
+		background-color: skyblue;
+	}
+	.panel-heading a{
+		text-decoration: none;
+	}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-</head>
-<body>
-<h3><a href="${cp }/couponManage">쿠폰발급/조회</a></h3>
-<h3><a href="${cp }/memberManageList">회원관리</a></h3>
-<br>
-<div id="memberDetailMenu">
-<ul>
-	<li><a href="javascript:changeCss(0)">상세정보</a></li>
-	<li><a href="javascript:changeCss(1)">구매목록</a></li>
-	<li><a href="javascript:changeCss(2)">서비스등록내역</a></li>
-	<li><a href="javascript:changeCss(3)">메일보내기</a></li>
-</ul>
-</div>
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+
 <div id="memberDetailWrap">
+<h2>회원관리</h2>
 <div id="memberDetailApp">
-	<div class="accordion" id="accordionExample">
-		<div class="accordion-item">
-			<h2 class="accordion-header" id="headingOne">
-		      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-		        Accordion Item #1
-		      </button>
-		    </h2>
-		    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-		      <div class="accordion-body">
-		        <comp1 ui="${user_id }" id="comp1"></comp1>
-		      </div>
-		    </div>
-		</div>
-		<div class="accordion-item">
-			<h2 class="accordion-header" id="headingTwo">
-			    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-			      Accordion Item #2
-			    </button>
-		  	</h2>
-			<div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-			  <div class="accordion-body">
-			    <comp2 user="${user_id }" id="comp2"></comp2>
-			  </div>
+
+
+
+
+<div class="container-fluid" style="min-height: calc(100vh - 136px);">
+	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+		<div class="panel panel-default">
+			<div class="panel-heading" role="tab">
+			<div id="accoBox1">
+			<h3 class="accordion-header" id="headingOne">
+				<a id="exeBox1" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse1" aria-expanded="false">
+				상세정보
+				</a>
+			</h3>
+			</div>
+			</div>
+			<div id="collapse1" class="panel-collapse collapse" role="tabpanel">
+				<div class="panel-body">
+					<comp1 ui="${user_id }" id="comp1"></comp1>
+				</div>
 			</div>
 		</div>
-		<div class="accordion-item">
-			<h2 class="accordion-header" id="headingThree">
-				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-					Accordion Item #3
-				</button>
-			</h2>
-			<div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-				<div class="accordion-body">
+		<div class="panel panel-default">
+			<div class="panel-heading" role="tab">
+			<div id="accoBox2">
+			<h3 class="accordion-header" id="headingTwo">
+				<a id="exeBox2" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse2" aria-expanded="false">
+				구매목록
+				</a>
+			</h3>
+			</div>
+			</div>
+			<div id="collapse2" class="panel-collapse collapse" role="tabpanel" style="margin-top: 5px; margin-bottom: 5px;">
+				<div class="panel-body">
+					<comp2 user="${user_id }" id="comp2"></comp2>
+				</div>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading" role="tab">
+			<div id="accoBox3">
+			<h3 class="accordion-header" id="headingThree">
+				<a id="exeBox3" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse3" aria-expanded="false">
+				서비스등록내역
+				</a>
+			</h3>
+			</div>
+			</div>
+			<div id="collapse3" class="panel-collapse collapse" role="tabpanel"  style="margin-top: 5px; margin-bottom: 5px;">
+				<div class="panel-body">
 					<comp3 user="${user_id }" id="comp3"></comp3>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
+</div>
 </div>
 <script type="text/javascript">
 $(document).ready(function(){
-	//changeCss(0);
+	$("#accoBox1").click(function(){
+		$("#exeBox1").get(0).click();
+	});
+	$("#accoBox2").click(function(){
+		$("#exeBox2").get(0).click();
+	});
+	$("#accoBox3").click(function(){
+		$("#exeBox3").get(0).click();
+	});
 });
-// function changeCss(num){
-// 	if(num==0){
-// 		$("#comp1").css("display","");
-// 		$("#comp2").css("display","none");
-// 		$("#comp3").css("display","none");
-// 	}else if(num==1){
-// 		$("#comp1").css("display","none");
-// 		$("#comp2").css("display","");
-// 		$("#comp3").css("display","none");
-// 	}else if(num==2){
-// 		$("#comp1").css("display","none");
-// 		$("#comp2").css("display","none");
-// 		$("#comp3").css("display","");
-// 	}
-// }
 
 var detailComp={
 	template:`<div v-bind="post">
@@ -256,7 +266,7 @@ var serviceSignup={
 					<td>{{a.accom_addr}}</td>
 				</tr>
 			</table>
-			<h2>투어등록목록</h2>
+			<h2 style='margin-top:5px;'>투어등록목록</h2>
 			<table>
 				<tr>
 					<th>숙소명</th>
@@ -298,11 +308,4 @@ new Vue({
 	}
 });
 
-
-
-
-
-
 </script>
-</body>
-</html>

@@ -25,7 +25,7 @@
 	.tourBookingWrapper .bookingSidebar{
 		width: 250px;
 		height: 940px;
-		background: #FFCA6C;
+		background: #4B70DD;
 		padding: 30px 0;
 	}
 	.tourBookingWrapper .bookingSidebar h2{
@@ -41,7 +41,7 @@
 		padding-left:10px;
 	}
 	.tourBookingWrapper .bookingSidebar ul li a{
-		color: #5853EB;
+		color: white;
 		display: block;
 		text-decoration: none;
 	}
@@ -52,7 +52,7 @@
 		width: 25px;
 	}
 	.tourBookingWrapper .bookingSidebar ul li:hover{
-		background: #FFE08C;
+		background: #6799FF;
 	}
 	.tourBookingWrapper .bookingSidebar ul li:hover a{
 		color:black;
@@ -85,6 +85,9 @@
 	.tourBookingWrapper .tourBookingMain .tourPaging{
 		text-align: center;
 		
+	}
+	.tourPaging{
+		margin-top: 10px;
 	}
 	.tourPaging i{
 		color:#C98AFF;

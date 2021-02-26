@@ -24,7 +24,7 @@
 	.accompastTripWrapper .bookingSidebar{
 		width: 250px;
 		height: 940px;
-		background: #FFCA6C;
+		background: #4B70DD;
 		padding: 30px 0;
 	}
 	.accompastTripWrapper .bookingSidebar h2{
@@ -40,7 +40,7 @@
 		padding-left:10px;
 	}
 	.accompastTripWrapper .bookingSidebar ul li a{
-		color: #5853EB;
+		color: white;
 		display: block;
 		text-decoration: none;
 	}
@@ -51,7 +51,7 @@
 		width: 25px;
 	}
 	.accompastTripWrapper .bookingSidebar ul li:hover{
-		background: #FFE08C;
+		background: #6799FF;
 	}
 	.accompastTripWrapper .bookingSidebar ul li:hover a{
 		color:black;
@@ -82,6 +82,9 @@
 	}
 	.accompastTripWrapper .accompastTripMain .accompastTripPaging{
 		text-align: center;	
+	}
+	.accompastTripPaging{
+		margin-top: 10px;
 	}
 	.accompastTripPaging i{
 		color:#C98AFF;

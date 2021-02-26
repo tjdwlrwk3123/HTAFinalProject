@@ -8,14 +8,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4b7621e8665f6a2b7f8fcf343ba118b6&libraries=services"></script>
 
-<!-- 구글폰트 -->
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Stylish&display=swap" rel="stylesheet">
-
 <style type="text/css">
-	*{
-		font-family: 'Stylish', sans-serif;
-	}
 	.accomBookingWrapper{
 		display: flex;
 		position: relative;
@@ -26,7 +19,7 @@
 	.accomBookingWrapper .bookingSidebar{
 		width: 250px;
 		height: 940px;
-		background: #FFCA6C;
+		background: #4B70DD;
 		padding: 30px 0;
 	}
 	.accomBookingWrapper .bookingSidebar h2{
@@ -42,7 +35,7 @@
 		padding-left:10px;
 	}
 	.accomBookingWrapper .bookingSidebar ul li a{
-		color: #5853EB;
+		color: white;
 		display: block;
 		text-decoration: none;
 	}
@@ -53,7 +46,7 @@
 		width: 25px;
 	}
 	.accomBookingWrapper .bookingSidebar ul li:hover{
-		background: #FFE08C;
+		background: #6799FF;
 	}
 	.accomBookingWrapper .bookingSidebar ul li:hover a{
 		color:black;
@@ -103,6 +96,9 @@
 	}
 	.accomBookingWrapper .accomBookingMain .accomPaging{
 		text-align: center;
+	}
+	.accomPaging{
+		margin-top: 10px;
 	}
 	.accomPaging i{
 		color:#C98AFF;

@@ -77,12 +77,12 @@ public class MemberManagementController {
 		model.addAttribute("picker",picker);
 		
 		
-		return ".admin.couponManagement";
+		return ".service.couponManagement.admin";
 	}
 	
 	@GetMapping("/goCreateCoupon")
 	public String goCreateCoupon() {
-		return ".admin.couponform";
+		return ".service.couponform.admin";
 	}
 	@PostMapping("/goCreateCoupon")
 	public String createCoupon(Model model,
@@ -153,12 +153,12 @@ public class MemberManagementController {
 		model.addAttribute("keyword",keyword);
 		model.addAttribute("orderby", orderby);
 		
-		return ".admin.memberManagement";
+		return ".service.memberManagement.admin";
 	}
 	@GetMapping("/memberDetailManage")
 	public String memberDetail(String user_id,Model model) {
 		model.addAttribute("user_id",user_id);
-		return ".admin.memberDetailMGMT";
+		return ".service.memberDetailMGMT.admin";
 	}
 	//회원 한명 정보 가져오기
 	@RequestMapping(value="/memberDetailManagement",produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
