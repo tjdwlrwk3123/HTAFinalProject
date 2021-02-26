@@ -1,9 +1,12 @@
 @charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Stylish&display=swap');
+
 
 #wrap{
 	width:1000px;
 /*  	height:100px; */
 	margin:auto;
+	font-family: 'Stylish', sans-serif;
 }
 #header{
 	width:100%;

@@ -29,11 +29,11 @@
 	}
 	#loading {
 		height: 100%;
+		width: 100%;
 		left: 0px;
+		top:0px;
 		position: fixed;
 		_position:absolute; 
-		top: 0px;
-		width: 100%;
 		filter:alpha(opacity=50);
 		-moz-opacity:0.5;
 		opacity : 0.5;
@@ -46,7 +46,7 @@
 		position:absolute; 
 		top:50%;
 		left:50%;
-		height:35px;
+		height:100px;
 		margin-top:-75px;
 		margin-left:-75px;	
 		z-index: 200;
@@ -324,7 +324,7 @@ var bindCk=true;
 
 
 	$(document).ready(function(){
-		var loading = $('<div id="loading" class="loading"></div><img id="loading_img" alt="loading" src="${cp}/resources/images/viewLoading.gif" />').appendTo(document.body).hide();
+		var loading = $('<div id="loading" class="loading"></div><img id="loading_img" alt="loading" src="${cp}/resources/images/Spinner.gif" />').appendTo(document.body).hide();
 		$(window)	
 		.ajaxStart(function(){
 		loading.show();
@@ -467,7 +467,7 @@ var bindCk=true;
 			}else{
 				var content=
 				"<section class='accomSelectSection'>"+
-				"<img src='${cp}/resources/images/3.png'>"+
+				"<img src='${cp}/resources/images/sorry.jpg'>"+
 				"<h3>검색결과가 없습니다...</h3>"
 				"</section>";
 				$("#accom").append(content);
