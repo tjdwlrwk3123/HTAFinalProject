@@ -60,7 +60,7 @@
 		<td>${coup.discount_price }</td>
 		<td>${coup.expire_date }</td>
 		<td>
-			<form action="${cp }/deleteCoupon" method="post" onsubmit="warnDel()">
+			<form action="${cp }/deleteCoupon" method="post" onsubmit="return warnDel()">
 			<input type="hidden" value="${coup.coupon_name }" name="coupName">
 			<input type="hidden" value="${coup.discount_price }" name="discount">
 			<c:if test="${coup.expire_date !=null }">
@@ -158,10 +158,6 @@ function couponDisposal(){
 
 function warnDel(){
 	var warndel=confirm("이 쿠폰을 소지하고 있는 회원들의 목록에서도 사라집니다. 삭제하시겠습니까?");
-	if(warndel){
-		return true;
-	}else{
-		return false;
-	}
+	return warndel;
 }
 </script>

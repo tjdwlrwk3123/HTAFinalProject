@@ -39,6 +39,9 @@
   	margin-top: 10px;
   	text-align: right;
   }
+  a{
+  	text-decoration: none;
+  }
 </style>
 </head>
 <body>
@@ -48,17 +51,17 @@
 <div id="memberWrap">
 <h2>회원관리</h2>
 <a href="${cp }/memberManageList?field=${field}&keyword=${keyword}&orderby=1&pageNum=${pu.pageNum}"
-id="idOrd1">아이디 정렬^</a>
+id="idOrd1">아이디 정렬<i class="fas fa-sort-up"></i></a>
 <a href="${cp }/memberManageList?field=${field}&keyword=${keyword}&orderby=2&pageNum=${pu.pageNum}"
-style="display: none;" id="idOrd2">아이디 정렬v</a>
+style="display: none;" id="idOrd2">아이디 정렬<i class="fas fa-sort-down"></i></a>
 <a href="${cp }/memberManageList?field=${field}&keyword=${keyword}&orderby=3&pageNum=${pu.pageNum}"
-id="nameOrd1">이름 정렬^</a>
+id="nameOrd1">이름 정렬<i class="fas fa-sort-up"></i></a>
 <a href="${cp }/memberManageList?field=${field}&keyword=${keyword}&orderby=4&pageNum=${pu.pageNum}"
-style="display: none;" id="nameOrd2">이름 정렬v</a>
+style="display: none;" id="nameOrd2">이름 정렬<i class="fas fa-sort-down"></i></a>
 <a href="${cp }/memberManageList?field=${field}&keyword=${keyword}&orderby=5&pageNum=${pu.pageNum}"
-id="gradeOrd1">등급 정렬^</a>
+id="gradeOrd1">등급 정렬<i class="fas fa-sort-up"></i></a>
 <a href="${cp }/memberManageList?field=${field}&keyword=${keyword}&orderby=6&pageNum=${pu.pageNum}"
-style="display: none;" id="gradeOrd2">등급 정렬v</a>
+style="display: none;" id="gradeOrd2">등급 정렬<i class="fas fa-sort-down"></i></a>
 <input type="hidden" value="${orderby }" id="checkOrderby">
 <table id="membertbl">
 	<tr>
