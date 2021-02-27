@@ -91,6 +91,7 @@ public class TourDetailController {
 			try {
 				String reImg = service.tourReviewImage(vo.getReview_number());
 				vo.setImage(reImg);
+				vo.setReview_content(vo.getReview_content().replaceAll("\\n", "<br>"));
 			}catch(NullPointerException ne) {
 				continue;
 			}
