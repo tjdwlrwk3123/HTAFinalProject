@@ -93,6 +93,7 @@ public class AccomDetailController {
 		List<ReviewVo> reviewlist=service.accomReviewList(service_number);
 		for(ReviewVo vo:reviewlist) {
 			int generalNum=vo.getReview_number();
+			vo.setReview_content(vo.getReview_content().replaceAll("\\n", "<br>"));
 			try {
 			ImageVo img=service.accomReviewImg(generalNum);
 			vo.setImage(img.getImgsavename());

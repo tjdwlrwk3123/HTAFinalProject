@@ -67,4 +67,7 @@ public class AccomService {
 	public ImageVo accomReviewImg(int generalNum) {
 		return dao.accomReviewImg(generalNum);
 	}
+	public List<String> accomNameList(String searchValue) {
+		return dao.accomNameList(searchValue);
+	}
 }

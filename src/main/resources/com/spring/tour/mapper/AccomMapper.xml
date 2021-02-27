@@ -23,6 +23,11 @@
 		and accom_max_people>=#{count}
 		)
 		]]>
+		<if test="keyword!=null">
+		and accom_service_number in(
+		select accom_service_number from accom_service where accom_name like '%'||#{keyword}||'%'
+		)
+		</if>
 		<if test="facility!=null">
 		and accom_service_number in(
 		select accom_service_number from accom_service natural join accom_info where
@@ -141,5 +146,9 @@
 	<select id="accom_review_img" parameterType="int" resultType="image">
 		select * from image where img_num=
 		(select min(img_num) from image where cate_number=55 and general_number=#{general_number})
+	</select>
+	<!-- 숙소 이름들 가져오기 -->
+	<select id="accomNameList" parameterType="string" resultType="string">
+		select accom_name from accom_service where accom_name like '%'||#{searchValue}||'%'
 	</select>
 </mapper>

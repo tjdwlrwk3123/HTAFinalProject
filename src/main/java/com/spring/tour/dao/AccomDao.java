@@ -69,4 +69,7 @@ public class AccomDao {
 	public ImageVo accomReviewImg(int generalNum) {
 		return sqlSession.selectOne(NAMESPACE+".accom_review_img", generalNum);
 	}
+	public List<String> accomNameList(String searchValue){
+		return sqlSession.selectList(NAMESPACE+".accomNameList",searchValue);
+	}
 }

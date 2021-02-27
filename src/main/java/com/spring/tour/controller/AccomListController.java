@@ -39,7 +39,8 @@ public class AccomListController {
 			@RequestParam(value="startDate") Date startDate,
 			@RequestParam(value="endDate") Date endDate,
 			@RequestParam(value="maxprice" , defaultValue = "0")int maxprice,
-			@RequestParam(value = "classification", defaultValue = "1") int classification // 리뷰많은순, 가격 싼순 등등
+			@RequestParam(value = "classification", defaultValue = "1") int classification, // 리뷰많은순, 가격 싼순 등등
+			@RequestParam(value="keyword",required = false) String keyword
 			) {
 		HttpServletRequest request=((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
 		HttpSession session = request.getSession();
@@ -58,6 +59,9 @@ public class AccomListController {
 		}
 		if(maxprice!=0) {
 			wholeMap.put("maxprice", maxprice);
+		}
+		if(keyword!=null) {
+			wholeMap.put("keyword", keyword);
 		}
 		
 		int howLong=service.howLong(wholeMap);
@@ -95,5 +99,14 @@ public class AccomListController {
 		result.put("howLong", howLong);
 		result.put("wishlist", wishlist);
 		return result;
+	}
+	
+	//keyword autocomplete
+	@RequestMapping(value="/nameList",produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	public HashMap<String, Object> nameList(String searchValue){
+		HashMap<String, Object> map=new HashMap<String, Object>();
+		List<String> accomNameList=service.accomNameList(searchValue);
+		map.put("accomList", accomNameList);
+		return map;
 	}
 }

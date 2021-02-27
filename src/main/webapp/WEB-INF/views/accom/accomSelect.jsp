@@ -150,6 +150,7 @@
 	}
 	#accomFacility input[type='checkbox']{
 		margin-bottom: 10px;
+		margin-left: 10px;
 	}
 	#accomConven{
 		border-bottom: 0.5px solid #79ABFF;
@@ -159,11 +160,13 @@
 	}
 	#accomConven input[type='checkbox']{
 		margin-bottom: 10px;
+		margin-left: 10px;
 	}
 	#accomSearchBox{
 		height: 70px;
-		margin-left: 5%;
+		margin-left: 10px;
 		padding-top: 15px;
+		width: 100%;
 	}
 	#accomSearchBox #numCount{
 		background-color: white;
@@ -285,7 +288,8 @@
 
 <div id="accomResult">
 	<div id="accomSearchBox">
-		<div style="display: inline-block; width: 450px; text-align: center;">
+		<input type="search" placeholder="검색어 입력" id="keyword" style="width:200px; border-radius: 5px;">
+		<div style="display: inline-block; width: 380px; text-align: center;">
 		<input type="text" id="d1" readonly="readonly" size="10">
 		<span style="margin-left: 10px;">~</span>
 		<input type="text" id="d2" readonly="readonly" size="10">
@@ -338,6 +342,30 @@ var bindCk=true;
 		.ajaxStop(function(){
 		loading.hide();
 		});
+		
+		
+		$( "#keyword" ).autocomplete({ 
+		      source : function(request,response ) { 
+		      $.ajax({ 
+		         url: "${cp}/nameList", 
+		         dataType: "json", 
+		         data: {  
+		            searchValue: request.term }, 
+		         success: function( result ) {
+		        	 console.log(result);
+		         var accomList = result.accomList;
+		         response( accomList);
+		            } 
+		       	}); 
+		      },
+		      focus : function(event, ui) {    //포커스 가면
+	                return false;//한글 에러 잡기용도로 사용됨
+	          },
+		      minLength: 1,
+		      select: function(event, ui) {}
+		}).bind('focus', function () {
+	        $(this).autocomplete("search");
+	    });
 
 		
 		$("#d1").datepicker('setDate','today');
@@ -359,13 +387,12 @@ var bindCk=true;
 		var count=$("#totCount").text().replace(/[^0-9]/g,"");
 		var startDate=$("#d1").val();
 		var endDate=$("#d2").val();
-		console.log(count);
-		console.log(startDate);
-		console.log(endDate);
+		var keyword=$("#keyword").val();
 		var param={
 				"count" : count,
 				"startDate" : startDate,
-				"endDate" : endDate
+				"endDate" : endDate,
+				"keyword" : keyword
 		}
 		console.log(param);
 		getfirst(param);
@@ -382,6 +409,7 @@ var bindCk=true;
 			var facility=[]; //시설 배열
 			var conven=[]; //편의서비스 배열
 			var category=[]; //카테고리 배열
+			var keyword=param.keyword; //키워드 적었던것
 			$("#accom").empty();
 			if(data.list.length!=0){
 				for(let i=0;i<data.list.length;i++){
@@ -502,7 +530,8 @@ var bindCk=true;
 						 "facility" : facility,
 						 "conven" : conven,
 						 "category" : category,
-						 "maxprice" : sliderMaxprice
+						 "maxprice" : sliderMaxprice,
+						 "keyword" : keyword
 				 }
 				 console.log(param);
 				 getfilter(param);
@@ -529,7 +558,8 @@ var bindCk=true;
 						 "facility" : facility,
 						 "conven" : conven,
 						 "category" : category,
-						 "maxprice" : sliderMaxprice
+						 "maxprice" : sliderMaxprice,
+						 "keyword" : keyword
 				 }
 				 console.log(param);
 				 getfilter(param);
@@ -555,6 +585,7 @@ var bindCk=true;
 								 "conven" : conven,
 								 "category" : category,
 								 "maxprice" : sliderMaxprice,
+								 "keyword" : keyword
 						 }
 			    	  console.log(param);
 			    	  getfilter(param);
@@ -582,6 +613,7 @@ var bindCk=true;
 		var conven=[];
 		var category=0;
 		var maxprice=$("#amount").val().replace(/[^0-9]/g,"");
+		var keyword=$("#keyword").val();
 		
 		 $("input[name='fck']:checked").each(function(i){ //시설에 체크된 리스트 저장
              facility.push($(this).val());
@@ -599,7 +631,8 @@ var bindCk=true;
 				 "conven" : conven,
 				 "category" : category,
 				 "maxprice" : maxprice,
-				 "classification" : classification
+				 "classification" : classification,
+				 "keyword" : keyword
 		}
 		getfilter(param);
 	}
@@ -823,17 +856,6 @@ var bindCk=true;
 					alert("insert ERROR");
 				}
 			});
-		}
-	}
-	function bindCheck(){
-		console.log("바인드?"+bindCk);
-		if(!bindCk){
-			$(".goDetail").on('click',function(){
-				bindCk=true;
-				return false;
-			})
-		}else{
-			return true;
 		}
 	}
 </script>
