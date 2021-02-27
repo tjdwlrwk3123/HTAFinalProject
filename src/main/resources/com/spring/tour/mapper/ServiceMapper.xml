@@ -5,7 +5,7 @@
 
 <mapper namespace="com.spring.tour.mapper.ServiceMapper">
 	<select id="selectAccomServiceList" resultType="com.spring.tour.vo.Accom_serviceVo" parameterType="hashmap">
-		<![CDATA[select * from (select s.*, rownum rnum from (select * from accom_service where user_accom_boss_name=#{user_accom_boss_name}) s) where rnum>=#{startRow} and rnum<=#{endRow}]]>
+		<![CDATA[select * from (select s.*, rownum rnum from (select * from accom_service where user_accom_boss_name=#{user_id}) s) where rnum>=#{startRow} and rnum<=#{endRow}]]>
 	</select>
 	<select id="selectAccomService" resultType="com.spring.tour.vo.Accom_serviceVo" parameterType="string">
 		select * from accom_service where accom_service_number=#{accom_service_number}

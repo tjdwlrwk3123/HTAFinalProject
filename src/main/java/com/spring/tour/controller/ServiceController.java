@@ -464,7 +464,7 @@ public class ServiceController {
 	public String accomoption(String accom_service_number, Model model, @RequestParam(name="pageNum",defaultValue="1")int pageNum) {
 		HashMap<String,Object> map=new HashMap<String, Object>();
 		map.put("accom_service_number", accom_service_number);
-		int totalRowCount=service.countAccomService(map);
+		int totalRowCount=service.countAccomOption(map);
 		System.out.println(totalRowCount);
 		PageUtil pu=new PageUtil(pageNum, 5, 5, totalRowCount);
 		int startRow=pu.getStartRow();
