@@ -226,7 +226,7 @@ public class ServiceController {
 	public String touroption(String service_number, Model model, @RequestParam(name="pageNum",defaultValue="1")int pageNum) {
 		HashMap<String,Object> map=new HashMap<String, Object>();
 		map.put("service_number", service_number);
-		int totalRowCount=service.countTourService(map);
+		int totalRowCount=service.countTourOption(map);
 		PageUtil pu=new PageUtil(pageNum, 5, 5, totalRowCount);
 		int startRow=pu.getStartRow();
 		int endRow=pu.getEndRow();
@@ -302,7 +302,7 @@ public class ServiceController {
 			}else {
 				HashMap<String,Object> map=new HashMap<String, Object>();
 				map.put("user_id", user_id);
-				int totalRowCount=service.countTourService(map);
+				int totalRowCount=service.countAccomService(map);
 				PageUtil pu=new PageUtil(pageNum, 5, 5, totalRowCount);
 				int startRow=pu.getStartRow();
 				int endRow=pu.getEndRow();
@@ -461,7 +461,7 @@ public class ServiceController {
 	public String accomoption(String accom_service_number, Model model, @RequestParam(name="pageNum",defaultValue="1")int pageNum) {
 		HashMap<String,Object> map=new HashMap<String, Object>();
 		map.put("accom_service_number", accom_service_number);
-		int totalRowCount=service.countTourService(map);
+		int totalRowCount=service.countAccomService(map);
 		PageUtil pu=new PageUtil(pageNum, 5, 5, totalRowCount);
 		int startRow=pu.getStartRow();
 		int endRow=pu.getEndRow();

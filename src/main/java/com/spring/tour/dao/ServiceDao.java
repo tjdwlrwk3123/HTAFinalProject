@@ -68,6 +68,15 @@ public class ServiceDao {
 	public int countTourService(HashMap<String, Object> map){
 		return sqlSession.selectOne(NAMESPACE+".counttourservice", map);
 	}
+	public int countTourOption(HashMap<String, Object> map){
+		return sqlSession.selectOne(NAMESPACE+".counttouroption", map);
+	}
+	public int countAccomService(HashMap<String, Object> map){
+		return sqlSession.selectOne(NAMESPACE+".countaccomservice", map);
+	}
+	public int countAccomOption(HashMap<String, Object> map){
+		return sqlSession.selectOne(NAMESPACE+".countaccomoption", map);
+	}
 	
 	public int insertAccomService(Accom_serviceVo vo) {
 		return sqlSession.insert(NAMESPACE+".insertAccomService",vo);

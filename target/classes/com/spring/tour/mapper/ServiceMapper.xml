@@ -55,6 +55,12 @@
 	<select id="counttouroption" parameterType="hashmap" resultType="int">
 		select count(*) from tour_option where user_id=#{user_id} and tour_service_number=#{tour_service_number}
 	</select>
+	<select id="countaccomservice" parameterType="hashmap" resultType="int">
+		select count(*) from accom_service where user_accom_boss_name=#{user_accom_boss_name}
+	</select>
+	<select id="countaccomoption" parameterType="hashmap" resultType="int">
+		select count(*) from accom_option where user_accom_boss_name=#{user_accom_boss_name} and accom_service_number=#{accom_service_number}
+	</select>
 	
 	<insert id="insertAccomService" parameterType="com.spring.tour.vo.Accom_serviceVo">
 		insert into accom_service values((select nvl(max(accom_service_number)+1,0) from accom_service),#{cate_number},#{user_accom_boss_name},#{accom_name},#{accom_addr})

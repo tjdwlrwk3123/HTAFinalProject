@@ -65,6 +65,15 @@ public class ServiceService {
 	public int countTourService(HashMap<String, Object> map) {
 		return dao.countTourService(map);
 	}
+	public int countTourOption(HashMap<String, Object> map) {
+		return dao.countTourOption(map);
+	}
+	public int countAccomService(HashMap<String, Object> map) {
+		return dao.countTourService(map);
+	}
+	public int countAccomOption(HashMap<String, Object> map) {
+		return dao.countTourOption(map);
+	}
 
 	public int insertAccomService(Accom_serviceVo vo) {
 		return dao.insertAccomService(vo);
