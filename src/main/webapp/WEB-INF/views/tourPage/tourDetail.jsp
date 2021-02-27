@@ -413,7 +413,7 @@
 				</div>
 				<!-- 사진으로 된 홍보물 자리 -->
 				<c:forEach var="p" items="${pa_image}">
-					<img src='${cp}/resources/upload/${p.imgsavename}' style="width:100%"alt="${cp}${p.imgsavename}">
+					<img src='${cp}/resources/upload/${p.imgsavename}' alt="${cp}${p.imgsavename}" style="width:100%;">
 				</c:forEach>
 			</div>
 			<div id="info">
