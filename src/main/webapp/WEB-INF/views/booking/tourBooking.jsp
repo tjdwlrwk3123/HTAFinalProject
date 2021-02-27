@@ -206,7 +206,7 @@
 						<input type="hidden" value="${vo.tour_book_number }">
 					</div>
 					<div style="display:inline-block; position: relative; left:70px;">
-						<span>리뷰쓰기</span>
+						<a href="${cp }/review/insert?service_number=${vo.service_number}&cate_number=1&service_name=${vo.service_name }">리뷰쓰기</a>
 					</div>
 					</div>
 				</div>

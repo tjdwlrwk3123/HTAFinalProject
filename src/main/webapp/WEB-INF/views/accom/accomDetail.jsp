@@ -828,7 +828,7 @@
 				if(discount!=0){
 					var isDiscount=
 						'<span style="font:bold;text-decoration: line-through;color:red;font-size:0.9em;">'+howLong+'박 총'+totPrice+'원</span><br>'+
-						'<span style="font:bold;">'+howLong+'박 총'+discountPrice+'원</span>'+
+						'<span style="font:bold;">'+howLong+'박 총'+dTotPrice+'원</span>'+
 						'<p style="font-size: 0.7em;">1인당 '+parseInt(dTotPrice/count)+'원</p>';
 				}else{
 					var isDiscount=

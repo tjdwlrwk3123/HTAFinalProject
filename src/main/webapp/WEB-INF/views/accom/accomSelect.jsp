@@ -55,7 +55,7 @@
 		width: 1000px;
 		margin: auto;
 		display : flex;
-		background-color: #FFCA6C;
+		height: 100%;
 	}
 	.accomSelectSection{
 		width:700px; 
@@ -629,6 +629,7 @@ var bindCk=true;
 						var fullstars = Math.floor(avgpoint);
 						var decimal =  Math.round(avgpoint*10%10);
 						var wishlist=data.wishlist[i];
+						var classification=data.classification;
 						var stars ="";
 					
 						if(avgpoint==0){
@@ -671,6 +672,19 @@ var bindCk=true;
 						
 						console.log(accomName);
 						console.log(minprice);
+						if(classification!=4){
+							var cfction=
+								"<p style='font-weight:bold; display:inline-block;'>총 "+minprice*howLong+"부터~</p>"+
+								"<div style='font-size: 0.7em; display:inline-block; margin-left:10px;'>(1인당 "+parseInt(minprice*howLong/count)+"원)</div>"+
+								"<div>1박 "+minprice+"원</div>";
+						}else{
+							var cfction=
+								"<p style='font-weight:bold; display:inline-block;'>~총 "+maxprice*howLong+"까지</p>"+
+								"<div style='font-size: 0.7em; display:inline-block; margin-left:10px;'>(1인당 "+parseInt(maxprice*howLong/count)+"원)</div>"+
+								"<div>1박 "+maxprice+"원</div>";
+						}
+						
+						
 						var content=
 							heart+
 							"<input type='hidden' value='"+accomNum+"'>"+
@@ -688,9 +702,7 @@ var bindCk=true;
 										"</div>"+
 										"<div class='accomPriceInfo'>"+
 										"<p>"+stars+"("+rcnt+")"+"</p>"+
-										"<p style='font-weight:bold; display:inline-block;'>총 "+minprice*howLong+"부터~</p>"+
-										"<div style='font-size: 0.7em; display:inline-block; margin-left:10px;'>(1인당 "+parseInt(minprice*howLong/count)+"원)</div>"+
-										"<div>1박 "+minprice+"원</div>"+
+										cfction+
 										"</div>"+
 										"</div>"
 									"</section>"+

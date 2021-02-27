@@ -169,7 +169,7 @@
 						<input type="hidden" value="${vo.accom_enddate }">
 					</div>
 					<div style="display:inline-block; position: relative; left: 70px;">
-						<a href="">리뷰쓰기</a>
+						<a href="${cp }/review/insert?cate_number=${service[status.index].cate_number}&service_number=${detail[status.index].accom_service_number}&service_name=${vo.service_name }">리뷰쓰기</a>
 					</div>
 				</div>
 			</c:forEach>
