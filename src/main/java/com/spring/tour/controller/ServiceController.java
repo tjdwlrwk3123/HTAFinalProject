@@ -50,6 +50,7 @@ public class ServiceController {
 				HashMap<String,Object> map=new HashMap<String, Object>();
 				map.put("user_id", user_id);
 				int totalRowCount=service.countTourService(map);
+				System.out.println(totalRowCount);
 				PageUtil pu=new PageUtil(pageNum, 5, 5, totalRowCount);
 				int startRow=pu.getStartRow();
 				int endRow=pu.getEndRow();
@@ -227,6 +228,7 @@ public class ServiceController {
 		HashMap<String,Object> map=new HashMap<String, Object>();
 		map.put("service_number", service_number);
 		int totalRowCount=service.countTourOption(map);
+		System.out.println(totalRowCount);
 		PageUtil pu=new PageUtil(pageNum, 5, 5, totalRowCount);
 		int startRow=pu.getStartRow();
 		int endRow=pu.getEndRow();
@@ -303,6 +305,7 @@ public class ServiceController {
 				HashMap<String,Object> map=new HashMap<String, Object>();
 				map.put("user_id", user_id);
 				int totalRowCount=service.countAccomService(map);
+				System.out.println(totalRowCount);
 				PageUtil pu=new PageUtil(pageNum, 5, 5, totalRowCount);
 				int startRow=pu.getStartRow();
 				int endRow=pu.getEndRow();
@@ -462,6 +465,7 @@ public class ServiceController {
 		HashMap<String,Object> map=new HashMap<String, Object>();
 		map.put("accom_service_number", accom_service_number);
 		int totalRowCount=service.countAccomService(map);
+		System.out.println(totalRowCount);
 		PageUtil pu=new PageUtil(pageNum, 5, 5, totalRowCount);
 		int startRow=pu.getStartRow();
 		int endRow=pu.getEndRow();

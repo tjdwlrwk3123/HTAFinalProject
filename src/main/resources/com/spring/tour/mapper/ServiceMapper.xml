@@ -53,13 +53,13 @@
 		select count(*) from tour_service where user_id=#{user_id}
 	</select>
 	<select id="counttouroption" parameterType="hashmap" resultType="int">
-		select count(*) from tour_option where user_id=#{user_id} and tour_service_number=#{tour_service_number}
+		select count(*) from tour_option where service_number=#{service_number}
 	</select>
 	<select id="countaccomservice" parameterType="hashmap" resultType="int">
-		select count(*) from accom_service where user_accom_boss_name=#{user_accom_boss_name}
+		select count(*) from accom_service where user_accom_boss_name=#{user_id}
 	</select>
 	<select id="countaccomoption" parameterType="hashmap" resultType="int">
-		select count(*) from accom_option where user_accom_boss_name=#{user_accom_boss_name} and accom_service_number=#{accom_service_number}
+		select count(*) from accom_option where accom_service_number=#{accom_service_number}
 	</select>
 	
 	<insert id="insertAccomService" parameterType="com.spring.tour.vo.Accom_serviceVo">
