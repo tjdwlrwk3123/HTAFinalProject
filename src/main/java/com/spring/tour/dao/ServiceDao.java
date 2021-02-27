@@ -1,5 +1,6 @@
 package com.spring.tour.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -19,8 +20,8 @@ import com.spring.tour.vo.Tour_infoVo;
 public class ServiceDao {
 	@Autowired private SqlSession sqlSession;
 	private static String NAMESPACE="com.spring.tour.mapper.ServiceMapper";
-	public List<Accom_serviceVo> selectAccomServiceList(String user_id){ 
-		return sqlSession.selectList(NAMESPACE+".selectAccomServiceList",user_id);
+	public List<Accom_serviceVo> selectAccomServiceList(HashMap<String, Object> map){ 
+		return sqlSession.selectList(NAMESPACE+".selectAccomServiceList",map);
 	} 
 	public Accom_serviceVo selectAccomService(String accom_service_number){ 
 		return sqlSession.selectOne(NAMESPACE+".selectAccomService",accom_service_number);
@@ -34,14 +35,14 @@ public class ServiceDao {
 	public String selectAccomOptioneMax(String accom_service_number){ 
 		return sqlSession.selectOne(NAMESPACE+".selectAccomOptioneMax",accom_service_number);
 	}
-	public List<AccomOptionVo> selectAccomOptionList(String accom_service_number){
-		return sqlSession.selectList(NAMESPACE+".selectAccomOptionList",accom_service_number);
+	public List<AccomOptionVo> selectAccomOptionList(HashMap<String, Object> map){
+		return sqlSession.selectList(NAMESPACE+".selectAccomOptionList",map);
 	}
 	public AccomOptionVo selectAccomOption(String accom_option_number){
 		return sqlSession.selectOne(NAMESPACE+".selectAccomOption",accom_option_number);
 	}
-	public List<TourServiceVo> selectTourServiceList(String user_id){ 
-		return sqlSession.selectList(NAMESPACE+".selectTourServiceList",user_id);
+	public List<TourServiceVo> selectTourServiceList(HashMap<String, Object> map){ 
+		return sqlSession.selectList(NAMESPACE+".selectTourServiceList",map);
 	} 
 	public TourServiceVo selectTourService(String service_number){ 
 		return sqlSession.selectOne(NAMESPACE+".selectTourService",service_number);
@@ -55,14 +56,17 @@ public class ServiceDao {
 	public String selectTourOptioneMax(String service_number){ 
 		return sqlSession.selectOne(NAMESPACE+".selectTourOptioneMax",service_number);
 	}
-	public List<TourOptionVo> selectTourOptionList(String service_number){
-		return sqlSession.selectList(NAMESPACE+".selectTourOptionList", service_number);
+	public List<TourOptionVo> selectTourOptionList(HashMap<String, Object> map){
+		return sqlSession.selectList(NAMESPACE+".selectTourOptionList", map);
 	}
 	public TourOptionVo selectTourOption(String tour_option_number){
 		return sqlSession.selectOne(NAMESPACE+".selectTourOption", tour_option_number);
 	}
 	public List<ImageVo> selectImageList(ImageVo vo){
 		return sqlSession.selectList(NAMESPACE+".selectImageList",vo);
+	}
+	public int countTourService(HashMap<String, Object> map){
+		return sqlSession.selectOne(NAMESPACE+".counttourservice", map);
 	}
 	
 	public int insertAccomService(Accom_serviceVo vo) {

@@ -27,6 +27,24 @@
 		</table>
 	</div>
 	<div>
+		<c:if test="${pu.startPageNum>1 }">
+			<a href="${cp }/touroption?service_number=${vo.service_number }&pageNum=${pu.startPageNum-1}"><span style='color:gray'>[이전]</span></a>
+		</c:if>
+		<c:forEach var="i" begin="${pu.startPageNum }" end="${pu.endPageNum }">
+			<c:choose>
+				<c:when test="${i==pu.pageNum }">
+					<a href="${cp }/touroption?service_number=${vo.service_number }&pageNum=${i}"><span style='color:blue'>[${i }]</span></a>
+				</c:when>
+				<c:otherwise>
+					<a href="${cp }/touroption?service_number=${vo.service_number }&pageNum=${i}"><span style='color:gray'>[${i }]</span></a>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+		<c:if test="${pu.totalPageCount>pu.endPageNum }">
+			<a href="${cp }/touroption?service_number=${vo.service_number }&pageNum=${pu.endPageNum+1}"><span style='color:gray'>[다음]</span></a>
+		</c:if>
+	</div>
+	<div>
 		<a href="${cp }/touroptioninsert?service_number=${service_number }">옵션추가</a>
 	</div>
 </div>

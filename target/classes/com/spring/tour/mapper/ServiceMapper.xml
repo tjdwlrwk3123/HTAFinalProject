@@ -4,8 +4,8 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.spring.tour.mapper.ServiceMapper">
-	<select id="selectAccomServiceList" resultType="com.spring.tour.vo.Accom_serviceVo" parameterType="string">
-		select * from accom_service where user_accom_boss_name=#{user_accom_boss_name}
+	<select id="selectAccomServiceList" resultType="com.spring.tour.vo.Accom_serviceVo" parameterType="hashmap">
+		<![CDATA[select * from (select s.*, rownum rnum from (select * from accom_service where user_accom_boss_name=#{user_accom_boss_name}) s) where rnum>=#{startRow} and rnum<=#{endRow}]]>
 	</select>
 	<select id="selectAccomService" resultType="com.spring.tour.vo.Accom_serviceVo" parameterType="string">
 		select * from accom_service where accom_service_number=#{accom_service_number}
@@ -19,14 +19,14 @@
 	<select id="selectAccomOptioneMax" resultType="string" parameterType="string">
 		select max(accom_option_number) from accom_option where accom_service_number=#{accom_service_number}
 	</select> 
-	<select id="selectAccomOptionList" resultType="com.spring.tour.vo.AccomOptionVo" parameterType="string">
-		select * from accom_option where accom_service_number=#{accom_service_number}
+	<select id="selectAccomOptionList" resultType="com.spring.tour.vo.AccomOptionVo" parameterType="hashmap">
+		<![CDATA[select * from (select s.*, rownum rnum from (select * from accom_option where accom_service_number=#{accom_service_number}) s) where rnum>=#{startRow} and rnum<=#{endRow}]]>
 	</select>
 	<select id="selectAccomOption" resultType="com.spring.tour.vo.AccomOptionVo" parameterType="string">
 		select * from accom_option where accom_option_number=#{accom_option_number}
 	</select>
-	<select id="selectTourServiceList" resultType="com.spring.tour.vo.TourServiceVo" parameterType="string">
-		select * from tour_service where user_id=#{user_id}
+	<select id="selectTourServiceList" resultType="com.spring.tour.vo.TourServiceVo" parameterType="hashmap">
+		<![CDATA[select * from (select s.*, rownum rnum from (select * from tour_service where user_id=#{user_id}) s) where rnum>=#{startRow} and rnum<=#{endRow}]]>
 	</select>
 	<select id="selectTourService" resultType="com.spring.tour.vo.TourServiceVo" parameterType="string">
 		select * from tour_service where service_number=#{service_number}
@@ -40,14 +40,20 @@
 	<select id="selectTourOptioneMax" resultType="string" parameterType="string">
 		select max(tour_option_number) from tour_option where service_number=#{service_number}
 	</select> 
-	<select id="selectTourOptionList" resultType="com.spring.tour.vo.TourOptionVo" parameterType="string">
-		select * from tour_option where service_number=#{service_number}
+	<select id="selectTourOptionList" resultType="com.spring.tour.vo.TourOptionVo" parameterType="hashmap">
+		<![CDATA[select * from (select s.*, rownum rnum from (select * from tour_option where service_number=#{service_number}) s) where rnum>=#{startRow} and rnum<=#{endRow}]]>
 	</select>
 	<select id="selectTourOption" resultType="com.spring.tour.vo.TourOptionVo" parameterType="string">
 		select * from tour_option where tour_option_number=#{tour_option_number}
 	</select>
 	<select id="selectImageList" resultType="com.spring.tour.vo.ImageVo" parameterType="com.spring.tour.vo.ImageVo">
 		select * from image where general_number=#{general_number} and cate_number=#{cate_number}
+	</select>
+	<select id="counttourservice" parameterType="hashmap" resultType="int">
+		select count(*) from tour_service where user_id=#{user_id}
+	</select>
+	<select id="counttouroption" parameterType="hashmap" resultType="int">
+		select count(*) from tour_option where user_id=#{user_id} and tour_service_number=#{tour_service_number}
 	</select>
 	
 	<insert id="insertAccomService" parameterType="com.spring.tour.vo.Accom_serviceVo">

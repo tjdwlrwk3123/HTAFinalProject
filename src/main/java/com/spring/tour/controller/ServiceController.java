@@ -18,12 +18,15 @@ import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.tour.service.ServiceService;
+import com.spring.tour.util.PageUtil;
 import com.spring.tour.vo.AccomInfoVo;
 import com.spring.tour.vo.AccomOptionVo;
 import com.spring.tour.vo.Accom_serviceVo;
+import com.spring.tour.vo.CouponVo;
 import com.spring.tour.vo.ImageVo;
 import com.spring.tour.vo.TourOptionVo;
 import com.spring.tour.vo.TourServiceVo;
@@ -36,7 +39,7 @@ public class ServiceController {
 	@Autowired ServletContext sc;
 
 	@GetMapping("/tourmain")
-	public String tourmain(HttpSession session,Model model) {
+	public String tourmain(HttpSession session,Model model, @RequestParam(name="pageNum",defaultValue="1")int pageNum) {
 		try {
 			System.out.println(session);
 			String user_id=(String)session.getAttribute("user_id");
@@ -44,7 +47,17 @@ public class ServiceController {
 			if(user_id.equals("")||user_id==null) {
 				return ".userjoin.userlogin";
 			}else {
-				List<TourServiceVo> list = service.selectTourServiceList(user_id);
+				HashMap<String,Object> map=new HashMap<String, Object>();
+				map.put("user_id", user_id);
+				int totalRowCount=service.countTourService(map);
+				PageUtil pu=new PageUtil(pageNum, 5, 5, totalRowCount);
+				int startRow=pu.getStartRow();
+				int endRow=pu.getEndRow();
+				map.put("startRow",startRow);
+				map.put("endRow", endRow);
+				List<TourServiceVo> list = service.selectTourServiceList(map);
+				
+				model.addAttribute("pu",pu);
 				model.addAttribute("list",list);
 				return ".service.tourmain";
 			}
@@ -210,8 +223,18 @@ public class ServiceController {
 		}
 	}
 	@GetMapping("/touroption")
-	public String touroption(String service_number, Model model) {
-		List<TourOptionVo> list = service.selectTourOptionList(service_number);
+	public String touroption(String service_number, Model model, @RequestParam(name="pageNum",defaultValue="1")int pageNum) {
+		HashMap<String,Object> map=new HashMap<String, Object>();
+		map.put("service_number", service_number);
+		int totalRowCount=service.countTourService(map);
+		PageUtil pu=new PageUtil(pageNum, 5, 5, totalRowCount);
+		int startRow=pu.getStartRow();
+		int endRow=pu.getEndRow();
+		map.put("startRow",startRow);
+		map.put("endRow", endRow);
+		List<TourOptionVo> list = service.selectTourOptionList(map);
+		
+		model.addAttribute("pu",pu);
 		model.addAttribute("list",list);
 		model.addAttribute("service_number",service_number);
 		return ".service.touroption"; 
@@ -269,7 +292,7 @@ public class ServiceController {
 	
 	
 	@GetMapping("/accommain")
-	public String accommain(HttpSession session,Model model) {
+	public String accommain(HttpSession session,Model model, @RequestParam(name="pageNum",defaultValue="1")int pageNum) {
 		try {
 			System.out.println(session);
 			String user_id=(String)session.getAttribute("user_id");
@@ -277,7 +300,17 @@ public class ServiceController {
 			if(user_id.equals("")||user_id==null) {
 				return ".userjoin.userlogin";
 			}else {
-				List<Accom_serviceVo> list = service.selectAccomServiceList(user_id);
+				HashMap<String,Object> map=new HashMap<String, Object>();
+				map.put("user_id", user_id);
+				int totalRowCount=service.countTourService(map);
+				PageUtil pu=new PageUtil(pageNum, 5, 5, totalRowCount);
+				int startRow=pu.getStartRow();
+				int endRow=pu.getEndRow();
+				map.put("startRow",startRow);
+				map.put("endRow", endRow);
+				List<Accom_serviceVo> list = service.selectAccomServiceList(map);
+				
+				model.addAttribute("pu",pu);
 				model.addAttribute("list",list);
 				return ".service.accommain";
 			}
@@ -425,8 +458,18 @@ public class ServiceController {
 	}
 
 	@GetMapping("/accomoption")
-	public String accomoption(String accom_service_number, Model model) {
-		List<AccomOptionVo> list = service.selectAccomOptionList(accom_service_number);
+	public String accomoption(String accom_service_number, Model model, @RequestParam(name="pageNum",defaultValue="1")int pageNum) {
+		HashMap<String,Object> map=new HashMap<String, Object>();
+		map.put("accom_service_number", accom_service_number);
+		int totalRowCount=service.countTourService(map);
+		PageUtil pu=new PageUtil(pageNum, 5, 5, totalRowCount);
+		int startRow=pu.getStartRow();
+		int endRow=pu.getEndRow();
+		map.put("startRow",startRow);
+		map.put("endRow", endRow);
+		List<AccomOptionVo> list = service.selectAccomOptionList(map);
+		
+		model.addAttribute("pu",pu);
 		model.addAttribute("list",list);
 		model.addAttribute("accom_service_number",accom_service_number);
 		return ".service.accomoption"; 

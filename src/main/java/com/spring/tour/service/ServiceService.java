@@ -1,5 +1,6 @@
 package com.spring.tour.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,8 @@ import com.spring.tour.vo.Tour_infoVo;
 @Service
 public class ServiceService {
 	@Autowired private ServiceDao dao;
-	public List<Accom_serviceVo> selectAccomServiceList(String user_id) {
-		return dao.selectAccomServiceList(user_id);
+	public List<Accom_serviceVo> selectAccomServiceList(HashMap<String, Object> map) {
+		return dao.selectAccomServiceList(map);
 	}
 	public Accom_serviceVo selectAccomService(String accom_service_number) {
 		return dao.selectAccomService(accom_service_number);
@@ -31,14 +32,14 @@ public class ServiceService {
 	public String selectAccomOptioneMax(String accom_service_number) {
 		return dao.selectAccomOptioneMax(accom_service_number);
 	} 
-	public List<AccomOptionVo> selectAccomOptionList(String accom_service_number) {
-		return dao.selectAccomOptionList(accom_service_number);
+	public List<AccomOptionVo> selectAccomOptionList(HashMap<String, Object> map) {
+		return dao.selectAccomOptionList(map);
 	}
 	public AccomOptionVo selectAccomOption(String accom_option_number) {
 		return dao.selectAccomOption(accom_option_number);
 	}
-	public List<TourServiceVo> selectTourServiceList(String user_id) {
-		return dao.selectTourServiceList(user_id);
+	public List<TourServiceVo> selectTourServiceList(HashMap<String, Object> map) {
+		return dao.selectTourServiceList(map);
 	}
 	public TourServiceVo selectTourService(String service_number) {
 		return dao.selectTourService(service_number);
@@ -52,14 +53,17 @@ public class ServiceService {
 	public String selectTourOptioneMax(String service_number) {
 		return dao.selectTourOptioneMax(service_number);
 	} 
-	public List<TourOptionVo> selectTourOptionList(String service_number) {
-		return dao.selectTourOptionList(service_number);
+	public List<TourOptionVo> selectTourOptionList(HashMap<String, Object> map) {
+		return dao.selectTourOptionList(map);
 	}
 	public TourOptionVo selectTourOption(String tour_option_number) {
 		return dao.selectTourOption(tour_option_number);
 	}
 	public List<ImageVo> selectImageList(ImageVo vo) {
 		return dao.selectImageList(vo);
+	}
+	public int countTourService(HashMap<String, Object> map) {
+		return dao.countTourService(map);
 	}
 
 	public int insertAccomService(Accom_serviceVo vo) {
