@@ -1,5 +1,5 @@
 
-/* Drop Tables */
+/* Drop Tables dd */
 
 DROP TABLE accom_info CASCADE CONSTRAINTS;
 DROP TABLE accom_option CASCADE CONSTRAINTS;
