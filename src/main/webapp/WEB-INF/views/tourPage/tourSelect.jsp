@@ -34,11 +34,14 @@
 	font-family: 'Gamja Flower', cursive;
 	
 }
+
+
 #tourSelect_wrapper {
-	width: 80%;
+	width: 1500px;
 	margin: auto;
 	display : flex;
 	background-color: white;
+	margin-top:-50px;
 /* 	드래그방지 */
 	-ms-user-select: none;
 	-moz-user-select: -moz-none;
@@ -50,7 +53,7 @@
 
 #tour_filterbox {
 	width: 200px;
-	padding: 20px 0;
+	padding: 30px 0; 
 	background-color:#4B70DD;	
 	color:white;
 }
@@ -159,6 +162,7 @@ h5{
 	margin:3px;
 
 }
+
 .card-img-top{
 	width:222px;
 	height:170px;
@@ -675,7 +679,7 @@ h5{
 					}
 				}
 				str+="<div class='col mb-4'>"+ //두번째 div
-						"<div class='card h-100' style='width: 14rem;' onclick='move(this)'>"+  //3번째 div
+						"<div class='card h-100 ml-3' style='width: 14rem;' onclick='move(this)'>"+  //3번째 div
 						   	 "<input type='hidden' name='cate_number' value='"+cate_number+"'>"+
 						   	 "<input type='hidden' name='service_number' value='"+service_number+"'>"+
 						 	 "<img src='${cp }/resources/upload/"+imgsavename+"' class='card-img-top'  alt='"+tour_name+"' >"+

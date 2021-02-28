@@ -35,7 +35,7 @@ public class ChatLoginController {
 		HttpSession session = req.getSession();
 		session.setAttribute("id" ,"admin");
 		model.addAttribute("username","admin");
-		return "/chat/adminchat";
+		return ".service.adminchat.admin";
 	}
 	
 	@RequestMapping(value = "/login.do", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})

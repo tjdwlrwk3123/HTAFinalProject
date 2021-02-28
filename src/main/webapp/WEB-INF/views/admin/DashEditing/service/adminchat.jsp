@@ -11,7 +11,7 @@
 	#adminchat_wrapper{
 		width:100%;
 		margin:auto;
-		align-content: center;
+/* 		align-content: center; */
 	}
 	#functionBox{
 		width:400px;
@@ -36,7 +36,7 @@
     }
 	.messagewindow{
 		width: 300px;
-		height: 300px; 
+		height: 400px; 
 		display:flex;  /*flex direction 사용하기 위함 */
  	    flex-direction: column-reverse; /*스크롤 하단 고정 */
 	    overflow-y:auto;  /* 내용이 설정된 height을 넘기면 자동으로 스크롤 생성 */
@@ -68,23 +68,31 @@
 		
 	 
 	.fromM{/* 내 메세지 div */
-		text-decoration:none;
-		text-align:right;
-		margin :8px;
-		margin-left:60px;
+		list-style:none;
+		max-width:80%;
+		margin:5px;
+		margin-left:20%;
+ 		text-align:left; 
 		word-break:break-all;
 		background-color:yellow;
 		padding:10px;
 		border-radius:25px 25px 25px 25px;
-		padding-left:-5px;
-		display:inline-block;
+		clear:both;
+		float:right;
 	}
  	.fromC{ /* 내가 아닌 메세지 div  */ 
+		max-width:80%;
  		text-align: left;
-		margin :8px;
 		margin-right:60px;
 		font-weight: 500;
 		word-break:break-all;
+		background-color:yellow;
+		padding:10px;
+		border-radius:25px 25px 25px 25px;
+		margin:5px;
+		margin-left:-2px;
+		clear:both;
+		float:left;
 	}
 	.mTag{/* 내용에 입힐 CSS */
 	
@@ -92,6 +100,8 @@
 	.cTag{/* */
 		margin:0;
 		font-weight: 700;
+		text-align:left;
+		padding-left:5px;
 	}
 	.chatBtn:not(:disabled){
 		border-radius: 25px 25px 25px 25px;
@@ -143,7 +153,7 @@
 				</select><br>
 				<br>
 				<input type="text" id="sender" value="admin" style="display:none;">
-				<textarea id="messageinput" rows="7" cols="40" style="resize:none;" ></textarea><br>
+				<textarea id="messageinput" rows="4" cols="40" style="resize:none;" ></textarea><br>
 				<button type="button" class="chatBtn" id="sendit" onclick="send()">메세지전송</button>
 				<button type="button" class="chatBtn" onclick="javascript:clearText()">대화내용 지우기</button>
 			</div>
@@ -363,13 +373,12 @@
 	function writeResponse1(text){
 		if(text.includes("#$#")){ //내가 보낸 메세지라는 표시
 			var ntext = text.replace("#$#", "");
-			messages1.innerHTML = "<li class='fromM'>"+ ntext +"</li>"+messages1.innerHTML;
-// 			messages1.innerHTML = "<div class='fromM'><span class='mTag'>"+ ntext +"</span></div>"+messages1.innerHTML;
+			messages1.innerHTML = "<div class='fromM'><span class='mTag'>"+ ntext +"</span></div>"+messages1.innerHTML;
 		}else if(text.includes("SYSTEM")){ //시스템이 보내는 메세지
 			var ntext= text.replace("SYSTEM","");
-			messages1.innerHTML = "<div class='fromC'><p class='cTag'>SYSTEM</p><span>"+ntext+"</span></div>"+messages1.innerHTML;
+			messages1.innerHTML = "<div class='fromC'><span>"+ntext+"</span></div><p class='cTag'>SYSTEM</p>"+messages1.innerHTML;
 		}else{
-			messages1.innerHTML = "<div class='fromC'><p class='cTag'>CUSTOMER1</p><span>"+text+"</span></div>"+messages1.innerHTML;
+			messages1.innerHTML = "<div class='fromC'><span>"+text+"</span></div><p class='cTag'>CUSTOMER1</p>"+messages1.innerHTML;
 		}
 	}
 	function writeResponse2(text){
