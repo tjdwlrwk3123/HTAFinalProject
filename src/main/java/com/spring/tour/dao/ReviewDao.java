@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.spring.tour.vo.ImageVo;
 import com.spring.tour.vo.ReviewVo;
 
 @Repository
@@ -43,5 +44,8 @@ public class ReviewDao {
 
 	public ReviewVo prev(int review_number) {
 		return sqlSession.selectOne(NAMESPACE + ".prev", review_number);
+	}
+	public int insert1(ImageVo vo) {
+		return sqlSession.insert(NAMESPACE+".insert1",vo);
 	}
 }

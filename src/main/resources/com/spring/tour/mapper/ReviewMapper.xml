@@ -70,5 +70,10 @@
 		where rownum=1
 		]]>
 	</select> 
+	
+	<insert id="insert1" parameterType="image">
+		insert into image
+		values(image_number_seq.nextval,#{imgorgname},#{imgsavename},#{general_number},#{cate_number})
+	</insert>
     
     </mapper>

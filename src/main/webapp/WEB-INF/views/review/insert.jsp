@@ -57,11 +57,12 @@ for (let i = 0; i < star.length; i++) {
 		showValue.innerHTML = i + " out of 5";
 	});
 }
+
 </script>
 </head>
 <body>
 <h1>리뷰등록</h1>
-<form method="post" action="${cp }/review/insert">
+<form method="post" action="${cp }/review/insert" enctype="multipart/form-data">
 		작성자아이디<br>
 		<input type="text" name="user_id"> <!--<input type="text" name="user_id" value="${sessionScope.SPRING_SECURITY_CONTEXT.authentication.principal.username}"/> 로그인했을때는 이렇게 처리. -->
 		<br>
@@ -94,6 +95,10 @@ for (let i = 0; i < star.length; i++) {
 		<br>
 		리뷰내용<br>
 		<textarea rows="5" cols="100" name="review_content"></textarea><br>
+			첨부파일<br>
+			<input type="file" name="img1"><br>
+			첨부파일<br>
+			<input type="file" name="img2"><br>
 		<input type="submit" value="문의글등록">
 </form>
 </body>

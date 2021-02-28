@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.tour.dao.ReviewDao;
+import com.spring.tour.vo.ImageVo;
 import com.spring.tour.vo.ReviewVo;
 
 @Service
@@ -37,5 +38,8 @@ public class ReviewService {
 	}
 	public ReviewVo prev(int review_number) {
 		return dao.prev(review_number);
+	}
+	public int insert1(ImageVo vo) {
+		return dao.insert1(vo);
 	}
 }
