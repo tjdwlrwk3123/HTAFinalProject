@@ -52,6 +52,9 @@ public class PaymentDao {
 	public int updatePoint(HashMap<String, Object> map) {
 		return sqlsession.update(NAMESPACE+".updatePoint", map);
 	}
+	public int pointPlus(HashMap<String, Object> map) {
+		return sqlsession.update(NAMESPACE+".pointPlus", map);
+	}
 	public int updateCoupon(HashMap<String, Object> map) {
 		return sqlsession.update(NAMESPACE+".updateCoupon", map);
 	}

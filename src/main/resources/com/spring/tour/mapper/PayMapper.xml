@@ -53,6 +53,9 @@
 	<update id="updatePoint" parameterType="hashmap">
 		update user_info set user_point = (select user_point from user_info where user_id=#{user_id})- #{point_useamount} where user_id=#{user_id}
 	</update>
+	<update id="pointPlus" parameterType="hashmap">
+		update user_info set user_point = #{pointPlus} where user_id=#{user_id}
+	</update>
 	<update id="updateCoupon" parameterType="hashmap">
 		update coupon set coupon_usecondition = 1 where user_id=#{user_id} and coupon_name=#{coupon_usecondition}
 	</update>

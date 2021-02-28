@@ -56,9 +56,16 @@ public class PaymentService {
 		// 포인트 사용했을시 user_info 테이블에서 사용한 만큼의 포인트 차감
 		dao.updatePoint(upMap);
 		
+		int pointPlus = (Integer)tbMap.get("total_price")/100*5;
+		System.out.println("pointPlus:"+pointPlus);
+		
 		String user_id = (String)tbMap.get("user_id");
 		System.out.println("user_id : "+user_id);
 		
+		HashMap<String, Object> pointMap = new HashMap<>();
+		pointMap.put("pointPlus", pointPlus);
+		pointMap.put("user_id", user_id);
+		dao.pointPlus(pointMap);
 		
 		int sumTotal = dao.getAccomTotal(user_id) + dao.getTourTotal(user_id);
 		String newGrade = "Bronze";
@@ -76,6 +83,7 @@ public class PaymentService {
 		HashMap<String, Object> gradeMap = new HashMap<>();
 		gradeMap.put("user_id", user_id);
 		gradeMap.put("user_grade", newGrade);
+		System.out.println("NewGrade ="+newGrade);
 		dao.changeGrade(gradeMap);
 		return 1;
 	}
