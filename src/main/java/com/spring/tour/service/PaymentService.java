@@ -61,7 +61,7 @@ public class PaymentService {
 		
 		
 		int sumTotal = dao.getAccomTotal(user_id) + dao.getTourTotal(user_id);
-		String newGrade = "";
+		String newGrade = "Bronze";
 		if(sumTotal>100000) {
 			newGrade = "Silver";
 		}else if(sumTotal>300000) {
