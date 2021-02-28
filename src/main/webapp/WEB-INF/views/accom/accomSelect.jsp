@@ -52,13 +52,13 @@
 		z-index: 200;
 	}
 	#accomWrap{
-		width: 1000px;
+		width: 80%;
 		margin: auto;
 		display : flex;
 		height: 100%;
 	}
 	.accomSelectSection{
-		width:700px; 
+		width:900px; 
 		height:200px;
 		border: 1px solid #D5D5D5;
 		display: flex;
@@ -72,7 +72,7 @@
 	.accomSelectSection .accomSelectImage{display:inline-block; margin-right:10px;}
 	.accomSelectSection .accomSelectImage img{width: 200px; height: 200px;}
 	.accomSelectSection .accomSelectInfo{
-		width: 90%
+		width: 90%;
 	}
 	.accomSelectSection .accomSelectInfo h3{
 		color: black;
@@ -89,7 +89,7 @@
 	}
 	.heartImg{
 		position:relative;
-		left:650px;
+		left:840px;
 		top:60px;
 		width:25px;
 		margin-bottom: 12px;
@@ -102,18 +102,16 @@
 	
 	#accomFilter {
 		width: 250px;
-		height: 100%;
 		background-color: #4B70DD;
 		padding: 30px 0;
 	}
 	#accomResult{
 		width: 85%;
-		background-color: #F3F3F3;
 		height:auto;
 		padding : 10px;
 	}
-	#accomResult #accomSearchBox{
-		text-align: center;
+	#accom{
+		width:700px;
 	}
 	#accomKind input[type="radio"]{
 		position: absolute;
@@ -166,7 +164,7 @@
 		height: 70px;
 		margin-left: 10px;
 		padding-top: 15px;
-		width: 100%;
+		width: 70%;
 	}
 	#accomSearchBox #numCount{
 		background-color: white;
@@ -182,12 +180,12 @@
 	#accomOrderBox{
 		text-align: right;
 		margin-bottom: 20px;
+		margin-top: 20px;
 	}
 	#accomOrderBox a{
 		text-decoration: none;
 		color: black;
 		margin-left: 10px;
-		font-size: 0.8em;
 	}
 	#accomOrderBox a:hover{
 		font-weight: 800;
@@ -309,18 +307,16 @@
 				</div>
 			</div>
 		</div>
-		<input type="button" value="검색" id="searchAccom" class="btn btn-outline-primary">
-	</div>
-
-	<div id="accomOrderBox">
-	<input type="hidden" id="classification">
-		<a href="javascript:orderChange(1);"<c:if test='${classification==1}'>style="color:gray;"</c:if>>추천순</a>
-		<a href="javascript:orderChange(2);"<c:if test='${classification==2}'>style="color:gray;"</c:if>>리뷰많은순</a>
-		<a href="javascript:orderChange(3);"<c:if test='${classification==3}'>style="color:gray;"</c:if>>가격낮은순</a>
-		<a href="javascript:orderChange(4);"<c:if test='${classification==4}'>style="color:gray;"</c:if>>가격높은순</a>
+		<input type="button" value="검색" id="searchAccom" class="btn btn-outline-primary" style="position: absolute;">
+		<div id="accomOrderBox">
+		<input type="hidden" id="classification">
+			<a href="javascript:orderChange(1);"<c:if test='${classification==1}'>style="color:gray;"</c:if>>추천순</a>
+			<a href="javascript:orderChange(2);"<c:if test='${classification==2}'>style="color:gray;"</c:if>>리뷰많은순</a>
+			<a href="javascript:orderChange(3);"<c:if test='${classification==3}'>style="color:gray;"</c:if>>가격낮은순</a>
+			<a href="javascript:orderChange(4);"<c:if test='${classification==4}'>style="color:gray;"</c:if>>가격높은순</a>
+		</div>
 	</div>
 	<div id="accom">
-		
 	</div>
 </div>
 </div>
