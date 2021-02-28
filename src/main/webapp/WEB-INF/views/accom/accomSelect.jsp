@@ -344,7 +344,7 @@ var bindCk=true;
 		});
 		
 		
-		$( "#keyword" ).autocomplete({ 
+		$( "#keyword" ).autocomplete({  
 		      source : function(request,response ) { 
 		      $.ajax({ 
 		         url: "${cp}/nameList", 
