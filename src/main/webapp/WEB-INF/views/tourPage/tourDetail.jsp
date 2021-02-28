@@ -413,7 +413,7 @@
 				</div>
 				<!-- 사진으로 된 홍보물 자리 -->
 				<c:forEach var="p" items="${pa_image}">
-					<img src='${cp}/resources/upload/${p.imgsavename}' alt="${cp}${p.imgsavename}" style="width:100%;">
+					<img src='${cp}/resources/upload/${p.imgsavename}' alt="${cp}/${p.imgsavename}" style="width:100%;">
 				</c:forEach>
 			</div>
 			<div id="info">
@@ -494,6 +494,7 @@
 				{"cate_number":$("#cate_number").val(),"service_number":$("#service_number").val()}, function(data) {
 			var str="";
 			str= "<h4>후기 ("+data.reviewlist.length+")</h4>"
+			console.log("리뷰리스트랭스: "+data.reviewlist.length);
 			if(data.reviewlist.length>3){
 				for(let i=0; i<3; i++){
 					var stars ="";
@@ -512,10 +513,11 @@
 									"</div>"+
 								"</div>"+
 								"<div class='col-md-2' style='text-align: center;'>"+
-									"<img src='${cp}/resources/upload/"+data.reviewlist[i].review_image+"' class='tourReviewImg' onerror='this.style.display=\"none\";'>"+
+									"<img src='${cp}/resources/upload/"+data.reviewlist[i].image+"' class='tourReviewImg'  onerror='this.style.display=\"none\";' >"+
 								"</div>"+
 							"</div>"+
 						"</div>";
+					console.log("리뷰이미지 이름 : "+data.reviewlist[i].image);
 				}
 				str+="<div style='text-align: center;'>"+
 						"<button type='button' class='btn btn-outline-primary' id='moreBtn' onclick='moreReview()'>리뷰더보기</button>"+
@@ -538,7 +540,7 @@
 									"</div>"+
 								"</div>"+
 								"<div class='col-md-2' style='text-align: center;'>"+
-									"<img src='${cp}/resources/upload/"+data.reviewlist[i].review_image+"' class='tourReviewImg' onerror='this.style.display=\"none\";' >"+
+									"<img src='${cp}/resources/upload/"+data.reviewlist[i].image+"' class='tourReviewImg' onerror='this.style.display=\"none\";' >"+
 								"</div>"+
 							"</div>"+
 						"</div>";
@@ -569,7 +571,7 @@
 								"</div>"+
 							"</div>"+
 							"<div class='col-md-2' style='text-align: center;'>"+
-								"<img src='${cp}/resources/images/"+data.reviewlist[i].review_image+"' class='tourReviewImg' onerror='this.style.display=\"none\";'>"+
+								"<img src='${cp}/resources/upload/"+data.reviewlist[i].image+"' class='tourReviewImg' onerror='this.style.display=\"none\";'>"+
 							"</div>"+
 						"</div>"+
 					"</div>";
@@ -696,9 +698,9 @@
 	}
 	
 	//이미지가 없으면 안보여짐
-	function errorImg(a){
-		a.style.display='none';
-	}
+// 	function errorImg(a){
+// 		a.style.display='none';
+// 	}
 	
 	
 	//결제페이지로 이동

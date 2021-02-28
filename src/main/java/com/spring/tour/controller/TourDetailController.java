@@ -92,10 +92,15 @@ public class TourDetailController {
 				String reImg = service.tourReviewImage(vo.getReview_number());
 				vo.setImage(reImg);
 				vo.setReview_content(vo.getReview_content().replaceAll("\\n", "<br>"));
+				System.out.println("reviewIMG : "+reImg);
 			}catch(NullPointerException ne) {
 				continue;
 			}
 		}
+		for(ReviewVo vo : reviewList) {
+			System.out.println("저장된 리스트 : "+vo);
+		}
+		
 		resultMap.put("reviewlist", reviewList);
 		
 		return resultMap;

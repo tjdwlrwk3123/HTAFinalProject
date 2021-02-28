@@ -24,11 +24,16 @@
 	position:absolute;
 	width:300px;
 	height:600px;
-	background-color: #A748FF;
+	background-color: #4E61FF;
+	color:white;
 	opacity:100%;
 	z-index: 99;
 	border-radius:5%;
 	display: block;
+}
+
+#callwrap p{
+	font-size:25px;
 }
 
 #call{
@@ -112,6 +117,14 @@ input:focus, textarea:focus, select:focus, button:focus{
     outline: none;
 }
 
+#messageSend{
+	background-color:transparent;
+	border-radius: 15px 15px 15px 15px;
+	padding:5px;
+}
+#messageSend:hover{
+	box-shadow: 1px 1px 2px 1px gray;
+}
 
 </style>    
 <div>
@@ -130,7 +143,7 @@ input:focus, textarea:focus, select:focus, button:focus{
 		</div>
 		<div id="btnbox">
 			<textarea id="inputtext" style="width:230px; height:150px; resize:none;" ></textarea>
-			<input type="button" value="SEND" id="send" onclick="send()" style="float:right; margin:5px;"><br>
+			<input type="button" value="SEND" id="messageSend" onclick="send()" style="float:right; margin:5px;"><br>
 		</div>
 	</div>
 </div>

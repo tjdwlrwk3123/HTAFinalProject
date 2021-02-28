@@ -30,6 +30,8 @@
 	#functionBox textarea{
 		padding:10px;
 		border-radius: 25px 25px 25px 25px;	
+		height:200px;
+		width:350px;
 	}
 	input:focus, textarea:focus, select:focus, button:focus{
     	outline: none;
@@ -121,11 +123,11 @@
 	<div id="adminchat_wrapper">
 		<div style="display: inline-block;">
 			<!-- 관리자 접속 채팅 창 -->
-			<div id="messages1" class="messagewindow"  style="background-color: #E1FF36;">
+			<div id="messages1" class="messagewindow"  style="background-color: #CEF279;">
 			<h1>1번 Customer</h1>	
 			</div>
 			
-			<div id="messages2" class="messagewindow"  style="background-color: yellow;">
+			<div id="messages2" class="messagewindow"  style="background-color: #D6C7ED;">
 			<h1>2번 Customer</h1>	
 			</div>
 			
@@ -133,7 +135,7 @@
 			<h1>3번 Customer</h1>	
 			</div>
 			
-			<div id="messages4" class="messagewindow"  style="background-color: skyblue;">
+			<div id="messages4" class="messagewindow"  style="background-color: #B2EBF4;">
 			<h1>4번 Customer</h1>	
 			</div>
 		</div><br>
@@ -153,7 +155,7 @@
 				</select><br>
 				<br>
 				<input type="text" id="sender" value="admin" style="display:none;">
-				<textarea id="messageinput" rows="4" cols="40" style="resize:none;" ></textarea><br>
+				<textarea id="messageinput" style="resize:none;" ></textarea><br>
 				<button type="button" class="chatBtn" id="sendit" onclick="send()">메세지전송</button>
 				<button type="button" class="chatBtn" onclick="javascript:clearText()">대화내용 지우기</button>
 			</div>
@@ -387,9 +389,9 @@
 			messages2.innerHTML = "<div class='fromM'><span class='mTag'>"+ntext+"</span></div>"+messages2.innerHTML;
 		}else if(text.includes("SYSTEM")){ //시스템이 보내는 메세지
 			var ntext= text.replace("SYSTEM","");
-			messages2.innerHTML = "<div class='fromC'><p class='cTag'>SYSTEM</p><span>"+ntext+"</span></div>"+messages2.innerHTML;
+			messages2.innerHTML = "<div class='fromC'><span>"+ntext+"</span></div><p class='cTag'>SYSTEM</p>"+messages2.innerHTML;
 		}else{
-			messages2.innerHTML = "<div class='fromC'><p class='cTag'>CUSTOMER2</p><span>"+text+"</span></div>"+messages2.innerHTML;
+			messages2.innerHTML = "<div class='fromC'><span>"+text+"</span></div><p class='cTag'>CUSTOMER2</p>"+messages2.innerHTML;
 		}
 	}
 	function writeResponse3(text){
@@ -398,9 +400,9 @@
 			messages3.innerHTML = "<div class='fromM'><span class='mTag'>"+ntext+"</span></div>"+messages3.innerHTML;
 		}else if(text.includes("SYSTEM")){ //시스템이 보내는 메세지
 			var ntext= text.replace("SYSTEM","");
-			messages3.innerHTML = "<div class='fromC'><p class='cTag'>SYSTEM</p><span>"+ntext+"</span></div>"+messages3.innerHTML;
+			messages3.innerHTML = "<div class='fromC'><span>"+ntext+"</span></div><p class='cTag'>SYSTEM</p>"+messages3.innerHTML;
 		}else{
-			messages3.innerHTML = "<div class='fromC'><p class='cTag'>CUSTOMER3</p><span>"+text+"</span></div>"+messages3.innerHTML;
+			messages3.innerHTML = "<div class='fromC'><span>"+text+"</span></div><p class='cTag'>CUSTOMER3</p>"+messages3.innerHTML;
 		}
 	}
 	function writeResponse4(text){
@@ -409,9 +411,9 @@
 			messages4.innerHTML = "<div class='fromM'><span class='mTag'>"+ntext+"</span></div>"+messages4.innerHTML;
 		}else if(text.includes("SYSTEM")){ //시스템이 보내는 메세지
 			var ntext= text.replace("SYSTEM","");
-			messages4.innerHTML = "<div class='fromC'><p class='cTag'>SYSTEM</p><span>"+ntext+"</span></div>"+messages4.innerHTML;
+			messages4.innerHTML = "<div class='fromC'><span>"+ntext+"</span></div><p class ='cTag'>SYSTEM</p>"+messages4.innerHTML;
 		}else{
-			messages4.innerHTML = "<div class='fromC'><p class='cTag'>CUSTOMER4</p><span>"+text+"</span></div>"+messages4.innerHTML;
+			messages4.innerHTML = "<div class='fromC'><span>"+text+"</span></div><p class='cTag'>CUSTOMER4</p>"+messages4.innerHTML;
 		}
 	}
 	
