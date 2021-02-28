@@ -408,8 +408,9 @@ h5{
 			max:100000,
 			step:10000,
 			slide: function( event, ui ) {
-				rangeApply(ui.value);
 		    	$( "#amount" ).text( ui.value+" 원" );
+			},stop: function(event,ui){
+				rangeApply(ui.value);
 			}
 		});
 
