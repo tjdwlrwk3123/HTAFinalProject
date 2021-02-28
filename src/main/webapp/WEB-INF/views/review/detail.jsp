@@ -27,7 +27,7 @@
 		<td>작성날짜</td><td>${vo.review_date}</td>
 	</tr>
 	<tr>
-		<td>사진넣을곳임</td><td></td>
+		<td>사진</td><td><img src="<%=request.getContextPath() %>/resources/upload/${vo1.imgsavename}"></td>
 	</tr>
 	
 		<tr>

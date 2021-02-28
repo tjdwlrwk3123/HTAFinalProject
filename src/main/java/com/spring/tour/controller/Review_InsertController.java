@@ -16,6 +16,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.spring.tour.service.ReviewService;
 import com.spring.tour.vo.ImageVo;
@@ -36,7 +37,7 @@ public class Review_InsertController {
 
 	@RequestMapping(value = "/review/insert", method = RequestMethod.POST)
 	public String insert(String user_id, Integer service_number, Integer star_point, String review_content,
-			Integer cate_number, Date review_date, String review_title, Integer general_number, MultipartFile[] img1, MultipartFile[] img2, Model model) {
+			Integer cate_number, Date review_date, String review_title, Integer general_number, MultipartFile[] img1, MultipartFile[] img2, Model model, MultipartHttpServletRequest request) {
 		try {
 			String path = sc.getRealPath("/resources/upload");
 			System.out.println(path);
@@ -52,7 +53,12 @@ public class Review_InsertController {
 					FileCopyUtils.copy(is, fos);
 					is.close();
 					fos.close();
-					ImageVo vo=new ImageVo(0,imgorgname,imgsavename,general_number,cate_number);
+					ImageVo vo=new ImageVo();
+					vo.setImg_num(0);
+					vo.setImgorgname(request.getParameter("imgorgname"));
+					vo.setImgsavename(request.getParameter("imgsavename"));
+					vo.setGeneral_number(Integer.parseInt(request.getParameter("general_number")));
+					vo.setCate_number(Integer.parseInt(request.getParameter("cate_number")));
 					service.insert1(vo);
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -69,6 +75,12 @@ public class Review_InsertController {
 					is.close();
 					fos.close();
 					ImageVo vo=new ImageVo(0,imgorgname,imgsavename,general_number,cate_number);
+					service.insert1(vo);
+					vo.setImg_num(0);
+					vo.setImgorgname(request.getParameter("imgorgname"));
+					vo.setImgsavename(request.getParameter("imgsavename"));
+					vo.setGeneral_number(Integer.parseInt(request.getParameter("general_number")));
+					vo.setCate_number(Integer.parseInt(request.getParameter("cate_number")));
 					service.insert1(vo);
 					
 				} catch (IOException e) {
