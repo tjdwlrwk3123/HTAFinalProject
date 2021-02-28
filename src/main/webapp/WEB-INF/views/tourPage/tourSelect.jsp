@@ -35,7 +35,7 @@
 	
 }
 #tourSelect_wrapper {
-	width: 1000px;
+	width: 80%;
 	margin: auto;
 	display : flex;
 	background-color: white;
@@ -628,7 +628,7 @@ h5{
 			}
 			
 			var str = "";
-			str+="<div class='row row-cols-1 row-cols-md-3'>"; //첫번째 div
+			str+="<div class='row row-cols-1 row-cols-md-4'>"; //첫번째 div
 			$("#tourType").val(param.tourType);
 
 			for(let i=0; i<data.list.length; i++){
