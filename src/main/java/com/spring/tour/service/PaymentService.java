@@ -56,6 +56,27 @@ public class PaymentService {
 		// 포인트 사용했을시 user_info 테이블에서 사용한 만큼의 포인트 차감
 		dao.updatePoint(upMap);
 		
+		String user_id = (String)tbMap.get("user_id");
+		System.out.println("user_id : "+user_id);
+		
+		
+		int sumTotal = dao.getAccomTotal(user_id) + dao.getTourTotal(user_id);
+		String newGrade = "";
+		if(sumTotal>100000) {
+			newGrade = "SILVER";
+		}else if(sumTotal>300000) {
+			newGrade = "GOLD";
+		}else if(sumTotal>800000) {
+			newGrade = "PLATINUM";
+		}else if(sumTotal>1000000) {
+			newGrade = "VIP";
+		}
+		
+		System.out.println("sumTotal ="+sumTotal);
+		HashMap<String, Object> gradeMap = new HashMap<>();
+		gradeMap.put("user_id", user_id);
+		gradeMap.put("user_grade", newGrade);
+		dao.changeGrade(gradeMap);
 		return 1;
 	}
 	
@@ -80,9 +101,27 @@ public class PaymentService {
 		// 포인트 사용했을시 user_info 테이블에서 사용한 만큼의 포인트 차감
 		dao.updatePoint(upMap);
 		
+		String user_id = (String)abMap.get("user_id");
+		System.out.println("user_id : "+user_id);
+
+		int sumTotal = dao.getAccomTotal(user_id) + dao.getTourTotal(user_id);
+		String newGrade = "";
+		if(sumTotal>100000) {
+			newGrade = "SILVER";
+		}else if(sumTotal>300000) {
+			newGrade = "GOLD";
+		}else if(sumTotal>800000) {
+			newGrade = "PLATINUM";
+		}else if(sumTotal>1000000) {
+			newGrade = "VIP";
+		}
+		
+		System.out.println("sumTotal ="+sumTotal);
+		HashMap<String, Object> gradeMap = new HashMap<>();
+		gradeMap.put("user_id", user_id);
+		gradeMap.put("user_grade", newGrade);
+		dao.changeGrade(gradeMap);
 		return 1;
+		
 	}
-	
-	
-	
 }

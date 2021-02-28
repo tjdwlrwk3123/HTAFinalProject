@@ -63,4 +63,14 @@
 	</update>
 	
 	
+	<select id="accomTotal" parameterType="string">
+		select sum(total_price) accomTotal from accom_book where user_id=#{user_id}
+	</select>
+	<select id="tourTotal" parameterType="string">
+		select sum(total_price) tourTotal from tour_book where user_id=#{user_id}
+	</select>
+	<update id="changeGrade" parameterType="hashmap">
+		update user_info set user_grade=#{user_grade} where user_id=#{user_id}
+	</update>
+	
 </mapper>

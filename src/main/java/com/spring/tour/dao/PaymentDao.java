@@ -48,11 +48,6 @@ public class PaymentDao {
 	}
 	
 	
-	
-	
-	
-	
-	
 	//공통 부분 
 	public int updatePoint(HashMap<String, Object> map) {
 		return sqlsession.update(NAMESPACE+".updatePoint", map);
@@ -62,6 +57,15 @@ public class PaymentDao {
 	}
 	public int updateTicket(HashMap<String, Object> map) {
 		return sqlsession.update(NAMESPACE+".updateTicket", map);
+	}
+	public int getAccomTotal(String user_id) {
+		return sqlsession.selectOne(NAMESPACE+".accomTotal", user_id);
+	}
+	public int getTourTotal(String user_id) {
+		return sqlsession.selectOne(NAMESPACE+".tourTotal", user_id);
+	}
+	public int changeGrade(HashMap<String, Object> map) {
+		return sqlsession.update(NAMESPACE+".changeGrade", map);
 	}
 }
 	
