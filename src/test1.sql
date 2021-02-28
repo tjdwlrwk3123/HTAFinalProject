@@ -27,11 +27,18 @@ DROP TABLE user_info CASCADE CONSTRAINTS;
 DROP TABLE facilities CASCADE CONSTRAINTS;
 DROP TABLE convenience CASCADE CONSTRAINTS;
 DROP TABLE tour_book_option CASCADE CONSTRAINTS;
+DROP TABLE VISITOR_INFO CASCADE CONSTRAINTS;
 
 /* Drop Sequences */
 
 DROP SEQUENCE WISH_SEQ;
-
+DROP SEQUENCE TI_SEQ;
+DROP SEQUENCE TO_SEQ;
+DROP SEQUENCE AB_SEQ;
+DROP SEQUENCE TB_SEQ;
+DROP SEQUENCE VI_SEQ;
+DROP SEQUENCE TOKEN_SEQ;
+DROP SEQUENCE COUPON_SEQ;
 
 
 /* Create Tables */
@@ -225,7 +232,7 @@ CREATE TABLE review_answer
 	review_number number NOT NULL,
 	review_content varchar2(3000),
 	review_answer_Date date,
-	PRIMARY KEY (review_answer_review)
+	PRIMARY KEY (review_answer_number)
 );
 
 
@@ -255,8 +262,8 @@ CREATE TABLE tour_info
 (
 	tour_info_number number NOT NULL,
 	service_number number NOT NULL,
-	tour_content varchar2(1000),
-	tour_how varchar2(1000),
+	tour_content varchar2(3000),
+	tour_how varchar2(3000),
 	tour_rule nvarchar2(1000),
 	tour_expire date,
 	PRIMARY KEY (tour_info_number)
