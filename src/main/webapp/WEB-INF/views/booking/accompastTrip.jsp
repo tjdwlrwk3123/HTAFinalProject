@@ -4,21 +4,18 @@
 <!DOCTYPE html>
 <meta charset="UTF-8">
 <!-- <script src="https://kit.fontawesome.com/b99e675b6e.js"></script> -->
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4b7621e8665f6a2b7f8fcf343ba118b6&libraries=services"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=04c1ebe9cbcfe54ddfd424342eee90fc&libraries=services"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
 
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Stylish&display=swap" rel="stylesheet">
+<script type="text/javascript" src="/tour/resources/js/jquery-3.5.1.min.js"></script>
+
 
 <style type="text/css">
-	*{
-		font-family: 'Stylish', sans-serif;
-	}
 	.accompastTripWrapper{
 		display: flex;
 		position: relative;
 		height: 1000px;
-		background-color: #F3F3F3;
+		left: 20%;
 	}
 	
 	.accompastTripWrapper .bookingSidebar{
@@ -57,9 +54,7 @@
 		color:black;
 	}
 	.accompastTripWrapper .accompastTripMain{
-		width: 100%;
-		height: 1000px;
-		background-color: #F3F3F3;
+		width: 50%;
 	}
 	.accompastTripWrapper .accompastTripMain #accompastTripWrap{
 		height: 900px;
@@ -68,10 +63,14 @@
 		border-bottom: 1px solid rgba(0,0,0,0.05);
 		border-top: 1px solid rgba(225,225,225,0.05);
 		margin-left: 50px;
+		margin-top: 15px;
+		width: 800px;
+		height: 145px;
 	}
 	.accompastTripList div img{
 		width: 145px;
 		height: 145px;
+		margin-bottom: 120px;
 	}
 	.accompastTripList a{
 		text-decoration: none;
@@ -140,7 +139,7 @@
 						<img src="${cp}/resources/upload/${image[status.index][0].imgsavename}" 
 						onselect="return false" ondragstart="return false">
 					</div>
-					<div style="display: inline-block; width:320px; position: relative; bottom: 30px;">
+					<div style="display: inline-block; width:450px; position: relative; bottom: 30px;">
 						<div>
 						<h3 style="display: inline-block;"><a href="${cp }/accomDetail?accomNum=${detail[status.index].accom_service_number}
 						&cate_number=${service[status.index].cate_number}">${vo.service_name }</a></h3>

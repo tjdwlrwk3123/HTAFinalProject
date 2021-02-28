@@ -5,26 +5,21 @@
 <meta charset="UTF-8">
 <!-- <script src="https://kit.fontawesome.com/b99e675b6e.js"></script> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4b7621e8665f6a2b7f8fcf343ba118b6&libraries=services"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=04c1ebe9cbcfe54ddfd424342eee90fc&libraries=services"></script>
 
-<!-- 구글폰트 -->
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Stylish&display=swap" rel="stylesheet">
+<script type="text/javascript" src="/tour/resources/js/jquery-3.5.1.min.js"></script>
+
 
 <style type="text/css">
-	*{
-		font-family: 'Stylish', sans-serif;
-	}
 	.tourBookingWrapper{
 		display: flex;
 		position: relative;
 		height: 1000px;
-		background-color: #F3F3F3;
+		left: 20%
 	}
 	
 	.tourBookingWrapper .bookingSidebar{
 		width: 250px;
-		height: 940px;
 		background: #4B70DD;
 		padding: 30px 0;
 	}
@@ -58,9 +53,7 @@
 		color:black;
 	}
 	.tourBookingWrapper .tourBookingMain{
-		width: 100%;
-		height: 1000px;
-		background-color: #F3F3F3;
+		width: 50%;
 	}
 	.tourBookingWrapper .tourBookingMain #tourListWrap{
 		height: 900px;
@@ -70,10 +63,13 @@
 		border-top: 1px solid rgba(225,225,225,0.05);
 		margin-left: 50px;
 		margin-top: 15px;
+		width: 800px;
+		height: 145px;
 	}
 	.tourBookList div img{
 		width: 145px;
 		height: 145px;
+		margin-bottom: 120px;
 	}
 	.tourBookList a{
 		text-decoration: none;
@@ -112,7 +108,10 @@
     width:600px;
     height:500px;
     background-color:#FFF;
-    z-index:10000;   
+    z-index:10000; 
+ 	}
+ 	.cancelPopup p{
+ 		margin-bottom: 30px;
  	}
  	.cancelPopup a{
  		text-decoration: none;
@@ -122,7 +121,6 @@
 		display:block;
 		width: 50px;
 		height: 30px;
-		padding-top: 15px;
  	}
  	.cancelPopup a:hover{
 		transition-duration:500ms;
@@ -174,7 +172,7 @@
 					<div style="display: inline-block;">
 						<img src="${cp}/resources/upload/${image[status.index][0].imgsavename}">
 					</div>
-					<div style="display: inline-block; width:320px; position: relative; bottom: 30px;">
+					<div style="display: inline-block; width:450px; position: relative; bottom: 30px;">
 						<h3><a href="${cp }/tourDetail?service_number=${vo.service_number}&cate_number=1">${vo.service_name }</a></h3>
 						<span>유효기간:</span><span>${vo.tour_startdate }~${vo.tour_enddate }</span>
 						<br>
@@ -253,8 +251,8 @@
     </p>
     <p style="text-align:center;">취소하시겠습니까?</p>
     <div style="text-align:center;">
-    <p style="background:#ffffff; padding:20px; display: inline-block;"><a href="#" class="cancelApply">예</a></p>
-    <p style="background:#ffffff; padding:20px; display: inline-block;"><a href="#" class="close">닫기</a></p>
+    <p style="background:#ffffff; padding:20px; display: inline-block;"><a href="#" name="cancelApply">예</a></p>
+    <p style="background:#ffffff; padding:20px; display: inline-block;"><a href="#" name="cancelClose">닫기</a></p>
     </div>
 </div>
 
@@ -401,7 +399,7 @@ $(document).ready(function(){
     });
 
     //닫기 버튼을 눌렀을 때
-    $(".cancelPopup .close").click(function (e) {  
+    $(".cancelPopup a[name=cancelClose]").click(function (e) {  
         //링크 기본동작은 작동하지 않도록 한다.
         e.preventDefault();
         bookNumber=0;
@@ -418,7 +416,7 @@ $(document).ready(function(){
         $(".detailPopup").hide();
     });
     
-    $(".cancelPopup .cancelApply").click(function (e) {  
+    $(".cancelPopup a[name=cancelApply]").click(function (e) {  
         //링크 기본동작은 작동하지 않도록 한다.
         e.preventDefault();
         location.href="/tour/tourCancel?bookNumber="+bookNumber;

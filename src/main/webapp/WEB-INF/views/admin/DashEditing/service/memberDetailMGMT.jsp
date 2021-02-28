@@ -129,14 +129,6 @@ var detailComp={
 		<div>연락처:{{post.user_phone}}</div>
 		<div>
 			<div style="display:inline-block">회원등급:{{post.user_grade}}</div>
-			<select ref="grade">
-				<option value="Bronze">Bronze</option>
-				<option value="Silver">Silver</option>
-				<option value="Gold">Gold</option>
-				<option value="Platinum">Platinum</option>
-				<option value="Vip">Vip</option>
-			</select>
-			<button style="display:inline-block" @click="changeGrade">등급변경</button>
 		</div>
 		<input type="hidden" v-bind:value="post.user_condition" ref="con">
 		<div>

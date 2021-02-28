@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.tour.dao.BookingDao;
+import com.spring.tour.dao.PaymentDao;
 import com.spring.tour.vo.AccomBookVo;
 import com.spring.tour.vo.TourBookOptionVo;
 import com.spring.tour.vo.TourBookVo;
@@ -17,6 +18,8 @@ import com.spring.tour.vo.VisitorInfoVo;
 public class BookingService {
 	@Autowired
 	private BookingDao dao;
+	@Autowired
+	private PaymentDao pdao;
 	
 	public List<AccomBookVo> accomBookList(HashMap<String, Object> accomMap){
 		return dao.accomBookList(accomMap);
@@ -43,6 +46,26 @@ public class BookingService {
 		map.put("user_id",user_id);
 		dao.pointRefund(map);
 		dao.accomCancel(bookNumber);
+		
+		int sumTotal = pdao.getAccomTotal(user_id) + pdao.getTourTotal(user_id);
+		String newGrade = "Bronze";
+		if(sumTotal>1000000) {
+			newGrade = "VIP";
+		}else if(sumTotal>800000) {
+			newGrade = "Platinum";
+		}else if(sumTotal>300000) {
+			newGrade = "Gold";
+		}else if(sumTotal>100000) {
+			newGrade = "Silver";
+		}
+		
+		System.out.println("sumTotal ="+sumTotal);
+		HashMap<String, Object> gradeMap = new HashMap<>();
+		gradeMap.put("user_id", user_id);
+		gradeMap.put("user_grade", newGrade);
+		System.out.println("NewGrade ="+newGrade);
+		pdao.changeGrade(gradeMap);
+		
 		return 1;
 	}
 	//숙소 디테일
@@ -79,6 +102,26 @@ public class BookingService {
 		dao.pointRefund(map);
 		dao.tourOptionDel(bookNumber);
 		dao.tourCancel(bookNumber);
+		
+		int sumTotal = pdao.getAccomTotal(user_id) + pdao.getTourTotal(user_id);
+		String newGrade = "Bronze";
+		if(sumTotal>1000000) {
+			newGrade = "VIP";
+		}else if(sumTotal>800000) {
+			newGrade = "Platinum";
+		}else if(sumTotal>300000) {
+			newGrade = "Gold";
+		}else if(sumTotal>100000) {
+			newGrade = "Silver";
+		}
+		
+		System.out.println("sumTotal ="+sumTotal);
+		HashMap<String, Object> gradeMap = new HashMap<>();
+		gradeMap.put("user_id", user_id);
+		gradeMap.put("user_grade", newGrade);
+		System.out.println("NewGrade ="+newGrade);
+		pdao.changeGrade(gradeMap);
+		
 		return 1;
 	}
 	//투어디테일

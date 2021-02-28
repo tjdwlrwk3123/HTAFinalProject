@@ -6,19 +6,20 @@
 <!-- <script src="https://kit.fontawesome.com/b99e675b6e.js"></script> -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4b7621e8665f6a2b7f8fcf343ba118b6&libraries=services"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=04c1ebe9cbcfe54ddfd424342eee90fc&libraries=services"></script>
+
+<script type="text/javascript" src="/tour/resources/js/jquery-3.5.1.min.js"></script>
 
 <style type="text/css">
 	.accomBookingWrapper{
 		display: flex;
 		position: relative;
+		left: 20%;
 		height: 1000px;
-		background-color: #F3F3F3;
 	}
 	
 	.accomBookingWrapper .bookingSidebar{
 		width: 250px;
-		height: 940px;
 		background: #4B70DD;
 		padding: 30px 0;
 	}
@@ -52,9 +53,7 @@
 		color:black;
 	}
 	.accomBookingWrapper .accomBookingMain{
-		width: 100%;
-		height: 1000px;
-		background-color: #F3F3F3;
+		width: 50%;
 	}
 	.accomBookingWrapper .accomBookingMain #accomListWrap{
 		height: 900px;
@@ -64,10 +63,13 @@
 		border-top: 1px solid rgba(225,225,225,0.05);
 		margin-left: 50px;
 		margin-top: 15px;
+		width: 800px;
+		height: 145px;
 	}
 	.accomBookList div img{
 		width: 145px;
 		height: 145px;
+		margin-bottom: 120px;
 	}
 	.accomBookList a{
 		text-decoration: none;
@@ -84,7 +86,6 @@
 		display:block;
 		width: 50px;
 		height: 30px;
-		padding-top: 15px;
 	}
 	.cancelPopup a:hover{
 		transition-duration:500ms;
@@ -166,7 +167,7 @@
 					<div style="display: inline-block;">
 						<img src="${cp}/resources/upload/${image[status.index][0].imgsavename}">
 					</div>
-					<div style="display: inline-block; width:320px; position: relative; bottom: 30px;">
+					<div style="display: inline-block; width:450px; position: relative; bottom: 30px;">
 						<div>
 						<h3 style="display: inline-block;"><a href="${cp }/accomDetail?accomNum=${detail[status.index].accom_service_number}
 						&cate_number=${service[status.index].cate_number}">${vo.service_name }</a></h3>
@@ -187,14 +188,14 @@
 						<span style="font-size: 0.5em;">(포인트 사용금액:</span><span style="font-size: 0.5em;">${vo.point_useamount }원)</span><br>
 						</c:if>
 					</div>
-					<div style="display:inline-block; position: relative; left:10px;">
+					<div style="display:inline-block; position: relative; left:40px;">
 						<a href="#" class="openBookDetail">상세보기</a>
 						<input type="hidden" value="${vo.accom_book_number }">
 						<input type="hidden" value="${vo.accom_option_number }">
 						<input type="hidden" value="${vo.accom_startdate }">
 						<input type="hidden" value="${vo.accom_enddate }">
 					</div>
-					<div style="display:inline-block; position: relative; left:40px;">
+					<div style="display:inline-block; position: relative; left:70px;">
 						<a href="#" class="openMask">예약취소</a>
 						<input type="hidden" value="${vo.accom_book_number }">
 					</div>
@@ -371,6 +372,7 @@ $(document).ready(function(){
         bookNumber=$(e.target).next().val();
         wrapWindowByMask();
     });
+
     $(".openBookDetail").click(function(e){
         e.preventDefault();
         bookNumber=$(e.target).next().val();
