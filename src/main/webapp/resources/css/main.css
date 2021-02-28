@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 #wrap{
-	width:1000px;
+	width:100%;
 /*  	height:100px; */
 	margin:auto;
 }
@@ -9,16 +9,19 @@
 	width:100%;
 	height:20%;
 	background-color:yellow;
+	display:inline-block;
 }
 #content{
 	width:100%;
 	height:60%;
 	background-color:orange;
+	display:inline-block;
 }
 #footer{
 	width:100%;
 	height:20%;
 	background-color:pink;
+	display:inline-block;
 }
 
 
