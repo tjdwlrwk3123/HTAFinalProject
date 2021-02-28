@@ -80,6 +80,7 @@ public class WebSocketChat3 {
 		if(cnt++==0) {
 			username=sender;
 			sendAllSessionToMessage(session, "SYSTEM", "SYSTEM"+message);
+			logger.info("Message From "+sender+":"+message);
 			return;
 		}
 		

@@ -77,14 +77,14 @@ public class WebSocketChat1 {
 	@OnMessage
 	public void onMessage(String message, Session session) {
 		String sender = message.split(",")[1];
-		message=message.split(",")[0];	
-		
+		message=message.split(",")[0];
+		message= message.replaceAll("\\n", "<br>");
 		if(cnt++==0) {
 			username=sender;
 			sendAllSessionToMessage(session, "SYSTEM", "SYSTEM"+message);
+			logger.info("Message From "+sender+":"+message);
 			return;
 		}
-		
 		logger.info("Message From "+sender+":"+message);
 		try {
 			final Basic basic = session.getBasicRemote(); // 내가 보낸걸 나에게로!

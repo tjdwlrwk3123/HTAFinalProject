@@ -8,90 +8,145 @@
 <meta http-equiv="Content-type" content="text/html;" charset="UTF-8">
 <title>Simple Chat</title>
 <style>
-	#wrapper{
-		width: 1380px;
+	#adminchat_wrapper{
+		width:100%;
 		margin:auto;
 		align-content: center;
 	}
 	#functionBox{
-		width:360px;
+		width:400px;
 		margin:auto;
-		border:2px dotted black;
+		border:2px dashed black;
 		clear:left;
 		padding:10px;
+		background-color: #E1E1E1;
+		border-radius: 25px 25px 25px 25px;
 	}
+	#functionBox input{
+		border-radius: 25px 25px 25px 25px;	
+		padding-left:10px;
+		width:160px;
+	}
+	#functionBox textarea{
+		padding:10px;
+		border-radius: 25px 25px 25px 25px;	
+	}
+	input:focus, textarea:focus, select:focus, button:focus{
+    	outline: none;
+    }
 	.messagewindow{
 		width: 300px;
-		height: 500px; 
+		height: 300px; 
 		display:flex;  /*flex direction 사용하기 위함 */
  	    flex-direction: column-reverse; /*스크롤 하단 고정 */
 	    overflow-y:auto;  /* 내용이 설정된 height을 넘기면 자동으로 스크롤 생성 */
 		float: left;
 		margin : 20px;
 		word-break:break-all;
+		padding:15px;
+		border-radius: 25px 25px 25px 25px;
+		color:black;
 	}   
+	
+	.messagewindow::-webkit-scrollbar {
+	   	width: 8px;
+	   	height: 100px;
+	}
+			 
+	.messagewindow::-webkit-scrollbar-thumb {
+	    background-color: #2f3542;
+	    border-radius: 10px;
+	    background-clip: padding-box;
+	    border: 2px solid transparent;
+	}
+	.messagewindow::-webkit-scrollbar-track {
+	    background-color: grey;
+	    border-radius: 10px;
+	    box-shadow: inset 0px 0px 5px white;
+	    height:100px;
+	}
+		
 	 
 	.fromM{/* 내 메세지 div */
+		text-decoration:none;
 		text-align:right;
 		margin :8px;
 		margin-left:60px;
 		word-break:break-all;
+		background-color:yellow;
+		padding:10px;
+		border-radius:25px 25px 25px 25px;
+		padding-left:-5px;
+		display:inline-block;
 	}
  	.fromC{ /* 내가 아닌 메세지 div  */ 
+ 		text-align: left;
 		margin :8px;
 		margin-right:60px;
 		font-weight: 500;
 		word-break:break-all;
 	}
 	.mTag{/* 내용에 입힐 CSS */
-		margin:3px;
+	
 	}
 	.cTag{/* */
 		margin:0;
 		font-weight: 700;
 	}
-	
-	
+	.chatBtn:not(:disabled){
+		border-radius: 25px 25px 25px 25px;
+		background-color:#4E61FF;
+		color:white;
+	}
+	.chatBtn:disabled{
+		border-radius: 25px 25px 25px 25px;
+		
+	}
+	.chatBtn:hover:not(:disabled){
+		box-shadow: 1px 1px 2px 2px gray;
+	}
 </style>
 </head>
 <body>
-	<div id="wrapper">
-		<!-- 관리자 접속 채팅 창 -->
-		<div id="messages1" class="messagewindow"  style="background-color: tomato;">
-		<h1>1번 Customer</h1>	
-		</div>
-		
-		<div id="messages2" class="messagewindow"  style="background-color: yellow;">
-		<h1>2번 Customer</h1>	
-		</div>
-		
-		<div id="messages3" class="messagewindow"  style="background-color: pink;">
-		<h1>3번 Customer</h1>	
-		</div>
-		
-		<div id="messages4" class="messagewindow"  style="background-color: skyblue;">
-		<h1>4번 Customer</h1>	
-		</div><br>
+	<div id="adminchat_wrapper">
+		<div style="display: inline-block;">
+			<!-- 관리자 접속 채팅 창 -->
+			<div id="messages1" class="messagewindow"  style="background-color: #E1FF36;">
+			<h1>1번 Customer</h1>	
+			</div>
 			
-		<div id="functionBox">
-			<button type="button" id="connect" onclick="openAll(event)">대화방 참여</button>
-			<button type="button" id="disconnect" onclick="closeSocket(event)" disabled="disabled">대화방 나가기</button>
-			<br><br>
-			현재 대화 상대 : <input type="text" id="currentChat" placeholder="Whom To Speak" disabled="disabled"><br> <!--  현재 누구랑 대화 중인지 설정 --> 
-			상대
-			<select id="who" onchange="changeTo(this.value);" disabled="disabled">
-				<option>선택해주세요</option>
-				<option value="customer1">customer1</option>
-				<option value="customer2">customer2</option>
-				<option value="customer3">customer3</option>
-				<option value="customer4">customer4</option>
-			</select><br>
-			<br>
-			<input type="text" id="sender" value="admin" style="display:none;">
-			<textarea id="messageinput" rows="10" cols="50" style="resize:none;" ></textarea><br>
-			<button type="button" id="sendit" onclick="send()">메세지전송</button>
-			<button type="button" onclick="javascript:clearText()">대화내용 지우기</button>
-			<button type="button" onclick="javascript:goHome()">홈으로 돌아가기</button>
+			<div id="messages2" class="messagewindow"  style="background-color: yellow;">
+			<h1>2번 Customer</h1>	
+			</div>
+			
+			<div id="messages3" class="messagewindow"  style="background-color: pink;">
+			<h1>3번 Customer</h1>	
+			</div>
+			
+			<div id="messages4" class="messagewindow"  style="background-color: skyblue;">
+			<h1>4번 Customer</h1>	
+			</div>
+		</div><br>
+		<div>
+			<div id="functionBox">
+				<button type="button" class="chatBtn" id="connect" onclick="openAll(event)">대화방 참여</button>
+				<button type="button" class="chatBtn" id="disconnect" onclick="closeSocket(event)" disabled="disabled">대화방 나가기</button>
+				<br><br>
+				현재 대화 상대 : <input type="text" id="currentChat" placeholder="Whom To Speak" disabled="disabled"><br> <!--  현재 누구랑 대화 중인지 설정 --> 
+				상대 : 
+				<select id="who" onchange="changeTo(this.value);" disabled="disabled">
+					<option>선택해주세요</option>
+					<option value="customer1">customer1</option>
+					<option value="customer2">customer2</option>
+					<option value="customer3">customer3</option>
+					<option value="customer4">customer4</option>
+				</select><br>
+				<br>
+				<input type="text" id="sender" value="admin" style="display:none;">
+				<textarea id="messageinput" rows="7" cols="40" style="resize:none;" ></textarea><br>
+				<button type="button" class="chatBtn" id="sendit" onclick="send()">메세지전송</button>
+				<button type="button" class="chatBtn" onclick="javascript:clearText()">대화내용 지우기</button>
+			</div>
 		</div>
 	</div>
 </body>
@@ -134,6 +189,7 @@
 		ws1.onopen = function(event){
 			if(event.data== undefined){
 				console.log("오픈되면 오는 메세지!! : "+event.data);
+				ws1.send("MANAGER가 접속하셨습니다.,MANAGER");
 				return;
 			}
 			console.log("오픈되면 오는 메세지!! : "+event.data);
@@ -164,6 +220,7 @@
 
 		ws2.onopen = function(event){
 			if(event.data== undefined){
+				ws2.send("MANAGER가 접속하셨습니다.,MANAGER");
 				return;
 			}
 			writerResponse2(event.data);
@@ -173,6 +230,7 @@
 			console.log('writeResponse');
 			console.log('ws2에서 받아온 메세지 :' + event.data);
 			writeResponse2(event.data);
+			
 		}
 		ws2.onclose=function(event){
 			writeResponse2("SYSTEM대화 종료");
@@ -194,6 +252,7 @@
 
 		ws3.onopen = function(event){
 			if(event.data== undefined){
+				ws3.send("MANAGER가 접속하셨습니다.,MANAGER");
 				return;
 			}
 			writerResponse3(event.data);
@@ -224,6 +283,7 @@
 
 		ws4.onopen = function(event){
 			if(event.data== undefined){
+				ws4.send("MANAGER가 접속하셨습니다.,MANAGER");
 				return;
 			}
 			writerResponse4(event.data);
@@ -281,11 +341,11 @@
 	///////////////////////
 	function openAll(e){ //한번에 열기
 		e.target.disabled=true; //대화방 참여 버튼 비활성화
-		document.getElementById("disconnect").disabled=false;
 		openSocket1();
 		openSocket2();
 		openSocket3();
 		openSocket4();
+		document.getElementById("disconnect").disabled=false;
 		document.getElementById("who").disabled=false;
 	}
 	
@@ -303,7 +363,8 @@
 	function writeResponse1(text){
 		if(text.includes("#$#")){ //내가 보낸 메세지라는 표시
 			var ntext = text.replace("#$#", "");
-			messages1.innerHTML = "<div class='fromM'><span class='mTag'>"+ntext+"</span></div>"+messages1.innerHTML;
+			messages1.innerHTML = "<li class='fromM'>"+ ntext +"</li>"+messages1.innerHTML;
+// 			messages1.innerHTML = "<div class='fromM'><span class='mTag'>"+ ntext +"</span></div>"+messages1.innerHTML;
 		}else if(text.includes("SYSTEM")){ //시스템이 보내는 메세지
 			var ntext= text.replace("SYSTEM","");
 			messages1.innerHTML = "<div class='fromC'><p class='cTag'>SYSTEM</p><span>"+ntext+"</span></div>"+messages1.innerHTML;
@@ -360,10 +421,7 @@
 			document.getElementById("messages4").innerHTML="";
 		}
 	}
-	
-	function goHome(){
-		window.location.href = "${cp}/";
-	}
+
 
 </script>
 </body>

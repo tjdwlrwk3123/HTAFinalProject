@@ -54,23 +54,24 @@
 
 	border-radius: 5% 5% 0% 0%;
 	word-break:break-all; /* 글자가 div를 넘어가지 않도록*/
-	}
+}
 
 
 #messages::-webkit-scrollbar {
    	width: 8px;
-	 }
- 	#messages::-webkit-scrollbar-thumb {
+}
+	 
+#messages::-webkit-scrollbar-thumb {
     background-color: #2f3542;
     border-radius: 10px;
     background-clip: padding-box;
     border: 2px solid transparent;
- }
- 	#messages::-webkit-scrollbar-track {
+}
+#messages::-webkit-scrollbar-track {
     background-color: grey;
     border-radius: 10px;
     box-shadow: inset 0px 0px 5px white;
- 	}
+}
 
 #btnbox{
 	height:150px;
@@ -84,8 +85,7 @@
 #inputtext{
 	border:1px solid white;
 	style="margin:5px;"
- }
- 
+}
  
 .fromM{/* 내 메세지 div */
 	text-align:right;
@@ -93,7 +93,8 @@
 	margin-left:60px;
 	word-break:break-all;
 }
-	.fromC{ /* 내가 아닌 메세지 div  */ 
+
+.fromC{ /* 내가 아닌 메세지 div  */ 
 	margin :8px;
 	margin-right:60px;
 	font-weight: 500;
@@ -212,7 +213,6 @@ input:focus, textarea:focus, select:focus, button:focus{
 			}
 			writerResponse(event.data);
 			ws.send(username+",님이 접속하셨습니다.");
-			
 		}
 		ws.onmessage = function(event){
 			console.log('writeResponse');

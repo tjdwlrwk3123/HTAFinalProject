@@ -79,7 +79,8 @@ public class WebSocketChat4 {
 		
 		if(cnt++==0) {
 			username=sender;
-			sendAllSessionToMessage(session, "SYSTEM", "SYSTEM"+message);
+			sendAllSessionToM|essage(session, "SYSTEM", "SYSTEM"+message);
+			logger.info("Message From "+sender+":"+message);
 			return;
 		}
 		
