@@ -67,44 +67,43 @@
 	    box-shadow: inset 0px 0px 5px white;
 	    height:100px;
 	}
-		
-	 
+
 	.fromM{/* 내 메세지 div */
-		list-style:none;
 		max-width:80%;
 		margin:5px;
 		margin-left:20%;
- 		text-align:left; 
 		word-break:break-all;
-		background-color:yellow;
-		padding:10px;
+		padding:5px;
 		border-radius:25px 25px 25px 25px;
+	}
+	.mMSG{/* 내용에 입힐 CSS */
 		clear:both;
 		float:right;
+		text-align: left;
 	}
+	
  	.fromC{ /* 내가 아닌 메세지 div  */ 
 		max-width:80%;
  		text-align: left;
 		margin-right:60px;
 		font-weight: 500;
 		word-break:break-all;
-		background-color:yellow;
-		padding:10px;
-		border-radius:25px 25px 25px 25px;
+		padding:5px;
 		margin:5px;
 		margin-left:-2px;
+		margin-bottom:5px;
 		clear:both;
 		float:left;
 	}
-	.mTag{/* 내용에 입힐 CSS */
-	
-	}
-	.cTag{/* */
+	.cTag{
 		margin:0;
 		font-weight: 700;
 		text-align:left;
 		padding-left:5px;
+		margin-bottom:-8px;
 	}
+	
+
 	.chatBtn:not(:disabled){
 		border-radius: 25px 25px 25px 25px;
 		background-color:#4E61FF;
@@ -116,6 +115,12 @@
 	}
 	.chatBtn:hover:not(:disabled){
 		box-shadow: 1px 1px 2px 2px gray;
+	}
+	
+	#who{
+		margin-top:10px;
+		border-radius: 25px 25px 25px 25px;
+		padding:5px;
 	}
 </style>
 </head>
@@ -375,10 +380,10 @@
 	function writeResponse1(text){
 		if(text.includes("#$#")){ //내가 보낸 메세지라는 표시
 			var ntext = text.replace("#$#", "");
-			messages1.innerHTML = "<div class='fromM'><span class='mTag'>"+ ntext +"</span></div>"+messages1.innerHTML;
+			messages1.innerHTML = "<div class='fromM'><span class='mMSG'>"+ ntext +"</span></div>"+messages1.innerHTML;
 		}else if(text.includes("SYSTEM")){ //시스템이 보내는 메세지
 			var ntext= text.replace("SYSTEM","");
-			messages1.innerHTML = "<div class='fromC'><span>"+ntext+"</span></div><p class='cTag'>SYSTEM</p>"+messages1.innerHTML;
+			messages1.innerHTML = "<div class='fromC'><span>"+ntext+"</span></div><p class= 'cTag'>SYSTEM</p>"+messages1.innerHTML;
 		}else{
 			messages1.innerHTML = "<div class='fromC'><span>"+text+"</span></div><p class='cTag'>CUSTOMER1</p>"+messages1.innerHTML;
 		}
@@ -386,7 +391,7 @@
 	function writeResponse2(text){
 		if(text.includes("#$#")){ //내가 보낸 메세지라는 표시
 			var ntext = text.replace("#$#", "");
-			messages2.innerHTML = "<div class='fromM'><span class='mTag'>"+ntext+"</span></div>"+messages2.innerHTML;
+			messages2.innerHTML = "<div class='fromM'><span class='mMSG'>"+ntext+"</span></div>"+messages2.innerHTML;
 		}else if(text.includes("SYSTEM")){ //시스템이 보내는 메세지
 			var ntext= text.replace("SYSTEM","");
 			messages2.innerHTML = "<div class='fromC'><span>"+ntext+"</span></div><p class='cTag'>SYSTEM</p>"+messages2.innerHTML;
@@ -397,7 +402,7 @@
 	function writeResponse3(text){
 		if(text.includes("#$#")){ //내가 보낸 메세지라는 표시
 			var ntext = text.replace("#$#", "");
-			messages3.innerHTML = "<div class='fromM'><span class='mTag'>"+ntext+"</span></div>"+messages3.innerHTML;
+			messages3.innerHTML = "<div class='fromM'><span class='mMSG'>"+ntext+"</span></div>"+messages3.innerHTML;
 		}else if(text.includes("SYSTEM")){ //시스템이 보내는 메세지
 			var ntext= text.replace("SYSTEM","");
 			messages3.innerHTML = "<div class='fromC'><span>"+ntext+"</span></div><p class='cTag'>SYSTEM</p>"+messages3.innerHTML;
@@ -408,7 +413,7 @@
 	function writeResponse4(text){
 		if(text.includes("#$#")){ //내가 보낸 메세지라는 표시
 			var ntext = text.replace("#$#", "");
-			messages4.innerHTML = "<div class='fromM'><span class='mTag'>"+ntext+"</span></div>"+messages4.innerHTML;
+			messages4.innerHTML = "<div class='fromM'><span class='mMSG'>"+ntext+"</span></div>"+messages4.innerHTML;
 		}else if(text.includes("SYSTEM")){ //시스템이 보내는 메세지
 			var ntext= text.replace("SYSTEM","");
 			messages4.innerHTML = "<div class='fromC'><span>"+ntext+"</span></div><p class ='cTag'>SYSTEM</p>"+messages4.innerHTML;
