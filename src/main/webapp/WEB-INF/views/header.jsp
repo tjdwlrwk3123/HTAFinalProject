@@ -39,7 +39,7 @@
 						</c:choose>
                      	<c:choose>
 							<c:when test="${empty sessionScope.user_id }">
-								<a href ="#">
+								<a href ="${cp }/userterms">
 									<span style="color:white; margin-left: 3%">회원가입</span>
 								</a>
 							</c:when>
