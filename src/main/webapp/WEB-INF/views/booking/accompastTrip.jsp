@@ -16,12 +16,13 @@
 		position: relative;
 		height: 1000px;
 		left: 20%;
+		top: -35px;
 	}
 	
 	.accompastTripWrapper .bookingSidebar{
 		width: 250px;
 		height: 940px;
-		background: #4B70DD;
+		background: #4F61FF;
 		padding: 30px 0;
 	}
 	.accompastTripWrapper .bookingSidebar h2{
@@ -128,6 +129,11 @@
 			<li><a href="${cp }/tourBookingCheck"><i class="fas fa-ticket-alt"></i>투어/티켓</a></li>
 			<li><a href="${cp }/accompastTrip"><i class="far fa-lightbulb"></i>지난여행/후기</a></li>
 			<li><a href="${cp }/cancelTrip"><i class="fas fa-plane-slash"></i>취소목록</a></li>
+		</ul>
+		<ul>
+			<li><a href="${cp }/userinfopage">유저정보</a></li>
+			<li><a href="${cp }/usercoupon">쿠폰 내역</a></li>
+			<li><a href="${cp }/wishlist">위시리스트</a></li>
 		</ul>
 	</div>
 	<div class="accompastTripMain">

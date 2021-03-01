@@ -56,6 +56,8 @@
 		margin: auto;
 		display : flex;
 		height: 100%;
+		position: relative;
+		top: -35px;
 	}
 	.accomSelectSection{
 		width:900px; 
