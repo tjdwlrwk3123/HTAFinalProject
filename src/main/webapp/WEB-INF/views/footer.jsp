@@ -127,10 +127,10 @@ input:focus, textarea:focus, select:focus, button:focus{
 }
 
 </style>    
-<div>
-	<h2>푸터</h2>
-	
-	<input type="hidden" id="sender" value="none"><br>
+	<footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; ConnecTrip 2021</p>
+      <input type="hidden" id="sender" value="none"><br>
 	<div id="chat_icon"><i class="far fa-comment-dots fa-2x"></i></div>
 	<div id="chat_window">
 		<div id="callwrap">
@@ -146,7 +146,9 @@ input:focus, textarea:focus, select:focus, button:focus{
 			<input type="button" value="SEND" id="messageSend" onclick="send()" style="float:right; margin:5px;"><br>
 		</div>
 	</div>
-</div>
+    </div>
+  </footer>
+
 <script type="text/javascript">
 	
 	var ws;

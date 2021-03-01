@@ -5,7 +5,7 @@
 	<!-- 타일즈정의 -->
 	<definition name = ".home" template = "/WEB-INF/views/layout.jsp">
 		<put-attribute name="header" value = "/WEB-INF/views/header.jsp" />
-		<put-attribute name="content" value = "/WEB-INF/views/home.jsp" />
+		<put-attribute name="content" value = "/WEB-INF/views/index.jsp" />
 		<put-attribute name="footer" value = "/WEB-INF/views/footer.jsp" />
 	</definition>
 	

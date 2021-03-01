@@ -89,6 +89,7 @@
                         <a class="collapse-item" href="${cp }/memberManageList">회원 정보</a>
                         <a class="collapse-item" href="${cp }/couponManage">쿠폰 정보</a>
                         <a class="collapse-item" href="${cp }/AdminMail">이메일 발송</a>
+                        <a class="collapse-item" href="${cp }/authChange">등급 관리</a>
                     </div>
                 </div>
             </li>
@@ -104,7 +105,7 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Revenue Management:</h6>
-                        <a class="collapse-item" href="utilities-color.html">매출 조회</a>
+                        <a class="collapse-item" href="${cp }/upload">이벤트 페이지 관리</a>
                     </div>
                 </div>
             </li>
