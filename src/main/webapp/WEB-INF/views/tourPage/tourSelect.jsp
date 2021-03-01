@@ -297,10 +297,6 @@ h5{
 	width:85%;
 }
 
-<%
-	session.setAttribute("user_id", "kaka");
-%>
-
 
 </style>
 
