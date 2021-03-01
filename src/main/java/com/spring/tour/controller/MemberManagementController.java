@@ -51,10 +51,6 @@ public class MemberManagementController {
 			@RequestParam(value ="pageNum",defaultValue = "1")int pageNum,
 			Model model,String field,String keyword,
 			String picker) {
-		HttpServletRequest request=((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
-		HttpSession session = request.getSession();
-		session.setAttribute("user_id","admin");
-		session.setAttribute("role", "ROLE_ADMIN");
 		
 		HashMap<String, Object> search=new HashMap<String, Object>();
 		search.put("field", field);

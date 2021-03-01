@@ -763,7 +763,7 @@ h5{
 				function(data) {
 				let result = data.code;
 				if(result=='insert_success'){
-					img.src="${cp}/resources/images/Heart.svg"
+					img.src="${cp}/resources/images/HRT.svg"
 					img.alt = 'heart';
 				}else if(result=='insert_fail'){
 					alert("insert ERROR");
@@ -774,7 +774,7 @@ h5{
 				function(data) {
 				let result = data.code;
 				if(result=='insert_success'){
-					img.src="${cp }/resources/images/Heart.svg"
+					img.src="${cp }/resources/images/HRT.svg"
 					img.alt = 'heart';
 				}else if(result=='insert_fail'){
 					alert("insert ERROR");

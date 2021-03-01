@@ -145,7 +145,7 @@
 		$.getJSON('${cp}/wishlist_list', {'user_id':'${user_id}'}, function(data) {
 			console.log("들어옴");
 			var str = "";
-			if(data.alist.length!=0){
+			if(data.list.length!=0){
 				str+="<h4>투어 위시리스트</h4>";
 				str+="<div class='row row-cols-1 row-cols-md-4' id='cardbox'>";
 				for(let i=0; i<data.list.length; i++){

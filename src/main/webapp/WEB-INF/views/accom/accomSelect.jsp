@@ -452,7 +452,7 @@ var bindCk=true;
 					}
 					
 					if(wishlist=='yes'){
-						var heart="<img src='${cp }/resources/images/Heart.svg' class='heartImg' onclick='wish(this)' alt='heart'>";
+						var heart="<img src='${cp }/resources/images/HRT.svg' class='heartImg' onclick='wish(this)' alt='heart'>";
 					}else{
 						var heart="<img src='${cp }/resources/images/emptyHRT.svg' class='heartImg' onclick='wish(this)' alt='emptyheart'>";
 					}
@@ -696,7 +696,7 @@ var bindCk=true;
 						}
 						
 						if(wishlist=='yes'){
-							var heart="<img src='${cp }/resources/images/Heart.svg' class='heartImg' onclick='wish(this)' alt='heart'>";
+							var heart="<img src='${cp }/resources/images/HRT.svg' class='heartImg' onclick='wish(this)' alt='heart'>";
 						}else{
 							var heart="<img src='${cp }/resources/images/emptyHRT.svg' class='heartImg' onclick='wish(this)' alt='emptyheart'>";
 						}
@@ -837,7 +837,7 @@ var bindCk=true;
 				function(data) {
 				let result = data.code;
 				if(result=='insert_success'){
-					img.src="${cp}/resources/images/Heart.svg"
+					img.src="${cp}/resources/images/HRT.svg"
 					img.alt = 'heart';
 				}else if(result=='insert_fail'){
 					alert("insert ERROR");
@@ -848,7 +848,7 @@ var bindCk=true;
 				function(data) {
 				let result = data.code;
 				if(result=='insert_success'){
-					img.src="${cp }/resources/images/Heart.svg"
+					img.src="${cp }/resources/images/HRT.svg"
 					img.alt = 'heart';
 				}else if(result=='insert_fail'){
 					alert("insert ERROR");
