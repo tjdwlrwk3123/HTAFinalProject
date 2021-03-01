@@ -118,6 +118,9 @@
 	
 	<div id="wishlist_list">
 	</div>
+	
+	<div id="accomWishlist_list">
+	</div>
 </div>
 
 <script>
@@ -134,6 +137,7 @@
 		});
 		
 		list();
+		accomlist();
 
 	});
 	
@@ -141,92 +145,163 @@
 		$.getJSON('${cp}/wishlist_list', {'user_id':'${user_id}'}, function(data) {
 			console.log("들어옴");
 			var str = "";
-			str+="<div class='row row-cols-1 row-cols-md-4' id='cardbox'>";
-			for(let i=0; i<data.list.length; i++){
-				let tour_amount = data.list[i].tour_amount;
-				if(tour_amount==0){
-					continue;
-				}
-				let cate_number = data.list[i].cate_number;
-				let service_number = data.list[i].service_number;
-				let user_id = data.list[i].user_id;
-				let tour_type = data.list[i].tour_type;
-				let tour_name = data.list[i].tour_name;
-				let avgpoint= data.list[i].avgpoint;
-				let rcnt = data.list[i].rcnt; //리뷰 갯수
-				let imgsavename = data.list[i].imgsavename;
-				let tour_price = data.list[i].tour_price;
-				let discount = data.list[i].discount; // 최저가에 붙은 할인
-				let dcnt = data.list[i].dcnt; // 할인 적용되면 정보 주기 0보다 큰 숫자면 해당 서비스에 할인 옵션이 있다는 의미.
-// 				console.log("cate_number"+cate_number);
-// 				console.log("service_number"+service_number);
-// 				console.log("user_id"+user_id);
-// 				console.log("tour_type"+tour_type);
-// 				console.log("tour_name"+tour_name);
-// 				console.log("avgpoint"+avgpoint);
-// 				console.log("rcnt"+rcnt);
-// 				console.log("imgsavename"+imgsavename);
-// 				console.log("tour_price"+tour_price);
-// 				console.log("discount"+discount);
-				
-				var fullstars = Math.floor(avgpoint);
-				var decimal =  Math.round(avgpoint*10%10);
-				var stars ="";
-				
-				if(avgpoint==0){
-					for(let l=0; l<5; l++){
-						stars+="<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>";
+			if(data.alist.length!=0){
+				str+="<h4>투어 위시리스트</h4>";
+				str+="<div class='row row-cols-1 row-cols-md-4' id='cardbox'>";
+				for(let i=0; i<data.list.length; i++){
+					let tour_amount = data.list[i].tour_amount;
+					if(tour_amount==0){
+						continue;
 					}
-				}else{
-					if(fullstars==5){ // 평점이 5점이면~ 
-						for(let k=0; k<fullstars; k++){
-							stars+="<img src='${cp }/resources/images/fullStar.svg' class='starImg'>";
+					let cate_number = data.list[i].cate_number;
+					let service_number = data.list[i].service_number;
+					let user_id = data.list[i].user_id;
+					let tour_type = data.list[i].tour_type;
+					let tour_name = data.list[i].tour_name;
+					let avgpoint= data.list[i].avgpoint;
+					let rcnt = data.list[i].rcnt; //리뷰 갯수
+					let imgsavename = data.list[i].imgsavename;
+					let tour_price = data.list[i].tour_price;
+					let discount = data.list[i].discount; // 최저가에 붙은 할인
+					let dcnt = data.list[i].dcnt; // 할인 적용되면 정보 주기 0보다 큰 숫자면 해당 서비스에 할인 옵션이 있다는 의미.
+	// 				console.log("cate_number"+cate_number);
+	// 				console.log("service_number"+service_number);
+	// 				console.log("user_id"+user_id);
+	// 				console.log("tour_type"+tour_type);
+	// 				console.log("tour_name"+tour_name);
+	// 				console.log("avgpoint"+avgpoint);
+	// 				console.log("rcnt"+rcnt);
+	// 				console.log("imgsavename"+imgsavename);
+	// 				console.log("tour_price"+tour_price);
+	// 				console.log("discount"+discount);
+					
+					var fullstars = Math.floor(avgpoint);
+					var decimal =  Math.round(avgpoint*10%10);
+					var stars ="";
+					
+					if(avgpoint==0){
+						for(let l=0; l<5; l++){
+							stars+="<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>";
 						}
 					}else{
-						for(let k=0; k<fullstars; k++){
-							stars+="<img src='${cp }/resources/images/fullStar.svg' class='starImg'>";
-						}
-						if(decimal>=0 && decimal<3){
-							stars+="<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>";
-						}else if(decimal>=3 && decimal<8 ){
-							stars+="<img src='${cp }/resources/images/halfStar.svg' class='starImg'>";
-						}else if(decimal>=8){
-							stars+="<img src='${cp }/resources/images/fullStar.svg' class='starImg'>";
-						}
-						for(let l=0; l<5-fullstars-1; l++){
-							stars+="<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>";
+						if(fullstars==5){ // 평점이 5점이면~ 
+							for(let k=0; k<fullstars; k++){
+								stars+="<img src='${cp }/resources/images/fullStar.svg' class='starImg'>";
+							}
+						}else{
+							for(let k=0; k<fullstars; k++){
+								stars+="<img src='${cp }/resources/images/fullStar.svg' class='starImg'>";
+							}
+							if(decimal>=0 && decimal<3){
+								stars+="<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>";
+							}else if(decimal>=3 && decimal<8 ){
+								stars+="<img src='${cp }/resources/images/halfStar.svg' class='starImg'>";
+							}else if(decimal>=8){
+								stars+="<img src='${cp }/resources/images/fullStar.svg' class='starImg'>";
+							}
+							for(let l=0; l<5-fullstars-1; l++){
+								stars+="<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>";
+							}
 						}
 					}
+					str+="<div class='col mb-4'>"+
+							"<div class='card h-100' style='width: 14rem;' onclick='move(this)'>"+
+							   	 "<input type='hidden' name='cate_number' value='"+cate_number+"'>"+
+							   	 "<input type='hidden' name='service_number' value='"+service_number+"'>"+
+							 	 "<img src='${cp }/resources/upload/"+imgsavename+"' class='card-img-top'  alt='"+tour_name+"'>"+
+							 	 "<div class="+tour_name+">"+
+							   		 "<h5 class='card-title'>"+tour_name+"</h5>"+
+								   	 "<p class='card-text'>"+tour_type+"</p>"+
+								   	 "<p class='card-text'>"+stars+"("+rcnt+")"+"</p>";
+					if(discount>0){
+								str+="<p class='card-text' style='text-decoration:line-through'>옵션최저가 "+tour_price+"원/명</p>"+
+									 "<p class='card-text'>할인특가 "+(tour_price-tour_price*discount/100)+"원/명</p>"+
+									 "<img src='${cp }/resources/images/discount1.svg' class='discountImg'>";  
+					}else if(dcnt>0){
+								str+="<p class='card-text'>옵션최저가 "+tour_price+"원/명</p>"+
+									 "<p class='card-text'>할인된 옵션이 있습니다</p>"+
+									 "<img src='${cp }/resources/images/discount1.svg' class='discountImg'>";
+					}else{
+								str+="<p class='card-text'>옵션최저가 "+tour_price+"원/명</p>";
+					}			   	 
+				   	 		str+="</div>"+
+						   	"<div class='heartbox'><img src='${cp }/resources/images/HRT.svg' class='heartImg' onclick='wish(this)' alt='heart'></div>" +
+					 	 "</div>"+
+					  "</div>";
 				}
-				str+="<div class='col mb-4'>"+
-						"<div class='card h-100' style='width: 14rem;' onclick='move(this)'>"+
-						   	 "<input type='hidden' name='cate_number' value='"+cate_number+"'>"+
-						   	 "<input type='hidden' name='service_number' value='"+service_number+"'>"+
-						 	 "<img src='${cp }/resources/upload/"+imgsavename+"' class='card-img-top'  alt='"+tour_name+"'>"+
-						 	 "<div class="+tour_name+">"+
-						   		 "<h5 class='card-title'>"+tour_name+"</h5>"+
-							   	 "<p class='card-text'>"+tour_type+"</p>"+
-							   	 "<p class='card-text'>"+stars+"("+rcnt+")"+"</p>";
-				if(discount>0){
-							str+="<p class='card-text' style='text-decoration:line-through'>옵션최저가 "+tour_price+"원/명</p>"+
-								 "<p class='card-text'>할인특가 "+(tour_price-tour_price*discount/100)+"원/명</p>"+
-								 "<img src='${cp }/resources/images/discount1.svg' class='discountImg'>";  
-				}else if(dcnt>0){
-							str+="<p class='card-text'>옵션최저가 "+tour_price+"원/명</p>"+
-								 "<p class='card-text'>할인된 옵션이 있습니다</p>"+
-								 "<img src='${cp }/resources/images/discount1.svg' class='discountImg'>";
-				}else{
-							str+="<p class='card-text'>옵션최저가 "+tour_price+"원/명</p>";
-				}			   	 
-			   	 		str+="</div>"+
-					   	"<div class='heartbox'><img src='${cp }/resources/images/HRT.svg' class='heartImg' onclick='wish(this)' alt='heart'></div>" +
-				 	 "</div>"+
-				  "</div>";
+				str+="</div>";
+				$("#wishlist_list").append(str);
 			}
-			str+="</div>";
-			$("#wishlist_list").append(str);
 		});
 	}
+	
+	function accomlist(){
+		$.getJSON('${cp}/wishlist_list', {'user_id':'${user_id}'}, function(data) {
+			console.log("들어옴");
+			var str = "";
+			if(data.alist.length!=0){
+				str+="<h4>숙소 위시리스트</h4>";
+				str+="<div class='row row-cols-1 row-cols-md-4' id='cardbox'>";
+				for(let i=0; i<data.alist.length; i++){
+					let cate_number = data.alist[i].cate_number;
+					let service_number = data.alist[i].accom_service_number;
+					let user_id = data.alist[i].user_id;
+					let accom_name = data.alist[i].accom_name;
+					let avgpoint= data.alist[i].avgpoint;
+					let rcnt = data.alist[i].rcnt; //리뷰 갯수
+					let imgsavename = data.imglist[i].imgsavename;
+					let accom_price = data.alist[i].minp;
+					
+					var fullstars = Math.floor(avgpoint);
+					var decimal =  Math.round(avgpoint*10%10);
+					var stars ="";
+					
+					if(avgpoint==0){
+						for(let l=0; l<5; l++){
+							stars+="<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>";
+						}
+					}else{
+						if(fullstars==5){ // 평점이 5점이면~ 
+							for(let k=0; k<fullstars; k++){
+								stars+="<img src='${cp }/resources/images/fullStar.svg' class='starImg'>";
+							}
+						}else{
+							for(let k=0; k<fullstars; k++){
+								stars+="<img src='${cp }/resources/images/fullStar.svg' class='starImg'>";
+							}
+							if(decimal>=0 && decimal<3){
+								stars+="<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>";
+							}else if(decimal>=3 && decimal<8 ){
+								stars+="<img src='${cp }/resources/images/halfStar.svg' class='starImg'>";
+							}else if(decimal>=8){
+								stars+="<img src='${cp }/resources/images/fullStar.svg' class='starImg'>";
+							}
+							for(let l=0; l<5-fullstars-1; l++){
+								stars+="<img src='${cp }/resources/images/emptyStar.svg' class='starImg'>";
+							}
+						}
+					}
+					str+="<div class='col mb-4'>"+
+							"<div class='card h-100' style='width: 14rem;' onclick='move(this)'>"+
+							   	 "<input type='hidden' name='cate_number' value='"+cate_number+"'>"+
+							   	 "<input type='hidden' name='service_number' value='"+service_number+"'>"+
+							 	 "<img src='${cp }/resources/upload/"+imgsavename+"' class='card-img-top'  alt='"+accom_name+"'>"+
+							 	 "<div class="+accom_name+">"+
+							   		 "<h5 class='card-title'>"+accom_name+"</h5>"+
+								   	 "<p class='card-text'>"+stars+"("+rcnt+")"+"</p>";
+					str+="<p class='card-text'>옵션최저가 "+accom_price+"원/명</p>";
+				   	 
+				   	 		str+="</div>"+
+						   	"<div class='heartbox'><img src='${cp }/resources/images/HRT.svg' class='heartImg' onclick='wish(this)' alt='heart'></div>" +
+					 	 "</div>"+
+					  "</div>";
+				}
+				str+="</div>";
+				$("#accomWishlist_list").append(str);
+			}
+		});
+	}
+	
 
 // 	$(".heartImg").on('click',function(e){
 // 		var cate_number= e.target.parentNode.parentNode.firstChild

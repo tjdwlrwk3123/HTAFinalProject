@@ -70,4 +70,7 @@ public class AccomService {
 	public List<String> accomNameList(String searchValue) {
 		return dao.accomNameList(searchValue);
 	}
+	public HashMap<String, Object> accomMinprice(int service_number){
+		return dao.accomMinprice(service_number);
+	}
 }

@@ -41,6 +41,23 @@
  	
  	</select>
  	
+ 	<select id="accomWishlist" parameterType="string" resultType="arJoin">
+ 		select accom_service_number,cate_number,accom_name,avgpoint,rcnt,min(accom_price) minp,max(accom_price) maxp
+		from(
+		select accom_service_number,accom_service.cate_number,accom_name,nvl(avg(star_point),0) avgpoint,count(review_number) rcnt 
+		from accom_service left join review
+		on accom_service_number=service_number and accom_service.cate_number=review.cate_number
+		group by accom_service_number,accom_service.cate_number,accom_name
+		having
+		accom_service_number in(
+		select accom_service_number from accom_option left join accom_book 
+		on accom_option.accom_option_number = accom_book.accom_option_number)
+        and accom_service_number in(
+        select accom_service_number from accom_service join wishlist
+        on accom_service_number=service_number where wishlist.cate_number in(2,3,4) and user_id=#{user_id}))natural join accom_option group by accom_service_number,cate_number,accom_name,avgpoint,rcnt
+        order by accom_service_number
+ 	</select>
+ 	
  	<delete id="delete" parameterType="hashmap">
  		delete wishlist where cate_number=#{cate_number} and service_number=#{service_number} and user_id=#{user_id}
  	</delete>

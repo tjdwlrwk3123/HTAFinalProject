@@ -72,4 +72,7 @@ public class AccomDao {
 	public List<String> accomNameList(String searchValue){
 		return sqlSession.selectList(NAMESPACE+".accomNameList",searchValue);
 	}
+	public HashMap<String, Object> accomMinprice(int service_number){
+		return sqlSession.selectOne(NAMESPACE+".accomMinprice", service_number);
+	}
 }

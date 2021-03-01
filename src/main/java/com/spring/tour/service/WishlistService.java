@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.tour.dao.WishlistDao;
+import com.spring.tour.vo.AccomServiceReviewJoinVo;
 import com.spring.tour.vo.WishlistVo;
 
 
@@ -23,5 +24,8 @@ public class WishlistService {
 	}
 	public List<WishlistVo> wishlist_list(String user_id){
 		return dao.wishlist_list(user_id);
+	}
+	public List<AccomServiceReviewJoinVo> accomWishlist(String user_id){
+		return dao.accomWishlist(user_id);
 	}
 }
