@@ -33,6 +33,8 @@
 <a href='${cp }/service_answer/list'>서비스답변리스트</a>
 <a href='${cp }/review/insert'>리뷰등록</a>
 <a href='${cp }/review/list'>리뷰보기</a>
+
+<a href='${cp }/authChange'>등급조절 테스트중</a>
 <c:choose>
 	<c:when test="${empty sessionScope.user_id }">
 		<a href='${cp }/userlogin'>로그인 테스트페이지</a>

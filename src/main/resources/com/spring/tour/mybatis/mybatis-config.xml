@@ -9,6 +9,7 @@
     </settings>
     
   <typeAliases>
+  	<typeAlias type="com.spring.tour.vo.AuthManageVo" alias="AuthManage"/>
   	<typeAlias type="com.spring.tour.vo.WishlistVo" alias="wishlist"/>
   	<typeAlias type="com.spring.tour.vo.TourPageVo" alias="tourpage"/>
   	<typeAlias type="com.spring.tour.vo.Accom_serviceVo" alias="accomService"/>
@@ -47,6 +48,7 @@
 			<mapper resource="com/spring/tour/mapper/BookingMapper.xml"/>
 			<mapper resource="com/spring/tour/mapper/MemberManageMapper.xml"/>
 			<mapper resource="com/spring/tour/mapper/UserMapper.xml"/>
+			<mapper resource="com/spring/tour/mapper/AuthManagementMapper.xml"/>
 
 			<mapper resource="com/spring/tour/mapper/ServiceMapper.xml"/>
 			

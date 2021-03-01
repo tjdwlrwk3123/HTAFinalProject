@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  
+  <mapper namespace="com.spring.tour.mapper.AuthManagementMapper">
+	
+	<select id="authManageList" resultType="AuthManage">
+		select u.user_id,u.user_name,u.user_condition,t.token_authority from user_info u
+		inner join (select user_id,token_authority
+		from id_token)t
+		on u.user_id=t.user_id 
+	</select>
+	
+  	<select id="authManageId" parameterType="String" resultType="AuthManage">
+		select u.user_id,u.user_name,u.user_condition,t.token_authority from user_info u
+		inner join (select user_id,token_authority
+		from id_token)t
+		on u.user_id=t.user_id
+		where u.user_id like '%'||#{user_id}||'%'
+	</select>
+	
+  	<select id="authManageStatus" parameterType="String" resultType="AuthManage">
+		select u.user_id,u.user_name,u.user_condition,t.token_authority from user_info u
+		inner join (select user_id,token_authority
+		from id_token)t
+		on u.user_id=t.user_id
+		where u.user_condition = #{user_condition}
+	</select>
+	
+  	<select id="authManageAuth" parameterType="String" resultType="AuthManage">
+		select u.user_id,u.user_name,u.user_condition,t.token_authority from user_info u
+		inner join (select user_id,token_authority
+		from id_token)t
+		on u.user_id=t.user_id
+		where t.token_authority like '%'||#{token_authority}||'%'
+	</select>
+	
+	<update id="authChangeStatus" parameterType="HashMap">
+		update user_info
+		set user_condition=#{user_condition}
+		where user_id=#{user_id}
+	</update>
+	
+	<update id="authChangeAuth" parameterType="HashMap">
+		update id_token
+		set token_authority=#{token_authority}
+		where user_id=#{user_id}	
+	</update>
+  </mapper>
+  
