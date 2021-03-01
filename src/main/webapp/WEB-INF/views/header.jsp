@@ -2,8 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<div style="display:inline-block">
-	<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" style="background-color: #4E61FF;height:10%">
+<div style="display:inline-block;">
+	<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" style="background-color: #4E61FF; height: 9%;">
                 <div class="navbar-header">
                     <a href="${cp }/" class="navbar-brand easysLogo" align="center"><img src="/tour/resources/mainimg/흰글씨인가봄.png" style="width:30%;margin-top: 3px;margin-left: 10%;"></a>
                 </div>

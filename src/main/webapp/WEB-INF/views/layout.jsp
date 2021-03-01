@@ -23,7 +23,7 @@
 	<div id="header" style="display:inline-block">
 		<tiles:insertAttribute name="header"/>
 	</div>
-	<br><br><br><br><br><br>
+	<br><br><br><br><br>
 	<div id="content" style="display:inline-block">
 		<tiles:insertAttribute name="content"/>
 	</div>
