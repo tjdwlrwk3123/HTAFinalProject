@@ -21,7 +21,7 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Stylish&display=swap" rel="stylesheet">
 
 <style>
 
@@ -31,7 +31,7 @@
 	box-sizing: border-box;
 	text-decoration: none;
 	list-style: none;
-	font-family: 'Gamja Flower', cursive;
+	font-family: 'Stylish', sans-serif;
 	
 }
 
