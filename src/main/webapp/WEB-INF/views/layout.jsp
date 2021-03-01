@@ -5,9 +5,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>layout.jsp</title>
+<title>ConnecTrip</title>
 
-
+<link rel="shortcut icon" href="/tour/resources/mainimg/domain.png" type="image/x-icon">
+<link rel="icon" href="/tour/resources/mainimg/domain.png" type="image/x-icon">
 
 <script src="https://kit.fontawesome.com/174a2d5b3b.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="/tour/resources/css/tourSelect.css">
