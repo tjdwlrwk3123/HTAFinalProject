@@ -74,8 +74,8 @@ public class MemberDao {
 	public String checkId(String user_id) {
 		return sqlSession.selectOne(NAMESPACE+".checkId",user_id);
 	}
-	public List<String> ptnSearch(){
-		return sqlSession.selectList(NAMESPACE+".ptnSearch");
+	public List<String> ptnSearch(String searchValue){
+		return sqlSession.selectList(NAMESPACE+".ptnSearch",searchValue);
 	}
 	public String getEmail(String user_id) {
 		return sqlSession.selectOne(NAMESPACE+".getEmail",user_id);

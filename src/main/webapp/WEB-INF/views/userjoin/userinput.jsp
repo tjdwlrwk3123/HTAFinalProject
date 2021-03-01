@@ -3,7 +3,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <div>
-	<form:form action="/tour/userinput" method="post">
+	<form:form action="/tour/userinput" method="post" id="inform">
 	<input type="hidden" id="usertype" name ="usertype" value="${ usertype}">
 	<h2 align="center">회원 가입</h2>
 		<table align="center">
@@ -21,7 +21,8 @@
 			<tr>
 				<td align="left">아이디 : </td>
 				<td colspan="6"><input type="text" name="user_id" id="userid" maxlength="12">
-				<span id="idchk"></span></td>
+				<span id="idchk"></span>
+				<input type="button" id="idchkBtn" value="아이디 중복검사"></td>
 			</tr>
 			<tr>
 				<td align="left">비밀번호 : </td>
@@ -60,8 +61,10 @@
 			</tr>
 		</table>
 		<input type="hidden" name="user_email" id=useremail>
+		<input type="hidden" id="chk1">
+		<input type="hidden" id="chk2">
 		<p align="center">
-			<input type="submit" value="회원가입">
+			<input type="button" value="회원가입" id="submitBtn">
 			<input type="reset" value="다시입력">
 		</p>
 	</form:form>
@@ -72,6 +75,51 @@
 </div>
 
 <script type="text/javascript">
+	$("#idchkBtn").click(function(e){
+		$.ajax({ 
+			url: "${cp}/idchkBtn", 
+			type: "get", 
+			data: {"user_id":$("#userid").val()}, 
+			dataType: "text", 
+			success: function(data){ 
+				$("#chk1").empty();
+				 if(data=="null"){
+					 $("#chk1").val("체크");
+					 alert("사용가능한 아이디입니다");
+				 }else{
+					 alert("중복된 아이디입니다");
+				 }
+			}
+		});
+	});
+	
+	$("#submitBtn").click(function(e){
+		$.getJSON("${cp}/findId",{"user_email":$("#user_email").val()},function(data){
+			if(data.user_id.length==0){
+				$("#chk2").val("체크");
+			}else{
+    			$("#chk2").empty();
+			}
+		});
+		
+		if($("#chk2").val()=="체크"){
+			if($("#chk1").val()=="체크"){
+				$("#inform").submit();
+			}else{
+				alert("아이디 중복확인 필요");
+				return;
+			}
+		}else{
+			if($("#chk1").val()=="체크"){
+				alert("이메일 중복확인 필요");
+				return;
+			}else{
+				alert("아이디, 이메일 중복확인 필요");
+				return;
+			}
+		}
+	});
+
 	$("#ex_detailAddress").keyup(function(){
 		$("#user_addr").val($("#ex_address").val()+" "+$("#ex_detailAddress").val());
 	});
