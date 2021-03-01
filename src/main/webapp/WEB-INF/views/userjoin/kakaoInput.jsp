@@ -57,7 +57,7 @@
 		</table>
 		<input type="hidden" name="user_email" value="${user_id }">
 		<p align="center">
-			<input type="submit" value="회원가입" id="submitBtn">
+			<input type="button" value="회원가입" id="submitBtn">
 			<input type="reset" value="다시입력">
 		</p>
 	</form:form>

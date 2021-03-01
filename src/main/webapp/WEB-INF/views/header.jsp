@@ -24,13 +24,34 @@
                 </div>
                 
                 <div style="margin-right::3%; width:22%;display: inline-block">
-                    <div style="margin-left :10%;">
-                     <a href ="#">
-                     <span style="color: white; margin-left: 3%">로그인</span></a>
+                    <div style="margin-left :8%;">
+                     	<c:choose>
+							<c:when test="${empty sessionScope.user_id }">
+								<a href ="${cp }/userlogin">
+									<span style="color:white; margin-left: 3%">로그인</span>
+								</a>
+							</c:when>
+							<c:otherwise>
+								<a href ="${cp }/logout">
+									<span style="color:white; margin-left: 3%">로그아웃</span>
+								</a>
+							</c:otherwise>
+						</c:choose>
+                     	<c:choose>
+							<c:when test="${empty sessionScope.user_id }">
+								<a href ="#">
+									<span style="color:white; margin-left: 3%">회원가입</span>
+								</a>
+							</c:when>
+							<c:otherwise>
+								<a href ="#">
+									<span style="color:white; margin-left: 3%">마이페이지</span>
+								</a>
+							</c:otherwise>
+						</c:choose>
                      <a href="#" style="margin-left: 10%;">
-                     <span style="color: white; margin-left: 3%">회원가입</span></a>
-                     <a href="#" style="margin-left: 10%;">
-                     <span style="color: white; margin-left: 3%">고객센터</span></a>
+                     	<span style="color: white; margin-left: 3%">고객센터</span>
+                     </a>
                     </div>
                 </div>
                
