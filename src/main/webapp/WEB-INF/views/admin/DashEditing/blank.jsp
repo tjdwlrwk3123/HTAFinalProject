@@ -51,7 +51,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="${cp }/adminPage">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="${cp }/">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -63,7 +63,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="${cp }/adminPage">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Admin Page</span></a>
             </li>
