@@ -44,7 +44,7 @@
 								</a>
 							</c:when>
 							<c:otherwise>
-								<a href ="#">
+								<a href ="${cp }/userinfopage">
 									<span style="color:white; margin-left: 3%">마이페이지</span>
 								</a>
 							</c:otherwise>

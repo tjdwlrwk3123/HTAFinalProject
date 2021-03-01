@@ -55,7 +55,7 @@
 		width: 80%;
 		margin: auto;
 		display : flex;
-		height: 100%;
+		height: auto;
 		position: relative;
 		top: -35px;
 	}

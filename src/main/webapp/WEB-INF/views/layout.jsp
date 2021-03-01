@@ -6,20 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>layout.jsp</title>
-<style>
-	#header{
-		height: 20%;
-		position: relative;
-	}
-	#content{
-		height: 60%;
-		position: relative;
-	}
-	#footer{
-		height: 20%;
-		position: relative;
-	}
-</style>
+
+
 
 <script src="https://kit.fontawesome.com/174a2d5b3b.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="/tour/resources/css/tourSelect.css">
