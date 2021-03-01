@@ -11,7 +11,7 @@ public class AdminPageController {
 	
 	@Autowired private MemberService service;
 	
-	@RequestMapping(value="/adminPage")
+	@RequestMapping(value="/admin/adminPage")
 	public String adminPage() {
 		return ".adminpage";
 	}
