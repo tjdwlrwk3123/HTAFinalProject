@@ -14,18 +14,18 @@
     <div class="container">
  	<!--post slider2 -->
       <div class="post-slider2">
-        <div class="post-wrapper2" style="width:100%">
+        <div class="post-wrapper2" style="width:100%; margin-top: 10px;">
           <div class="post">
-            <img src="${cp }/resources/mainimg/이벤트1.png" class="slider-image" style="width:100%">
+            <a href="${cp }/tourSelect?tourType=0"><img src="${cp }/resources/upload/심쿵1.jpg" class="slider-image" style="width:100%; height: 450px;"></a>
           </div>
           <div class="post">
-            <img src="${cp }/resources/mainimg/이벤트2.png" class="slider-image" style="width:100%">
+            <a href="${cp }/tourDetail?cate_number=1&service_number=5"><img src="${cp }/resources/upload/에버1.PNG" class="slider-image" style="width:100%; height: 450px;"></a>
           </div>
           <div class="post">
-            <img src="${cp }/resources/mainimg/이벤트3.png" class="slider-image" style="width:100%">
+           	<a href="${cp }/accomlist"><img src="${cp }/resources/upload/홍보3.PNG" class="slider-image" style="width:100%; height: 450px;"></a>
           </div>
           <div class="post">
-            <img src="${cp }/resources/mainimg/이벤트4.png" class="slider-image" style="width:100%">
+            <a href="${cp }/accomDetail?accomNum=0&cate_number=2"><img src="${cp }/resources/upload/홍보4.PNG" class="slider-image" style="width:100%; height: 450px;"></a>
           </div>
         </div>
       </div>
