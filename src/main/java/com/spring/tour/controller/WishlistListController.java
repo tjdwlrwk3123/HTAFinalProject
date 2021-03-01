@@ -3,6 +3,8 @@ package com.spring.tour.controller;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -21,8 +23,8 @@ public class WishlistListController {
 	private WishlistService service;
 	
 	@RequestMapping(value = "/wishlist")
-	public String wishlist(@RequestParam(name = "user_id") String user_id, Model model) {
-		model.addAttribute("user_id",user_id);
+	public String wishlist(Model model, HttpServletRequest req) {
+		model.addAttribute("user_id",req.getSession().getAttribute("user_id"));
 		return ".wishlist.wishList";
 	}
 	

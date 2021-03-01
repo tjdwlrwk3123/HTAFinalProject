@@ -6,6 +6,7 @@
 	<ul>
 		<li><a href="${cp }/userinfopage">유저정보</a></li>
 		<li><a href="${cp }/usercoupon">쿠폰 내역</a></li>
+		<li><a href="${cp }/wishlist">위시리스트</a></li>
 	</ul>
 </div>
 <div>
