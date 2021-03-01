@@ -282,9 +282,9 @@
 						}
 					}
 					str+="<div class='col mb-4'>"+
-							"<div class='card h-100' style='width: 14rem;' onclick='move(this)'>"+
+							"<div class='card h-100' style='width: 14rem;' onclick='accommove(this)'>"+
 							   	 "<input type='hidden' name='cate_number' value='"+cate_number+"'>"+
-							   	 "<input type='hidden' name='service_number' value='"+service_number+"'>"+
+							   	 "<input type='hidden' name='accomNum' value='"+service_number+"'>"+
 							 	 "<img src='${cp }/resources/upload/"+imgsavename+"' class='card-img-top'  alt='"+accom_name+"'>"+
 							 	 "<div class="+accom_name+">"+
 							   		 "<h5 class='card-title'>"+accom_name+"</h5>"+
@@ -373,6 +373,13 @@
 		console.log(cate_number+"//"+service_number);
 		
 		window.location.href="${cp}/tourDetail?cate_number="+cate_number+"&service_number="+service_number;
+	}
+	
+	function accommove(m){
+		var cate_number=parseInt(m.firstChild.value);
+		var accomNum=parseInt(m.firstChild.nextSibling.value);
+		
+		window.location.href="${cp}/accomDetail?cate_number="+cate_number+"&accomNum="+accomNum;
 	}
 	
 </script>

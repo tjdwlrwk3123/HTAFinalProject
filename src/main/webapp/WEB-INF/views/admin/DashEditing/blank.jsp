@@ -89,6 +89,7 @@
                         <a class="collapse-item" href="${cp }/memberManageList">회원 정보</a>
                         <a class="collapse-item" href="${cp }/couponManage">쿠폰 정보</a>
                         <a class="collapse-item" href="${cp }/AdminMail">이메일 발송</a>
+                        <a class="collapse-item" href="${cp }/adminchat">관리자 채팅</a>
                     </div>
                 </div>
             </li>
