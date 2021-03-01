@@ -120,7 +120,11 @@ public class MemberService {
 		
 	}
 	
-	public List<String> ptnSearch(){
-		return dao.ptnSearch();
+	public String idchkbtn(String user_id) {
+		return dao.checkId(user_id);
+	}
+	
+	public List<String> ptnSearch(String searchValue){
+		return dao.ptnSearch(searchValue);
 	}
 }

@@ -49,6 +49,19 @@ public class UserController {
 		return ".userjoin.userselect";
 	}
 	
+	@RequestMapping(value="/idchkBtn")
+	@ResponseBody
+	public String idchkBtn(String user_id) {
+		System.out.println(service.idchkbtn(user_id));
+		String id= service.idchkbtn(user_id);
+		if(id==null) {
+			return "null";
+		}else {
+			return service.idchkbtn(user_id);
+		}
+	}
+	
+	
 	@RequestMapping(value = "/userinput", method = RequestMethod.POST)
 	public String RegisterPost(User_InfoVo vo, Model model, RedirectAttributes rttr, HttpServletRequest req, HttpSession session) throws Exception {
 		
@@ -135,10 +148,10 @@ public class UserController {
 	
 	@RequestMapping(value="/ptnSearch", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
 	@ResponseBody
-	public HashMap<String,Object> ptnSearch() {
+	public HashMap<String,Object> ptnSearch(String searchValue) {
 		
 		HashMap<String,Object> map = new HashMap<String,Object>();
-		List<String> ptnList = service.ptnSearch();
+		List<String> ptnList = service.ptnSearch(searchValue);
 		ArrayList<String> userid = new ArrayList<String>();
 		for(String ptn :ptnList) {
 			userid.add(ptn);
