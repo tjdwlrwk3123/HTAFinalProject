@@ -3,12 +3,21 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <div>
-	<form:form action="/tour/userinput" method="post">
-	<input type="hidden" id="usertype" name ="usertype" value="${ usertype}">
+	<form:form action="/tour/userinput" method="post" id="kakainput">
 	<h2 align="center">카카오 회원 세부정보 입력</h2>
 		<table align="center">
 			<tr>
 				<td colspan="7" align="center">회원 정보 입력</td>
+			</tr>
+			<tr>
+				<td align="left">회원 종류 : </td>
+				<td>
+					<select id="usertype" name="usertype">
+						<option value="basic" selected>선택해주세요</option>
+						<option value="member">일반 회원</option>
+						<option value="partner">사업자 회원</option>
+					</select>
+				</td>
 			</tr>
 			<tr>
 				<td align="left">이름 : </td>
@@ -45,16 +54,10 @@
 					<input type="hidden" name="user_addr" id="user_addr" value="일단 테스트">
 				</td>
 			</tr>
-			<tr>
-				<td align="left">메일 주소 : </td>
-				<td colspan="6">
-					<input type="hidden" name="user_email" value="${user_id }">
-				</td>
-			</tr>
 		</table>
-		
+		<input type="hidden" name="user_email" value="${user_id }">
 		<p align="center">
-			<input type="submit" value="회원가입">
+			<input type="submit" value="회원가입" id="submitBtn">
 			<input type="reset" value="다시입력">
 		</p>
 	</form:form>
@@ -65,6 +68,14 @@
 </div>
 
 <script type="text/javascript">
+	$("#submitBtn").click(function(e){
+		if($("#usertype").val()=="basic"){
+			alert("회원 종류를 선택해주세요");
+		}else{
+			$("#kakainput").submit();
+		}
+	});
+
 	$("#ex_detailAddress").keyup(function(){
 		$("#user_addr").val($("#ex_address").val()+" "+$("#ex_detailAddress").val());
 	});
