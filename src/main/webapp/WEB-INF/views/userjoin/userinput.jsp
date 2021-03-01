@@ -118,8 +118,6 @@
 				return;
 			}
 		}
-		
-		$("#inform").submit();
 	});
 
 	$("#ex_detailAddress").keyup(function(){
