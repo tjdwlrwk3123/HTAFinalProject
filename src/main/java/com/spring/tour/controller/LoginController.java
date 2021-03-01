@@ -59,7 +59,7 @@ public class LoginController {
 					mav.addObject("msg","블랙리스트");
 				}
 			}else {
-				mav.addObject("msg","가입 안됬음");
+				mav.addObject("msg","아이디나 비밀번호를 확인하세요");
 			}
 				return mav;
 			
