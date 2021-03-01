@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <div style="display:inline-block">
 	<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" style="background-color: #4E61FF;height:10%">
                 <div class="navbar-header">
