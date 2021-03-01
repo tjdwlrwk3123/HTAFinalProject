@@ -1,8 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<a href="${cp }/userinfopage">유저정보</a>
-<a href="${cp }/usercoupon">쿠폰 내역</a>
+
+<div>
+	<ul>
+		<li><a href="${cp }/userinfopage">유저정보</a></li>
+		<li><a href="${cp }/usercoupon">쿠폰 내역</a></li>
+	</ul>
+</div>
 
 <h1>쿠폰</h1>
 <table border="1" width="500">
