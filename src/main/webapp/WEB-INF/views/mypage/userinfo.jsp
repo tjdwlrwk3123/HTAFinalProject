@@ -5,6 +5,7 @@
 <div>
 	<a href="${cp }/userinfopage">유저정보</a>
 	<a href="${cp }/usercoupon">쿠폰 내역</a>
+	<a href="${cp }/wishlist">위시리스트</a>
 	<table align="center">
 		<tr>
 			<td colspan="7" align="center">회원 정보</td>
