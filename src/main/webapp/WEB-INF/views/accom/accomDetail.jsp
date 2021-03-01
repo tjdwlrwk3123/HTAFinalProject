@@ -70,7 +70,7 @@
 	height:150px; 
 	position: sticky;
 	margin-left:25px;
-	top:50px; 
+	top:140px; 
 	border:2px solid gray;
 	background-color:white;
 	display:table;

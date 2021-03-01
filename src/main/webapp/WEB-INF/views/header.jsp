@@ -5,7 +5,7 @@
 <div style="display:inline-block">
 	<nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav" style="background-color: #4E61FF;height:10%">
                 <div class="navbar-header">
-                    <a href="#" class="navbar-brand easysLogo" align="center"><img src="/tour/resources/mainimg/흰글씨인가봄.png" style="width:30%;margin-top: 3px;margin-left: 10%;"></a>
+                    <a href="${cp }/" class="navbar-brand easysLogo" align="center"><img src="/tour/resources/mainimg/흰글씨인가봄.png" style="width:30%;margin-top: 3px;margin-left: 10%;"></a>
                 </div>
                 <div style="border-radius: 15px 15px; background-color: white;height:50%; width:22%;display:inline-block; margin-top: 10px; ">
                  <div style="margin-top: 5px;">
@@ -16,9 +16,9 @@
                 </div>
                 <div style="margin-left:3%; width:22%;display: inline-block">
                     <div style="margin-left :10%;">
-                     <a href ="#"><i class="fas fa-hotel" style="color:white"></i>
+                     <a href ="${cp }/accomlist"><i class="fas fa-hotel" style="color:white"></i>
                      <span style="color: white; margin-left: 3%">숙박</span></a>
-                     <a href="#" style="margin-left: 10%;"><i class="fas fa-torii-gate" style="color:white"></i>
+                     <a href="${cp }/tourSelect?tourType=0" style="margin-left: 10%;"><i class="fas fa-torii-gate" style="color:white"></i>
                      <span style="color: white; margin-left: 3%">투어</span></a>
                     </div>
                 </div>
