@@ -59,11 +59,9 @@ public class BookingService {
 			newGrade = "Silver";
 		}
 		
-		System.out.println("sumTotal ="+sumTotal);
 		HashMap<String, Object> gradeMap = new HashMap<>();
 		gradeMap.put("user_id", user_id);
 		gradeMap.put("user_grade", newGrade);
-		System.out.println("NewGrade ="+newGrade);
 		pdao.changeGrade(gradeMap);
 		
 		return 1;

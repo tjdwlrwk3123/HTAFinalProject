@@ -47,14 +47,15 @@
 								<a href ="${cp }/userinfopage">
 									<span style="color:white; margin-left: 3%">마이페이지</span>
 								</a>
+								<a href="${cp }/tourmain" style="margin-left: 3%;">
+		                     	<span style="color: white; margin-left: 3%">서비스페이지</span>
+		                    	</a>
+								<a href="${cp }/admin/adminPage" style="margin-left: 3%;">
+		                     	<span style="color: white; margin-left: 3%">관리자페이지</span>
+		                    	</a>
 							</c:otherwise>
 						</c:choose>
-						<a href="${cp }/tourmain" style="margin-left: 3%;">
-                     	<span style="color: white; margin-left: 3%">서비스페이지</span>
-                    	 </a>
-						<a href="${cp }/admin/adminPage" style="margin-left: 3%;">
-                     	<span style="color: white; margin-left: 3%">관리자페이지</span>
-                    	 </a>
+						
                     </div>
                 </div>
                

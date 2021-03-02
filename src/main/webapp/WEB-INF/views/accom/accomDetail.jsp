@@ -483,7 +483,7 @@
 					<button type="button" id="wishbtn" class="btn btn-outline-danger btn-lg">위시리스트제거</button>
 				</c:otherwise>
 			</c:choose>
-			<button type="button" id="goTicket" class="btn btn-outline-secondary btn-lg">티켓보기</button>
+			<button type="button" id="goTicket" class="btn btn-outline-secondary btn-lg">맨 위로</button>
 
 			<input type="hidden" value="${service.cate_number }" id="cate_number"><br>
 			<input type="hidden" value="${service.accom_service_number }" id="service_number"><br>
