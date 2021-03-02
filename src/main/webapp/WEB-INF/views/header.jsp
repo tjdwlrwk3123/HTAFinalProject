@@ -49,9 +49,12 @@
 								</a>
 							</c:otherwise>
 						</c:choose>
-                     <a href="#" style="margin-left: 10%;">
-                     	<span style="color: white; margin-left: 3%">고객센터</span>
-                     </a>
+						<a href="${cp }/tourmain" style="margin-left: 3%;">
+                     	<span style="color: white; margin-left: 3%">서비스페이지</span>
+                    	 </a>
+						<a href="${cp }/admin/adminPage" style="margin-left: 3%;">
+                     	<span style="color: white; margin-left: 3%">관리자페이지</span>
+                    	 </a>
                     </div>
                 </div>
                
