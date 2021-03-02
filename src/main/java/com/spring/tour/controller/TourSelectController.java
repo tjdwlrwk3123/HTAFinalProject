@@ -26,9 +26,12 @@ public class TourSelectController {
 	private TourPageService service;
 	
 	@RequestMapping(value = "/tourSelect")
-	public String tourSelect(String tourType, Model model) {
+	public String tourSelect(String tourType, Model model,HttpServletRequest req) {
 		if(tourType!=null || !tourType.equals("")) {
 			model.addAttribute("tourType",tourType);
+		}
+		if(req.getSession().getAttribute("user_id")!=null) {
+			model.addAttribute("user_id",req.getSession().getAttribute("user_id"));
 		}
 		return ".tourPage.tourSelect";
 	}

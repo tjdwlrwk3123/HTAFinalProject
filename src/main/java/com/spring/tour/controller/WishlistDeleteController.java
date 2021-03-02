@@ -27,6 +27,9 @@ public class WishlistDeleteController {
 		wishMap.put("cate_number", cate_number);
 		wishMap.put("service_number", service_number);
 		String user_id;
+		
+		System.out.println("WL cate_number :"+cate_number);
+		System.out.println("WL service_number :"+service_number);
 		if(req.getSession().getAttribute("user_id")!=null) {
 			user_id = (String)req.getSession().getAttribute("user_id");			
 			System.out.println("user_id"+user_id);
@@ -50,6 +53,9 @@ public class WishlistDeleteController {
 		HashMap<String, Object> wishMap = new HashMap<>();
 		wishMap.put("cate_number", cate_number);
 		wishMap.put("service_number", service_number);
+		
+		System.out.println("WL cate_number :"+cate_number);
+		System.out.println("WL service_number :"+service_number);
 		
 		String user_id;
 		if(req.getSession().getAttribute("user_id")!=null) {

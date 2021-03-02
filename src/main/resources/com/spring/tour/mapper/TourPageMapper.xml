@@ -39,11 +39,11 @@ select i.cate_number,i.service_number, tour_type, tour_name, avgpoint, rcnt, img
 		            )f on e.cate_number=f.cate_number and e.service_number = f.service_number 
 		)g join (select tour_expire,service_number from tour_info)h on g.service_number = h.service_number
 <if test="user_id!=null">
-    )i left join (select service_number, user_id from wishlist where user_id=#{user_id})j on i.service_number = j.service_number
+    )i left join (select service_number, user_id from wishlist where user_id=#{user_id} and cate_number=1)j on i.service_number = j.service_number
 </if>
 		<where>
 			<![CDATA[
-			((tour_expire >= sysdate and tour_expire>= #{startDate}) or (tour_expire is null))
+			(tour_expire>= #{startDate} or (tour_expire is null))
 			]]>
 			<if test="tourType!=null">
 				<if test="tourType==1">

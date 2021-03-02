@@ -211,10 +211,10 @@
 			<div id="priceInfo" class="box">
 					<input type="hidden" name="couponUsing" id="couponUsing"><!-- 선택한 쿠폰 이름 저장해서 나중에 결제할때 보내기 -->
 					<c:choose>
-						<c:when test="${!empty pvo }"><!-- user_id로 로그인 했을때만 보여짐 -->
+						<c:when test="${!empty pvo }">
 							<h3>쿠폰 & 포인트</h3>
 							<c:choose>
-								<c:when test="${!empty discount || !empty isDiscount }">
+								<c:when test="${!empty isDiscount }">
 									<p>쿠폰 할인이 불가한 상품입니다.</p>
 								</c:when>
 								<c:otherwise>

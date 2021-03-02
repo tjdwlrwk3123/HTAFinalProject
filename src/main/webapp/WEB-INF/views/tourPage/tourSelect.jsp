@@ -644,6 +644,7 @@ h5{
 				let dcnt = data.list[i].dcnt;
 				let user_id = data.list[i].user_id;
 				
+				console.log("userID : "+user_id);
 				
 				var fullstars = Math.floor(avgpoint);
 				var decimal =  Math.round(avgpoint*10%10);
