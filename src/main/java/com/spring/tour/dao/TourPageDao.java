@@ -11,7 +11,6 @@ import com.spring.tour.vo.ImageVo;
 import com.spring.tour.vo.ReviewVo;
 import com.spring.tour.vo.TourDetailVo;
 import com.spring.tour.vo.TourOptionVo;
-import com.spring.tour.vo.TourReviewVo;
 import com.spring.tour.vo.TourSelectVo;
 import com.spring.tour.vo.TourServiceVo;
 import com.spring.tour.vo.WishlistVo;

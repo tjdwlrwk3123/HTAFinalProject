@@ -5,28 +5,6 @@
 
   <mapper namespace="com.spring.tour.mapper.TourPageMapper">
  		<!-- 투어의 첫화면 DATA -->
- 	<select id="mainlist" resultType="tourpage">
-		select * from (
-		    select distinct img_num, imgsavename, e.service_number, e.cate_number, tour_name, tour_type, avgpoint, tour_price, tour_amount  from  
-		    (
-		         select img_num,imgsavename, b.service_number, a.cate_number, tour_name,tour_type  from 
-		            (           
-		                select * from image where img_num in (select min(img_num) from image group by general_number))
-		                a join (
-		                select tour_name, cate_number, service_number, tour_type from tour_service)
-		                b on a.cate_number=b.cate_number and general_number = service_number
-		            )e join (
-		        select avgpoint, cate_number,c.service_number, tour_price,tour_amount from 
-		            (
-		                select avg(star_point) avgpoint, cate_number, service_number from review group by service_number,cate_number,service_number order by service_number)
-		                c join (
-                       select * from tour_option where (service_number, tour_option_index, tour_price) in 
-                        (select service_number, min(tour_option_index), min(tour_price) from tour_option where (service_number, tour_price) in 
-                        (select service_number, min(tour_price) from tour_option where tour_amount>0 group by service_number) group by service_number))
-		                d on c.service_number = d.service_number
-		            )f on e.cate_number=f.cate_number and e.service_number = f.service_number order by avgpoint desc
-		) <![CDATA[where rownum <=8]]>
- 	</select>
  	
  	<select id="selectlist" parameterType="hashmap" resultType="wishlist">
 <if test="user_id!=null">

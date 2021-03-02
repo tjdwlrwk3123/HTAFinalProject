@@ -11,7 +11,6 @@
   <typeAliases>
   	<typeAlias type="com.spring.tour.vo.AuthManageVo" alias="AuthManage"/>
   	<typeAlias type="com.spring.tour.vo.WishlistVo" alias="wishlist"/>
-  	<typeAlias type="com.spring.tour.vo.TourPageVo" alias="tourpage"/>
   	<typeAlias type="com.spring.tour.vo.Accom_serviceVo" alias="accomService"/>
   	<typeAlias type="com.spring.tour.vo.AccomInfoVo" alias="accomInfo"/>
   	<typeAlias type="com.spring.tour.vo.AccomOptionVo" alias="accomOption"/>
@@ -22,10 +21,8 @@
   	<typeAlias type="com.spring.tour.vo.User_InfoVo" alias="userinfo"/>
   	<typeAlias type="com.spring.tour.vo.IdTokenVo" alias="idtoken"/>
   	<typeAlias type="com.spring.tour.vo.ImageVo" alias="image"/>
-  	<typeAlias type="com.spring.tour.vo.TourPageVo" alias="tourpage"/>
   	<typeAlias type="com.spring.tour.vo.TourDetailVo" alias="tourdetail"/>
   	<typeAlias type="com.spring.tour.vo.TourOptionVo" alias="touroption"/>
-  	<typeAlias type="com.spring.tour.vo.TourReviewVo" alias="tourreview"/>
   	<typeAlias type="com.spring.tour.vo.TourSelectVo" alias="tourselect"/>
   	<typeAlias type="com.spring.tour.vo.TourServiceVo" alias="tourservice"/>
   	<typeAlias type="com.spring.tour.vo.TourBookOptionVo" alias="tourBookOption"/>
