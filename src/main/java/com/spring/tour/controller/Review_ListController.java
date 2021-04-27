@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,10 +20,19 @@ public class Review_ListController {
 	private ReviewService service;
 	
 	@RequestMapping("/review/list")
-	public ModelAndView list(@RequestParam(value = "pageNum", defaultValue = "1")int pageNum, String field, String keyword) {
+	public String list(@RequestParam(value = "pageNum", defaultValue = "1")int pageNum,
+			String field, String keyword, 
+			@RequestParam(value = "cate_number", defaultValue = "0")int cate_number, 
+			@RequestParam(value = "service_number", defaultValue = "0")int service_number,
+			Model model) {
 		HashMap<String,Object> map=new HashMap<String, Object>();
 		map.put("field", field);
 		map.put("keyword", keyword);
+		if(cate_number!=0 && service_number!=0) {
+			map.put("cate_number", cate_number);
+			map.put("sevice_number", service_number);
+		}
+		System.out.println(cate_number+","+service_number);
 		
 		int totalRowCount=service.count(map);
 		PageUtil pu=new PageUtil(pageNum, 5, 5, totalRowCount);
@@ -32,12 +42,14 @@ public class Review_ListController {
 		map.put("endRow", endRow);
 		
 		List<ReviewVo> list=service.list(map);
+		for(ReviewVo vo:list) {
+			System.out.println(vo.getReview_title());
+		}
 		
-		ModelAndView mv=new ModelAndView("review/list");
-		mv.addObject("list", list);
-		mv.addObject("pu", pu);
-		mv.addObject("field", field);
-		mv.addObject("keyword", keyword);
-		return mv;
+		model.addAttribute("list", list);
+		model.addAttribute("pu", pu);
+		model.addAttribute("field", field);
+		model.addAttribute("keyword", keyword);
+		return ".review.list";
 	}
 }

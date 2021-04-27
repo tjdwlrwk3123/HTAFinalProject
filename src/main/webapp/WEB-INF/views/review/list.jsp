@@ -11,7 +11,7 @@
 </head>
 <body>
 <h1>리뷰목록</h1>
-<table border="1" width="500">
+<table border="1" style="width:1000px;">
 	<tr>
 		<th>리뷰번호</th>
 		<th>서비스고유번호</th>

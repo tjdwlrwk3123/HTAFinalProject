@@ -22,26 +22,33 @@
     
     <select id="count" resultType="int" parameterType="hashmap">
 		select NVL(count(*),0) cnt from review
-		<if test="field!=null and field!=''">
-			where ${field} like '%'|| #{keyword} ||'%'
-		</if>
+		<where>
+			<if test="cate_number!=null and service_number!=null">
+				and cate_number=#{cate_number} and service_number=#{service_number}
+			</if>
+			<if test="field!=null and field!=''">
+				and ${field} like '%'|| #{keyword} ||'%'
+			</if>
+		</where>
 	</select>
 	
 	<select id="list" resultType="review" parameterType="hashmap"> 
-	select *
-	from (
-			select rownum as rn, a.*
-			from (
-				select r.* from 
-				review r JOIN user_info u 
-				on r.user_id=u.user_id JOIN category g
-				on g.cate_number=r.cate_number JOIN
-				tour_service ts on r.service_number=ts.service_number JOIN
-				accom_service a on a.accom_service_number=r.service_number
-				<include refid="search"/> 
-				ORDER BY review_number
-				)a
-		)where rn between #{startRow} and #{endRow}
+	select * from
+	(
+		select a.*,rownum rnum from(
+			select * from review
+			<where>
+				<if test="cate_number!=null and service_number!=null">
+				and cate_number=#{cate_number} and service_number=#{service_number}
+				</if>
+				<if test="field!=null and field!=''">
+				and ${field} like '%'|| #{keyword} ||'%'
+				</if>
+			</where>
+			order by review_number
+		) a
+	)
+	<![CDATA[ where rnum>=#{startRow} and rnum<=#{endRow} ]]>
 	</select>
 	
 	<select id="select" resultType="review" parameterType="int">

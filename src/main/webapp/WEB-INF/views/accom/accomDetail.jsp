@@ -496,7 +496,11 @@
 		$.getJSON("${cp}/getAccomReviewList", 
 				{"cate_number":$("#catNum").val(),"service_number":$("#serviceNum").val()}, function(data) {
 			var str="";
-			str= "<h4>후기 ("+data.reviewlist.length+")</h4>"
+			str= "<div>";
+			str+= "<div style='font-size:25px; font-weight:bold; display:inline-block'>후기 ("+data.reviewlist.length+")</div>";
+			str+= "<div style='display:inline-block; right:10px;'>";
+			str+= "<a href='${cp}/review/list?service_number="+$("#serviceNum").val()+"&cate_number="+$("#catNum").val()+"'>리뷰페이지로</a></div>";
+			str+= "</div>";
 			if(data.reviewlist.length>3){
 				for(let i=0; i<3; i++){
 					var stars ="";
