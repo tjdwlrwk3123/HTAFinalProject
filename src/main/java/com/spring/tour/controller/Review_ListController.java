@@ -42,6 +42,9 @@ public class Review_ListController {
 		map.put("endRow", endRow);
 		
 		List<ReviewVo> list=service.list(map);
+		System.out.println(totalRowCount);
+		System.out.println(startRow);
+		System.out.println(endRow);
 		for(ReviewVo vo:list) {
 			System.out.println(vo.getReview_title());
 		}
